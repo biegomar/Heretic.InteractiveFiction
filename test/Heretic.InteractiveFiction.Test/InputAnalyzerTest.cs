@@ -1,5 +1,3 @@
-using Heretic.GamePlay;
-using Heretic.GamePlay.Prerequisites;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.GamePlay.EventSystem;
 using Heretic.InteractiveFiction.Objects;
