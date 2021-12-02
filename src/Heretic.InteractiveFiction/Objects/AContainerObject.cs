@@ -1,0 +1,684 @@
+﻿using Heretic.InteractiveFiction.Exceptions;
+using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+using Heretic.InteractiveFiction.Resources;
+
+namespace Heretic.InteractiveFiction.Objects;
+
+public abstract class AContainerObject
+{
+    private string name;
+
+    /// <summary>
+    /// This is the name of the object. This name is used as headline during printout.
+    /// </summary>
+    public string Name
+    {
+        get => this.GetObjectName();
+        set => name = value;
+    }
+
+    /// <summary>
+    /// The unique key that is representing the object.
+    /// </summary>
+    public string Key { get; init; }
+    /// <summary>
+    /// The detailed description of the object. It is used during printout.
+    /// </summary>
+    public string Description { get; init; }
+    /// <summary>
+    /// The first look description is only used during the first printout and contains additional information.
+    /// </summary>
+    public string FirstLookDescription { get; set; }
+    /// <summary>
+    /// Is the object visible or hidden?
+    /// </summary>
+    public bool IsHidden { get; set; }
+    /// <summary>
+    /// Is this a physical object or just virtual? 
+    /// </summary>
+    public bool IsVirtual { get; set; }
+    /// <summary>
+    /// Can the object picked up?
+    /// </summary>
+    public bool IsPickAble { get; set; }
+    /// <summary>
+    /// If the object cannot be taken, this description can explain why.
+    /// </summary>
+    public string UnPickAbleDescription { get; init; }
+    /// <summary>
+    /// The weight of the object.
+    /// </summary>
+    public int Weight { get; init; }
+    /// <summary>
+    /// If this object is a container, you can specify how much weight it can hold.
+    /// </summary>
+    public int MaxPayload { get; init; }
+    /// <summary>
+    /// Determines whether simply looking at the surroundings will make this object visible.
+    /// </summary>
+    public bool IsUnveilAble { get; set; }
+    /// <summary>
+    /// Determines whether an object is lockable.
+    /// </summary>
+    public bool IsLockAble { get; init; }
+    /// <summary>
+    /// Is the object locked?
+    /// </summary>
+    public bool IsLocked { get; set; }
+    /// <summary>
+    /// Gives a more detailed description about the state of a locked object.
+    /// </summary>
+    public string LockDescription { get; set; }
+    /// <summary>
+    /// Can this object be closed?
+    /// </summary>
+    public bool IsCloseAble { get; init; }
+    /// <summary>
+    /// Is this object closed?
+    /// </summary>
+    public bool IsClosed { get; set; }
+    /// <summary>
+    /// Gives a more detailed description about the state of an opened object.
+    /// </summary>
+    public string OpenDescription { get; init; }
+    /// <summary>
+    /// Gives a more detailed description about the state of a closed object.
+    /// </summary>
+    public string CloseDescription { get; init; }
+
+    /// <summary>
+    /// The list of contained objects.
+    /// </summary>
+    public ICollection<Item> Items { get; init; }
+
+    /// <summary>
+    /// The list of surrounding objects.
+    /// </summary>
+    public IDictionary<string, string> Surroundings { get; init; }
+
+    public ICollection<string> LinkedTo { get; init; }
+
+    /// <summary>
+    /// The list of contained characters.
+    /// <example>
+    /// A magician in a huge box.
+    /// </example>
+    /// </summary>
+    public ICollection<Character> Characters { get; init; }
+    public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
+    public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
+    public event EventHandler<ContainerObjectEventArgs> BeforeClose;
+    public event EventHandler<ContainerObjectEventArgs> AfterClose;
+    public event EventHandler<ContainerObjectEventArgs> BeforeDrop;
+    public event EventHandler<ContainerObjectEventArgs> AfterDrop;
+    public event EventHandler<ContainerObjectEventArgs> AfterGive;
+    public event EventHandler<ContainerObjectEventArgs> AfterOpen;
+    public event EventHandler<ContainerObjectEventArgs> AfterLook;
+    public event EventHandler<ContainerObjectEventArgs> AfterTake;
+    public event EventHandler<ContainerObjectEventArgs> Buy;
+    public event EventHandler<ContainerObjectEventArgs> Turn;
+    public event EventHandler<UnlockContainerEventArgs> Unlock;
+    public event EventHandler<UseItemEventArg> Use;
+
+    public void OnUse(UseItemEventArg eventArgs)
+    {
+        EventHandler<UseItemEventArg> localEventHandler = this.Use;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+
+    public virtual void OnBuy(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Buy;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new BuyException(BaseDescriptions.ON_BUY_EXCEPTION);
+        }
+    }
+
+    public virtual void OnBeforeDrop(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeDrop;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterDrop(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterDrop;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterGive(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterGive;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterLook(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterLook;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnTurn(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Turn;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterTake(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterTake;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnBeforeChangeLocation(ChangeLocationEventArgs eventArgs)
+    {
+        EventHandler<ChangeLocationEventArgs> localEventHandler = this.BeforeChangeLocation;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual ChangeLocationStatus OnAfterChangeLocation(ChangeLocationEventArgs eventArgs)
+    {
+        EventHandler<ChangeLocationEventArgs> localEventHandler = this.AfterChangeLocation;
+        if (localEventHandler != null)
+        {
+            localEventHandler(this, eventArgs);
+        }
+        else
+        {
+            if (!eventArgs.NewLocationMap.Location.IsLocked)
+            {
+                if (eventArgs.NewLocationMap.Location.IsClosed)
+                {
+                    return ChangeLocationStatus.IsClosed;
+                }
+            }
+            else
+            {
+                return ChangeLocationStatus.IsLocked;
+            }
+        }
+
+        return ChangeLocationStatus.Ok;
+    }
+
+    public virtual void OnBeforeClose(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeClose;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterClose(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterClose;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterOpen(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterOpen;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnUnlock(UnlockContainerEventArgs eventArgs)
+    {
+        EventHandler<UnlockContainerEventArgs> localEventHandler = this.Unlock;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    protected AContainerObject()
+    {
+        this.Items = new List<Item>();
+        this.Characters = new List<Character>();
+        this.Surroundings = new Dictionary<string, string>();
+        this.LinkedTo = new List<string>();
+        this.FirstLookDescription = string.Empty;
+        this.IsHidden = false;
+        this.IsVirtual = false;
+        this.IsPickAble = true;
+        this.IsUnveilAble = true;
+        this.IsLockAble = false;
+        this.IsLocked = false;
+        this.IsClosed = false;
+        this.IsCloseAble = false;
+        this.name = string.Empty;
+        this.Description = string.Empty;
+        this.OpenDescription = string.Empty;
+        this.CloseDescription = string.Empty;
+        this.UnPickAbleDescription = string.Empty;
+        this.LockDescription = string.Empty;
+    }
+
+    protected virtual string GetVariationOfYouSee()
+    {
+        return BaseDescriptions.YOU_SEE;
+    }
+
+    protected virtual string GetVariationOfHereSingle()
+    {
+        return BaseDescriptions.HERE_SINGLE;
+    }
+
+    protected virtual string GetVariationOfHerePlural()
+    {
+        return BaseDescriptions.HERE_PLURAL;
+    }
+
+    private string PrintUnhiddenObjects(ICollection<AContainerObject> unhiddenObjects, bool subItems = false)
+    {
+        var description = new StringBuilder();
+
+        if (unhiddenObjects.Any())
+        {
+            if (subItems)
+            {
+                description.Append($" ({GetVariationOfYouSee()} ");
+            }
+
+            var index = 0;
+            foreach (var item in unhiddenObjects)
+            {
+                if (index != 0)
+                {
+                    if (unhiddenObjects.Count == 2)
+                    {
+                        description.Append($" {BaseDescriptions.AND} ");
+                    }
+                    else
+                    {
+                        description.Append(index == unhiddenObjects.Count - 1 ? $" {BaseDescriptions.AND} " : ", ");
+                    }
+                }
+
+                if (index != 0)
+                {
+                    var lowerName = item.Name.First().ToString().ToLower() + item.Name.Substring(1);
+                    description.Append($"{lowerName}");
+                }
+                else
+                {
+                    description.Append($"{item.Name}");
+                }
+
+                if (!item.IsCloseAble || item.IsCloseAble && !item.IsClosed)
+                {
+                    if (item.Items.Any(i => i.IsHidden == false))
+                    {
+                        var subItemList = item.Items.Where(i => i.IsHidden == false).ToList<AContainerObject>();
+                        description.Append(item.PrintUnhiddenObjects(subItemList, true));
+                    }
+                }
+
+                description.Append(GetLinkedObjectsDescription(item));
+
+                index++;
+            }
+
+            if (subItems)
+            {
+                description.Append(')');
+            }
+            else
+            {
+                description.AppendLine(index == 1
+                    ? $" {GetVariationOfHereSingle()}"
+                    : $" {GetVariationOfHerePlural()}");
+            }
+
+        }
+
+        return description.ToString();
+    }
+
+    private string GetLinkedObjectsDescription(AContainerObject item)
+    {
+        var description = new StringBuilder();
+        if (item.LinkedTo.Any())
+        {
+            description.Append(" (").Append(BaseDescriptions.LINKED_TO);
+            int linkedItemIndex = 0;
+            foreach (var linkedItem in item.LinkedTo)
+            {
+                if (linkedItemIndex > 0)
+                {
+                    description.Append(", ");
+                }
+
+                description.Append(linkedItem.First().ToString().ToLower());
+                description.Append(linkedItem.Substring(1));
+
+                linkedItemIndex++;
+            }
+
+            description.Append(')');
+        }
+
+        return description.ToString();
+    }
+
+    protected virtual string PrintCharacters()
+    {
+        var unhiddenItems = this.Characters.Where(i => i.IsHidden == false).ToList<AContainerObject>();
+
+        return this.PrintUnhiddenObjects(unhiddenItems);
+    }
+
+    public virtual string PrintItems(bool subItems = false)
+    {
+
+        var unhiddenItems = this.Items.Where(i => i.IsHidden == false).ToList<AContainerObject>();
+
+        return this.PrintUnhiddenObjects(unhiddenItems);
+    }
+
+    public Item GetUnhiddenItemByKey(string key)
+    {
+        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false);
+        var unhiddenItems = this.Items.Where(i => i.IsHidden == false).Union(itemsFromCharacter).ToList();
+
+        if (unhiddenItems.Any())
+        {
+            foreach (var item in unhiddenItems)
+            {
+                if (item.Key == key)
+                {
+                    return item;
+                }
+                var result = item.GetUnhiddenItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public Item GetVirtualItemByKey(string key)
+    {
+        var itemsFromCharacter = this.Characters.SelectMany(c => c.Items);
+        var items = this.Items.Union(itemsFromCharacter).ToList();
+
+        if (items.Any())
+        {
+            foreach (var item in items)
+            {
+                if (item.Key == key && item.IsVirtual)
+                {
+                    return item;
+                }
+                var result = item.GetVirtualItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public Item GetItemByKey(string key)
+    {
+        foreach (var item in this.Items)
+        {
+            if (item.Key == key)
+            {
+                return item;
+            }
+            var result = item.GetItemByKey(key);
+
+            if (result != default)
+            {
+                return result;
+            }
+        }
+
+        foreach (var character in this.Characters)
+        {
+            foreach (var item in character.Items)
+            {
+                if (item.Key == key)
+                {
+                    return item;
+                }
+                var result = item.GetItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public bool RemoveItem(Item itemToRemove)
+    {
+        foreach (var item in this.Items)
+        {
+            if (item.Key == itemToRemove.Key)
+            {
+                return this.Items.Remove(itemToRemove);
+            }
+            var result = item.RemoveItem(itemToRemove);
+
+            if (result)
+            {
+                return true;
+            }
+        }
+
+        foreach (var character in this.Characters)
+        {
+            foreach (var item in character.Items)
+            {
+                if (item.Key == itemToRemove.Key)
+                {
+                    return character.Items.Remove(itemToRemove);
+                }
+                var result = item.RemoveItem(itemToRemove);
+
+                if (result)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public Character GetUnhiddenCharacterByKey(string key)
+    {
+        var unhiddenItems = this.Characters.Where(i => i.IsHidden == false).ToList();
+
+        if (unhiddenItems.Any())
+        {
+            foreach (var character in unhiddenItems)
+            {
+                if (character.Key == key)
+                {
+                    return character;
+                }
+                var result = character.GetUnhiddenCharacterByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public Character GetCharacterByKey(string key)
+    {
+        if (this.Characters.Any())
+        {
+            foreach (var character in this.Characters)
+            {
+                if (character.Key == key)
+                {
+                    return character;
+                }
+                var result = character.GetCharacterByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public AContainerObject GetOwnerOfUnhiddenItemByKey(string key)
+    {
+        var unhiddenItems = this.Items.Where(i => !i.IsHidden).ToList();
+
+        if (unhiddenItems.Any())
+        {
+            foreach (var item in unhiddenItems)
+            {
+                if (item.Key == key)
+                {
+                    return this;
+                }
+                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        var unhiddenCharacters = this.Characters.Where(c => !c.IsHidden).ToList();
+        if (unhiddenCharacters.Any())
+        {
+            foreach (var item in unhiddenCharacters)
+            {
+                if (item.Key == key)
+                {
+                    return this;
+                }
+                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public int GetActualPayload()
+    {
+        var sum = this.Weight;
+        if (this.Items.Any())
+        {
+            foreach (var item in this.Items)
+            {
+                if (item.Items.Any())
+                {
+                    sum += item.GetActualPayload();
+                }
+                else
+                {
+                    sum += item.Weight;
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    public string AlterEgo()
+    {
+        var result = new StringBuilder();
+        result.AppendFormat(BaseDescriptions.ALTER_EGO_DESCRIPTION, this.Name);
+        result.AppendLine(this.GetResourceByKey());
+
+        return result.ToString();
+    }
+
+    private string GetResourceByKey()
+    {
+        var characterNames = this.name.Split('|');
+        return string.Join(", ", characterNames);
+    }
+
+    private string GetObjectName()
+    {
+        var sentence = this.name.Split('|');
+        return sentence[0].Trim();
+    }
+
+    public override string ToString()
+    {
+        var description = new StringBuilder();
+        description.AppendLine(this.Name);
+        description.AppendLine(new string('-', this.Name.Length));
+        description.AppendLine(this.Description);
+
+        if (this.FirstLookDescription != string.Empty)
+        {
+            description.AppendLine(this.FirstLookDescription);
+            this.FirstLookDescription = string.Empty;
+        }
+
+        if (this.IsLocked && !string.IsNullOrEmpty(this.LockDescription))
+        {
+            description.AppendLine(this.LockDescription);
+        }
+        else
+        {
+            if (this.IsCloseAble)
+            {
+                if (this.IsClosed && !string.IsNullOrEmpty(this.CloseDescription))
+                {
+                    description.AppendLine(this.CloseDescription);
+                }
+
+                if (!this.IsClosed && !string.IsNullOrEmpty(this.OpenDescription))
+                {
+                    description.AppendLine(this.OpenDescription);
+                }
+            }
+
+        }
+
+        if (!this.IsCloseAble || this.IsCloseAble && !this.IsClosed)
+        {
+            if (this.Items.Any(i => !i.IsHidden) || this.Characters.Any(c => !c.IsHidden))
+            {
+                description.AppendLine();
+            }
+
+            description.Append(this.PrintCharacters());
+            description.Append(this.PrintItems());
+        }
+
+        return description.ToString();
+    }
+}

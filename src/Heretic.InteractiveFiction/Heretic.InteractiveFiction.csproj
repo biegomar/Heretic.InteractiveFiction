@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\BaseDescriptions.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>BaseDescriptions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Verbs.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Verbs.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\PackingWords.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>PackingWords.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\BaseDescriptions.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>BaseDescriptions.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Verbs.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Verbs.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\PackingWords.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>PackingWords.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="LINKED_TO" xml:space="preserve">
+    <value>ist verbunden mit: </value>
+  </data>
+    <data name="NOTHING_HAPPENS" xml:space="preserve">
+    <value>Nichts passiert!</value>
+  </data>
+    <data name="ON_BUY_EXCEPTION" xml:space="preserve">
+    <value>Das macht keinen Sinn. Du kannst das nicht kaufen.</value>
+  </data>
+    <data name="HERE_PLURAL" xml:space="preserve">
+    <value>sind hier.</value>
+  </data>
+    <data name="HERE_SINGLE" xml:space="preserve">
+    <value>ist hier.</value>
+  </data>
+    <data name="YOU_SEE" xml:space="preserve">
+    <value>darin befinden sich:</value>
+  </data>
+    <data name="AND" xml:space="preserve">
+    <value>und</value>
+  </data>
+    <data name="ALTER_EGO_DESCRIPTION" xml:space="preserve">
+    <value>Folgende Begriffe kannst Du für '{0}' ebenfalls benutzen: </value>
+  </data>
+    <data name="YOU_SEE_FEMALE" xml:space="preserve">
+    <value>sie trägt bei sich:</value>
+  </data>
+  <data name="YOU_SEE_MALE" xml:space="preserve">
+    <value>er trägt bei sich:</value>
+  </data>
+  <data name="GENDER_FEMALE" xml:space="preserve">
+    <value>sie</value>
+  </data>
+  <data name="GENDER_UNKNOWN" xml:space="preserve">
+    <value>es</value>
+  </data>
+  <data name="GENDER_MALE" xml:space="preserve">
+    <value>er</value>
+  </data>
+  <data name="NO_ANSWER_EXCEPTION" xml:space="preserve">
+    <value>Offensichtlich gibt es darüber nichts zu sagen.</value>
+  </data>
+  <data name="WAY" xml:space="preserve">
+    <value>liegt in Richtung</value>
+  </data>
+  <data name="HELLO_NAME" xml:space="preserve">
+    <value>Hallo {0}.</value>
+  </data>
+  <data name="HELLO_STRANGER" xml:space="preserve">
+    <value>Hallo Fremder (willst Du mir eigentlich Deinen richtigen Namen nennen?).</value>
+  </data>
+  <data name="NOTHING" xml:space="preserve">
+    <value>Du hast aktuell keine Gegenstände bei Dir.</value>
+  </data>
+  <data name="ACTUAL_PAYLOAD" xml:space="preserve">
+    <value>Du trägst im Moment Gegenstände mit einem Gesamtgewicht von {0, 0:F3} kg. Du kannst noch {1, 0:F3} kg zusätzlich tragen.</value>
+  </data>
+  <data name="MAX_PAYLOAD" xml:space="preserve">
+    <value>Du kannst momentan ein maximales Gewicht von {0, 0:F3} kg tragen.</value>
+  </data>
+  <data name="BLOCK_PICKUP_PLURAL" xml:space="preserve">
+    <value>verhindern, dass Du weitere Gegenstände mitnehmen kannst.</value>
+  </data>
+  <data name="BLOCK_PICKUP_SINGLE" xml:space="preserve">
+    <value>verhindert, dass Du weitere Gegenstände mitnehmen kannst.</value>
+  </data>
+  <data name="INVENTORY" xml:space="preserve">
+    <value>trägst Du bei Dir.</value>
+  </data>
+  <data name="NO_WAY" xml:space="preserve">
+    <value>Du kannst dort nicht hingehen!</value>
+  </data>
+  <data name="NO_WAYS" xml:space="preserve">
+    <value>Im Moment gibt es hier keine sichtbaren Wege. Vielleicht musst Du nur genau schauen, oder jemanden danach fragen?</value>
+  </data>
+  <data name="CHARACTER_NOT_VISIBLE" xml:space="preserve">
+    <value>Diese Person sehe ich hier nicht.</value>
+  </data>
+  <data name="ITEM_NOT_VISIBLE" xml:space="preserve">
+    <value>Diesen Gegenstand sehe ich hier nicht!</value>
+  </data>
+  <data name="ROOM_LOCKDESCRIPTION" xml:space="preserve">
+    <value>Die Tür scheint verschlossen zu sein.</value>
+  </data>
+  <data name="INVENTORY_TEMPLATE" xml:space="preserve">
+    <value>trägt {0} bei sich.</value>
+  </data>
+</root>

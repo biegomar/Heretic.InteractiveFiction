@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ASK" xml:space="preserve">
+    <value>Frag|Frage</value>
+  </data>
+  <data name="CLOSE" xml:space="preserve">
+    <value>Schließe|Schließ|Schliesse|Schliess</value>
+  </data>
+  <data name="DOWN" xml:space="preserve">
+    <value>Runter</value>
+  </data>
+  <data name="DROP" xml:space="preserve">
+    <value>Leg|verliere|Drop</value>
+  </data>
+  <data name="E" xml:space="preserve">
+    <value>Osten|Ost|O|E</value>
+  </data>
+  <data name="GO" xml:space="preserve">
+    <value>Gehe|Geh|Go|G</value>
+  </data>
+  <data name="HELP" xml:space="preserve">
+    <value>Hilfe|Help|H</value>
+  </data>
+  <data name="HISTORY" xml:space="preserve">
+    <value>History|Hist|All</value>
+  </data>
+  <data name="INV" xml:space="preserve">
+    <value>Inventar|inv</value>
+  </data>
+  <data name="JUMP" xml:space="preserve">
+    <value>Spring|Springe</value>
+  </data>
+  <data name="LOCK" xml:space="preserve">
+    <value>Verriegeln|Verriegel|Sperren|Sperre|Verschließe|Verschließ|Lock</value>
+  </data>
+  <data name="LOOK" xml:space="preserve">
+    <value>Schaue|Schau|Lies|Untersuche|Zeige|Zeig|Look|L|Show</value>
+  </data>
+  <data name="N" xml:space="preserve">
+    <value>Norden|Nord|N</value>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NE" xml:space="preserve">
+    <value>Nord-Osten|NO|NE</value>
+  </data>
+  <data name="NW" xml:space="preserve">
+    <value>Nord-Westen|NW</value>
+  </data>
+  <data name="OPEN" xml:space="preserve">
+    <value>Öffne|Öffnen</value>
+  </data>
+  <data name="QUIT" xml:space="preserve">
+    <value>Quit|Exit|Ende|Q</value>
+  </data>
+  <data name="S" xml:space="preserve">
+    <value>Süden|Süd|Sued|Sueden|S</value>
+  </data>
+  <data name="SAY" xml:space="preserve">
+    <value>Sag|Sage|Antworte</value>
+  </data>
+  <data name="SCORE" xml:space="preserve">
+    <value>Score|Punkte|Fortschritt</value>
+  </data>
+  <data name="SE" xml:space="preserve">
+    <value>Süd-Osten|Sued-Osten|SO|SE</value>
+  </data>
+  <data name="SW" xml:space="preserve">
+    <value>Süd-Westen|Sued-Westen|SW</value>
+  </data>
+  <data name="TAKE" xml:space="preserve">
+    <value>Nimm|Nehme|Take</value>
+  </data>
+  <data name="TALK" xml:space="preserve">
+    <value>Rede|Sprich</value>
+  </data>
+  <data name="TURN" xml:space="preserve">
+    <value>Drehe|Dreh|</value>
+  </data>
+  <data name="UNLOCK" xml:space="preserve">
+    <value>Entriegeln|Entriegel|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock</value>
+  </data>
+  <data name="UP" xml:space="preserve">
+    <value>Hoch|Rauf</value>
+  </data>
+  <data name="USE" xml:space="preserve">
+    <value>Nutze|Benutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier</value>
+  </data>
+  <data name="W" xml:space="preserve">
+    <value>Westen|West|W</value>
+  </data>
+  <data name="WAYS" xml:space="preserve">
+    <value>Wege|Auswege|Weg|Ausweg</value>
+  </data>
+  <data name="ALTER_EGO" xml:space="preserve">
+    <value>Alter|Alterego|Alternativ|Alternative</value>
+  </data>
+  <data name="BUY" xml:space="preserve">
+    <value>Bezahle|Bezahl|Zahle|Zahl|Kaufe|Kauf</value>
+  </data>
+  <data name="GIVE" xml:space="preserve">
+    <value>Gib|Gebe</value>
+  </data>
+  <data name="CREDITS" xml:space="preserve">
+    <value>Credits|Anerkennung|Anerkennungen|Referenz|Referenzen|Würdigung|Würdigungen</value>
+  </data>
+</root>
