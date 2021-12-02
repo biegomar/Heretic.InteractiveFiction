@@ -2,6 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>0.1.0</PackageVersion>
+        <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
+        <Authors>Marc Biegota</Authors>
+        <Description>Heretic Interactive Fiction - an interactive fiction programming framework</Description>
+        <Copyright>Copyright © 2021</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
