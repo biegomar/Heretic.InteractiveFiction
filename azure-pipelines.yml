@@ -7,13 +7,13 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-2022
 
 steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: '**/*.sln'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
