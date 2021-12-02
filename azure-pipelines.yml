@@ -10,8 +10,10 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'Heretic.InteractiveFiction.Solution.sln'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
