@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heretic.InteractiveFiction", "src\Heretic.InteractiveFiction\Heretic.InteractiveFiction.csproj", "{877C19E6-CB7B-42C8-AD71-6E2900532B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heretic.InteractiveFiction.Test", "test\Heretic.InteractiveFiction.Test\Heretic.InteractiveFiction.Test.csproj", "{20551484-4998-46AA-99E1-C3551B32F13F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{877C19E6-CB7B-42C8-AD71-6E2900532B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877C19E6-CB7B-42C8-AD71-6E2900532B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877C19E6-CB7B-42C8-AD71-6E2900532B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877C19E6-CB7B-42C8-AD71-6E2900532B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20551484-4998-46AA-99E1-C3551B32F13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20551484-4998-46AA-99E1-C3551B32F13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20551484-4998-46AA-99E1-C3551B32F13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20551484-4998-46AA-99E1-C3551B32F13F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
