@@ -13,7 +13,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: 'Heretic.InteractiveFiction.Solution.sln'
+    projects: '**/*.csproj'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
