@@ -11,8 +11,30 @@ pool:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: 'Restore packages'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    vstsFeed: '036c7387-bd55-403b-bfbb-62bfc76e14d6/43a4376f-0cc6-4d91-a527-bee4677071c6'
+- task: DotNetCoreCLI@2
+  displayName: 'Build Solution'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-
-
+- task: DotNetCoreCLI@2
+  displayName: 'Unit Tests'
+  inputs:
+    command: 'test'
+    projects: '**/*.Test.csproj'
+- task: DotNetCoreCLI@2
+  displayName: 'Prepare Nuget package'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'off'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '036c7387-bd55-403b-bfbb-62bfc76e14d6/43a4376f-0cc6-4d91-a527-bee4677071c6'
