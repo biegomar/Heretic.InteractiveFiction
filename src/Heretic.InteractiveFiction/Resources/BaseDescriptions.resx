@@ -1,48 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:element name="root" msdata:IsDataSet="true">
-            
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>1.3</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <data name="LINKED_TO" xml:space="preserve">
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LINKED_TO" xml:space="preserve">
     <value>ist verbunden mit: </value>
   </data>
-    <data name="NOTHING_HAPPENS" xml:space="preserve">
+  <data name="NOTHING_HAPPENS" xml:space="preserve">
     <value>Nichts passiert!</value>
   </data>
-    <data name="ON_BUY_EXCEPTION" xml:space="preserve">
+  <data name="ON_BUY_EXCEPTION" xml:space="preserve">
     <value>Das macht keinen Sinn. Du kannst das nicht kaufen.</value>
   </data>
-    <data name="HERE_PLURAL" xml:space="preserve">
+  <data name="HERE_PLURAL" xml:space="preserve">
     <value>sind hier.</value>
   </data>
-    <data name="HERE_SINGLE" xml:space="preserve">
+  <data name="HERE_SINGLE" xml:space="preserve">
     <value>ist hier.</value>
   </data>
-    <data name="YOU_SEE" xml:space="preserve">
+  <data name="YOU_SEE" xml:space="preserve">
     <value>darin befinden sich:</value>
   </data>
-    <data name="AND" xml:space="preserve">
+  <data name="AND" xml:space="preserve">
     <value>und</value>
   </data>
-    <data name="ALTER_EGO_DESCRIPTION" xml:space="preserve">
+  <data name="ALTER_EGO_DESCRIPTION" xml:space="preserve">
     <value>Folgende Begriffe kannst Du für '{0}' ebenfalls benutzen: </value>
   </data>
-    <data name="YOU_SEE_FEMALE" xml:space="preserve">
+  <data name="YOU_SEE_FEMALE" xml:space="preserve">
     <value>sie trägt bei sich:</value>
   </data>
   <data name="YOU_SEE_MALE" xml:space="preserve">
@@ -104,5 +203,191 @@
   </data>
   <data name="INVENTORY_TEMPLATE" xml:space="preserve">
     <value>trägt {0} bei sich.</value>
+  </data>
+  <data name="ITEM_ALREADY_OWNED" xml:space="preserve">
+    <value>Hm? Kannst es sein, dass Du den Gegenstand schon besitzt?</value>
+  </data>
+  <data name="ITEM_DROP" xml:space="preserve">
+    <value>Du hast {0} fallen gelassen.</value>
+  </data>
+  <data name="ITEM_NOT_LOCKABLE" xml:space="preserve">
+    <value>{0} kann nicht auf- oder zugeschlossen werden.</value>
+  </data>
+  <data name="ITEM_NOT_OWNED" xml:space="preserve">
+    <value>Das geht nicht. Du hast den Gegenstand offensichtlich gar nicht bei Dir. Oder ist er noch in einem anderen Behälter?</value>
+  </data>
+  <data name="ITEM_PICKUP" xml:space="preserve">
+    <value>Du hast {0} genommen.</value>
+  </data>
+  <data name="ITEM_STILL_LOCKED" xml:space="preserve">
+    <value>{0} ist aber abgeschlossen.</value>
+  </data>
+  <data name="ITEM_UNLOCKED" xml:space="preserve">
+    <value>{0} wurde aufgeschlossen.</value>
+  </data>
+  <data name="HELP" xml:space="preserve">
+    <value>Zeige diese Hilfeseite</value>
+  </data>
+  <data name="HELP_DESCRIPTION" xml:space="preserve">
+    <value>Folgende Kommandos stehen Dir zur Verfügung:</value>
+  </data>
+  <data name="HELP_WANTED" xml:space="preserve">
+    <value>Schreibe 'hilfe', um Hilfe zu erhalten.</value>
+  </data>
+  <data name="ALTER_EGO" xml:space="preserve">
+    <value>Zeigt Dir an, mit welchen alternativen Namen oder Bezeichnungen Du Personen und Gegenstände noch benennen kannst.</value>
+  </data>
+  <data name="ASK" xml:space="preserve">
+    <value>Frage eine Person etwas</value>
+  </data>
+  <data name="BUY" xml:space="preserve">
+    <value>Einen Gegenstand kaufen</value>
+  </data>
+  <data name="CLOSE" xml:space="preserve">
+    <value>Schließe einen Gegenstand.</value>
+  </data>
+  <data name="CREDITS" xml:space="preserve">
+    <value>Informationen zum Spiel abrufen</value>
+  </data>
+  <data name="DOWN" xml:space="preserve">
+    <value>Bewegungsrichtung "Runter"</value>
+  </data>
+  <data name="DROP" xml:space="preserve">
+    <value>Einen Gegenstand fallen lassen</value>
+  </data>
+  <data name="E" xml:space="preserve">
+    <value>Bewegungsrichtung "Osten"</value>
+  </data>
+  <data name="GIVE" xml:space="preserve">
+    <value>Einem anderen Charakter einen Gegenstand überreichen</value>
+  </data>
+  <data name="GO" xml:space="preserve">
+    <value>Gehe zu einem Ort</value>
+  </data>
+  <data name="HISTORY" xml:space="preserve">
+    <value>Die Auflistung all Deiner bisherigen Kommandos.</value>
+  </data>
+  <data name="INV" xml:space="preserve">
+    <value>Zeige Deine mitgeführten Gegenstände</value>
+  </data>
+  <data name="JUMP" xml:space="preserve">
+    <value>Springe</value>
+  </data>
+  <data name="LOCK" xml:space="preserve">
+    <value>Verriegelt einen Gegenstand.</value>
+  </data>
+  <data name="LOOK" xml:space="preserve">
+    <value>Schaue Dir Örtlichkeiten, Personen oder Gegenstände an</value>
+  </data>
+  <data name="N" xml:space="preserve">
+    <value>Bewegungsrichtung "Nord"</value>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>Ändere Deinen Spielernamen</value>
+  </data>
+  <data name="NE" xml:space="preserve">
+    <value>Bewegungsrichtung "Nord-Ost"</value>
+  </data>
+  <data name="NW" xml:space="preserve">
+    <value>Bewegungsrichtung "Nord-West"</value>
+  </data>
+  <data name="OPEN" xml:space="preserve">
+    <value>Öffne einen Gegenstand.</value>
+  </data>
+  <data name="QUIT" xml:space="preserve">
+    <value>Beende das Spiel</value>
+  </data>
+  <data name="S" xml:space="preserve">
+    <value>Bewegungsrichtung "Süden"</value>
+  </data>
+  <data name="SAY" xml:space="preserve">
+    <value>Sprich mit einer Person</value>
+  </data>
+  <data name="SCORE" xml:space="preserve">
+    <value>erreichte Wertung {0}/{1}</value>
+  </data>
+  <data name="SE" xml:space="preserve">
+    <value>Bewegungsrichtung "Süd-Ost"</value>
+  </data>
+  <data name="SW" xml:space="preserve">
+    <value>Bewegungsrichtung "Süd-West"</value>
+  </data>
+  <data name="TAKE" xml:space="preserve">
+    <value>Nimm einen Gegenstand</value>
+  </data>
+  <data name="TALK" xml:space="preserve">
+    <value>Smalltalk mit einer Person</value>
+  </data>
+  <data name="TURN" xml:space="preserve">
+    <value>Drehe einen Gegenstand, bzw. schließe oder öffne einen Gegenstand durch drehen.</value>
+  </data>
+  <data name="UNLOCK" xml:space="preserve">
+    <value>Entriegelt einen Gegenstand.</value>
+  </data>
+  <data name="UP" xml:space="preserve">
+    <value>Bewegungsrichtung "Hoch"</value>
+  </data>
+  <data name="USE" xml:space="preserve">
+    <value>Benutze einen Gegenstand</value>
+  </data>
+  <data name="W" xml:space="preserve">
+    <value>Bewegungsrichtung "Westen"</value>
+  </data>
+  <data name="WAYS" xml:space="preserve">
+    <value>Zeigt Dir explizit alle verfügbaren Wege an</value>
+  </data>
+  <data name="IMPOSSIBLE_CHARACTER_PICKUP" xml:space="preserve">
+    <value>Aaah, eine Entführung? Das ist bestimmt ein ganz tolle Idee...</value>
+  </data>
+  <data name="IMPOSSIBLE_DROP" xml:space="preserve">
+    <value>Du kannst {0} nicht fallen lassen. Ist es noch mit einem anderen Gegenstand verbunden?</value>
+  </data>
+  <data name="IMPOSSIBLE_PICKUP" xml:space="preserve">
+    <value>Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!</value>
+  </data>
+  <data name="TO_HEAVY" xml:space="preserve">
+    <value>Der Gegenstand ist zu schwer, um ihn noch zu tragen! Vielleicht benötigst Du eine größe Transportmöglichkeit, oder Du wirfst einige Sachen weg.</value>
+  </data>
+  <data name="ALREADY_CLOSED" xml:space="preserve">
+    <value>{0} ist bereits geschlossen.</value>
+  </data>
+  <data name="ALREADY_OPEN" xml:space="preserve">
+    <value>{0} ist bereits geöffnet.</value>
+  </data>
+  <data name="ALREADY_UNLOCKED" xml:space="preserve">
+    <value>{0} ist bereits entriegelt.</value>
+  </data>
+  <data name="NOW_CLOSED" xml:space="preserve">
+    <value>{0} ist nun geschlossen.</value>
+  </data>
+  <data name="NOW_OPEN" xml:space="preserve">
+    <value>{0} ist nun geöffnet.</value>
+  </data>
+  <data name="MISCONCEPTION" xml:space="preserve">
+    <value>Ich verstehe Dich nicht! Was genau möchtest Du tun?</value>
+  </data>
+  <data name="NOTHING_TO_TAKE" xml:space="preserve">
+    <value>Es gibt hier keine Gegenstände die Du mitnehmen kannst.</value>
+  </data>
+  <data name="NO_ANSWER" xml:space="preserve">
+    <value>Du sagst "{0}". Keine Reaktion!</value>
+  </data>
+  <data name="NO_ANSWER_TO_QUESTION" xml:space="preserve">
+    <value>Du fragst "{0}"? Keine Reaktion!</value>
+  </data>
+  <data name="WRONG_KEY" xml:space="preserve">
+    <value>Du kannst {0} damit nicht aufschließen. Vielleicht probierst Du besser einen anderen Schlüssel?</value>
+  </data>
+  <data name="SAME_ACTION_AGAIN" xml:space="preserve">
+    <value>Dasselbe wolltest Du doch gerade schon machen?! Aber bitte...</value>
+  </data>
+  <data name="NO_EVENT" xml:space="preserve">
+    <value>Irgendwie passiert nichts. Hattest Du vielleicht etwas anderes vor?</value>
+  </data>
+  <data name="WAY_IS_CLOSED" xml:space="preserve">
+    <value>Der Weg scheint geschlossen zu sein. Musst Du vielleicht erst etwas öffnen?</value>
+  </data>
+  <data name="WAY_IS_LOCKED" xml:space="preserve">
+    <value>Der Weg scheint versperrt zu sein. Vielleicht benötigst Du eine Art Schlüssel?</value>
   </data>
 </root>
