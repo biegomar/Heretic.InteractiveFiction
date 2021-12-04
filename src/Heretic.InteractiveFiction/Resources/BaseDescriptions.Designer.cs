@@ -448,6 +448,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ich kenne und sehe nichts was &quot;{0}&quot; sein könnte..
+        /// </summary>
+        public static string ITEM_UNKNOWN {
+            get {
+                return ResourceManager.GetString("ITEM_UNKNOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} wurde aufgeschlossen..
         /// </summary>
         public static string ITEM_UNLOCKED {

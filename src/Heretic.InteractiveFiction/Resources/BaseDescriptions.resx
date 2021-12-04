@@ -390,4 +390,7 @@
   <data name="WAY_IS_LOCKED" xml:space="preserve">
     <value>Der Weg scheint versperrt zu sein. Vielleicht benötigst Du eine Art Schlüssel?</value>
   </data>
+  <data name="ITEM_UNKNOWN" xml:space="preserve">
+    <value>Ich kenne und sehe nichts was "{0}" sein könnte.</value>
+  </data>
 </root>
