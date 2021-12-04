@@ -1,6 +1,8 @@
+using Heretic.InteractiveFiction.Objects;
+
 namespace Heretic.InteractiveFiction.GamePlay;
 
 public interface IGamePrerequisitesAssembler
 {
-    void GetGameMap();
+    (LocationMap map, Location activeLocation, Player activePlayer) GetGameMap();
 }
