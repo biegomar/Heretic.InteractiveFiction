@@ -133,6 +133,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;Dazu kann ich Ihnen im Moment nichts sagen&quot;, antwortet {0}..
+        /// </summary>
+        public static string ASK_FOR_INVISIBLE_OBJECT {
+            get {
+                return ResourceManager.GetString("ASK_FOR_INVISIBLE_OBJECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to verhindern, dass Du weitere Gegenstände mitnehmen kannst..
         /// </summary>
         public static string BLOCK_PICKUP_PLURAL {
@@ -354,6 +363,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string IMPOSSIBLE_PICKUP {
             get {
                 return ResourceManager.GetString("IMPOSSIBLE_PICKUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Womit möchtest Du denn {0} aufschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?.
+        /// </summary>
+        public static string IMPOSSIBLE_UNLOCK {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_UNLOCK", resourceCulture);
             }
         }
         
@@ -673,6 +691,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Womit willst Du das bezahlen?.
+        /// </summary>
+        public static string PAY_WITH_WHAT {
+            get {
+                return ResourceManager.GetString("PAY_WITH_WHAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beende das Spiel.
         /// </summary>
         public static string QUIT {
@@ -849,6 +876,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string WAYS {
             get {
                 return ResourceManager.GetString("WAYS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Hm?&quot;, ist die verwunderte Antwort..
+        /// </summary>
+        public static string WHAT {
+            get {
+                return ResourceManager.GetString("WHAT", resourceCulture);
             }
         }
         

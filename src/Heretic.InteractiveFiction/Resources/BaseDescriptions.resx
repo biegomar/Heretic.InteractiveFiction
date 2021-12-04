@@ -393,4 +393,16 @@
   <data name="ITEM_UNKNOWN" xml:space="preserve">
     <value>Ich kenne und sehe nichts was "{0}" sein könnte.</value>
   </data>
+  <data name="IMPOSSIBLE_UNLOCK" xml:space="preserve">
+    <value>Womit möchtest Du denn {0} aufschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?</value>
+  </data>
+  <data name="WHAT" xml:space="preserve">
+    <value>"Hm?", ist die verwunderte Antwort.</value>
+  </data>
+  <data name="PAY_WITH_WHAT" xml:space="preserve">
+    <value>Womit willst Du das bezahlen?</value>
+  </data>
+  <data name="ASK_FOR_INVISIBLE_OBJECT" xml:space="preserve">
+    <value>"Dazu kann ich Ihnen im Moment nichts sagen", antwortet {0}.</value>
+  </data>
 </root>
