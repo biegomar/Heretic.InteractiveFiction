@@ -1,4 +1,5 @@
-﻿using Heretic.InteractiveFiction.Exceptions;
+﻿using System.Collections.Specialized;
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
@@ -130,15 +131,13 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.WAYS].Contains(input, StringComparer.InvariantCultureIgnoreCase))
         {
-            if (this.universe.LocationMap[this.universe.ActiveLocation].Any(l => !l.IsHidden))
+            if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation) 
+                && this.universe.LocationMap[this.universe.ActiveLocation].Any(l => !l.IsHidden))
             {
-                return PrintingSubsystem.LocationMap(this.universe.ActiveLocation, this.universe.LocationMap);
-            }
-            else
-            {
-                return PrintingSubsystem.Resource(BaseDescriptions.NO_WAYS);
+                return PrintingSubsystem.DestinationNode(this.universe.ActiveLocation, this.universe.LocationMap);
             }
 
+            return PrintingSubsystem.Resource(BaseDescriptions.NO_WAYS);
         }
 
         return false;
@@ -900,6 +899,15 @@ internal sealed class VerbHandler
         if (containerObject == default)
         {
             containerObject = this.GetUnhiddenCharacterByName(objectName);
+        }
+
+        if (containerObject == default)
+        {
+            var key = this.GetCharacterKeyByName(objectName);
+            if (key == this.universe.ActivePlayer.Key)
+            {
+                containerObject = this.universe.ActivePlayer;
+            }
         }
 
         return containerObject;

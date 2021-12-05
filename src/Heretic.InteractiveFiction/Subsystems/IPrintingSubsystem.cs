@@ -4,7 +4,7 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public interface IPrintingSubsystem
 {
-    bool ActiveLocation(Location activeLocation, IDictionary<Location, IEnumerable<LocationMap>> locationMap);
+    bool ActiveLocation(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap);
     bool ActivePlayer(Player activePlayer);
     bool AlterEgo(AContainerObject item);
     bool AlterEgo(string itemName);
@@ -31,7 +31,7 @@ public interface IPrintingSubsystem
     bool ItemDropSuccess(AContainerObject item);
     bool ItemNotOwned();
     bool ItemAlreadyOwned();
-    bool LocationMap(Location activeLocation, IDictionary<Location, IEnumerable<LocationMap>> locationMap);
+    bool DestinationNode(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap);
     bool Misconcept();
     bool NothingToTake();
     bool NoAnswer(string phrase);

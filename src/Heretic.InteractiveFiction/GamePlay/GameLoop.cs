@@ -14,7 +14,7 @@ public class GameLoop
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
-        gamePrerequisitesAssembler.GetGameMap();
+        (this.universe.LocationMap, this.universe.ActiveLocation, this.universe.ActivePlayer) = gamePrerequisitesAssembler.AssembleGame();
         this.processor = new InputProcessor(printingSubsystem, resourceProvider, this.universe);
         this.commands = new Queue<string>();
         if (!string.IsNullOrEmpty(fileName))

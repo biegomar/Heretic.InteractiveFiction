@@ -4,10 +4,10 @@ namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
 public class ChangeLocationEventArgs : ContainerObjectEventArgs
 {
-    public LocationMap NewLocationMap { get; set; }
+    public DestinationNode NewDestinationNode { get; set; }
 
-    public ChangeLocationEventArgs(LocationMap newLocationMap)
+    public ChangeLocationEventArgs(DestinationNode newDestinationNode)
     {
-        this.NewLocationMap = newLocationMap;
+        this.NewDestinationNode = newDestinationNode;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Heretic.InteractiveFiction.GamePlay;
+﻿using Heretic.InteractiveFiction.Comparer;
+using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.GamePlay.EventSystem;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Subsystems;
@@ -28,7 +29,7 @@ public class Universe
     public readonly IDictionary<string, IEnumerable<string>> ConversationAnswersResources;
     public readonly IEnumerable<string> PackingWordsResources;
 
-    public IDictionary<Location, IEnumerable<LocationMap>> LocationMap { get; set; }
+    public LocationMap LocationMap { get; set; }
     public Location ActiveLocation { get; set; }
     public Player ActivePlayer { get; set; }
 
@@ -57,7 +58,7 @@ public class Universe
         this.LocationResources = resourceProvider.GetLocationsFromResources();
         this.PackingWordsResources = resourceProvider.GetPackingWordsFromResources();
         this.ConversationAnswersResources = resourceProvider.GetConversationsAnswersFromResources();
-        this.LocationMap = new Dictionary<Location, IEnumerable<LocationMap>>();
+        this.LocationMap = new LocationMap(new LocationComparer());
     }
 
     public void RaisePeriodicEvents(PeriodicEventArgs eventArgs)
@@ -199,7 +200,7 @@ public class Universe
         }
     }
 
-    public LocationMap GetLocationMapByEnumString(string key)
+    public DestinationNode GetLocationMapByEnumString(string key)
     {
         if (this.LocationMap.ContainsKey(this.ActiveLocation))
         {

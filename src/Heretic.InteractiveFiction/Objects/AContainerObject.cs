@@ -197,9 +197,9 @@ public abstract class AContainerObject
         }
         else
         {
-            if (!eventArgs.NewLocationMap.Location.IsLocked)
+            if (!eventArgs.NewDestinationNode.Location.IsLocked)
             {
-                if (eventArgs.NewLocationMap.Location.IsClosed)
+                if (eventArgs.NewDestinationNode.Location.IsClosed)
                 {
                     return ChangeLocationStatus.IsClosed;
                 }

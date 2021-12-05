@@ -18,6 +18,15 @@ public class Player : AContainerObject
         {
             result.AppendLine(string.Format(BaseDescriptions.HELLO_NAME, this.Name));
         }
+        
+        result.AppendLine(this.Description);
+        
+        if (this.FirstLookDescription != string.Empty)
+        {
+            result.AppendLine(this.FirstLookDescription);
+            this.FirstLookDescription = string.Empty;
+        }
+        
 
         if (this.Items.Any())
         {
