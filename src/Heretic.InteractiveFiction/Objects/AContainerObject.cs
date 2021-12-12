@@ -30,6 +30,10 @@ public abstract class AContainerObject
     /// </summary>
     public string FirstLookDescription { get; set; }
     /// <summary>
+    /// Is this object eatable?
+    /// </summary>
+    public bool IsEatable { get; set; }
+    /// <summary>
     /// Is the object visible or hidden?
     /// </summary>
     public bool IsHidden { get; set; }
@@ -111,6 +115,8 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterClose;
     public event EventHandler<ContainerObjectEventArgs> BeforeDrop;
     public event EventHandler<ContainerObjectEventArgs> AfterDrop;
+    public event EventHandler<ContainerObjectEventArgs> BeforeEat;
+    public event EventHandler<ContainerObjectEventArgs> AfterEat; 
     public event EventHandler<ContainerObjectEventArgs> AfterGive;
     public event EventHandler<ContainerObjectEventArgs> AfterOpen;
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
@@ -155,6 +161,18 @@ public abstract class AContainerObject
     public virtual void OnAfterDrop(ContainerObjectEventArgs eventArgs)
     {
         EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterDrop;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeEat(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeEat;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterEat(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterEat;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
@@ -244,6 +262,7 @@ public abstract class AContainerObject
         this.Surroundings = new Dictionary<string, string>();
         this.LinkedTo = new List<string>();
         this.FirstLookDescription = string.Empty;
+        this.IsEatable = false;
         this.IsHidden = false;
         this.IsVirtual = false;
         this.IsPickAble = true;

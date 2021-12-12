@@ -405,4 +405,13 @@
   <data name="ASK_FOR_INVISIBLE_OBJECT" xml:space="preserve">
     <value>"Dazu kann ich Ihnen im Moment nichts sagen", antwortet {0}.</value>
   </data>
+  <data name="EAT" xml:space="preserve">
+    <value>Etwas essen</value>
+  </data>
+  <data name="ITEM_EATEN" xml:space="preserve">
+    <value>Du hast {0} gegessen.</value>
+  </data>
+  <data name="ITEM_NOT_EATABLE" xml:space="preserve">
+    <value>Das wirkt nicht so, als könne man es essen!</value>
+  </data>
 </root>

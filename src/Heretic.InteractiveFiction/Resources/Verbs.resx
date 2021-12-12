@@ -222,4 +222,7 @@
   <data name="CREDITS" xml:space="preserve">
     <value>Credits|Anerkennung|Anerkennungen|Referenz|Referenzen|Würdigung|Würdigungen</value>
   </data>
+  <data name="EAT" xml:space="preserve">
+    <value>Iss|Ess|Esse</value>
+  </data>
 </root>

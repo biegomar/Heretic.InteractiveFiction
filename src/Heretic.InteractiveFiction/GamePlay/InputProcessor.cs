@@ -100,6 +100,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Turn(processingVerb, processingSubject);
         result = result || verbHandler.AlterEgo(processingVerb, processingSubject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject);
+        result = result || verbHandler.Eat(processingVerb, processingSubject);
 
         if (!result)
         {

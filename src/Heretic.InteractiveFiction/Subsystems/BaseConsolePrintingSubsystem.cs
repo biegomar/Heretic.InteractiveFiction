@@ -183,6 +183,20 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool ItemEaten(AContainerObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, Console.WindowWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+
+    public bool ItemNotEatable(AContainerObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_EATABLE, Console.WindowWidth));
+        Console.WriteLine();
+        return true;
+    }
+
     public virtual bool ItemStillLocked(AContainerObject item)
     {
         Console.Write(!string.IsNullOrEmpty(item.LockDescription)

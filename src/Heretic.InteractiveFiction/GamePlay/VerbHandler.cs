@@ -353,6 +353,36 @@ internal sealed class VerbHandler
         return false;
     }
 
+    internal bool Eat(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.EAT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var key = this.GetItemKeyByName(subject);
+            var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
+
+
+            if (item != default)
+            {
+                if (item.IsEatable)
+                {
+                    item.OnBeforeEat(new ContainerObjectEventArgs());
+
+                    var result = PrintingSubsystem.ItemEaten(item);
+
+                    item.OnAfterEat(new ContainerObjectEventArgs());
+
+                    return result;
+                }
+                
+                return PrintingSubsystem.ItemNotEatable(item);
+            }
+
+            return PrintingSubsystem.ItemNotOwned();
+        }
+
+        return false;
+    }
+
     internal bool Ask(string verb, string characterName, string subjectName)
     {
         if (this.universe.VerbResources[VerbKeys.ASK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))

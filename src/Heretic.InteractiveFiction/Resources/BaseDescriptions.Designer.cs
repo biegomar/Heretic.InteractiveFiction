@@ -223,6 +223,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Etwas essen.
+        /// </summary>
+        public static string EAT {
+            get {
+                return ResourceManager.GetString("EAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to sie.
         /// </summary>
         public static string GENDER_FEMALE {
@@ -417,6 +426,24 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string ITEM_DROP {
             get {
                 return ResourceManager.GetString("ITEM_DROP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast {0} gegessen..
+        /// </summary>
+        public static string ITEM_EATEN {
+            get {
+                return ResourceManager.GetString("ITEM_EATEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Das wirkt nicht so, als könne man es essen!.
+        /// </summary>
+        public static string ITEM_NOT_EATABLE {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_EATABLE", resourceCulture);
             }
         }
         

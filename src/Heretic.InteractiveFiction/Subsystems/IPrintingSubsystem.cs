@@ -24,6 +24,8 @@ public interface IPrintingSubsystem
     bool ItemClosed(AContainerObject item);
     bool ItemAlreadyOpen(AContainerObject item);
     bool ItemAlreadyUnlocked(AContainerObject item);
+    bool ItemEaten(AContainerObject item);
+    bool ItemNotEatable(AContainerObject item);
     bool ItemStillLocked(AContainerObject item);
     bool ItemUnlocked(AContainerObject item);
     bool ItemNotLockAble(AContainerObject item);
