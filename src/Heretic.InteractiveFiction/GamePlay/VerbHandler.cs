@@ -60,10 +60,16 @@ internal sealed class VerbHandler
                 return result;
             }
 
+            // now only surroundings are possible.
             var itemKey = this.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
-                return PrintingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]);
+                var result = PrintingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]);
+                
+                // surroundings only exist within the active location.
+                this.universe.ActiveLocation.OnAfterLook(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
+
+                return result;
             }
 
             return PrintingSubsystem.ItemNotVisible();
