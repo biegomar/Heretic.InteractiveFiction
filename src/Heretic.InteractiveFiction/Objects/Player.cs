@@ -7,6 +7,8 @@ public class Player : AContainerObject
     public bool HasPaymentMethod { get; set; }
     public Item PaymentMethod { get; set; }
 
+    public string StandardClothing { get; set; }
+
     public override string ToString()
     {
         var result = new StringBuilder();
@@ -26,7 +28,12 @@ public class Player : AContainerObject
             result.AppendLine(this.FirstLookDescription);
             this.FirstLookDescription = string.Empty;
         }
-        
+
+        if (this.StandardClothing != string.Empty)
+        {
+            result.AppendLine(this.StandardClothing);
+        }
+
 
         if (this.Items.Any())
         {
