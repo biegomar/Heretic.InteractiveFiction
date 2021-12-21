@@ -414,4 +414,7 @@
   <data name="ITEM_NOT_EATABLE" xml:space="preserve">
     <value>Das wirkt nicht so, als könne man es essen!</value>
   </data>
+  <data name="START_THE_GAME" xml:space="preserve">
+    <value>&lt;&lt;...drücke eine Taste, um das Spiel zu starten...&gt;&gt;</value>
+  </data>
 </root>

@@ -60,7 +60,7 @@ internal sealed class VerbHandler
                 return result;
             }
 
-            // now only surroundings are possible.
+            // lets have a look at surroundings.
             var itemKey = this.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {

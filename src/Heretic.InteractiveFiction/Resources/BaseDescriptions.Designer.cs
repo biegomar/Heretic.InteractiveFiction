@@ -790,6 +790,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;&lt;...drücke eine Taste, um das Spiel zu starten...&gt;&gt;.
+        /// </summary>
+        public static string START_THE_GAME {
+            get {
+                return ResourceManager.GetString("START_THE_GAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bewegungsrichtung &quot;Süd-West&quot;.
         /// </summary>
         public static string SW {

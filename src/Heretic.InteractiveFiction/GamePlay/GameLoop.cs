@@ -1,4 +1,5 @@
 using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -31,9 +32,9 @@ public class GameLoop
         do
         {
             printingSubsystem.Prompt();
-            Console.ForegroundColor = ConsoleColor.Green;
+            printingSubsystem.ForegroundColor = TextColor.Green;
             var input = GetInput();
-            Console.ResetColor();
+            printingSubsystem.ResetColors();
             unfinished = this.processor.Process(input);
         } while (unfinished);
     }
@@ -59,6 +60,10 @@ public class GameLoop
         printingSubsystem.ClearScreen();
         printingSubsystem.TitleAndScore(this.universe.Score, this.universe.MaxScore);
         printingSubsystem.Opening();
+        printingSubsystem.ForegroundColor = TextColor.DarkCyan;
+        printingSubsystem.Resource(BaseDescriptions.START_THE_GAME);
+        printingSubsystem.ResetColors();
+        Console.ReadKey();
         printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
     }
 }

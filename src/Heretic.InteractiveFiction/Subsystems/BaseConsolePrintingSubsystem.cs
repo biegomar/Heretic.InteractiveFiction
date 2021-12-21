@@ -5,6 +5,23 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 {
+    public TextColor ForegroundColor
+    {
+        get => (TextColor)Console.ForegroundColor;
+        set => Console.ForegroundColor = (ConsoleColor)value;
+    }
+
+    public TextColor BackgroundColor
+    {
+        get => (TextColor)Console.BackgroundColor;
+        set => Console.BackgroundColor = (ConsoleColor)value;
+    }
+
+    public void ResetColors()
+    {
+        Console.ResetColor();
+    }
+
     public virtual bool ActiveLocation(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap)
     {
         Console.Write(WordWrap(activeLocation, Console.WindowWidth));

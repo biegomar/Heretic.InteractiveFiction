@@ -4,6 +4,9 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public interface IPrintingSubsystem
 {
+    TextColor ForegroundColor { get; set; }
+    TextColor BackgroundColor { get; set; }
+    void ResetColors();
     bool ActiveLocation(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap);
     bool ActivePlayer(Player activePlayer);
     bool AlterEgo(AContainerObject item);
