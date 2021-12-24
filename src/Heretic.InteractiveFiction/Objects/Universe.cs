@@ -96,7 +96,7 @@ public class Universe
         }
     }
 
-    public bool PickObject(Item item)
+    public bool PickObject(Item item, bool suppressSuccessMessage = false)
     {
         if (item != default)
         {
@@ -123,7 +123,7 @@ public class Universe
                     result = owner.Items.Remove(item);
                     if (result)
                     {
-                        return printingSubsystem.ItemPickupSuccess(item);
+                        return suppressSuccessMessage || printingSubsystem.ItemPickupSuccess(item);
                     }
 
                     return false;

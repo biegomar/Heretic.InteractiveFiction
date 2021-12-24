@@ -360,6 +360,14 @@ internal sealed class VerbHandler
             var key = this.GetItemKeyByName(subject);
             var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
 
+            if (item == default)
+            {
+                item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
+                if (item is { IsEatable: true })
+                {
+                    this.universe.PickObject(item, true);
+                }
+            }
 
             if (item != default)
             {
