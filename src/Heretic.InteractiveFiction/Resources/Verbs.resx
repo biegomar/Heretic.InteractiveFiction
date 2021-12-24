@@ -139,7 +139,7 @@
     <value>Hilfe|Help|H</value>
   </data>
   <data name="HISTORY" xml:space="preserve">
-    <value>History|Hist|All</value>
+    <value>History|Hist|Verlauf</value>
   </data>
   <data name="INV" xml:space="preserve">
     <value>Inventar|inv</value>

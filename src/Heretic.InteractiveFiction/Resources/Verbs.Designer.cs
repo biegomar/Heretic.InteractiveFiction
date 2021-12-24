@@ -169,7 +169,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to History|Hist|All.
+        ///   Looks up a localized string similar to History|Hist|Verlauf.
         /// </summary>
         internal static string HISTORY {
             get {
