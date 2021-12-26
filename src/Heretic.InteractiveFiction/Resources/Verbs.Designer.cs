@@ -331,7 +331,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Drehe|Dreh|.
+        ///   Looks up a localized string similar to Drehe|Dreh.
         /// </summary>
         internal static string TURN {
             get {

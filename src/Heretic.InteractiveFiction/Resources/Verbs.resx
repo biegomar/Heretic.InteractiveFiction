@@ -193,7 +193,7 @@
     <value>Rede|Sprich</value>
   </data>
   <data name="TURN" xml:space="preserve">
-    <value>Drehe|Dreh|</value>
+    <value>Drehe|Dreh</value>
   </data>
   <data name="UNLOCK" xml:space="preserve">
     <value>Entriegeln|Entriegel|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock</value>

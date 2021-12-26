@@ -97,26 +97,28 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool Help(IDictionary<string, IEnumerable<string>> verbResource)
     {
-        var description = new StringBuilder();
-        description.AppendLine(BaseDescriptions.HELP_DESCRIPTION);
-        description.AppendLine(new string('-', BaseDescriptions.HELP_DESCRIPTION.Length)).AppendLine();
+        Console.WriteLine(BaseDescriptions.HELP_DESCRIPTION);
+        Console.WriteLine(new string('-', BaseDescriptions.HELP_DESCRIPTION.Length));
+        Console.WriteLine();
 
         foreach (var verbs in verbResource)
         {
-            description.AppendLine(BaseDescriptions.ResourceManager.GetString(verbs.Key));
+            Console.Write(BaseDescriptions.ResourceManager.GetString(verbs.Key));
             var index = 0;
+            this.ForegroundColor = TextColor.Magenta;
             foreach (var value in verbs.Value)
             {
-                description.Append(index != 0 ? ", " : "...");
+                Console.Write(index != 0 ? ", " : "...");
 
-                description.Append(value);
+                Console.Write(value);
                 index++;
             }
-            description.AppendLine().AppendLine();
+            this.ResetColors();
+
+            Console.WriteLine();
+            Console.WriteLine();
         }
-
-        Console.Write(WordWrap(description, Console.WindowWidth));
-
+        
         return true;
     }
 

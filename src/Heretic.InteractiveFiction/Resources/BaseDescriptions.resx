@@ -232,10 +232,10 @@
     <value>Folgende Kommandos stehen Dir zur Verfügung:</value>
   </data>
   <data name="HELP_WANTED" xml:space="preserve">
-    <value>Schreibe 'hilfe', um Hilfe zu erhalten.</value>
+    <value>(schreibe 'hilfe', um Hilfe zu erhalten.)</value>
   </data>
   <data name="ALTER_EGO" xml:space="preserve">
-    <value>Zeigt Dir an, mit welchen alternativen Namen oder Bezeichnungen Du Personen und Gegenstände noch benennen kannst.</value>
+    <value>Zeigt Dir an, mit welchen alternativen Bezeichnungen Du Personen und Gegenstände noch benennen kannst.</value>
   </data>
   <data name="ASK" xml:space="preserve">
     <value>Frage eine Person etwas</value>

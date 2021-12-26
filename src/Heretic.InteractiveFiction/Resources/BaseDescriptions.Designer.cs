@@ -97,7 +97,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zeigt Dir an, mit welchen alternativen Namen oder Bezeichnungen Du Personen und Gegenstände noch benennen kannst..
+        ///   Looks up a localized string similar to Zeigt Dir an, mit welchen alternativen Bezeichnungen Du Personen und Gegenstände noch benennen kannst..
         /// </summary>
         public static string ALTER_EGO {
             get {
@@ -313,7 +313,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schreibe &apos;hilfe&apos;, um Hilfe zu erhalten..
+        ///   Looks up a localized string similar to (schreibe &apos;hilfe&apos;, um Hilfe zu erhalten.).
         /// </summary>
         public static string HELP_WANTED {
             get {
