@@ -417,4 +417,10 @@
   <data name="START_THE_GAME" xml:space="preserve">
     <value>&lt;&lt;...drücke eine Taste, um das Spiel zu starten...&gt;&gt;</value>
   </data>
+  <data name="IMPOSSIBLE_UNLOCK_SURROUNDINGS" xml:space="preserve">
+    <value>Womit möchtest Du das denn aufschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?</value>
+  </data>
+  <data name="KEY_NOT_VISIBLE" xml:space="preserve">
+    <value>Mir ist nicht klar, was Sie hier als Schlüssel verwenden wollen.</value>
+  </data>
 </root>

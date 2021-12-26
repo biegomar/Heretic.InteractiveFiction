@@ -18,6 +18,7 @@ public interface IPrintingSubsystem
     bool Help(IDictionary<string, IEnumerable<string>> verbResource);
     bool History(ICollection<string> historyCollection);
     bool ItemNotVisible();
+    bool KeyNotVisible();
     bool ImpossiblePickup(AContainerObject containerObject);
     bool ItemToHeavy();
     bool ItemPickupSuccess(AContainerObject item);

@@ -135,6 +135,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.ITEM_NOT_VISIBLE);
     }
 
+    public bool KeyNotVisible()
+    {
+        return Resource(WordWrap(BaseDescriptions.KEY_NOT_VISIBLE, Console.WindowWidth));
+    }
+
     public virtual bool ImpossiblePickup(AContainerObject containerObject)
     {
         if (containerObject != default)

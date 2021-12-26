@@ -385,6 +385,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Womit möchtest Du das denn aufschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?.
+        /// </summary>
+        public static string IMPOSSIBLE_UNLOCK_SURROUNDINGS {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_UNLOCK_SURROUNDINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zeige Deine mitgeführten Gegenstände.
         /// </summary>
         public static string INV {
@@ -516,6 +525,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string JUMP {
             get {
                 return ResourceManager.GetString("JUMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mir ist nicht klar, was Sie hier als Schlüssel verwenden wollen..
+        /// </summary>
+        public static string KEY_NOT_VISIBLE {
+            get {
+                return ResourceManager.GetString("KEY_NOT_VISIBLE", resourceCulture);
             }
         }
         

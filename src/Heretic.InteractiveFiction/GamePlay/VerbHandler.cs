@@ -325,6 +325,16 @@ internal sealed class VerbHandler
 
                 return false;
             }
+            
+            // lets have a look at surroundings.
+            var itemKey = this.GetItemKeyByName(subject);
+            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+            {
+                // surroundings only exist within the active location.
+                this.universe.ActiveLocation.OnAfterOpen(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
+
+                return true;
+            }
 
             return PrintingSubsystem.ItemNotVisible();
         }
@@ -521,6 +531,13 @@ internal sealed class VerbHandler
             {
                 return PrintingSubsystem.ImpossibleUnlock(item);
             }
+            
+            // lets have a look at surroundings.
+            var itemKey = this.GetItemKeyByName(unlockObject);
+            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+            {
+                return PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_UNLOCK_SURROUNDINGS);
+            }
         }
 
         return false;
@@ -533,29 +550,42 @@ internal sealed class VerbHandler
             var item = this.GetUnhiddenItemByNameActive(unlockObject);
             var key = this.GetUnhiddenItemByNameActive(unlockKey);
 
-            if (item == default || key == default)
+            if (item != default)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.ITEM_NOT_VISIBLE);
-            }
-
-            if (item.IsLockAble)
-            {
-                if (item.IsLocked)
+                if (key != default)
                 {
-                    if (!item.IsCloseAble || item.IsCloseAble && item.IsClosed)
+                    if (item.IsLockAble)
                     {
-                        item.OnUnlock(new UnlockContainerEventArgs(key));
+                        if (item.IsLocked)
+                        {
+                            if (!item.IsCloseAble || item.IsCloseAble && item.IsClosed)
+                            {
+                                item.OnUnlock(new UnlockContainerEventArgs(key));
 
-                        return true;
+                                return true;
+                            }
+                        }
+                        return PrintingSubsystem.ItemAlreadyUnlocked(item);
                     }
+                    return PrintingSubsystem.ItemNotLockAble(item);
                 }
+                return PrintingSubsystem.KeyNotVisible();
+            }
 
-                return PrintingSubsystem.ItemAlreadyUnlocked(item);
-            }
-            else
+            // lets have a look at surroundings.
+            var itemKey = this.GetItemKeyByName(unlockObject);
+            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
-                return PrintingSubsystem.ItemNotLockAble(item);
+                if (key != default)
+                {
+                    // surroundings only exist within the active location.
+                    this.universe.ActiveLocation.OnUnlock(new UnlockContainerEventArgs(key) {ExternalItemKey = itemKey});
+                    return true;
+                }
+                return PrintingSubsystem.KeyNotVisible();
             }
+            
+            return PrintingSubsystem.ItemNotVisible();
         }
 
         return false;
