@@ -581,7 +581,15 @@ internal sealed class VerbHandler
                     }
                     else
                     {
-                        result = result && PrintingSubsystem.ItemNotVisible();
+                        var itemKey = this.GetItemKeyByName(subject);
+                        if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+                        {
+                            result = result && PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_PICKUP);
+                        }
+                        else
+                        {
+                            result = result && PrintingSubsystem.ItemNotVisible();    
+                        }
                     }
                 }
                 else
