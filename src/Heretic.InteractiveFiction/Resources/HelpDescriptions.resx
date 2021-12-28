@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="HELP_DESCRIPTION" xml:space="preserve">
+        <value>Einige generelle Hinweise:</value>
+    </data>
+    <data name="HELP_GENERAL_INSTRUCTION_PART_I" xml:space="preserve">
+        <value>Es ist sehr wichtig, dass Du Dir Deine Umgebung ganz genau anschaust. Jeder noch so kleine Hinweis kann von Bedeutung sein. Um das zu tun, benutzt Du das Kommando</value>
+    </data>
+    <data name="HELP_GENERAL_INSTRUCTION_LOOK" xml:space="preserve">
+        <value>schaue</value>
+    </data>
+    <data name="VERBS" xml:space="preserve">
+    <value>Folgende Kommandos stehen Dir zur Verfügung:</value>
+  </data>
+    <data name="EXAMPLES" xml:space="preserve">
+        <value>Beispiele: </value>
+    </data>
+    <data name="HELP_GENERAL_INSTRUCTION_LOOK_II" xml:space="preserve">
+        <value>schaue auf den teppich</value>
+    </data>
+    <data name="PROMPT" xml:space="preserve">
+        <value>&gt; </value>
+    </data>
+    <data name="HELP_GENERAL_INSTRUCTION_LOOK_III" xml:space="preserve">
+        <value>schaue teppich</value>
+    </data>
+    <data name="ROOM_DESCRIPTION" xml:space="preserve">
+        <value>[zeigt die Beschreibung des aktuellen Raums]</value>
+    </data>
+    <data name="ITEM_DESCRIPTION" xml:space="preserve">
+        <value>[zeigt die Beschreibung des Teppichs, aber nur, wenn es auch einen Teppich in dem aktuellen Raum gibt]</value>
+    </data>
+    <data name="ITEM_DESCRIPTION_SHORT" xml:space="preserve">
+        <value>[das ist die kurze Schreibweise und die zeigt Dir ebenfalls die Beschreibung des Teppichs]</value>
+    </data>
+</root>

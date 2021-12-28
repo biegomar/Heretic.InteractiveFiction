@@ -97,10 +97,14 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool Help(IDictionary<string, IEnumerable<string>> verbResource)
     {
-        Console.WriteLine(BaseDescriptions.HELP_DESCRIPTION);
-        Console.WriteLine(new string('-', BaseDescriptions.HELP_DESCRIPTION.Length));
-        Console.WriteLine();
+        GeneralHelp();
+        VerbHelp(verbResource);
+        
+        return true;
+    }
 
+    private void VerbHelp(IDictionary<string, IEnumerable<string>> verbResource)
+    {
         foreach (var verbs in verbResource)
         {
             Console.Write(BaseDescriptions.ResourceManager.GetString(verbs.Key));
@@ -113,13 +117,43 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
                 Console.Write(value);
                 index++;
             }
+
             this.ResetColors();
 
             Console.WriteLine();
-            Console.WriteLine();
         }
-        
-        return true;
+    }
+
+    private void GeneralHelp()
+    {
+        Console.WriteLine(HelpDescriptions.HELP_DESCRIPTION);
+        Console.WriteLine(new string('-', HelpDescriptions.HELP_DESCRIPTION.Length));
+        Console.Write(HelpDescriptions.HELP_GENERAL_INSTRUCTION_PART_I);
+        this.ForegroundColor = TextColor.Green;
+        Console.Write($@" {this.GetObjectName(Verbs.LOOK).ToLower()}");
+        this.ResetColors();
+        Console.WriteLine(".");
+        Console.WriteLine(HelpDescriptions.EXAMPLES);
+        Console.Write(HelpDescriptions.PROMPT);
+        this.ForegroundColor = TextColor.Green;
+        Console.WriteLine(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK);
+        this.ResetColors();
+        Console.WriteLine(HelpDescriptions.ROOM_DESCRIPTION);
+        Console.WriteLine();
+        Console.Write(HelpDescriptions.PROMPT);
+        this.ForegroundColor = TextColor.Green;
+        Console.WriteLine(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK_II);
+        this.ResetColors();
+        Console.WriteLine(HelpDescriptions.ITEM_DESCRIPTION);
+        Console.WriteLine();
+        Console.Write(HelpDescriptions.PROMPT);
+        this.ForegroundColor = TextColor.Green;
+        Console.WriteLine(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK_III);
+        this.ResetColors();
+        Console.WriteLine(HelpDescriptions.ITEM_DESCRIPTION_SHORT);
+        Console.WriteLine();
+        Console.WriteLine(HelpDescriptions.VERBS);
+        Console.WriteLine(new string('-', HelpDescriptions.VERBS.Length));
     }
 
     public virtual bool History(ICollection<string> historyCollection)

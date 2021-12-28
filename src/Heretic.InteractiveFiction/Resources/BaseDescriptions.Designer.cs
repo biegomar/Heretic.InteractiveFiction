@@ -304,15 +304,6 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Folgende Kommandos stehen Dir zur Verfügung:.
-        /// </summary>
-        public static string HELP_DESCRIPTION {
-            get {
-                return ResourceManager.GetString("HELP_DESCRIPTION", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to (schreibe &apos;hilfe&apos;, um Hilfe zu erhalten.).
         /// </summary>
         public static string HELP_WANTED {

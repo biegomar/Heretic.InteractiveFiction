@@ -228,9 +228,6 @@
   <data name="HELP" xml:space="preserve">
     <value>Zeige diese Hilfeseite</value>
   </data>
-  <data name="HELP_DESCRIPTION" xml:space="preserve">
-    <value>Folgende Kommandos stehen Dir zur Verfügung:</value>
-  </data>
   <data name="HELP_WANTED" xml:space="preserve">
     <value>(schreibe 'hilfe', um Hilfe zu erhalten.)</value>
   </data>
