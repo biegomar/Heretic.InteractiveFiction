@@ -304,6 +304,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setze|Setz|Sitz.
+        /// </summary>
+        internal static string SIT {
+            get {
+                return ResourceManager.GetString("SIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Süd-Westen|Sued-Westen|SW.
         /// </summary>
         internal static string SW {

@@ -420,4 +420,16 @@
   <data name="KEY_NOT_VISIBLE" xml:space="preserve">
     <value>Mir ist nicht klar, was Sie hier als Schlüssel verwenden wollen.</value>
   </data>
+  <data name="SIT" xml:space="preserve">
+    <value>Setzte Dich auf eine Sitzgelegenheit</value>
+  </data>
+  <data name="ITEM_SEATED" xml:space="preserve">
+    <value>Du hast auf {0} Platz genommen.</value>
+  </data>
+  <data name="ITEM_NOT_SEATABLE" xml:space="preserve">
+    <value>Es ist nicht möglich, sich auf {0} zu setzen.</value>
+  </data>
+  <data name="SURROUNDING_NOT_SEATABLE" xml:space="preserve">
+    <value>Selbst wenn das ginge, macht das gerade keinen Sinn.</value>
+  </data>
 </root>

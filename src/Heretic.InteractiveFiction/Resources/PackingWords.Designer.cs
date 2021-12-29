@@ -79,7 +79,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mein|meine|sein|seine|dein|deine|der|die|das|den|dem.
+        ///   Looks up a localized string similar to mein|meine|sein|seine|dein|deine|der|die|das|den|dem|du|dich.
         /// </summary>
         public static string ARTICLE {
             get {

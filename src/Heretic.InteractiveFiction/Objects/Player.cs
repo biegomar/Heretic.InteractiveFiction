@@ -9,6 +9,15 @@ public class Player : AContainerObject
 
     public string StandardClothing { get; set; }
 
+    public bool IsSitting { get; set; }
+
+    public AContainerObject Seat { get; set; }
+
+    public Player()
+    {
+        this.IsSitting = false;
+    }
+    
     public override string ToString()
     {
         var result = new StringBuilder();
@@ -137,6 +146,30 @@ public class Player : AContainerObject
         if (this.Items.Contains(item))
         {
             this.Items.Remove(item);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool SitDown(AContainerObject seat)
+    {
+        if (seat.IsSeatAble && !this.IsSitting)
+        {
+            this.IsSitting = true;
+            this.Seat = seat;
+            return true;
+        }
+
+        return false;
+    }
+    
+    public bool StandUp()
+    {
+        if (this.IsSitting)
+        {
+            this.IsSitting = false;
+            this.Seat = null;
             return true;
         }
 

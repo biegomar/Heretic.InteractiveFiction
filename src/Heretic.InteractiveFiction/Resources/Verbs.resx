@@ -225,4 +225,7 @@
   <data name="EAT" xml:space="preserve">
     <value>Iss|Ess|Esse</value>
   </data>
+  <data name="SIT" xml:space="preserve">
+    <value>Setze|Setz|Sitz</value>
+  </data>
 </root>

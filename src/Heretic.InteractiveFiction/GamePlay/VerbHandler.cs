@@ -401,6 +401,46 @@ internal sealed class VerbHandler
         return false;
     }
 
+    internal bool SitDown(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var key = this.GetItemKeyByName(subject);
+            var item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
+
+            if (item == default)
+            {
+                item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
+            }
+
+            if (item != default)
+            {
+                if (item.IsSeatAble)
+                {
+                    this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs(item));
+                    item.OnBeforeSitDown(new SitDownEventArgs(this.universe.ActivePlayer));
+                    this.universe.ActivePlayer.SitDown(item);
+                    var result = PrintingSubsystem.ItemSeated(item);
+                    item.OnAfterSitDown(new SitDownEventArgs(this.universe.ActivePlayer));
+                    this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs(item));
+                    
+                    return result;
+                }    
+                return PrintingSubsystem.ItemNotSeatable(item);
+            }
+            
+            // lets have a look at surroundings.
+            var itemKey = this.GetItemKeyByName(subject);
+            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+            {
+                return PrintingSubsystem.Resource(BaseDescriptions.SURROUNDING_NOT_SEATABLE);
+            }
+
+            return PrintingSubsystem.ItemNotVisible();
+        }
+        return false;
+    }
+
     internal bool Ask(string verb, string characterName, string subjectName)
     {
         if (this.universe.VerbResources[VerbKeys.ASK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))

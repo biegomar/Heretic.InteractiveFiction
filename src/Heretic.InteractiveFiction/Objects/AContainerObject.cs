@@ -45,6 +45,12 @@ public abstract class AContainerObject
     /// Can the object picked up?
     /// </summary>
     public bool IsPickAble { get; set; }
+
+    /// <summary>
+    /// Can the player sit on this object?
+    /// </summary>
+    public bool IsSeatAble { get; set; }
+
     /// <summary>
     /// If the object cannot be taken, this description can explain why.
     /// </summary>
@@ -121,6 +127,8 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterOpen;
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
+    public event EventHandler<ContainerObjectEventArgs> BeforeSitDown;
+    public event EventHandler<ContainerObjectEventArgs> AfterSitDown; 
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<ContainerObjectEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
@@ -173,6 +181,18 @@ public abstract class AContainerObject
     public virtual void OnAfterEat(ContainerObjectEventArgs eventArgs)
     {
         EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterEat;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeSitDown(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeSitDown;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterSitDown(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterSitDown;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
@@ -271,6 +291,7 @@ public abstract class AContainerObject
         this.IsLocked = false;
         this.IsClosed = false;
         this.IsCloseAble = false;
+        this.IsSeatAble = false;
         this.name = string.Empty;
         this.Description = string.Empty;
         this.OpenDescription = string.Empty;

@@ -124,7 +124,7 @@
     <value>und|oder</value>
   </data>
   <data name="ARTICLE" xml:space="preserve">
-    <value>mein|meine|sein|seine|dein|deine|der|die|das|den|dem</value>
+    <value>mein|meine|sein|seine|dein|deine|der|die|das|den|dem|du|dich</value>
   </data>
   <data name="ON" xml:space="preserve">
     <value>auf|in|ins|an|zum|zur|zu|mit|ab|nach|unter</value>

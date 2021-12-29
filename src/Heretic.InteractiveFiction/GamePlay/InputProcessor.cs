@@ -101,6 +101,7 @@ public sealed class InputProcessor
         result = result || verbHandler.AlterEgo(processingVerb, processingSubject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject);
         result = result || verbHandler.Eat(processingVerb, processingSubject);
+        result = result || verbHandler.SitDown(processingVerb, processingSubject);
 
         if (!result)
         {

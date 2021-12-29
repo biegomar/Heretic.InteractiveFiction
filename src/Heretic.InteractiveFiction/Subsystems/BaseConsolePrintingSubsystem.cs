@@ -255,6 +255,20 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool ItemSeated(AContainerObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, Console.WindowWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+
+    public bool ItemNotSeatable(AContainerObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, Console.WindowWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+
     public virtual bool ItemStillLocked(AContainerObject item)
     {
         Console.Write(!string.IsNullOrEmpty(item.LockDescription)

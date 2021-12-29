@@ -466,6 +466,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Es ist nicht möglich, sich auf {0} zu setzen..
+        /// </summary>
+        public static string ITEM_NOT_SEATABLE {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_SEATABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diesen Gegenstand sehe ich hier nicht!.
         /// </summary>
         public static string ITEM_NOT_VISIBLE {
@@ -480,6 +489,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string ITEM_PICKUP {
             get {
                 return ResourceManager.GetString("ITEM_PICKUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast auf {0} Platz genommen..
+        /// </summary>
+        public static string ITEM_SEATED {
+            get {
+                return ResourceManager.GetString("ITEM_SEATED", resourceCulture);
             }
         }
         
@@ -799,11 +817,29 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setzte Dich auf eine Sitzgelegenheit.
+        /// </summary>
+        public static string SIT {
+            get {
+                return ResourceManager.GetString("SIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;&lt;...drücke eine Taste, um das Spiel zu starten...&gt;&gt;.
         /// </summary>
         public static string START_THE_GAME {
             get {
                 return ResourceManager.GetString("START_THE_GAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selbst wenn das ginge, macht das gerade keinen Sinn..
+        /// </summary>
+        public static string SURROUNDING_NOT_SEATABLE {
+            get {
+                return ResourceManager.GetString("SURROUNDING_NOT_SEATABLE", resourceCulture);
             }
         }
         

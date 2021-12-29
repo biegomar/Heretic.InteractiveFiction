@@ -30,6 +30,8 @@ public interface IPrintingSubsystem
     bool ItemAlreadyUnlocked(AContainerObject item);
     bool ItemEaten(AContainerObject item);
     bool ItemNotEatable(AContainerObject item);
+    bool ItemSeated(AContainerObject item);
+    bool ItemNotSeatable(AContainerObject item);
     bool ItemStillLocked(AContainerObject item);
     bool ItemUnlocked(AContainerObject item);
     bool ItemNotLockAble(AContainerObject item);
