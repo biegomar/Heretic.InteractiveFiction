@@ -226,6 +226,9 @@
     <value>Iss|Ess|Esse</value>
   </data>
   <data name="SIT" xml:space="preserve">
-    <value>Setze|Setz|Sitz</value>
+    <value>Setze|Setz|Hinsetzen</value>
+  </data>
+  <data name="STANDUP" xml:space="preserve">
+    <value>Aufstehen|Hinstellen</value>
   </data>
 </root>

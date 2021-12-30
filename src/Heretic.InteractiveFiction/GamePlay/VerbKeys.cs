@@ -30,6 +30,7 @@ public static class VerbKeys
     public static string SCORE => nameof(SCORE);
     public static string SE => nameof(SE);
     public static string SIT => nameof(SIT);
+    public static string STANDUP => nameof(STANDUP);
     public static string SW => nameof(SW);
     public static string TAKE => nameof(TAKE);
     public static string TALK => nameof(TALK);

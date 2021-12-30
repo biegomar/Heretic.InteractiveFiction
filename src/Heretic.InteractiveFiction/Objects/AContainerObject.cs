@@ -129,6 +129,8 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
     public event EventHandler<ContainerObjectEventArgs> BeforeSitDown;
     public event EventHandler<ContainerObjectEventArgs> AfterSitDown; 
+    public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
+    public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<ContainerObjectEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
@@ -193,6 +195,18 @@ public abstract class AContainerObject
     public virtual void OnAfterSitDown(ContainerObjectEventArgs eventArgs)
     {
         EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterSitDown;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeStandUp(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeStandUp;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterStandUp(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterStandUp;
         localEventHandler?.Invoke(this, eventArgs);
     }
 

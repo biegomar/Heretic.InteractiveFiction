@@ -277,7 +277,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo {0}..
+        ///   Looks up a localized string similar to Hallo {0},.
         /// </summary>
         public static string HELLO_NAME {
             get {
@@ -286,7 +286,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo Fremder (willst Du mir eigentlich Deinen richtigen Namen nennen?)..
+        ///   Looks up a localized string similar to Hallo Fremder (willst Du mir eigentlich Deinen richtigen Namen nennen?),.
         /// </summary>
         public static string HELLO_STRANGER {
             get {
@@ -673,6 +673,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to So wie es aussieht, sitzt Du gerade gar nicht..
+        /// </summary>
+        public static string NOT_SITTING {
+            get {
+                return ResourceManager.GetString("NOT_SITTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du hast aktuell keine Gegenstände bei Dir..
         /// </summary>
         public static string NOTHING {
@@ -822,6 +831,33 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string SIT {
             get {
                 return ResourceManager.GetString("SIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du sitzt gerade auf {0}..
+        /// </summary>
+        public static string SITTING_ON {
+            get {
+                return ResourceManager.GetString("SITTING_ON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du bist aufgestanden..
+        /// </summary>
+        public static string STANDING_UP {
+            get {
+                return ResourceManager.GetString("STANDING_UP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erhebe Dich wieder von einer Sitzgelegenheit.
+        /// </summary>
+        public static string STANDUP {
+            get {
+                return ResourceManager.GetString("STANDUP", resourceCulture);
             }
         }
         

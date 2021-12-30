@@ -163,10 +163,10 @@
     <value>liegt in Richtung</value>
   </data>
   <data name="HELLO_NAME" xml:space="preserve">
-    <value>Hallo {0}.</value>
+    <value>Hallo {0},</value>
   </data>
   <data name="HELLO_STRANGER" xml:space="preserve">
-    <value>Hallo Fremder (willst Du mir eigentlich Deinen richtigen Namen nennen?).</value>
+    <value>Hallo Fremder (willst Du mir eigentlich Deinen richtigen Namen nennen?),</value>
   </data>
   <data name="NOTHING" xml:space="preserve">
     <value>Du hast aktuell keine Gegenstände bei Dir.</value>
@@ -431,5 +431,17 @@
   </data>
   <data name="SURROUNDING_NOT_SEATABLE" xml:space="preserve">
     <value>Selbst wenn das ginge, macht das gerade keinen Sinn.</value>
+  </data>
+  <data name="STANDING_UP" xml:space="preserve">
+    <value>Du bist aufgestanden.</value>
+  </data>
+  <data name="NOT_SITTING" xml:space="preserve">
+    <value>So wie es aussieht, sitzt Du gerade gar nicht.</value>
+  </data>
+  <data name="STANDUP" xml:space="preserve">
+    <value>Erhebe Dich wieder von einer Sitzgelegenheit</value>
+  </data>
+  <data name="SITTING_ON" xml:space="preserve">
+    <value>Du sitzt gerade auf {0}.</value>
   </data>
 </root>

@@ -67,6 +67,11 @@ public class Player : AContainerObject
             result.AppendLine(BaseDescriptions.NOTHING);
         }
 
+        if (this.IsSitting && this.Seat != default)
+        {
+            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.Seat.Name));
+        }
+
 
         return result.ToString();
     }

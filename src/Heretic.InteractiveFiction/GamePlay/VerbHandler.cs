@@ -440,6 +440,29 @@ internal sealed class VerbHandler
         }
         return false;
     }
+    
+    internal bool StandUp(string input)
+    {
+        if (this.universe.VerbResources[VerbKeys.STANDUP].Contains(input, StringComparer.InvariantCultureIgnoreCase))
+        {
+            if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != default)
+            {
+                var item = this.universe.ActivePlayer.Seat;
+                var eventArgs = new ContainerObjectEventArgs();
+                
+                this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
+                item.OnBeforeSitDown(eventArgs);
+                this.universe.ActivePlayer.StandUp();
+                var result = PrintingSubsystem.Resource(BaseDescriptions.STANDING_UP);
+                item.OnAfterStandUp(eventArgs);
+                this.universe.ActivePlayer.OnAfterStandUp(eventArgs);
+                return result;
+            }
+            return PrintingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
+        }
+
+        return false;
+    }
 
     internal bool Ask(string verb, string characterName, string subjectName)
     {

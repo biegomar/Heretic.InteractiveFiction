@@ -31,7 +31,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ActivePlayer(Player activePlayer)
     {
-        Console.WriteLine(WordWrap(activePlayer, Console.WindowWidth));
+        Console.Write(WordWrap(activePlayer, Console.WindowWidth));
         return true;
     }
 
@@ -387,7 +387,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine($@"{string.Format(BaseDescriptions.SCORE, score, maxScore)}");
         return true;
     }
-
+    
     public virtual bool Talk(Character character)
     {
         if (character != default)

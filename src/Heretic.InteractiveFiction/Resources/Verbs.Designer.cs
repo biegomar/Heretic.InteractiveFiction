@@ -304,11 +304,20 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setze|Setz|Sitz.
+        ///   Looks up a localized string similar to Setze|Setz|Hinsetzen.
         /// </summary>
         internal static string SIT {
             get {
                 return ResourceManager.GetString("SIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aufstehen|Hinstellen.
+        /// </summary>
+        internal static string STANDUP {
+            get {
+                return ResourceManager.GetString("STANDUP", resourceCulture);
             }
         }
         
