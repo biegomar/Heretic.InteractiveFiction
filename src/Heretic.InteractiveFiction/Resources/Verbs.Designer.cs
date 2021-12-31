@@ -401,5 +401,14 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("WAYS", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe.
+        /// </summary>
+        internal static string WRITE {
+            get {
+                return ResourceManager.GetString("WRITE", resourceCulture);
+            }
+        }
     }
 }

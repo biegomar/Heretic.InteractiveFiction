@@ -102,6 +102,17 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Write(string verb, string text)
+    {
+        if (this.universe.VerbResources[VerbKeys.WRITE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            this.universe.ActiveLocation.OnWrite(new WriteEventArgs() {Text = text});
+            return true;
+        }
+
+        return false;
+    }
 
     internal bool Help(string input)
     {
@@ -192,7 +203,7 @@ internal sealed class VerbHandler
 
             try
             {
-                subject.OnUse(new UseItemEventArg(item));
+                subject.OnUse(new UseItemEventArg() {ItemToUse = item});
 
                 return true;
             }
@@ -417,12 +428,12 @@ internal sealed class VerbHandler
             {
                 if (item.IsSeatAble)
                 {
-                    this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs(item));
-                    item.OnBeforeSitDown(new SitDownEventArgs(this.universe.ActivePlayer));
+                    this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = item});
+                    item.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                     this.universe.ActivePlayer.SitDown(item);
                     var result = PrintingSubsystem.ItemSeated(item);
-                    item.OnAfterSitDown(new SitDownEventArgs(this.universe.ActivePlayer));
-                    this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs(item));
+                    item.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                    this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = item});
                     
                     return result;
                 }    
@@ -463,7 +474,7 @@ internal sealed class VerbHandler
 
         return false;
     }
-
+    
     internal bool Ask(string verb, string characterName, string subjectName)
     {
         if (this.universe.VerbResources[VerbKeys.ASK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
@@ -623,7 +634,7 @@ internal sealed class VerbHandler
                         {
                             if (!item.IsCloseAble || item.IsCloseAble && item.IsClosed)
                             {
-                                item.OnUnlock(new UnlockContainerEventArgs(key));
+                                item.OnUnlock(new UnlockContainerEventArgs { Key = key });
 
                                 return true;
                             }
@@ -642,7 +653,7 @@ internal sealed class VerbHandler
                 if (key != default)
                 {
                     // surroundings only exist within the active location.
-                    this.universe.ActiveLocation.OnUnlock(new UnlockContainerEventArgs(key) {ExternalItemKey = itemKey});
+                    this.universe.ActiveLocation.OnUnlock(new UnlockContainerEventArgs {Key = key, ExternalItemKey = itemKey});
                     return true;
                 }
                 return PrintingSubsystem.KeyNotVisible();

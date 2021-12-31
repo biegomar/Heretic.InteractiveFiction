@@ -231,4 +231,7 @@
   <data name="STANDUP" xml:space="preserve">
     <value>Aufstehen|Hinstellen</value>
   </data>
+  <data name="WRITE" xml:space="preserve">
+    <value>Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe</value>
+  </data>
 </root>

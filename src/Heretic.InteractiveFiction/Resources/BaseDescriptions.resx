@@ -444,4 +444,7 @@
   <data name="SITTING_ON" xml:space="preserve">
     <value>Du sitzt gerade auf {0}.</value>
   </data>
+  <data name="WRITE" xml:space="preserve">
+    <value>Schreibe oder Tippe etwas.</value>
+  </data>
 </root>

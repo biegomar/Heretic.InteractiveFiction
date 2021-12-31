@@ -4,10 +4,5 @@ namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
 public class UseItemEventArg : ContainerObjectEventArgs
 {
-    public AContainerObject ItemToUse { get; set; }
-
-    public UseItemEventArg(AContainerObject item)
-    {
-        this.ItemToUse = item;
-    }
+    public AContainerObject ItemToUse { get; init; }
 }

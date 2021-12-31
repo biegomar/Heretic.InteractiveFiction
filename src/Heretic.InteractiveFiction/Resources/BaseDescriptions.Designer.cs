@@ -1006,6 +1006,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schreibe oder Tippe etwas..
+        /// </summary>
+        public static string WRITE {
+            get {
+                return ResourceManager.GetString("WRITE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du kannst {0} damit nicht aufschließen. Vielleicht probierst Du besser einen anderen Schlüssel?.
         /// </summary>
         public static string WRONG_KEY {

@@ -135,8 +135,9 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
     public event EventHandler<UseItemEventArg> Use;
+    public event EventHandler<WriteEventArgs> Write;
 
-    public void OnUse(UseItemEventArg eventArgs)
+    public virtual void OnUse(UseItemEventArg eventArgs)
     {
         EventHandler<UseItemEventArg> localEventHandler = this.Use;
         if (localEventHandler != null)
@@ -147,6 +148,12 @@ public abstract class AContainerObject
         {
             throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
         }
+    }
+    
+    public virtual void OnWrite(WriteEventArgs eventArgs)
+    {
+        EventHandler<WriteEventArgs> localEventHandler = this.Write;
+        localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnBuy(ContainerObjectEventArgs eventArgs)
