@@ -70,6 +70,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Score(processingInput);
         result = result || verbHandler.Help(processingInput);
         result = result || verbHandler.Credits(processingInput);
+        result = result || verbHandler.SitDown(processingInput);
         result = result || verbHandler.StandUp(processingInput);
         result = result || verbHandler.History(processingInput, this.historyAdministrator.All);
 

@@ -382,6 +382,16 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool FormattedResource(string resource, string text)
+    {
+        if (!string.IsNullOrEmpty(resource) && !string.IsNullOrEmpty(text))
+        {
+            Console.Write(WordWrap(resource, Console.WindowWidth), text);
+            Console.WriteLine();
+        }
+        return true;
+    }
+
     public virtual bool Score(int score, int maxScore)
     {
         Console.WriteLine($@"{string.Format(BaseDescriptions.SCORE, score, maxScore)}");

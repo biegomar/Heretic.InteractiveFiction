@@ -412,6 +412,37 @@ internal sealed class VerbHandler
         return false;
     }
 
+    internal bool SitDown(string verb)
+    {
+        if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var seatCount = this.universe.ActiveLocation.Items.Count(x => x.IsSeatAble);
+
+            if (seatCount == 0)
+            {
+                return PrintingSubsystem.Resource(BaseDescriptions.NO_SEAT);
+            }
+            
+            if (seatCount == 1)
+            {
+                var onlySeat = this.universe.ActiveLocation.Items.First(x => x.IsSeatAble);
+                
+                this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
+                onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                this.universe.ActivePlayer.SitDown(onlySeat);
+                var result = PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.Name);
+                onlySeat.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
+
+                return result;
+            }
+
+            return PrintingSubsystem.Resource(BaseDescriptions.MORE_SEATS);
+        }
+        
+        return false;
+    }
+    
     internal bool SitDown(string verb, string subject)
     {
         if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))

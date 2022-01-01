@@ -484,6 +484,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scheinbar gibt es in diesem Raum nur eine richtige Sitzmöglichkeit. Daher nimmt Du einfach auf {0} Platz..
+        /// </summary>
+        public static string ITEM_ONLY_SEAT {
+            get {
+                return ResourceManager.GetString("ITEM_ONLY_SEAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du hast {0} genommen..
         /// </summary>
         public static string ITEM_PICKUP {
@@ -592,6 +601,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auf welche der Sitzgelegenheiten möchtest Du denn Platz nehmen? Das musst Du schon genauer bestimmen..
+        /// </summary>
+        public static string MORE_SEATS {
+            get {
+                return ResourceManager.GetString("MORE_SEATS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bewegungsrichtung &quot;Nord&quot;.
         /// </summary>
         public static string N {
@@ -651,6 +669,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string NO_EVENT {
             get {
                 return ResourceManager.GetString("NO_EVENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hier gibt es scheinbar keine Sitzmöglichkeit. Also bleibst Du einfach stehen..
+        /// </summary>
+        public static string NO_SEAT {
+            get {
+                return ResourceManager.GetString("NO_SEAT", resourceCulture);
             }
         }
         

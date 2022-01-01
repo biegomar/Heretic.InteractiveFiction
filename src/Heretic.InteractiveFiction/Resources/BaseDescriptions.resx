@@ -447,4 +447,13 @@
   <data name="WRITE" xml:space="preserve">
     <value>Schreibe oder Tippe etwas.</value>
   </data>
+  <data name="ITEM_ONLY_SEAT" xml:space="preserve">
+        <value>Scheinbar gibt es in diesem Raum nur eine richtige Sitzmöglichkeit. Daher nimmt Du einfach auf {0} Platz.</value>
+    </data>
+  <data name="NO_SEAT" xml:space="preserve">
+    <value>Hier gibt es scheinbar keine Sitzmöglichkeit. Also bleibst Du einfach stehen.</value>
+  </data>
+  <data name="MORE_SEATS" xml:space="preserve">
+    <value>Auf welche der Sitzgelegenheiten möchtest Du denn Platz nehmen? Das musst Du schon genauer bestimmen.</value>
+  </data>
 </root>
