@@ -17,3 +17,11 @@
 * Will man unwichtige Objekte untersuchen, ohne sie aber in der Liste der sichtbaren Objekte aufzuführen (z.B. Sushi in Fish Bowl), kann man einfach einen Eintrag in dem Dictionary "Surroundings" hinterlegen. Leider sind aber weiterhin die gesamten Keys in den entsprechenden Ressourcen-Files zu hinterlegen (also: Keys, Description, Items)
 * Die Klasse Universe hat nun die Möglichkeit gelöste Rätsel zu verwalten.
 * Räume können von Aussen nicht eingesehen werden (l raum -> geht nicht). Um das zu erreichen, kann man diesen Raum auch als Surrounding hinterlegen.
+
+# Roadmap
+## V1.0
+
+* alle Events zu den Verben sind vorhanden (BeforeX, X, AfterX)
+* IPrintingSubsystem verschlanken (mehr auf Print.Ressource gehen)
+* Dokumentation alle relevanten Klassen und Methoden
+* kleines Beispielprogramm

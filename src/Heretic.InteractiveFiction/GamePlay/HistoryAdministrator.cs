@@ -45,7 +45,7 @@ internal sealed class HistoryAdministrator
     private List<string> GetAllRepeatableVerbs()
     {
         var resourceManager = Verbs.ResourceManager;
-        var verbs = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW", "UP", "DOWN", "TALK" };
+        var verbs = new string[] { "N", "NE", "E", "SE", "S", "SW", "W", "NW", "UP", "DOWN", "TALK", "WRITE" };
         List<string> allRepeatableVerbs = new List<string>();
 
         foreach (var verb in verbs)

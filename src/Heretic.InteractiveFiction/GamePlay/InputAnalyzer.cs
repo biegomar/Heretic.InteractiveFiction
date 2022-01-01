@@ -13,13 +13,56 @@ internal sealed class InputAnalyzer
 
     internal string[] Analyze(string input)
     {
-        var normalizedInput = input.Trim().Replace(", ", ",");
-        var sentence = normalizedInput.Split(' ');
-        sentence = sentence.Where(x => !this.universe.PackingWordsResources.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ToArray();
+        const string block = "##TEXT##";
+        var stringToAnalyze = string.Empty;
+        var quotedText = string.Empty;
 
-        sentence = this.OrderSentence(sentence);
+        try
+        {
+            var quotedTextArray = input.Split('"');
+            if (quotedTextArray.Length > 1)
+            {
+                for (int i = 0; i < quotedTextArray.Length; i++)
+                {
+                    if (i == 1)
+                    {
+                        quotedText = quotedTextArray[1].Trim();
+                        stringToAnalyze += block;
+                        stringToAnalyze += " ";
+                    }
+                    else
+                    {
+                        stringToAnalyze += quotedTextArray[i].Trim();
+                        stringToAnalyze += " ";
+                    }
+                }
+            }
+            else
+            {
+                stringToAnalyze = input;
+            }
+        
+            var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
+            var sentence = normalizedInput.Split(' ');
+            sentence = sentence.Where(x => !this.universe.PackingWordsResources.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ToArray();
 
-        return sentence;
+            sentence = this.OrderSentence(sentence);
+
+            if (!string.IsNullOrEmpty(quotedText))
+            {
+                var index = Array.IndexOf(sentence, block);
+                if (index > -1)
+                {
+                    sentence[index] = quotedText;
+                }
+            }
+            
+            return sentence;
+        }
+        catch (Exception e)
+        {
+            return new []{string.Empty};
+        }
     }
 
     private string[] OrderSentence(IReadOnlyList<string> sentence)
