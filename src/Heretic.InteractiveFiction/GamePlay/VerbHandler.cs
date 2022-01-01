@@ -462,7 +462,7 @@ internal sealed class VerbHandler
                 var eventArgs = new ContainerObjectEventArgs();
                 
                 this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
-                item.OnBeforeSitDown(eventArgs);
+                item.OnBeforeStandUp(eventArgs);
                 this.universe.ActivePlayer.StandUp();
                 var result = PrintingSubsystem.Resource(BaseDescriptions.STANDING_UP);
                 item.OnAfterStandUp(eventArgs);
