@@ -123,6 +123,7 @@ public class Universe
                     result = owner.Items.Remove(item);
                     if (result)
                     {
+                        item.ContainmentDescription = string.Empty;
                         return suppressSuccessMessage || printingSubsystem.ItemPickupSuccess(item);
                     }
 

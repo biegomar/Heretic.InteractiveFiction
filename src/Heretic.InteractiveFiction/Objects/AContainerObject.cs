@@ -29,6 +29,12 @@ public abstract class AContainerObject
     /// The first look description is only used during the first printout and contains additional information.
     /// </summary>
     public string FirstLookDescription { get; set; }
+    
+    /// <summary>
+    /// This description can be used to describe the discover situation in more detail. It is used during printout instead of the name of the object.
+    /// It is only valid in the context of the location where it was found and is deleted after a pickup.
+    /// </summary>
+    public string ContainmentDescription { get; set; }
     /// <summary>
     /// Is this object eatable?
     /// </summary>
@@ -319,6 +325,7 @@ public abstract class AContainerObject
         this.CloseDescription = string.Empty;
         this.UnPickAbleDescription = string.Empty;
         this.LockDescription = string.Empty;
+        this.ContainmentDescription = string.Empty;
     }
 
     protected virtual string GetVariationOfYouSee()
@@ -342,61 +349,87 @@ public abstract class AContainerObject
 
         if (unhiddenObjects.Any())
         {
-            if (subItems)
+            var unHiddenObjectsWithContainmentDescription = unhiddenObjects.Where(x => !string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
+            var unHiddenObjectsWithoutContainmentDescription = unhiddenObjects.Where(x => string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
+            
+            if (unHiddenObjectsWithContainmentDescription.Any())
             {
-                description.Append($" ({GetVariationOfYouSee()} ");
-            }
-
-            var index = 0;
-            foreach (var item in unhiddenObjects)
-            {
-                if (index != 0)
+                if (subItems)
                 {
-                    if (unhiddenObjects.Count == 2)
-                    {
-                        description.Append($" {BaseDescriptions.AND} ");
-                    }
-                    else
-                    {
-                        description.Append(index == unhiddenObjects.Count - 1 ? $" {BaseDescriptions.AND} " : ", ");
-                    }
-                }
-
-                if (index != 0)
-                {
-                    var lowerName = item.Name.First().ToString().ToLower() + item.Name.Substring(1);
-                    description.Append($"{lowerName}");
+                    unHiddenObjectsWithoutContainmentDescription = unhiddenObjects.ToList();
                 }
                 else
                 {
-                    description.Append($"{item.Name}");
+                    description.AppendLine(string.Join(Environment.NewLine, unHiddenObjectsWithContainmentDescription.Select(x => x.ContainmentDescription)));    
                 }
+            }
 
-                if (!item.IsCloseAble || item.IsCloseAble && !item.IsClosed)
+            if (unHiddenObjectsWithoutContainmentDescription.Any())
+            {
+                if (subItems)
                 {
-                    if (item.Items.Any(i => i.IsHidden == false))
-                    {
-                        var subItemList = item.Items.Where(i => i.IsHidden == false).ToList<AContainerObject>();
-                        description.Append(item.PrintUnhiddenObjects(subItemList, true));
-                    }
+                    description.Append($" ({GetVariationOfYouSee()} ");
                 }
 
-                description.Append(GetLinkedObjectsDescription(item));
+                var index = 0;
 
-                index++;
-            }
+                foreach (var item in unHiddenObjectsWithoutContainmentDescription)
+                {
+                    if (index != 0)
+                    {
+                        if (unhiddenObjects.Count == 2)
+                        {
+                            description.Append($" {BaseDescriptions.AND} ");
+                        }
+                        else
+                        {
+                            description.Append(index == unhiddenObjects.Count - 1 ? $" {BaseDescriptions.AND} " : ", ");
+                        }
+                    }
 
-            if (subItems)
-            {
-                description.Append(')');
-            }
-            else
-            {
-                description.AppendLine(index == 1
-                    ? $" {GetVariationOfHereSingle()}"
-                    : $" {GetVariationOfHerePlural()}");
-            }
+                    if (index != 0)
+                    {
+                        var lowerName = item.Name.First().ToString().ToLower() + item.Name.Substring(1);
+                        description.Append($"{lowerName}");
+                    }
+                    else
+                    {
+                        if (subItems)
+                        {
+                            var lowerName = item.Name.First().ToString().ToLower() + item.Name.Substring(1);
+                            description.Append($"{lowerName}");
+                        }
+                        else
+                        {
+                            description.Append($"{item.Name}");
+                        }
+                    }
 
+                    if (!item.IsCloseAble || item.IsCloseAble && !item.IsClosed)
+                    {
+                        if (item.Items.Any(i => i.IsHidden == false))
+                        {
+                            var subItemList = item.Items.Where(i => i.IsHidden == false).ToList<AContainerObject>();
+                            description.Append(item.PrintUnhiddenObjects(subItemList, true));
+                        }
+                    }
+
+                    description.Append(GetLinkedObjectsDescription(item));
+
+                    index++;
+                }
+
+                if (subItems)
+                {
+                    description.Append(')');
+                }
+                else
+                {
+                    description.AppendLine(index == 1
+                        ? $" {GetVariationOfHereSingle()}"
+                        : $" {GetVariationOfHerePlural()}");
+                }
+            }
         }
 
         return description.ToString();
