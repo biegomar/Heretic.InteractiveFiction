@@ -97,7 +97,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credits|Anerkennung|Anerkennungen|Referenz|Referenzen|Würdigung|Würdigungen.
+        ///   Looks up a localized string similar to Credits|Info|Anerkennung|Anerkennungen|Referenz|Referenzen|Würdigung|Würdigungen.
         /// </summary>
         internal static string CREDITS {
             get {
@@ -160,7 +160,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hilfe|Help|H.
+        ///   Looks up a localized string similar to Hilfe|Help.
         /// </summary>
         internal static string HELP {
             get {

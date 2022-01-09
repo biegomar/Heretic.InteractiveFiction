@@ -59,7 +59,7 @@ internal sealed class InputAnalyzer
             
             return sentence;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new []{string.Empty};
         }

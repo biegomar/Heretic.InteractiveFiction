@@ -201,14 +201,14 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemPickupSuccess(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, Console.WindowWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
 
     public virtual bool ImpossibleDrop(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, Console.WindowWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -243,7 +243,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemEaten(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, Console.WindowWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -257,14 +257,14 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemSeated(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, Console.WindowWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
 
     public bool ItemNotSeatable(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, Console.WindowWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -302,7 +302,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemDropSuccess(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, Console.WindowWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -420,7 +420,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool WrongKey(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, Console.WindowWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -473,7 +473,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    protected string LowerFirstChar(string description)
+    private string LowerFirstChar(string description)
     {
         return description[..1].ToLower() + description[1..];
     }
@@ -489,7 +489,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
             while (!string.IsNullOrWhiteSpace(newMessage) && newMessage.Length > width)
             {
-                int start = 0;
+                int start;
                 int last = 0;
                 do
                 {

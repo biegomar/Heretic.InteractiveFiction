@@ -136,7 +136,7 @@
     <value>Gehe|Geh|Go|G</value>
   </data>
   <data name="HELP" xml:space="preserve">
-    <value>Hilfe|Help|H</value>
+    <value>Hilfe|Help</value>
   </data>
   <data name="HISTORY" xml:space="preserve">
     <value>History|Hist|Verlauf</value>
@@ -220,7 +220,7 @@
     <value>Gib|Gebe</value>
   </data>
   <data name="CREDITS" xml:space="preserve">
-    <value>Credits|Anerkennung|Anerkennungen|Referenz|Referenzen|Würdigung|Würdigungen</value>
+    <value>Credits|Info|Anerkennung|Anerkennungen|Referenz|Referenzen|Würdigung|Würdigungen</value>
   </data>
   <data name="EAT" xml:space="preserve">
     <value>Iss|Ess|Esse</value>
