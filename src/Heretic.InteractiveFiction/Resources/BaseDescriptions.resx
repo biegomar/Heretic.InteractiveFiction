@@ -418,7 +418,7 @@
     <value>Womit möchtest Du das denn aufschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?</value>
   </data>
   <data name="KEY_NOT_VISIBLE" xml:space="preserve">
-    <value>Mir ist nicht klar, was Sie hier als Schlüssel verwenden wollen.</value>
+    <value>Mir ist nicht klar, was Du hier als Schlüssel verwenden willst.</value>
   </data>
   <data name="SIT" xml:space="preserve">
     <value>Setzte Dich auf eine Sitzgelegenheit</value>
@@ -455,5 +455,29 @@
   </data>
   <data name="MORE_SEATS" xml:space="preserve">
     <value>Auf welche der Sitzgelegenheiten möchtest Du denn Platz nehmen? Das musst Du schon genauer bestimmen.</value>
+  </data>
+  <data name="BREAK" xml:space="preserve">
+    <value>Brich einen Gegenstand entzwei, bzw. zerstöre ihn mit einem anderen Gegenstand.</value>
+  </data>
+  <data name="IMPOSSIBLE_BREAK" xml:space="preserve">
+    <value>Du kannst das nicht zerstören.</value>
+  </data>
+  <data name="ALREADY_BROKEN" xml:space="preserve">
+    <value>{0} ist bereits zerbrochen.</value>
+  </data>
+  <data name="ITEM_UNBREAKABLE" xml:space="preserve">
+    <value>{0} kann nicht zerbrochen werden.</value>
+  </data>
+  <data name="WRONG_TOOL" xml:space="preserve">
+    <value>Du kannst {0} damit nicht zerbrechen. Vielleicht probierst Du besser ein anderes Werkzeug?</value>
+  </data>
+  <data name="TOOL_NOT_VISIBLE" xml:space="preserve">
+    <value>Mir ist nicht klar, was Du hier als Werkzeug verwenden willst.</value>
+  </data>
+  <data name="IMPOSSIBLE_OPEN" xml:space="preserve">
+    <value>Scheinbar lässt sich das nicht öffnen.</value>
+  </data>
+  <data name="IMPOSSIBLE_BREAK_ITEM" xml:space="preserve">
+    <value>Womit möchtest Du das denn zerstören? Hast Du vielleicht irgendein entsprechendes Werkzeug?</value>
   </data>
 </root>

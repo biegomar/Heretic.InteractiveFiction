@@ -342,9 +342,15 @@ internal sealed class VerbHandler
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 // surroundings only exist within the active location.
-                this.universe.ActiveLocation.OnAfterOpen(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
-
-                return true;
+                try
+                {
+                    this.universe.ActiveLocation.OnOpen(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
+                    return true;
+                }
+                catch (OpenException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
             }
 
             return PrintingSubsystem.ItemNotVisible();
@@ -625,6 +631,101 @@ internal sealed class VerbHandler
         }
 
         return string.Empty;
+    }
+    
+    internal bool Break(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.BREAK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var item = this.GetUnhiddenItemByNameActive(subject);
+            if (item != default)
+            {
+                try
+                {
+                    item.OnBreak(new BreakItemEventArg());
+                    return true;
+                }
+                catch (BreakException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
+            }
+            
+            // lets have a look at surroundings.
+            var itemKey = this.GetItemKeyByName(subject);
+            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+            {
+                try
+                {
+                    this.universe.ActiveLocation.OnBreak(new BreakItemEventArg());
+                    return true;
+                }
+                catch (BreakException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    internal bool Break(string verb, string subject, string tool)
+    {
+        if (this.universe.VerbResources[VerbKeys.BREAK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var item = this.GetUnhiddenItemByNameActive(subject);
+            var toolItem = this.GetUnhiddenItemByNameActive(tool);
+
+            if (item != default)
+            {
+                if (toolItem != default)
+                {
+                    if (item.IsBreakable)
+                    {
+                        if (!item.IsBroken)
+                        {
+                            try
+                            {
+                                item.OnBreak(new BreakItemEventArg() { ItemToUse = toolItem });
+                                return true;
+                            }
+                            catch (BreakException ex)
+                            {
+                                return PrintingSubsystem.Resource(ex.Message);
+                            }
+                        }
+                        return PrintingSubsystem.ItemAlreadyBroken(item);
+                    }
+                    return PrintingSubsystem.ItemUnbreakable(item);
+                }
+                return PrintingSubsystem.ToolNotVisible();
+            }
+
+            // lets have a look at surroundings.
+            var itemKey = this.GetItemKeyByName(subject);
+            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+            {
+                if (toolItem != default)
+                {
+                    // surroundings only exist within the active location.
+                    try
+                    {
+                        this.universe.ActiveLocation.OnBreak(new BreakItemEventArg() { ItemToUse = toolItem });
+                        return true;
+                    }
+                    catch (BreakException ex)
+                    {
+                        return PrintingSubsystem.Resource(ex.Message);
+                    }
+                }
+                return PrintingSubsystem.ToolNotVisible();
+            }
+            
+            return PrintingSubsystem.ItemNotVisible();
+        }
+        
+        return false;
     }
 
     internal bool Unlock(string verb, string unlockObject)

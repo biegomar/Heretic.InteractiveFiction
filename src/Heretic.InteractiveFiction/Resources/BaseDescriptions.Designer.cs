@@ -70,6 +70,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} ist bereits zerbrochen..
+        /// </summary>
+        public static string ALREADY_BROKEN {
+            get {
+                return ResourceManager.GetString("ALREADY_BROKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist bereits geschlossen..
         /// </summary>
         public static string ALREADY_CLOSED {
@@ -156,6 +165,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string BLOCK_PICKUP_SINGLE {
             get {
                 return ResourceManager.GetString("BLOCK_PICKUP_SINGLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brich einen Gegenstand entzwei, bzw. zerstöre ihn mit einem anderen Gegenstand..
+        /// </summary>
+        public static string BREAK {
+            get {
+                return ResourceManager.GetString("BREAK", resourceCulture);
             }
         }
         
@@ -340,6 +358,24 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du kannst das nicht zerstören..
+        /// </summary>
+        public static string IMPOSSIBLE_BREAK {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_BREAK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Womit möchtest Du das denn zerstören? Hast Du vielleicht irgendein entsprechendes Werkzeug?.
+        /// </summary>
+        public static string IMPOSSIBLE_BREAK_ITEM {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_BREAK_ITEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aaah, eine Entführung? Das ist bestimmt ein ganz tolle Idee....
         /// </summary>
         public static string IMPOSSIBLE_CHARACTER_PICKUP {
@@ -354,6 +390,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string IMPOSSIBLE_DROP {
             get {
                 return ResourceManager.GetString("IMPOSSIBLE_DROP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scheinbar lässt sich das nicht öffnen..
+        /// </summary>
+        public static string IMPOSSIBLE_OPEN {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_OPEN", resourceCulture);
             }
         }
         
@@ -520,6 +565,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} kann nicht zerbrochen werden..
+        /// </summary>
+        public static string ITEM_UNBREAKABLE {
+            get {
+                return ResourceManager.GetString("ITEM_UNBREAKABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ich kenne und sehe nichts was &quot;{0}&quot; sein könnte..
         /// </summary>
         public static string ITEM_UNKNOWN {
@@ -547,7 +601,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mir ist nicht klar, was Sie hier als Schlüssel verwenden wollen..
+        ///   Looks up a localized string similar to Mir ist nicht klar, was Du hier als Schlüssel verwenden willst..
         /// </summary>
         public static string KEY_NOT_VISIBLE {
             get {
@@ -943,6 +997,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mir ist nicht klar, was Du hier als Werkzeug verwenden willst..
+        /// </summary>
+        public static string TOOL_NOT_VISIBLE {
+            get {
+                return ResourceManager.GetString("TOOL_NOT_VISIBLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drehe einen Gegenstand, bzw. schließe oder öffne einen Gegenstand durch drehen..
         /// </summary>
         public static string TURN {
@@ -1047,6 +1110,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string WRONG_KEY {
             get {
                 return ResourceManager.GetString("WRONG_KEY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du kannst {0} damit nicht zerbrechen. Vielleicht probierst Du besser ein anderes Werkzeug?.
+        /// </summary>
+        public static string WRONG_TOOL {
+            get {
+                return ResourceManager.GetString("WRONG_TOOL", resourceCulture);
             }
         }
         

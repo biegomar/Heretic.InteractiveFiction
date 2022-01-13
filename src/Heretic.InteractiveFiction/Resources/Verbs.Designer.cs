@@ -79,6 +79,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zerbrich|Zerbreche|Brich|Breche|Brech|Zerstöre|Zerstör|Zerschlage|Zerschlag.
+        /// </summary>
+        internal static string BREAK {
+            get {
+                return ResourceManager.GetString("BREAK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bezahle|Bezahl|Zahle|Zahl|Kaufe|Kauf.
         /// </summary>
         internal static string BUY {

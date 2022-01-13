@@ -102,6 +102,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Turn(processingVerb, processingSubject);
         result = result || verbHandler.AlterEgo(processingVerb, processingSubject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject);
+        result = result || verbHandler.Break(processingVerb, processingSubject);
         result = result || verbHandler.Eat(processingVerb, processingSubject);
         result = result || verbHandler.SitDown(processingVerb, processingSubject);
         result = result || verbHandler.Write(processingVerb, processingSubject);
@@ -125,6 +126,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Give(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Use(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Break(processingVerb, processingSubject, processingObject);
 
         if (!result)
         {

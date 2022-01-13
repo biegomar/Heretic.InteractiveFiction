@@ -29,12 +29,23 @@ public abstract class AContainerObject
     /// The first look description is only used during the first printout and contains additional information.
     /// </summary>
     public string FirstLookDescription { get; set; }
-    
     /// <summary>
     /// This description can be used to describe the discover situation in more detail. It is used during printout instead of the name of the object.
     /// It is only valid in the context of the location where it was found and is deleted after a pickup.
     /// </summary>
     public string ContainmentDescription { get; set; }
+    /// <summary>
+    /// Is shown when the item is broken.
+    /// </summary>
+    public string BrokenDescription { get; set; }
+    /// <summary>
+    /// Can this object be broken?
+    /// </summary>
+    public bool IsBreakable { get; set; }
+    /// <summary>
+    /// Is this object broken?
+    /// </summary>
+    public bool IsBroken { get; set; }
     /// <summary>
     /// Is this object eatable?
     /// </summary>
@@ -123,6 +134,7 @@ public abstract class AContainerObject
     public ICollection<Character> Characters { get; init; }
     public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
     public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
+    public event EventHandler<BreakItemEventArg> Break;
     public event EventHandler<ContainerObjectEventArgs> BeforeClose;
     public event EventHandler<ContainerObjectEventArgs> AfterClose;
     public event EventHandler<ContainerObjectEventArgs> BeforeDrop;
@@ -130,6 +142,7 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> BeforeEat;
     public event EventHandler<ContainerObjectEventArgs> AfterEat; 
     public event EventHandler<ContainerObjectEventArgs> AfterGive;
+    public event EventHandler<ContainerObjectEventArgs> Open;
     public event EventHandler<ContainerObjectEventArgs> AfterOpen;
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
@@ -153,6 +166,19 @@ public abstract class AContainerObject
         else
         {
             throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+    
+    public virtual void OnOpen(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Open;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new OpenException(BaseDescriptions.IMPOSSIBLE_OPEN);
         }
     }
     
@@ -197,6 +223,19 @@ public abstract class AContainerObject
     {
         EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterEat;
         localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBreak(BreakItemEventArg eventArgs)
+    {
+        var localEventHandler = this.Break;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new BreakException(BaseDescriptions.IMPOSSIBLE_BREAK);
+        }
     }
     
     public virtual void OnBeforeSitDown(ContainerObjectEventArgs eventArgs)
@@ -309,6 +348,8 @@ public abstract class AContainerObject
         this.Surroundings = new Dictionary<string, string>();
         this.LinkedTo = new List<string>();
         this.FirstLookDescription = string.Empty;
+        this.IsBreakable = false;
+        this.IsBroken = false;
         this.IsEatable = false;
         this.IsHidden = false;
         this.IsVirtual = false;
@@ -326,6 +367,7 @@ public abstract class AContainerObject
         this.UnPickAbleDescription = string.Empty;
         this.LockDescription = string.Empty;
         this.ContainmentDescription = string.Empty;
+        this.BrokenDescription = string.Empty;
     }
 
     protected virtual string GetVariationOfYouSee()
@@ -468,7 +510,7 @@ public abstract class AContainerObject
         return this.PrintUnhiddenObjects(unhiddenItems);
     }
 
-    public virtual string PrintItems(bool subItems = false)
+    protected virtual string PrintItems(bool subItems = false)
     {
 
         var unhiddenItems = this.Items.Where(i => i.IsHidden == false).ToList<AContainerObject>();

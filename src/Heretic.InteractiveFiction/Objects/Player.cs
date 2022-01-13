@@ -196,7 +196,7 @@ public class Player : AContainerObject
         return sum;
     }
 
-    public override string PrintItems(bool subItems = false)
+    protected override string PrintItems(bool subItems = false)
     {
         var baseResult = base.PrintItems(subItems);
 

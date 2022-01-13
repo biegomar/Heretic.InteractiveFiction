@@ -5,6 +5,7 @@ public static class VerbKeys
     public static string ALTER_EGO => nameof(ALTER_EGO);
     public static string ASK => nameof(ASK);
     public static string BUY => nameof(BUY);
+    public static string BREAK => nameof(BREAK);
     public static string CLOSE => nameof(CLOSE);
     public static string CREDITS => nameof(CREDITS);
     public static string DOWN => nameof(DOWN);

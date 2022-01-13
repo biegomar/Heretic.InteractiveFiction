@@ -234,4 +234,7 @@
   <data name="WRITE" xml:space="preserve">
     <value>Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe</value>
   </data>
+  <data name="BREAK" xml:space="preserve">
+    <value>Zerbrich|Zerbreche|Brich|Breche|Brech|Zerstöre|Zerstör|Zerschlage|Zerschlag</value>
+  </data>
 </root>

@@ -26,9 +26,11 @@ public interface IPrintingSubsystem
     bool ImpossibleUnlock(AContainerObject item);
     bool ItemAlreadyClosed(AContainerObject item);
     bool ItemClosed(AContainerObject item);
+    bool ItemAlreadyBroken(AContainerObject item);
     bool ItemAlreadyOpen(AContainerObject item);
     bool ItemAlreadyUnlocked(AContainerObject item);
     bool ItemEaten(AContainerObject item);
+    bool ItemUnbreakable(AContainerObject item);
     bool ItemNotEatable(AContainerObject item);
     bool ItemSeated(AContainerObject item);
     bool ItemNotSeatable(AContainerObject item);
@@ -51,6 +53,7 @@ public interface IPrintingSubsystem
     bool Score(int score, int maxScore);
     bool Talk(Character character);
     bool TitleAndScore(int score, int maxScore);
+    bool ToolNotVisible();
     bool WrongKey(AContainerObject item);
     bool Prompt();
     bool PayWithWhat();

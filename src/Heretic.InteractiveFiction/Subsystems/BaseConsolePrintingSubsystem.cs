@@ -173,7 +173,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool KeyNotVisible()
     {
-        return Resource(WordWrap(BaseDescriptions.KEY_NOT_VISIBLE, Console.WindowWidth));
+        return Resource(BaseDescriptions.KEY_NOT_VISIBLE);
     }
 
     public virtual bool ImpossiblePickup(AContainerObject containerObject)
@@ -227,6 +227,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool ItemAlreadyBroken(AContainerObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_BROKEN, Console.WindowWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+
     public virtual bool ItemAlreadyOpen(AContainerObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.ALREADY_OPEN, Console.WindowWidth), item.Name);
@@ -244,6 +251,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     public bool ItemEaten(AContainerObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.WriteLine();
+        return true;
+    }
+
+    public bool ItemUnbreakable(AContainerObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_UNBREAKABLE, Console.WindowWidth), item.Name);
         Console.WriteLine();
         return true;
     }
@@ -417,6 +431,10 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     }
 
     public abstract bool TitleAndScore(int score, int maxScore);
+    public bool ToolNotVisible()
+    {
+        return Resource(BaseDescriptions.TOOL_NOT_VISIBLE);
+    }
 
     public virtual bool WrongKey(AContainerObject item)
     {
