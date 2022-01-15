@@ -26,9 +26,9 @@ public class InputAnalyzerTest
     }
 
     [Theory]
-    [InlineData("l man", new[] { "l", "man" })]
-    [InlineData("look man", new[] { "look", "man" })]
-    [InlineData("man look", new[] { "look", "man" })]
+    [InlineData("l mann", new[] { "l", "mann" })]
+    [InlineData("look mann", new[] { "look", "mann" }) ]
+    [InlineData("mann look", new[] { "look", "mann" })]
     [InlineData("schaue auf den Mann", new[] { "schaue", "Mann" })]
     [InlineData("Mann schaue auf den ", new[] { "schaue", "Mann" })]
     [InlineData("Rede mit dem Tankwart ", new[] { "Rede", "Tankwart" })]
@@ -40,5 +40,6 @@ public class InputAnalyzerTest
         var actual = sut.Analyze(input);
 
         Assert.Equal(expected[0], actual[0]);
+        Assert.Equal(expected[1], actual[1]);
     }
 }

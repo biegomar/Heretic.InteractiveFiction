@@ -1,3 +1,4 @@
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -68,58 +69,115 @@ internal sealed class InputAnalyzer
     private string[] OrderSentence(IReadOnlyList<string> sentence)
     {
         var orderedSentence = new string[sentence.Count];
+        string itemObject;
 
-        var verb = sentence[0];
-        var subject = string.Empty;
-        var character = string.Empty;
-        var isCharacterSet = false;
-
+        var parts = sentence.ToList();
+        var verb = this.GetVerb(parts);
+        parts.Remove(verb);
+        orderedSentence[0] = verb;
+        
         if (sentence.Count == 2)
         {
-            subject = sentence[1];
+            itemObject = this.GetItem(parts);
+            if (itemObject == string.Empty)
+            {
+                itemObject = this.GetCharacter(parts);
+                if (itemObject== string.Empty)
+                {
+                    itemObject = this.GetConversationAnswer(parts);
+                    if (itemObject== string.Empty)
+                    {
+                        itemObject = parts[0];
+                    }
+                }
+            }
+            
+            orderedSentence[1] = itemObject;
         }
         else if (sentence.Count == 3)
         {
-            character = sentence[1];
-            subject = sentence[2];
+            itemObject = this.GetCharacter(parts);
+            if (itemObject == string.Empty)
+            {
+                itemObject = this.GetItem(parts);
+                if (itemObject== string.Empty)
+                {
+                    itemObject = parts[0];
+                }
+            }
+            parts.Remove(itemObject);
+            orderedSentence[1] = itemObject;
+            
+            
+            var subject = this.GetItem(parts);
+            if (subject == string.Empty)
+            {
+                subject = this.GetCharacter(parts);
+                if (subject== string.Empty)
+                {
+                    subject = this.GetConversationAnswer(parts);
+                    if (subject== string.Empty)
+                    {
+                        subject = parts[0];
+                    }
+                }
+            }
+            orderedSentence[2] = subject;
         }
-
+        
+        return orderedSentence;
+    }
+    
+    private string GetVerb(IEnumerable<string> sentence)
+    {
         foreach (var word in sentence)
         {
             if (this.universe.VerbResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
             {
-                verb = word;
-            }
-            else if (this.universe.CharacterResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase) && !isCharacterSet)
-            {
-                character = word;
-                isCharacterSet = true;
-            }
-            else if (this.universe.ItemResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
-            {
-                subject = word;
-            }
-            else if (this.universe.ConversationAnswersResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
-            {
-                subject = word;
-            }
-            else if (sentence.Count == 3)
-            {
-                subject = word;
+                return word;
             }
         }
 
-        orderedSentence[0] = verb;
-        if (orderedSentence.Length == 2)
-        {
-            orderedSentence[1] = subject;
-        }
-        else if (sentence.Count == 3)
-        {
-            orderedSentence[1] = character;
-            orderedSentence[2] = subject;
-        }
-
-        return orderedSentence;
+        throw new NoVerbException();
     }
+    
+    private string GetCharacter(IEnumerable<string> sentence)
+    {
+        foreach (var word in sentence)
+        {
+            if (this.universe.CharacterResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return word;
+            }
+        }
+
+        return string.Empty;
+    }
+    
+    private string GetItem(IEnumerable<string> sentence)
+    {
+        foreach (var word in sentence)
+        {
+            if (this.universe.ItemResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return word;
+            }
+        }
+
+        return string.Empty;
+    }
+    
+    private string GetConversationAnswer(IEnumerable<string> sentence)
+    {
+        foreach (var word in sentence)
+        {
+            if (this.universe.ConversationAnswersResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return word;
+            }
+        }
+
+        return string.Empty;
+    }
+    
 }
