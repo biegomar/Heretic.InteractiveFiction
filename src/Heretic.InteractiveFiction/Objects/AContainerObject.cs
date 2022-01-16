@@ -75,7 +75,7 @@ public abstract class AContainerObject
     /// <summary>
     /// The weight of the object.
     /// </summary>
-    public int Weight { get; init; }
+    public int Weight { get; set; }
     /// <summary>
     /// If this object is a container, you can specify how much weight it can hold.
     /// </summary>
