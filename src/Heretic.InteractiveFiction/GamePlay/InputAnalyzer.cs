@@ -75,67 +75,53 @@ internal sealed class InputAnalyzer
         var verb = this.GetVerb(parts);
         parts.Remove(verb);
         orderedSentence.Add(verb);
-        
-        if (sentence.Count == 2)
+
+        var normList = this.NormalizeSentence(parts);
+        itemObject = this.GetCharacter(normList.Keys.ToList());
+        if (itemObject == string.Empty)
         {
-            itemObject = this.GetItem(parts);
+            itemObject = this.GetItem(normList.Keys.ToList());
             if (itemObject == string.Empty)
             {
-                itemObject = this.GetCharacter(parts);
-                if (itemObject== string.Empty)
-                {
-                    itemObject = this.GetConversationAnswer(parts);
-                    if (itemObject== string.Empty)
-                    {
-                        itemObject = parts[0];
-                    }
-                }
+                itemObject = parts[0];
             }
-            
-            orderedSentence.Add(itemObject);
         }
-        else if (sentence.Count > 2)
+
+        RemoveNormlistItemsFromParts(normList[itemObject], parts);
+
+        orderedSentence.Add(itemObject);
+
+        if (parts.Any())
         {
-            var normList = this.NormalizeSentence(parts);
-            itemObject = this.GetCharacter(normList.Keys.ToList());
-            if (itemObject == string.Empty)
+            normList = this.NormalizeSentence(parts);
+            var subject = this.GetItem(normList.Keys.ToList());
+            if (subject == string.Empty)
             {
-                itemObject = this.GetItem(normList.Keys.ToList());
-                if (itemObject== string.Empty)
-                {
-                    itemObject = parts[0];
-                }
-            }
-
-            foreach (var item in normList[itemObject])
-            {
-                parts.Remove(item);    
-            }
-            orderedSentence.Add(itemObject);
-
-            if (parts.Any())
-            {
-                normList = this.NormalizeSentence(parts);
-                var subject = this.GetItem(normList.Keys.ToList());
+                subject = this.GetCharacter(normList.Keys.ToList());
                 if (subject == string.Empty)
                 {
-                    subject = this.GetCharacter(normList.Keys.ToList());
-                    if (subject== string.Empty)
+                    subject = this.GetConversationAnswer(normList.Keys.ToList());
+                    if (subject == string.Empty)
                     {
-                        subject = this.GetConversationAnswer(normList.Keys.ToList());
-                        if (subject== string.Empty)
-                        {
-                            subject = parts[0];
-                        }
+                        subject = parts[0];
                     }
                 }
-                orderedSentence.Add(subject);
             }
+
+            orderedSentence.Add(subject);
         }
         
         return orderedSentence;
     }
-    
+
+    private static void RemoveNormlistItemsFromParts(IEnumerable<string> normList, ICollection<string> parts)
+    {
+        foreach (var item in normList)
+        {
+            parts.Remove(item);
+        }
+    }
+
     private string GetVerb(IList<string> sentence)
     {
         foreach (var word in sentence)
