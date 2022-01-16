@@ -76,39 +76,42 @@ internal sealed class InputAnalyzer
         parts.Remove(verb);
         orderedSentence.Add(verb);
 
-        var normList = this.NormalizeSentence(parts);
-        itemObject = this.GetCharacter(normList.Keys.ToList());
-        if (itemObject == string.Empty)
-        {
-            itemObject = this.GetItem(normList.Keys.ToList());
-            if (itemObject == string.Empty)
-            {
-                itemObject = parts[0];
-            }
-        }
-
-        RemoveNormlistItemsFromParts(normList[itemObject], parts);
-
-        orderedSentence.Add(itemObject);
-
         if (parts.Any())
         {
-            normList = this.NormalizeSentence(parts);
-            var subject = this.GetItem(normList.Keys.ToList());
-            if (subject == string.Empty)
+            var normList = this.NormalizeSentence(parts);
+            itemObject = this.GetCharacter(normList.Keys.ToList());
+            if (itemObject == string.Empty)
             {
-                subject = this.GetCharacter(normList.Keys.ToList());
-                if (subject == string.Empty)
+                itemObject = this.GetItem(normList.Keys.ToList());
+                if (itemObject == string.Empty)
                 {
-                    subject = this.GetConversationAnswer(normList.Keys.ToList());
-                    if (subject == string.Empty)
-                    {
-                        subject = parts[0];
-                    }
+                    itemObject = parts[0];
                 }
             }
 
-            orderedSentence.Add(subject);
+            RemoveNormlistItemsFromParts(normList[itemObject], parts);
+
+            orderedSentence.Add(itemObject);
+
+            if (parts.Any())
+            {
+                normList = this.NormalizeSentence(parts);
+                var subject = this.GetItem(normList.Keys.ToList());
+                if (subject == string.Empty)
+                {
+                    subject = this.GetCharacter(normList.Keys.ToList());
+                    if (subject == string.Empty)
+                    {
+                        subject = this.GetConversationAnswer(normList.Keys.ToList());
+                        if (subject == string.Empty)
+                        {
+                            subject = parts[0];
+                        }
+                    }
+                }
+
+                orderedSentence.Add(subject);
+            }
         }
         
         return orderedSentence;
