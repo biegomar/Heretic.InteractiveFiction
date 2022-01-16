@@ -47,7 +47,7 @@ internal sealed class InputAnalyzer
             var sentence = normalizedInput.Split(' ');
             sentence = sentence.Where(x => !this.universe.PackingWordsResources.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ToArray();
 
-            sentence = this.OrderSentence(sentence);
+            sentence = this.OrderSentence(sentence).ToArray();
 
             if (!string.IsNullOrEmpty(quotedText))
             {
@@ -66,15 +66,15 @@ internal sealed class InputAnalyzer
         }
     }
 
-    private string[] OrderSentence(IReadOnlyList<string> sentence)
+    private IList<string> OrderSentence(IReadOnlyList<string> sentence)
     {
-        var orderedSentence = new string[sentence.Count];
+        var orderedSentence = new List<string>();
         string itemObject;
 
         var parts = sentence.ToList();
         var verb = this.GetVerb(parts);
         parts.Remove(verb);
-        orderedSentence[0] = verb;
+        orderedSentence.Add(verb);
         
         if (sentence.Count == 2)
         {
@@ -92,43 +92,51 @@ internal sealed class InputAnalyzer
                 }
             }
             
-            orderedSentence[1] = itemObject;
+            orderedSentence.Add(itemObject);
         }
-        else if (sentence.Count == 3)
+        else if (sentence.Count > 2)
         {
-            itemObject = this.GetCharacter(parts);
+            var normList = this.NormalizeSentence(parts);
+            itemObject = this.GetCharacter(normList.Keys.ToList());
             if (itemObject == string.Empty)
             {
-                itemObject = this.GetItem(parts);
+                itemObject = this.GetItem(normList.Keys.ToList());
                 if (itemObject== string.Empty)
                 {
                     itemObject = parts[0];
                 }
             }
-            parts.Remove(itemObject);
-            orderedSentence[1] = itemObject;
-            
-            
-            var subject = this.GetItem(parts);
-            if (subject == string.Empty)
+
+            foreach (var item in normList[itemObject])
             {
-                subject = this.GetCharacter(parts);
-                if (subject== string.Empty)
+                parts.Remove(item);    
+            }
+            orderedSentence.Add(itemObject);
+
+            if (parts.Any())
+            {
+                normList = this.NormalizeSentence(parts);
+                var subject = this.GetItem(normList.Keys.ToList());
+                if (subject == string.Empty)
                 {
-                    subject = this.GetConversationAnswer(parts);
+                    subject = this.GetCharacter(normList.Keys.ToList());
                     if (subject== string.Empty)
                     {
-                        subject = parts[0];
+                        subject = this.GetConversationAnswer(normList.Keys.ToList());
+                        if (subject== string.Empty)
+                        {
+                            subject = parts[0];
+                        }
                     }
                 }
+                orderedSentence.Add(subject);
             }
-            orderedSentence[2] = subject;
         }
         
         return orderedSentence;
     }
     
-    private string GetVerb(IEnumerable<string> sentence)
+    private string GetVerb(IList<string> sentence)
     {
         foreach (var word in sentence)
         {
@@ -141,7 +149,7 @@ internal sealed class InputAnalyzer
         throw new NoVerbException();
     }
     
-    private string GetCharacter(IEnumerable<string> sentence)
+    private string GetCharacter(IList<string> sentence)
     {
         foreach (var word in sentence)
         {
@@ -154,7 +162,7 @@ internal sealed class InputAnalyzer
         return string.Empty;
     }
     
-    private string GetItem(IEnumerable<string> sentence)
+    private string GetItem(IList<string> sentence)
     {
         foreach (var word in sentence)
         {
@@ -167,7 +175,7 @@ internal sealed class InputAnalyzer
         return string.Empty;
     }
     
-    private string GetConversationAnswer(IEnumerable<string> sentence)
+    private string GetConversationAnswer(IList<string> sentence)
     {
         foreach (var word in sentence)
         {
@@ -178,6 +186,27 @@ internal sealed class InputAnalyzer
         }
 
         return string.Empty;
+    }
+    
+    private IDictionary<string, IEnumerable<string>> NormalizeSentence(IList<string> sentence)
+    {
+        var result = new Dictionary<string, IEnumerable<string>>();
+        
+        for (var index = 0; index < sentence.Count; index++)
+        {
+            var concatWord = sentence[index];
+            var concatWordList = new List<string>() { concatWord };
+            result.Add(concatWord, concatWordList.ToList());
+            
+            for (var position = index + 1; position < sentence.Count(); position++)
+            {
+                concatWord += sentence[position];
+                concatWordList.Add(sentence[position]);
+                result.Add(concatWord, concatWordList.ToList());
+            }
+        }
+
+        return result;
     }
     
 }
