@@ -1112,6 +1112,19 @@ internal sealed class VerbHandler
 
     private string GetItemKeyByName(string itemName)
     {
+        var activeLocationItemKeys = this.universe.ActiveLocation.Items.Select(x => x.Key);
+        var activePlayerItemKeys = this.universe.ActivePlayer.Items.Select(x => x.Key);
+        var prioritizedKeysOfActiveLocationAndPlayer = activeLocationItemKeys.Union(activePlayerItemKeys).ToList();
+        var prioritizedItemResources = this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key));
+        
+        foreach (var (key, value) in prioritizedItemResources)
+        {
+            if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return key;
+            }
+        }
+        
         foreach (var (key, value) in this.universe.ItemResources)
         {
             if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
