@@ -15,7 +15,15 @@ public class DestinationNode
 
     public override string ToString()
     {
-        return $"{Location.Name} {BaseDescriptions.WAY} {this.GetDirectionDescription()}. {this.GetLockDescription()}";
+        if (string.IsNullOrEmpty(Location.ContainmentDescription))
+        {
+            return $"{Location.Name} {BaseDescriptions.WAY} {this.GetDirectionDescription()}. {this.GetLockDescription()}";
+        }
+        else
+        {
+            return $"{Location.ContainmentDescription} {this.GetLockDescription()}";
+        }
+
     }
 
     private string GetDirectionDescription()
