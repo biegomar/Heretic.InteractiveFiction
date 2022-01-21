@@ -7,23 +7,34 @@ public class DestinationNode
     public Directions Direction { get; set; }
     public Location Location { get; set; }
     public bool IsHidden { get; set; }
+    public bool ShowInDescription { get; set; }
+    /// <summary>
+    /// This description is displayed when the location is listed in a way description.
+    /// If the value is not set, a standardized message is shown.
+    /// </summary>
+    public string DestinationDescription { get; init; }
 
     public DestinationNode()
     {
         this.IsHidden = false;
+        this.ShowInDescription = true;
+        this.DestinationDescription = string.Empty;
     }
 
     public override string ToString()
     {
-        if (string.IsNullOrEmpty(Location.ContainmentDescription))
+        if (ShowInDescription)
         {
-            return $"{Location.Name} {BaseDescriptions.WAY} {this.GetDirectionDescription()}. {this.GetLockDescription()}";
-        }
-        else
-        {
-            return $"{Location.ContainmentDescription} {this.GetLockDescription()}";
-        }
+            if (string.IsNullOrEmpty(this.DestinationDescription))
+            {
+                return
+                    $"{Location.Name} {BaseDescriptions.WAY} {this.GetDirectionDescription()}. {this.GetLockDescription()}";
+            }
 
+            return $"{this.DestinationDescription} {this.GetLockDescription()}";
+        }
+        
+        return string.Empty;
     }
 
     private string GetDirectionDescription()

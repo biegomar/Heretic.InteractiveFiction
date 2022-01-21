@@ -340,7 +340,10 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             {
                 foreach (var item in unhiddenMappings)
                 {
-                    Console.Write(WordWrap(item, Console.WindowWidth));
+                    if (item.ShowInDescription)
+                    {
+                        Console.Write(WordWrap(item, Console.WindowWidth));    
+                    }
                 }
 
                 Console.WriteLine();

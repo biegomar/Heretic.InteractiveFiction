@@ -412,7 +412,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe.
+        ///   Looks up a localized string similar to Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe|Tipp.
         /// </summary>
         internal static string WRITE {
             get {
