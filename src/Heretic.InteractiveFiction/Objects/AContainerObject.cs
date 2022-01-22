@@ -39,6 +39,11 @@ public abstract class AContainerObject
     /// </summary>
     public string BrokenDescription { get; set; }
     /// <summary>
+    /// This description is used when the object cannot be broken.
+    /// If the description is empty, a default text is generated.
+    /// </summary>
+    public string UnbreakableDescription { get; set; }
+    /// <summary>
     /// Can this object be broken?
     /// </summary>
     public bool IsBreakable { get; set; }
@@ -368,6 +373,7 @@ public abstract class AContainerObject
         this.LockDescription = string.Empty;
         this.ContainmentDescription = string.Empty;
         this.BrokenDescription = string.Empty;
+        this.UnbreakableDescription = string.Empty;
     }
 
     protected virtual string GetVariationOfYouSee()

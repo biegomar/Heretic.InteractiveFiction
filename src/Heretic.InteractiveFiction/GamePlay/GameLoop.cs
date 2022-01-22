@@ -18,7 +18,7 @@ public class GameLoop
         (this.universe.LocationMap, this.universe.ActiveLocation, this.universe.ActivePlayer) = gamePrerequisitesAssembler.AssembleGame();
         this.processor = new InputProcessor(printingSubsystem, resourceProvider, this.universe);
         this.commands = new Queue<string>();
-        if (!string.IsNullOrEmpty(fileName))
+        if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
         {
             this.commands = GetCommandList(fileName);
         }
@@ -39,9 +39,9 @@ public class GameLoop
         } while (unfinished);
     }
 
-    private Queue<string> GetCommandList(string FileName)
+    private Queue<string> GetCommandList(string fileName)
     {
-        return new(File.ReadAllLines(FileName).Where(x => !string.IsNullOrEmpty(x)).ToList());
+        return new(File.ReadAllLines(fileName).Where(x => !string.IsNullOrEmpty(x)).ToList());
     }
 
     private string GetInput()

@@ -257,7 +257,15 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemUnbreakable(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_UNBREAKABLE, Console.WindowWidth), item.Name);
+        if (string.IsNullOrEmpty(item.UnbreakableDescription))
+        {
+            Console.Write(WordWrap(BaseDescriptions.ITEM_UNBREAKABLE, Console.WindowWidth), item.Name);    
+        }
+        else
+        {
+            Console.Write(WordWrap(item.UnbreakableDescription, Console.WindowWidth));
+        }
+        
         Console.WriteLine();
         return true;
     }
