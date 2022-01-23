@@ -430,6 +430,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} lässt sich ohne passenden Schlüssel oder einen schlüsselähnlichen Gegenstand nicht öffnen. {1} ist auf jeden Fall nicht passend..
+        /// </summary>
+        public static string IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zeige Deine mitgeführten Gegenstände.
         /// </summary>
         public static string INV {

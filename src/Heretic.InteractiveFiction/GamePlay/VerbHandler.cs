@@ -766,9 +766,17 @@ internal sealed class VerbHandler
                         {
                             if (!item.IsCloseAble || item.IsCloseAble && item.IsClosed)
                             {
-                                item.OnUnlock(new UnlockContainerEventArgs { Key = key });
+                                try
+                                {
+                                    item.OnUnlock(new UnlockContainerEventArgs { Key = key });
 
-                                return true;
+                                    return true;
+                                }
+                                catch (UnlockException e)
+                                {
+                                    return PrintingSubsystem.Resource(e.Message);
+                                }
+                                
                             }
                         }
                         return PrintingSubsystem.ItemAlreadyUnlocked(item);

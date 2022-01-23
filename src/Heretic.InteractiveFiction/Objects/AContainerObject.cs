@@ -342,8 +342,15 @@ public abstract class AContainerObject
 
     public virtual void OnUnlock(UnlockContainerEventArgs eventArgs)
     {
-        EventHandler<UnlockContainerEventArgs> localEventHandler = this.Unlock;
-        localEventHandler?.Invoke(this, eventArgs);
+        var localEventHandler = this.Unlock;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new UnlockException(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, this.Name, eventArgs.Key.Name));
+        }
     }
     
     protected AContainerObject()

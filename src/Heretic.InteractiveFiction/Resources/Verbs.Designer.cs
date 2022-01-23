@@ -385,7 +385,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nutze|Benutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier.
+        ///   Looks up a localized string similar to Nutze|Benutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig.
         /// </summary>
         internal static string USE {
             get {
