@@ -158,5 +158,266 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("VERBS", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interaktion mit ab- und verschließbaren Gegenständen:.
+        /// </summary>
+        internal static string VERBS_CONTAINER {
+            get {
+                return ResourceManager.GetString("VERBS_CONTAINER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to öffne kiste.
+        /// </summary>
+        internal static string VERBS_CONTAINER_EXAMPLE_I {
+            get {
+                return ResourceManager.GetString("VERBS_CONTAINER_EXAMPLE_I", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [die Kiste wird geöffnet, sofern sie nicht abgeschlossen ist, bzw. man sie auch wirklich öffnen kann.].
+        /// </summary>
+        internal static string VERBS_CONTAINER_EXAMPLE_I_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_CONTAINER_EXAMPLE_I_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to entriegel schloß mit grünem schlüssel.
+        /// </summary>
+        internal static string VERBS_CONTAINER_EXAMPLE_II {
+            get {
+                return ResourceManager.GetString("VERBS_CONTAINER_EXAMPLE_II", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [das Schloß wird mit dem passenden Schlüssel aufgeschlossen.].
+        /// </summary>
+        internal static string VERBS_CONTAINER_EXAMPLE_II_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_CONTAINER_EXAMPLE_II_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bewegungsrichtungen:.
+        /// </summary>
+        internal static string VERBS_DIRECTIONS {
+            get {
+                return ResourceManager.GetString("VERBS_DIRECTIONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [der Spieler bewegt sich an den westlich angrenzenden Ort.].
+        /// </summary>
+        internal static string VERBS_DIRECTIONS_EXAMPLE_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_DIRECTIONS_EXAMPLE_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to westen.
+        /// </summary>
+        internal static string VERBS_DIRECTIONS_EXAMPLE_I {
+            get {
+                return ResourceManager.GetString("VERBS_DIRECTIONS_EXAMPLE_I", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to w.
+        /// </summary>
+        internal static string VERBS_DIRECTIONS_EXAMPLE_II {
+            get {
+                return ResourceManager.GetString("VERBS_DIRECTIONS_EXAMPLE_II", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interaktion mit einem Gegenstand:.
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to zerbrich die scheibe mit dem stein.
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_I {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_I", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [spricht für sich.].
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_I_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_I_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nimm den stein.
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_II {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_II", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [hebt den Stein auf und überführt ihn ins Inventar.].
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_II_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_II_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nimm.
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_III {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_III", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [hebt alle Gegenstände im Raum auf, die frei zugänglich sind.].
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_III_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_III_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metainformationen:.
+        /// </summary>
+        internal static string VERBS_METAINFO {
+            get {
+                return ResourceManager.GetString("VERBS_METAINFO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to alter teppich.
+        /// </summary>
+        internal static string VERBS_METAINFO_EXAMPLE_I {
+            get {
+                return ResourceManager.GetString("VERBS_METAINFO_EXAMPLE_I", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [zeigt an, welcher Begriff in dieser Situation synonym für Teppich benutzt werden kann.].
+        /// </summary>
+        internal static string VERBS_METAINFO_EXAMPLE_I_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_METAINFO_EXAMPLE_I_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mein Name ist Marc.
+        /// </summary>
+        internal static string VERBS_METAINFO_EXAMPLE_II {
+            get {
+                return ResourceManager.GetString("VERBS_METAINFO_EXAMPLE_II", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [ändert den Spielernamen, der u.a. im Inventar angezeigt wird.].
+        /// </summary>
+        internal static string VERBS_METAINFO_EXAMPLE_II_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_METAINFO_EXAMPLE_II_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to name Marc.
+        /// </summary>
+        internal static string VERBS_METAINFO_EXAMPLE_III {
+            get {
+                return ResourceManager.GetString("VERBS_METAINFO_EXAMPLE_III", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rede mit dem Barkeeper.
+        /// </summary>
+        internal static string VERBS_TALK_EXAMPLE_I {
+            get {
+                return ResourceManager.GetString("VERBS_TALK_EXAMPLE_I", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [falls der Barkeeper mit Dir reden will, wird ein kurzes (vorgegebenes) Gespräch wiedergegeben. Die Möglichkeit einer Antwort besteht nicht.].
+        /// </summary>
+        internal static string VERBS_TALK_EXAMPLE_I_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_TALK_EXAMPLE_I_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to frag den Barkeeper nach dem Wiskey.
+        /// </summary>
+        internal static string VERBS_TALK_EXAMPLE_II {
+            get {
+                return ResourceManager.GetString("VERBS_TALK_EXAMPLE_II", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [falls der Barkeeper zu dem Glas etwas zu sagen hat, gibt er Dir eine Auskunft. Dient als Einstieg in ein echtes Gespräch.].
+        /// </summary>
+        internal static string VERBS_TALK_EXAMPLE_II_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_TALK_EXAMPLE_II_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sag ja zum Barkeeper.
+        /// </summary>
+        internal static string VERBS_TALK_EXAMPLE_III {
+            get {
+                return ResourceManager.GetString("VERBS_TALK_EXAMPLE_III", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [hiermit kann eine Antwort auf eine Frage gegeben, oder ein Gespräch weitergeführt werden.].
+        /// </summary>
+        internal static string VERBS_TALK_EXAMPLE_III_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_TALK_EXAMPLE_III_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interaktion mit einem Charakter:.
+        /// </summary>
+        internal static string VERBS_TALKS {
+            get {
+                return ResourceManager.GetString("VERBS_TALKS", resourceCulture);
+            }
+        }
     }
 }

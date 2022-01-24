@@ -51,4 +51,91 @@
     <data name="ITEM_DESCRIPTION_SHORT" xml:space="preserve">
         <value>[das ist die kurze Schreibweise und die zeigt Dir ebenfalls die Beschreibung des Teppichs]</value>
     </data>
+    <data name="VERBS_DIRECTIONS" xml:space="preserve">
+    <value>Bewegungsrichtungen:</value>
+  </data>
+    <data name="VERBS_DIRECTIONS_EXAMPLE_I" xml:space="preserve">
+        <value>westen</value>
+    </data>
+    <data name="VERBS_DIRECTIONS_EXAMPLE_II" xml:space="preserve">
+        <value>w</value>
+    </data>
+    <data name="VERBS_DIRECTIONS_EXAMPLE_DESCRIPTION" xml:space="preserve">
+        <value>[der Spieler bewegt sich an den westlich angrenzenden Ort.]</value>
+    </data>
+    <data name="VERBS_METAINFO" xml:space="preserve">
+        <value>Metainformationen:</value>
+    </data>
+    <data name="VERBS_METAINFO_EXAMPLE_I" xml:space="preserve">
+        <value>alter teppich</value>
+    </data>
+    <data name="VERBS_METAINFO_EXAMPLE_II" xml:space="preserve">
+        <value>mein Name ist Marc</value>
+    </data>
+    <data name="VERBS_METAINFO_EXAMPLE_III" xml:space="preserve">
+        <value>name Marc</value>
+    </data>
+    <data name="VERBS_METAINFO_EXAMPLE_I_DESCRIPTION" xml:space="preserve">
+        <value>[zeigt an, welcher Begriff in dieser Situation synonym für Teppich benutzt werden kann.]</value>
+    </data>
+    <data name="VERBS_METAINFO_EXAMPLE_II_DESCRIPTION" xml:space="preserve">
+        <value>[ändert den Spielernamen, der u.a. im Inventar angezeigt wird.]</value>
+    </data>
+    <data name="VERBS_TALKS" xml:space="preserve">
+        <value>Interaktion mit einem Charakter:</value>
+    </data>
+    <data name="VERBS_TALK_EXAMPLE_I" xml:space="preserve">
+        <value>rede mit dem Barkeeper</value>
+    </data>
+    <data name="VERBS_TALK_EXAMPLE_I_DESCRIPTION" xml:space="preserve">
+        <value>[falls der Barkeeper mit Dir reden will, wird ein kurzes (vorgegebenes) Gespräch wiedergegeben. Die Möglichkeit einer Antwort besteht nicht.]</value>
+    </data>
+    <data name="VERBS_TALK_EXAMPLE_II" xml:space="preserve">
+        <value>frag den Barkeeper nach dem Wiskey</value>
+    </data>
+    <data name="VERBS_TALK_EXAMPLE_II_DESCRIPTION" xml:space="preserve">
+        <value>[falls der Barkeeper zu dem Glas etwas zu sagen hat, gibt er Dir eine Auskunft. Dient als Einstieg in ein echtes Gespräch.]</value>
+    </data>
+    <data name="VERBS_TALK_EXAMPLE_III" xml:space="preserve">
+        <value>sag ja zum Barkeeper</value>
+    </data>
+    <data name="VERBS_TALK_EXAMPLE_III_DESCRIPTION" xml:space="preserve">
+        <value>[hiermit kann eine Antwort auf eine Frage gegeben, oder ein Gespräch weitergeführt werden.]</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS" xml:space="preserve">
+        <value>Interaktion mit einem Gegenstand:</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_I" xml:space="preserve">
+        <value>zerbrich die scheibe mit dem stein</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_I_DESCRIPTION" xml:space="preserve">
+        <value>[spricht für sich.]</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_II" xml:space="preserve">
+        <value>nimm den stein</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_II_DESCRIPTION" xml:space="preserve">
+        <value>[hebt den Stein auf und überführt ihn ins Inventar.]</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_III" xml:space="preserve">
+        <value>nimm</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_III_DESCRIPTION" xml:space="preserve">
+        <value>[hebt alle Gegenstände im Raum auf, die frei zugänglich sind.]</value>
+    </data>
+    <data name="VERBS_CONTAINER" xml:space="preserve">
+        <value>Interaktion mit ab- und verschließbaren Gegenständen:</value>
+    </data>
+    <data name="VERBS_CONTAINER_EXAMPLE_I" xml:space="preserve">
+        <value>öffne kiste</value>
+    </data>
+    <data name="VERBS_CONTAINER_EXAMPLE_I_DESCRIPTION" xml:space="preserve">
+        <value>[die Kiste wird geöffnet, sofern sie nicht abgeschlossen ist, bzw. man sie auch wirklich öffnen kann.]</value>
+    </data>
+    <data name="VERBS_CONTAINER_EXAMPLE_II" xml:space="preserve">
+        <value>entriegel schloß mit grünem schlüssel</value>
+    </data>
+    <data name="VERBS_CONTAINER_EXAMPLE_II_DESCRIPTION" xml:space="preserve">
+        <value>[das Schloß wird mit dem passenden Schlüssel aufgeschlossen.]</value>
+    </data>
 </root>
