@@ -106,7 +106,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zeigt Dir an, mit welchen alternativen Bezeichnungen Du Personen und Gegenstände noch benennen kannst..
+        ///   Looks up a localized string similar to Alternative Bezeichnungen für Personen und Gegenstände.
         /// </summary>
         public static string ALTER_EGO {
             get {
@@ -133,7 +133,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frage eine Person etwas.
+        ///   Looks up a localized string similar to Frage eine Person.
         /// </summary>
         public static string ASK {
             get {
@@ -169,7 +169,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Brich einen Gegenstand entzwei, bzw. zerstöre ihn mit einem anderen Gegenstand..
+        ///   Looks up a localized string similar to Zerbrich, bzw. zerstöre einen Gegenstand.
         /// </summary>
         public static string BREAK {
             get {
@@ -178,7 +178,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Einen Gegenstand kaufen.
+        ///   Looks up a localized string similar to Kaufe einen Gegenstand.
         /// </summary>
         public static string BUY {
             get {
@@ -196,7 +196,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schließe einen Gegenstand..
+        ///   Looks up a localized string similar to Schließe einen Gegenstand.
         /// </summary>
         public static string CLOSE {
             get {
@@ -223,7 +223,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Einen Gegenstand fallen lassen.
+        ///   Looks up a localized string similar to Lasse einen Gegenstand fallen.
         /// </summary>
         public static string DROP {
             get {
@@ -241,7 +241,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etwas essen.
+        ///   Looks up a localized string similar to Iss etwas.
         /// </summary>
         public static string EAT {
             get {
@@ -277,7 +277,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Einem anderen Charakter einen Gegenstand überreichen.
+        ///   Looks up a localized string similar to Überreiche einen Gegenstand.
         /// </summary>
         public static string GIVE {
             get {
@@ -349,7 +349,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Die Auflistung all Deiner bisherigen Kommandos..
+        ///   Looks up a localized string similar to Liste alle bisherigen Kommandos auf.
         /// </summary>
         public static string HISTORY {
             get {
@@ -601,7 +601,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Springe.
+        ///   Looks up a localized string similar to Springe hoch oder auf ein Objekt.
         /// </summary>
         public static string JUMP {
             get {
@@ -628,7 +628,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verriegelt einen Gegenstand..
+        ///   Looks up a localized string similar to Verriegel einen Gegenstand.
         /// </summary>
         public static string LOCK {
             get {
@@ -835,7 +835,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Öffne einen Gegenstand..
+        ///   Looks up a localized string similar to Öffne einen Gegenstand.
         /// </summary>
         public static string OPEN {
             get {
@@ -943,7 +943,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erhebe Dich wieder von einer Sitzgelegenheit.
+        ///   Looks up a localized string similar to Stehe von einer Sitzgelegenheit auf.
         /// </summary>
         public static string STANDUP {
             get {
@@ -1015,7 +1015,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Drehe einen Gegenstand, bzw. schließe oder öffne einen Gegenstand durch drehen..
+        ///   Looks up a localized string similar to Drehe einen Gegenstand, bzw. schließe oder öffne einen Gegenstand durch drehen.
         /// </summary>
         public static string TURN {
             get {
@@ -1024,7 +1024,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entriegelt einen Gegenstand..
+        ///   Looks up a localized string similar to Entriegel einen Gegenstand.
         /// </summary>
         public static string UNLOCK {
             get {
@@ -1087,7 +1087,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zeigt Dir explizit alle verfügbaren Wege an.
+        ///   Looks up a localized string similar to Zeige alle verfügbaren Wege.
         /// </summary>
         public static string WAYS {
             get {
@@ -1105,7 +1105,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schreibe oder Tippe etwas..
+        ///   Looks up a localized string similar to Schreibe oder tippe etwas.
         /// </summary>
         public static string WRITE {
             get {

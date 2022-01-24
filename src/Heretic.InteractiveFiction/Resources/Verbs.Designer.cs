@@ -205,7 +205,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verriegeln|Verriegel|Sperren|Sperre|Verschließe|Verschließ|Lock.
+        ///   Looks up a localized string similar to Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock.
         /// </summary>
         internal static string LOCK {
             get {
@@ -367,7 +367,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entriegeln|Entriegel|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock.
+        ///   Looks up a localized string similar to Entriegel|Entriegeln|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock.
         /// </summary>
         internal static string UNLOCK {
             get {
@@ -385,7 +385,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nutze|Benutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig.
+        ///   Looks up a localized string similar to Benutze|Nutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig.
         /// </summary>
         internal static string USE {
             get {

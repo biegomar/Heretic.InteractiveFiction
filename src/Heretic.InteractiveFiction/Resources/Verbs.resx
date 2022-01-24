@@ -148,7 +148,7 @@
     <value>Spring|Springe</value>
   </data>
   <data name="LOCK" xml:space="preserve">
-    <value>Verriegeln|Verriegel|Sperren|Sperre|Verschließe|Verschließ|Lock</value>
+    <value>Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock</value>
   </data>
   <data name="LOOK" xml:space="preserve">
     <value>Schaue|Schau|Lies|Untersuche|Zeige|Zeig|Look|L|Show</value>
@@ -196,13 +196,13 @@
     <value>Drehe|Dreh</value>
   </data>
   <data name="UNLOCK" xml:space="preserve">
-    <value>Entriegeln|Entriegel|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock</value>
+    <value>Entriegel|Entriegeln|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock</value>
   </data>
   <data name="UP" xml:space="preserve">
     <value>Hoch|Rauf</value>
   </data>
   <data name="USE" xml:space="preserve">
-    <value>Nutze|Benutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig</value>
+    <value>Benutze|Nutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig</value>
   </data>
   <data name="W" xml:space="preserve">
     <value>Westen|West|W</value>

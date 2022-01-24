@@ -232,16 +232,16 @@
     <value>(schreibe 'hilfe', um Hilfe zu erhalten.)</value>
   </data>
   <data name="ALTER_EGO" xml:space="preserve">
-    <value>Zeigt Dir an, mit welchen alternativen Bezeichnungen Du Personen und Gegenstände noch benennen kannst.</value>
+    <value>Alternative Bezeichnungen für Personen und Gegenstände</value>
   </data>
   <data name="ASK" xml:space="preserve">
-    <value>Frage eine Person etwas</value>
+    <value>Frage eine Person</value>
   </data>
   <data name="BUY" xml:space="preserve">
-    <value>Einen Gegenstand kaufen</value>
+    <value>Kaufe einen Gegenstand</value>
   </data>
   <data name="CLOSE" xml:space="preserve">
-    <value>Schließe einen Gegenstand.</value>
+    <value>Schließe einen Gegenstand</value>
   </data>
   <data name="CREDITS" xml:space="preserve">
     <value>Informationen zum Spiel abrufen</value>
@@ -250,28 +250,28 @@
     <value>Bewegungsrichtung "Runter"</value>
   </data>
   <data name="DROP" xml:space="preserve">
-    <value>Einen Gegenstand fallen lassen</value>
+    <value>Lasse einen Gegenstand fallen</value>
   </data>
   <data name="E" xml:space="preserve">
     <value>Bewegungsrichtung "Osten"</value>
   </data>
   <data name="GIVE" xml:space="preserve">
-    <value>Einem anderen Charakter einen Gegenstand überreichen</value>
+    <value>Überreiche einen Gegenstand</value>
   </data>
   <data name="GO" xml:space="preserve">
     <value>Gehe zu einem Ort</value>
   </data>
   <data name="HISTORY" xml:space="preserve">
-    <value>Die Auflistung all Deiner bisherigen Kommandos.</value>
+    <value>Liste alle bisherigen Kommandos auf</value>
   </data>
   <data name="INV" xml:space="preserve">
     <value>Zeige Deine mitgeführten Gegenstände</value>
   </data>
   <data name="JUMP" xml:space="preserve">
-    <value>Springe</value>
+    <value>Springe hoch oder auf ein Objekt</value>
   </data>
   <data name="LOCK" xml:space="preserve">
-    <value>Verriegelt einen Gegenstand.</value>
+    <value>Verriegel einen Gegenstand</value>
   </data>
   <data name="LOOK" xml:space="preserve">
     <value>Schaue Dir Örtlichkeiten, Personen oder Gegenstände an</value>
@@ -289,7 +289,7 @@
     <value>Bewegungsrichtung "Nord-West"</value>
   </data>
   <data name="OPEN" xml:space="preserve">
-    <value>Öffne einen Gegenstand.</value>
+    <value>Öffne einen Gegenstand</value>
   </data>
   <data name="QUIT" xml:space="preserve">
     <value>Beende das Spiel</value>
@@ -316,10 +316,10 @@
     <value>Smalltalk mit einer Person</value>
   </data>
   <data name="TURN" xml:space="preserve">
-    <value>Drehe einen Gegenstand, bzw. schließe oder öffne einen Gegenstand durch drehen.</value>
+    <value>Drehe einen Gegenstand, bzw. schließe oder öffne einen Gegenstand durch drehen</value>
   </data>
   <data name="UNLOCK" xml:space="preserve">
-    <value>Entriegelt einen Gegenstand.</value>
+    <value>Entriegel einen Gegenstand</value>
   </data>
   <data name="UP" xml:space="preserve">
     <value>Bewegungsrichtung "Hoch"</value>
@@ -331,7 +331,7 @@
     <value>Bewegungsrichtung "Westen"</value>
   </data>
   <data name="WAYS" xml:space="preserve">
-    <value>Zeigt Dir explizit alle verfügbaren Wege an</value>
+    <value>Zeige alle verfügbaren Wege</value>
   </data>
   <data name="IMPOSSIBLE_CHARACTER_PICKUP" xml:space="preserve">
     <value>Aaah, eine Entführung? Das ist bestimmt ein ganz tolle Idee...</value>
@@ -403,7 +403,7 @@
     <value>"Dazu kann ich Ihnen im Moment nichts sagen", antwortet {0}.</value>
   </data>
   <data name="EAT" xml:space="preserve">
-    <value>Etwas essen</value>
+    <value>Iss etwas</value>
   </data>
   <data name="ITEM_EATEN" xml:space="preserve">
     <value>Du hast {0} gegessen.</value>
@@ -439,13 +439,13 @@
     <value>So wie es aussieht, sitzt Du gerade gar nicht.</value>
   </data>
   <data name="STANDUP" xml:space="preserve">
-    <value>Erhebe Dich wieder von einer Sitzgelegenheit</value>
+    <value>Stehe von einer Sitzgelegenheit auf</value>
   </data>
   <data name="SITTING_ON" xml:space="preserve">
     <value>Du sitzt gerade auf {0}.</value>
   </data>
   <data name="WRITE" xml:space="preserve">
-    <value>Schreibe oder Tippe etwas.</value>
+    <value>Schreibe oder tippe etwas</value>
   </data>
   <data name="ITEM_ONLY_SEAT" xml:space="preserve">
         <value>Scheinbar gibt es in diesem Raum nur eine richtige Sitzmöglichkeit. Daher nimmt Du einfach auf {0} Platz.</value>
@@ -457,7 +457,7 @@
     <value>Auf welche der Sitzgelegenheiten möchtest Du denn Platz nehmen? Das musst Du schon genauer bestimmen.</value>
   </data>
   <data name="BREAK" xml:space="preserve">
-    <value>Brich einen Gegenstand entzwei, bzw. zerstöre ihn mit einem anderen Gegenstand.</value>
+    <value>Zerbrich, bzw. zerstöre einen Gegenstand</value>
   </data>
   <data name="IMPOSSIBLE_BREAK" xml:space="preserve">
     <value>Du kannst das nicht zerstören.</value>
