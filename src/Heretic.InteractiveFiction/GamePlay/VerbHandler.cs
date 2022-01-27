@@ -1120,9 +1120,9 @@ internal sealed class VerbHandler
 
     private string GetItemKeyByName(string itemName)
     {
-        var activeLocationItemKeys = this.universe.ActiveLocation.Items.Select(x => x.Key);
-        var activePlayerItemKeys = this.universe.ActivePlayer.Items.Select(x => x.Key);
-        var prioritizedKeysOfActiveLocationAndPlayer = activeLocationItemKeys.Union(activePlayerItemKeys).ToList();
+        var allActiveLocationItemKeys = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items);
+        var allActivePlayerItemKeys = this.GetItemKeysRecursive(this.universe.ActivePlayer.Items);
+        var prioritizedKeysOfActiveLocationAndPlayer = allActiveLocationItemKeys.Union(allActivePlayerItemKeys).ToList();
         var prioritizedItemResources = this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key));
         
         foreach (var (key, value) in prioritizedItemResources)
@@ -1142,6 +1142,22 @@ internal sealed class VerbHandler
         }
 
         return string.Empty;
+    }
+
+    private IEnumerable<string> GetItemKeysRecursive(IEnumerable<Item> items)
+    {
+        var result = new List<string>();
+        foreach (var item in items)
+        {
+            if (item.Items.Any())
+            {
+                result.AddRange(this.GetItemKeysRecursive(item.Items));
+            }
+            
+            result.Add(item.Key);
+        }
+
+        return result;
     }
 
     private string GetLocationKeyByName(string locationName)
