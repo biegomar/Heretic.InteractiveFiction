@@ -286,9 +286,16 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
-                item.OnTurn(new ContainerObjectEventArgs());
+                try
+                {
+                    item.OnTurn(new ContainerObjectEventArgs());
 
-                return true;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
             }
 
             return PrintingSubsystem.ItemNotVisible();

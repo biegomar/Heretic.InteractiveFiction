@@ -257,6 +257,20 @@ public abstract class AContainerObject
         }
     }
     
+    public virtual void OnTurn(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Turn;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new BreakException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
     public virtual void OnBeforeSitDown(ContainerObjectEventArgs eventArgs)
     {
         EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeSitDown;
@@ -290,12 +304,6 @@ public abstract class AContainerObject
     public virtual void OnAfterLook(ContainerObjectEventArgs eventArgs)
     {
         EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterLook;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnTurn(ContainerObjectEventArgs eventArgs)
-    {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Turn;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
