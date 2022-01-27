@@ -483,4 +483,7 @@
   <data name="IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY" xml:space="preserve">
     <value>{0} lässt sich ohne passenden Schlüssel oder einen schlüsselähnlichen Gegenstand nicht öffnen. {1} ist auf jeden Fall nicht passend.</value>
   </data>
+  <data name="PULL" xml:space="preserve">
+    <value>Ziehe an einem Gegenstand</value>
+  </data>
 </root>

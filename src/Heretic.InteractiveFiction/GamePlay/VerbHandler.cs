@@ -77,6 +77,31 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Pull(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.PULL].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var item = this.GetUnhiddenObjectByName(subject);
+            if (item != default)
+            {
+                try
+                {
+                    item.OnPull(new ContainerObjectEventArgs());
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
 
     internal bool AlterEgo(string verb, string subject)
     {

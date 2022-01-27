@@ -156,6 +156,7 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> Buy;
+    public event EventHandler<ContainerObjectEventArgs> Pull;
     public event EventHandler<ContainerObjectEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
     public event EventHandler<UseItemEventArg> Use;
@@ -171,6 +172,19 @@ public abstract class AContainerObject
         else
         {
             throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+    
+    public virtual void OnPull(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Pull;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new PullException(BaseDescriptions.NOTHING_HAPPENS);
         }
     }
     

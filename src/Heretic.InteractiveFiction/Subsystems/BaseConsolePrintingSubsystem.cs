@@ -238,6 +238,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         {
             nameof(Verbs.TAKE),
             nameof(Verbs.DROP),
+            nameof(Verbs.PULL),
             nameof(Verbs.BUY),
             nameof(Verbs.BREAK),
             nameof(Verbs.USE),

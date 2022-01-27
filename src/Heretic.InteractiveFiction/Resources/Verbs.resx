@@ -237,4 +237,7 @@
   <data name="BREAK" xml:space="preserve">
     <value>Zerbrich|Zerbreche|Brich|Breche|Brech|Zerstöre|Zerstör|Zerschlage|Zerschlag</value>
   </data>
+  <data name="PULL" xml:space="preserve">
+    <value>Ziehe|Zieh</value>
+  </data>
 </root>

@@ -853,6 +853,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ziehe an einem Gegenstand.
+        /// </summary>
+        public static string PULL {
+            get {
+                return ResourceManager.GetString("PULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beende das Spiel.
         /// </summary>
         public static string QUIT {

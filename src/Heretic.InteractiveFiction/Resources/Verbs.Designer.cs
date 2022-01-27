@@ -268,6 +268,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ziehe|Zieh.
+        /// </summary>
+        internal static string PULL {
+            get {
+                return ResourceManager.GetString("PULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit|Exit|Ende|Q.
         /// </summary>
         internal static string QUIT {

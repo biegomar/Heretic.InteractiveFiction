@@ -99,6 +99,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Open(processingVerb, processingSubject);
         result = result || verbHandler.Close(processingVerb, processingSubject);
         result = result || verbHandler.Drop(processingVerb, commaSeparatedList);
+        result = result || verbHandler.Pull(processingVerb, processingSubject);
         result = result || verbHandler.Turn(processingVerb, processingSubject);
         result = result || verbHandler.AlterEgo(processingVerb, processingSubject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject);
