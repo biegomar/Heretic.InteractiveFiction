@@ -160,6 +160,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_DIRECTIONS.Length));
         VerbHelp(GetDirectionVerbs(verbResource));
+        VerbGroupDirectionsExamples();
+    }
+
+    private void VerbGroupDirectionsExamples()
+    {
         Console.WriteLine(HelpDescriptions.EXAMPLES);
         Console.Write(HelpDescriptions.PROMPT);
         this.ForegroundColor = TextColor.Green;
@@ -174,7 +179,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS_EXAMPLE_DESCRIPTION);
         Console.WriteLine();
     }
-    
+
     private IDictionary<string, IEnumerable<string>> GetMetaInfoVerbs(
         IDictionary<string, IEnumerable<string>> verbResource)
     {
@@ -200,6 +205,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_METAINFO);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_METAINFO.Length));
         VerbHelp(GetMetaInfoVerbs(verbResource));
+        VerbMetaInfosExamples();
+    }
+
+    private void VerbMetaInfosExamples()
+    {
         Console.WriteLine(HelpDescriptions.EXAMPLES);
         Console.Write(HelpDescriptions.PROMPT);
         this.ForegroundColor = TextColor.Green;
@@ -220,7 +230,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_METAINFO_EXAMPLE_II_DESCRIPTION);
         Console.WriteLine();
     }
-    
+
     private IDictionary<string, IEnumerable<string>> GetInteractVerbs(
         IDictionary<string, IEnumerable<string>> verbResource)
     {
@@ -248,6 +258,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_INTERACT_ITEMS.Length));
         VerbHelp(GetInteractVerbs(verbResource));
+        VerbInteractItemsExamples();
+    }
+
+    private void VerbInteractItemsExamples()
+    {
         Console.WriteLine(HelpDescriptions.EXAMPLES);
         Console.Write(HelpDescriptions.PROMPT);
         this.ForegroundColor = TextColor.Green;
@@ -268,7 +283,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_III_DESCRIPTION);
         Console.WriteLine();
     }
-    
+
     private IDictionary<string, IEnumerable<string>> GetTalkVerbs(
         IDictionary<string, IEnumerable<string>> verbResource)
     {
@@ -290,6 +305,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_TALKS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_TALKS.Length));
         VerbHelp(GetTalkVerbs(verbResource));
+        VerbTalksExamples();
+    }
+
+    private void VerbTalksExamples()
+    {
         Console.WriteLine(HelpDescriptions.EXAMPLES);
         Console.Write(HelpDescriptions.PROMPT);
         this.ForegroundColor = TextColor.Green;
@@ -310,7 +330,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_III_DESCRIPTION);
         Console.WriteLine();
     }
-    
+
     private IDictionary<string, IEnumerable<string>> GetContainerVerbs(
         IDictionary<string, IEnumerable<string>> verbResource)
     {
@@ -333,6 +353,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_CONTAINER);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_CONTAINER.Length));
         VerbHelp(GetContainerVerbs(verbResource));
+        VerbContainersExamples();
+    }
+
+    private void VerbContainersExamples()
+    {
         Console.WriteLine(HelpDescriptions.EXAMPLES);
         Console.Write(HelpDescriptions.PROMPT);
         this.ForegroundColor = TextColor.Green;
@@ -353,6 +378,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_III_DESCRIPTION);
         Console.WriteLine();
     }
+
     private void GeneralHelp()
     {
         Console.WriteLine(HelpDescriptions.HELP_DESCRIPTION);
