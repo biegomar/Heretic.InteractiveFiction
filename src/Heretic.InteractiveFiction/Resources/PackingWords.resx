@@ -127,7 +127,7 @@
     <value>mein|meine|sein|seine|dein|deine|der|die|das|den|dem|du|dich</value>
   </data>
   <data name="ON" xml:space="preserve">
-    <value>auf|in|ins|an|zum|zur|zu|mit|ab|nach|unter</value>
+    <value>auf|in|ins|an|am|zum|zur|zu|mit|ab|nach|unter|um</value>
   </data>
   <data name="TO_BE" xml:space="preserve">
     <value>ist</value>

@@ -88,7 +88,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to auf|in|ins|an|zum|zur|zu|mit|ab|nach|unter.
+        ///   Looks up a localized string similar to auf|in|ins|an|am|zum|zur|zu|mit|ab|nach|unter|um.
         /// </summary>
         public static string ON {
             get {
