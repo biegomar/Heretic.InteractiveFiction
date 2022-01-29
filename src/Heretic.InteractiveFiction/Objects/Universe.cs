@@ -177,6 +177,15 @@ public class Universe
             return;
         }
 
+        var unveilAbleLinkedItems = container.LinkedTo.Where(i => i.IsUnveilAble).ToList();
+        if (unveilAbleLinkedItems.Any())
+        {
+            foreach (var linkedItem in unveilAbleLinkedItems)
+            {
+                linkedItem.IsHidden = false;
+            }
+        }
+        
         if (container.IsCloseAble && container.IsClosed)
         {
             return;
@@ -185,9 +194,9 @@ public class Universe
         var unveilAbleItems = container.Items.Where(i => i.IsUnveilAble).ToList();
         if (unveilAbleItems.Any())
         {
-            foreach (var items in unveilAbleItems)
+            foreach (var item in unveilAbleItems)
             {
-                items.IsHidden = false;
+                item.IsHidden = false;
             }
         }
 

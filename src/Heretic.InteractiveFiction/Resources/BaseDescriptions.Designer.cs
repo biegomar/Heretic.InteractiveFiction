@@ -619,7 +619,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ist verbunden mit: .
+        ///   Looks up a localized string similar to Ist verbunden mit: .
         /// </summary>
         public static string LINKED_TO {
             get {
@@ -1119,6 +1119,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string WRITE {
             get {
                 return ResourceManager.GetString("WRITE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Damit wird Dir das nicht gelingen!.
+        /// </summary>
+        public static string WRONG_BREAK_ITEM {
+            get {
+                return ResourceManager.GetString("WRONG_BREAK_ITEM", resourceCulture);
             }
         }
         

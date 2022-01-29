@@ -106,7 +106,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credits|Info|Anerkennung|Anerkennungen|Referenz|Referenzen|Würdigung|Würdigungen.
+        ///   Looks up a localized string similar to Credits|Info|Contribute|Contrib.
         /// </summary>
         internal static string CREDITS {
             get {

@@ -128,7 +128,7 @@ public abstract class AContainerObject
     /// </summary>
     public IDictionary<string, string> Surroundings { get; init; }
 
-    public ICollection<string> LinkedTo { get; init; }
+    public ICollection<Item> LinkedTo { get; init; }
 
     /// <summary>
     /// The list of contained characters.
@@ -380,7 +380,7 @@ public abstract class AContainerObject
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.Surroundings = new Dictionary<string, string>();
-        this.LinkedTo = new List<string>();
+        this.LinkedTo = new List<Item>();
         this.FirstLookDescription = string.Empty;
         this.IsBreakable = false;
         this.IsBroken = false;
@@ -437,7 +437,11 @@ public abstract class AContainerObject
                 }
                 else
                 {
-                    description.AppendLine(string.Join(Environment.NewLine, unHiddenObjectsWithContainmentDescription.Select(x => x.ContainmentDescription)));    
+                    foreach (var item in unHiddenObjectsWithContainmentDescription)
+                    {
+                        description.Append(item.ContainmentDescription);
+                        description.AppendLine(GetLinkedObjectsDescription(item));
+                    }
                 }
             }
 
@@ -517,22 +521,23 @@ public abstract class AContainerObject
         var description = new StringBuilder();
         if (item.LinkedTo.Any())
         {
-            description.Append(" (").Append(BaseDescriptions.LINKED_TO);
-            int linkedItemIndex = 0;
-            foreach (var linkedItem in item.LinkedTo)
+            var orderedUnhiddenLinkedItems = item.LinkedTo.Where(x => !x.IsHidden).OrderByDescending(x => x.ContainmentDescription).ToList();
+            foreach (var linkedItem in orderedUnhiddenLinkedItems)
             {
-                if (linkedItemIndex > 0)
+                if (!string.IsNullOrEmpty(linkedItem.ContainmentDescription))
                 {
-                    description.Append(", ");
+                    description.Append(' ');
+                    description.Append(linkedItem.ContainmentDescription);
                 }
-
-                description.Append(linkedItem.First().ToString().ToLower());
-                description.Append(linkedItem.Substring(1));
-
-                linkedItemIndex++;
+                else
+                {
+                    description.Append(' ');
+                    description.Append(BaseDescriptions.LINKED_TO);
+                    description.Append(linkedItem.Name.First().ToString().ToLower());
+                    description.Append(linkedItem.Name.Substring(1));
+                    description.Append('.');
+                }
             }
-
-            description.Append(')');
         }
 
         return description.ToString();
@@ -555,8 +560,12 @@ public abstract class AContainerObject
 
     public Item GetUnhiddenItemByKey(string key)
     {
-        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false);
-        var unhiddenItems = this.Items.Where(i => i.IsHidden == false).Union(itemsFromCharacter).ToList();
+        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false)
+            .Union(this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.LinkedTo).Where(i => i.IsHidden == false));
+        
+        var unhiddenItems = this.Items.Where(i => i.IsHidden == false)
+            .Union(this.LinkedTo.Where(i => i.IsHidden == false))
+            .Union(itemsFromCharacter).ToList();
 
         if (unhiddenItems.Any())
         {

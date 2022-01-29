@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LINKED_TO" xml:space="preserve">
-    <value>ist verbunden mit: </value>
+    <value>Ist verbunden mit: </value>
   </data>
   <data name="NOTHING_HAPPENS" xml:space="preserve">
     <value>Nichts passiert!</value>
@@ -485,5 +485,8 @@
   </data>
   <data name="PULL" xml:space="preserve">
     <value>Ziehe an einem Gegenstand</value>
+  </data>
+  <data name="WRONG_BREAK_ITEM" xml:space="preserve">
+    <value>Damit wird Dir das nicht gelingen!</value>
   </data>
 </root>

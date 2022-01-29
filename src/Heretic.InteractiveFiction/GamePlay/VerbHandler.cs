@@ -366,7 +366,7 @@ internal sealed class VerbHandler
                     return result;
                 }
 
-                return false;
+                return PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_OPEN);
             }
             
             // lets have a look at surroundings.
@@ -1152,20 +1152,32 @@ internal sealed class VerbHandler
 
     private string GetItemKeyByName(string itemName)
     {
-        var allActiveLocationItemKeys = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items);
-        var allActivePlayerItemKeys = this.GetItemKeysRecursive(this.universe.ActivePlayer.Items);
-        var prioritizedKeysOfActiveLocationAndPlayer = allActiveLocationItemKeys.Union(allActivePlayerItemKeys).ToList();
-        var prioritizedItemResources = this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key));
-        
-        foreach (var (key, value) in prioritizedItemResources)
+        if (GetPrioritizedItemKeys(itemName) is { } itemKey && !string.IsNullOrEmpty(itemKey))
+        {
+            return itemKey;
+        }
+
+        foreach (var (key, value) in this.universe.ItemResources)
         {
             if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
             {
                 return key;
             }
         }
-        
-        foreach (var (key, value) in this.universe.ItemResources)
+
+        return string.Empty;
+    }
+
+    private string GetPrioritizedItemKeys(string itemName)
+    {
+        var allActiveLocationItemKeys = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items)
+            .Union(this.GetSurroundingKeys(this.universe.ActiveLocation.Surroundings));
+        var allActivePlayerItemKeys = this.GetItemKeysRecursive(this.universe.ActivePlayer.Items);
+        var prioritizedKeysOfActiveLocationAndPlayer = allActiveLocationItemKeys.Union(allActivePlayerItemKeys).ToList();
+        var prioritizedItemResources =
+            this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key));
+
+        foreach (var (key, value) in prioritizedItemResources)
         {
             if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
             {
@@ -1185,11 +1197,22 @@ internal sealed class VerbHandler
             {
                 result.AddRange(this.GetItemKeysRecursive(item.Items));
             }
+
+            //TODO - also recursive, but break on circular references.
+            if (item.LinkedTo.Any())
+            {
+                result.AddRange(item.LinkedTo.Select(x => x.Key));
+            }
             
             result.Add(item.Key);
         }
 
         return result;
+    }
+    
+    private IEnumerable<string> GetSurroundingKeys(IDictionary<string, string> surroundings)
+    {
+        return surroundings.Keys.ToList();
     }
 
     private string GetLocationKeyByName(string locationName)
