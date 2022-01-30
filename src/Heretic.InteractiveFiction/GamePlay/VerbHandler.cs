@@ -102,6 +102,31 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Push(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.PUSH].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var item = this.GetUnhiddenObjectByName(subject);
+            if (item != default)
+            {
+                try
+                {
+                    item.OnPush(new ContainerObjectEventArgs());
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
 
     internal bool AlterEgo(string verb, string subject)
     {
@@ -358,6 +383,8 @@ internal sealed class VerbHandler
                         return PrintingSubsystem.ItemAlreadyOpen(item);
                     }
 
+                    item.OnBeforeOpen(new ContainerObjectEventArgs());
+                    
                     item.IsClosed = false;
                     var result = PrintingSubsystem.ItemOpen(item);
 

@@ -862,6 +862,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drücke, bzw. schiebe oder stecke einen Gegenstand in etwas hinein.
+        /// </summary>
+        public static string PUSH {
+            get {
+                return ResourceManager.GetString("PUSH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beende das Spiel.
         /// </summary>
         public static string QUIT {

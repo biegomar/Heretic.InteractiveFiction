@@ -489,4 +489,7 @@
   <data name="WRONG_BREAK_ITEM" xml:space="preserve">
     <value>Damit wird Dir das nicht gelingen!</value>
   </data>
+  <data name="PUSH" xml:space="preserve">
+    <value>Drücke, bzw. schiebe oder stecke einen Gegenstand in etwas hinein</value>
+  </data>
 </root>

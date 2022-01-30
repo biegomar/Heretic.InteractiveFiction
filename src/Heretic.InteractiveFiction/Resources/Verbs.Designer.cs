@@ -61,7 +61,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alter|Alterego|Alternativ|Alternative.
+        ///   Looks up a localized string similar to Alter|Alterego|Alternativ|Alternative|Alias.
         /// </summary>
         internal static string ALTER_EGO {
             get {
@@ -273,6 +273,15 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string PULL {
             get {
                 return ResourceManager.GetString("PULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drücke|Drück|Schiebe|Schieb|Stecke|Steck.
+        /// </summary>
+        internal static string PUSH {
+            get {
+                return ResourceManager.GetString("PUSH", resourceCulture);
             }
         }
         

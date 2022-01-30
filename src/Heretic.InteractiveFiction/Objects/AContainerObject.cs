@@ -148,6 +148,7 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterEat; 
     public event EventHandler<ContainerObjectEventArgs> AfterGive;
     public event EventHandler<ContainerObjectEventArgs> Open;
+    public event EventHandler<ContainerObjectEventArgs> BeforeOpen;
     public event EventHandler<ContainerObjectEventArgs> AfterOpen;
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
@@ -157,6 +158,7 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<ContainerObjectEventArgs> Pull;
+    public event EventHandler<ContainerObjectEventArgs> Push;
     public event EventHandler<ContainerObjectEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
     public event EventHandler<UseItemEventArg> Use;
@@ -185,6 +187,19 @@ public abstract class AContainerObject
         else
         {
             throw new PullException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+    
+    public virtual void OnPush(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Push;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new PushException(BaseDescriptions.NOTHING_HAPPENS);
         }
     }
     
@@ -356,6 +371,12 @@ public abstract class AContainerObject
         localEventHandler?.Invoke(this, eventArgs);
     }
 
+    public virtual void OnBeforeOpen(ContainerObjectEventArgs eventArgs)
+    {
+        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeOpen;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
     public virtual void OnAfterOpen(ContainerObjectEventArgs eventArgs)
     {
         EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterOpen;

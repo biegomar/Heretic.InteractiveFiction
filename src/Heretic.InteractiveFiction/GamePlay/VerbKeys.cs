@@ -26,6 +26,7 @@ public static class VerbKeys
     public static string NW => nameof(NW);
     public static string OPEN => nameof(OPEN);
     public static string PULL => nameof(PULL);
+    public static string PUSH => nameof(PUSH);
     public static string QUIT => nameof(QUIT);
     public static string S => nameof(S);
     public static string SAY => nameof(SAY);
