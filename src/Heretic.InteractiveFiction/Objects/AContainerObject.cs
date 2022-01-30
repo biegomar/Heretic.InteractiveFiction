@@ -158,18 +158,18 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<ContainerObjectEventArgs> Pull;
-    public event EventHandler<ContainerObjectEventArgs> Push;
+    public event EventHandler<PushItemEventArgs> Push;
     public event EventHandler<ContainerObjectEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
-    public event EventHandler<UseItemEventArg> Use;
+    public event EventHandler<UseItemEventArgs> Use;
     public event EventHandler<WriteEventArgs> Write;
 
-    public virtual void OnUse(UseItemEventArg eventArgs)
+    public virtual void OnUse(UseItemEventArgs eventArgses)
     {
-        EventHandler<UseItemEventArg> localEventHandler = this.Use;
+        EventHandler<UseItemEventArgs> localEventHandler = this.Use;
         if (localEventHandler != null)
         {
-            localEventHandler.Invoke(this, eventArgs);
+            localEventHandler.Invoke(this, eventArgses);
         }
         else
         {
@@ -190,9 +190,9 @@ public abstract class AContainerObject
         }
     }
     
-    public virtual void OnPush(ContainerObjectEventArgs eventArgs)
+    public virtual void OnPush(PushItemEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Push;
+        EventHandler<PushItemEventArgs> localEventHandler = this.Push;
         if (localEventHandler != null)
         {
             localEventHandler.Invoke(this, eventArgs);

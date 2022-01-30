@@ -128,6 +128,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Give(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Use(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Push(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Break(processingVerb, processingSubject, processingObject);
 
         if (!result)

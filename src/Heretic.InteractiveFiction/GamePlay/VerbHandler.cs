@@ -112,7 +112,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
-                    item.OnPush(new ContainerObjectEventArgs());
+                    item.OnPush(new PushItemEventArgs());
 
                     return true;
                 }
@@ -127,6 +127,40 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Push(string verb, string subjectName, string objectName)
+    {
+        if (this.universe.VerbResources[VerbKeys.PUSH].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var subject = this.GetUnhiddenObjectByName(subjectName);
+
+            if (subject == default)
+            {
+                return PrintingSubsystem.CanNotUseObject(subjectName);
+            }
+
+            var item = this.GetUnhiddenObjectByName(objectName);
+
+            if (item == default)
+            {
+                return PrintingSubsystem.CanNotUseObject(objectName);
+            }
+
+            try
+            {
+                subject.OnPush(new PushItemEventArgs() {ItemToUse = item});
+
+                return true;
+            }
+            catch (PushException ex)
+            {
+                return PrintingSubsystem.Resource(ex.Message);
+            }
+        }
+
+        return false;
+    }
+
 
     internal bool AlterEgo(string verb, string subject)
     {
@@ -253,7 +287,7 @@ internal sealed class VerbHandler
 
             try
             {
-                subject.OnUse(new UseItemEventArg() {ItemToUse = item});
+                subject.OnUse(new UseItemEventArgs() {ItemToUse = item});
 
                 return true;
             }
