@@ -76,7 +76,7 @@ public abstract class AContainerObject
     /// <summary>
     /// If the object cannot be taken, this description can explain why.
     /// </summary>
-    public string UnPickAbleDescription { get; init; }
+    public string UnPickAbleDescription { get; set; }
     /// <summary>
     /// The weight of the object.
     /// </summary>
@@ -879,6 +879,8 @@ public abstract class AContainerObject
             description.Append(this.PrintCharacters());
             description.Append(this.PrintItems());
         }
+        
+        description.Append(GetLinkedObjectsDescription(this));
 
         return description.ToString();
     }
