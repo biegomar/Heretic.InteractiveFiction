@@ -516,7 +516,10 @@ public abstract class AContainerObject
                         }
                     }
 
-                    description.Append(GetLinkedObjectsDescription(item));
+                    if (!subItems)
+                    {
+                        description.Append(GetLinkedObjectsDescription(item));
+                    }
 
                     index++;
                 }
@@ -542,23 +545,46 @@ public abstract class AContainerObject
         var description = new StringBuilder();
         if (item.LinkedTo.Any())
         {
-            var orderedUnhiddenLinkedItems = item.LinkedTo.Where(x => !x.IsHidden).OrderByDescending(x => x.ContainmentDescription).ToList();
-            foreach (var linkedItem in orderedUnhiddenLinkedItems)
+            
+            var unhiddenLinkedItemsWithContainment = item.LinkedTo.Where(x => !x.IsHidden && !string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
+            var unhiddenLinkedItemsWithoutContainment =
+                item.LinkedTo.Except(unhiddenLinkedItemsWithContainment).ToList();
+            
+            description.Append(" (");
+            
+            int linkedItemIndex = 0;
+            foreach (var linkedItem in unhiddenLinkedItemsWithContainment)
             {
-                if (!string.IsNullOrEmpty(linkedItem.ContainmentDescription))
+                if (linkedItemIndex > 0)
                 {
                     description.Append(' ');
-                    description.Append(linkedItem.ContainmentDescription);
+                }
+                
+                description.Append(linkedItem.ContainmentDescription);
+                
+                linkedItemIndex++;
+            }
+            
+            linkedItemIndex = 0;
+            foreach (var linkedItem in unhiddenLinkedItemsWithoutContainment)
+            {
+                if (linkedItemIndex == 0)
+                {
+                    description.Append(' ').Append(BaseDescriptions.LINKED_TO);
+                    
                 }
                 else
                 {
-                    description.Append(' ');
-                    description.Append(BaseDescriptions.LINKED_TO);
-                    description.Append(linkedItem.Name.First().ToString().ToLower());
-                    description.Append(linkedItem.Name.Substring(1));
-                    description.Append('.');
+                    description.Append(", ");
                 }
+                
+                description.Append(linkedItem.Name.First().ToString().ToLower());
+                description.Append(linkedItem.Name.Substring(1));
+
+                linkedItemIndex++;
             }
+
+            description.Append(')');
         }
 
         return description.ToString();
