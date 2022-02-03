@@ -103,6 +103,39 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Pull(string verb, string subjectName, string objectName)
+    {
+        if (this.universe.VerbResources[VerbKeys.PULL].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var subject = this.GetUnhiddenObjectByName(subjectName);
+
+            if (subject == default)
+            {
+                return PrintingSubsystem.CanNotUseObject(subjectName);
+            }
+
+            var item = this.GetUnhiddenObjectByName(objectName);
+
+            if (item == default)
+            {
+                return PrintingSubsystem.CanNotUseObject(objectName);
+            }
+
+            try
+            {
+                subject.OnPull(new PullItemEventArgs() {ItemToUse = item});
+
+                return true;
+            }
+            catch (PushException ex)
+            {
+                return PrintingSubsystem.Resource(ex.Message);
+            }
+        }
+
+        return false;
+    }
+    
     internal bool Push(string verb, string subject)
     {
         if (this.universe.VerbResources[VerbKeys.PUSH].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
@@ -381,6 +414,7 @@ internal sealed class VerbHandler
                     item.OnBeforeClose(new ContainerObjectEventArgs());
 
                     item.IsClosed = true;
+                    this.HideItemsOnClose(item);
                     var result = PrintingSubsystem.ItemClosed(item);
 
                     item.OnAfterClose(new ContainerObjectEventArgs());
@@ -395,6 +429,17 @@ internal sealed class VerbHandler
         }
 
         return false;
+    }
+    
+    private void HideItemsOnClose(AContainerObject item)
+    {
+        if (item.IsClosed)
+        {
+            foreach (var child in item.Items.Where(x => x.HideOnContainerClose))
+            {
+                child.IsHidden = true;
+            }
+        }
     }
 
     internal bool Open(string verb, string subject)

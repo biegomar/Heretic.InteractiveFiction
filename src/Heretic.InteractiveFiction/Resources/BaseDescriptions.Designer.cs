@@ -214,6 +214,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Das scheint nicht zu funktionieren..
+        /// </summary>
+        public static string DOES_NOT_WORK {
+            get {
+                return ResourceManager.GetString("DOES_NOT_WORK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bewegungsrichtung &quot;Runter&quot;.
         /// </summary>
         public static string DOWN {

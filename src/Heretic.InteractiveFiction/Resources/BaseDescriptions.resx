@@ -492,4 +492,7 @@
   <data name="PUSH" xml:space="preserve">
     <value>Drücke, bzw. schiebe oder stecke einen Gegenstand in etwas hinein</value>
   </data>
+  <data name="DOES_NOT_WORK" xml:space="preserve">
+    <value>Das scheint nicht zu funktionieren.</value>
+  </data>
 </root>

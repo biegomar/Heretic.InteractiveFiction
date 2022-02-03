@@ -60,6 +60,10 @@ public abstract class AContainerObject
     /// </summary>
     public bool IsHidden { get; set; }
     /// <summary>
+    /// Should this object be hidden when the container it is placed in is closed?
+    /// </summary>
+    public bool HideOnContainerClose { get; set; }
+    /// <summary>
     /// Is this a physical object or just virtual? 
     /// </summary>
     public bool IsVirtual { get; set; }
@@ -199,7 +203,7 @@ public abstract class AContainerObject
         }
         else
         {
-            throw new PushException(BaseDescriptions.NOTHING_HAPPENS);
+            throw new PushException(BaseDescriptions.DOES_NOT_WORK);
         }
     }
     
@@ -407,6 +411,7 @@ public abstract class AContainerObject
         this.IsBroken = false;
         this.IsEatable = false;
         this.IsHidden = false;
+        this.HideOnContainerClose = true;
         this.IsVirtual = false;
         this.IsPickAble = true;
         this.IsUnveilAble = true;
