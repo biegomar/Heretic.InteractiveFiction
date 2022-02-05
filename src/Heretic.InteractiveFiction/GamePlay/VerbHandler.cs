@@ -465,6 +465,7 @@ internal sealed class VerbHandler
                     item.OnBeforeOpen(new ContainerObjectEventArgs());
                     
                     item.IsClosed = false;
+                    this.universe.UnveilFirstLevelObjects(item);
                     var result = PrintingSubsystem.ItemOpen(item);
 
                     item.OnAfterOpen(new ContainerObjectEventArgs());

@@ -545,18 +545,18 @@ public abstract class AContainerObject
         return description.ToString();
     }
 
-    private string GetLinkedObjectsDescription(AContainerObject item)
+    private string GetLinkedObjectsDescription(AContainerObject item, bool useBracket = true)
     {
         var description = new StringBuilder();
-        if (item.LinkedTo.Any())
+        var unhiddenLinkedItemsWithContainment = item.LinkedTo.Where(x => !x.IsHidden && !string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
+        var unhiddenLinkedItemsWithoutContainment =item.LinkedTo.Where(x => !x.IsHidden && string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
+        if (unhiddenLinkedItemsWithContainment.Any() ||unhiddenLinkedItemsWithoutContainment.Any())
         {
-            
-            var unhiddenLinkedItemsWithContainment = item.LinkedTo.Where(x => !x.IsHidden && !string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
-            var unhiddenLinkedItemsWithoutContainment =
-                item.LinkedTo.Except(unhiddenLinkedItemsWithContainment).ToList();
-            
-            description.Append(" (");
-            
+            if (useBracket)
+            {
+                description.Append(" (");    
+            }
+
             int linkedItemIndex = 0;
             foreach (var linkedItem in unhiddenLinkedItemsWithContainment)
             {
@@ -589,7 +589,10 @@ public abstract class AContainerObject
                 linkedItemIndex++;
             }
 
-            description.Append(')');
+            if (useBracket)
+            {
+                description.Append(')');    
+            }
         }
 
         return description.ToString();
@@ -911,7 +914,7 @@ public abstract class AContainerObject
             description.Append(this.PrintItems());
         }
         
-        description.Append(GetLinkedObjectsDescription(this));
+        description.Append(GetLinkedObjectsDescription(this, false));
 
         return description.ToString();
     }
