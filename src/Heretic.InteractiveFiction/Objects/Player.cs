@@ -7,7 +7,7 @@ public class Player : AContainerObject
     public bool HasPaymentMethod { get; set; }
     public Item PaymentMethod { get; set; }
 
-    public string StandardClothing { get; set; }
+    public ICollection<Item> Clothes { get; set; }
 
     public bool IsSitting { get; set; }
 
@@ -15,6 +15,7 @@ public class Player : AContainerObject
 
     public Player()
     {
+        this.Clothes = new List<Item>();
         this.IsSitting = false;
     }
     
@@ -38,11 +39,7 @@ public class Player : AContainerObject
             this.FirstLookDescription = string.Empty;
         }
 
-        if (this.StandardClothing != string.Empty)
-        {
-            result.AppendLine(this.StandardClothing);
-        }
-
+        result.AppendLine(this.PrintClothes());
 
         if (this.Items.Any())
         {
@@ -72,6 +69,40 @@ public class Player : AContainerObject
             result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.Seat.Name));
         }
 
+
+        return result.ToString();
+    }
+    
+    protected override IList<Item> FilterUnhiddenItems()
+    {
+        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false)
+            .Union(this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.LinkedTo).Where(i => i.IsHidden == false));
+        
+        var unhiddenItems = this.Items.Where(i => i.IsHidden == false)
+            .Union(this.LinkedTo.Where(i => i.IsHidden == false))
+            .Union(this.Clothes.Where(i => i.IsHidden == false))
+            .Union(itemsFromCharacter).ToList();
+
+        return unhiddenItems;
+    }
+    
+    private string PrintClothes()
+    {
+        var result = new StringBuilder();
+        if (this.Clothes.Any())
+        {
+            result.Append(BaseDescriptions.WEARING_ITEMS);
+            var itemIndex = 0;
+            foreach (var cloth in Clothes)
+            {
+                if (itemIndex != 0)
+                {
+                    result.Append(", ");    
+                }
+                result.Append(this.FirstLetterToLower(cloth.Name));
+                itemIndex++;
+            }
+        }
 
         return result.ToString();
     }

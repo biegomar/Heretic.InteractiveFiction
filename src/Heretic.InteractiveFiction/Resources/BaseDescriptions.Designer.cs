@@ -1123,6 +1123,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folgende Dinge hast Du angezogen: .
+        /// </summary>
+        public static string WEARING_ITEMS {
+            get {
+                return ResourceManager.GetString("WEARING_ITEMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Hm?&quot;, ist die verwunderte Antwort..
         /// </summary>
         public static string WHAT {

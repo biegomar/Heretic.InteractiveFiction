@@ -496,14 +496,14 @@ public abstract class AContainerObject
 
                     if (index != 0)
                     {
-                        var lowerName = item.Name.First().ToString().ToLower() + item.Name.Substring(1);
+                        var lowerName = this.FirstLetterToLower(item.Name);
                         description.Append($"{lowerName}");
                     }
                     else
                     {
                         if (subItems)
                         {
-                            var lowerName = item.Name.First().ToString().ToLower() + item.Name.Substring(1);
+                            var lowerName = this.FirstLetterToLower(item.Name);
                             description.Append($"{lowerName}");
                         }
                         else
@@ -544,6 +544,11 @@ public abstract class AContainerObject
 
         return description.ToString();
     }
+    
+    protected string FirstLetterToLower(string text)
+    {
+        return text.First().ToString().ToLower() + text.Substring(1);
+    }
 
     private string GetLinkedObjectsDescription(AContainerObject item, bool useBracket = true)
     {
@@ -583,8 +588,7 @@ public abstract class AContainerObject
                     description.Append(", ");
                 }
                 
-                description.Append(linkedItem.Name.First().ToString().ToLower());
-                description.Append(linkedItem.Name.Substring(1));
+                description.Append(this.FirstLetterToLower(linkedItem.Name));
 
                 linkedItemIndex++;
             }
@@ -615,12 +619,7 @@ public abstract class AContainerObject
 
     public Item GetUnhiddenItemByKey(string key)
     {
-        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false)
-            .Union(this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.LinkedTo).Where(i => i.IsHidden == false));
-        
-        var unhiddenItems = this.Items.Where(i => i.IsHidden == false)
-            .Union(this.LinkedTo.Where(i => i.IsHidden == false))
-            .Union(itemsFromCharacter).ToList();
+        var unhiddenItems = this.FilterUnhiddenItems();
 
         if (unhiddenItems.Any())
         {
@@ -640,6 +639,18 @@ public abstract class AContainerObject
         }
 
         return default;
+    }
+    
+    protected virtual IList<Item> FilterUnhiddenItems()
+    {
+        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false)
+            .Union(this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.LinkedTo).Where(i => i.IsHidden == false));
+        
+        var unhiddenItems = this.Items.Where(i => i.IsHidden == false)
+            .Union(this.LinkedTo.Where(i => i.IsHidden == false))
+            .Union(itemsFromCharacter).ToList();
+
+        return unhiddenItems;
     }
 
     public Item GetVirtualItemByKey(string key)
