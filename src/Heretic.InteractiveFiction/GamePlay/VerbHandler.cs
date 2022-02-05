@@ -1030,30 +1030,42 @@ internal sealed class VerbHandler
             {
                 var key = this.GetItemKeyByName(subject);
 
-                if (this.universe.ActivePlayer.Items.Any(x => x.Key == key))
+                var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == key);
+                var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == key);
+                if (isPlayerItem || isPlayerCloths)
                 {
-                    var item = this.universe.ActivePlayer.Items.Single(i => i.Key == key);
+                    var item = isPlayerItem ? 
+                        this.universe.ActivePlayer.Items.Single(i => i.Key == key): 
+                        this.universe.ActivePlayer.Clothes.Single(x => x.Key == key);
 
-                    try
+                    if (item.IsDropAble)
                     {
-                        item.OnBeforeDrop(new ContainerObjectEventArgs());
+                        try
+                        {
+                            item.OnBeforeDrop(new ContainerObjectEventArgs());
 
-                        var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
-                        result = result && singleDropResult;
-                        if (singleDropResult)
-                        {
-                            this.universe.ActiveLocation.Items.Add(item);
-                            PrintingSubsystem.ItemDropSuccess(item);
-                            item.OnAfterDrop(new ContainerObjectEventArgs());
+                            var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
+                            result = result && singleDropResult;
+                            if (singleDropResult)
+                            {
+                                this.universe.ActiveLocation.Items.Add(item);
+                                PrintingSubsystem.ItemDropSuccess(item);
+                                item.OnAfterDrop(new ContainerObjectEventArgs());
+                            }
+                            else
+                            {
+                                PrintingSubsystem.ImpossibleDrop(item);
+                            }
                         }
-                        else
+                        catch (BeforeDropException e)
                         {
-                            PrintingSubsystem.ImpossibleDrop(item);
+                            PrintingSubsystem.Resource(e.Message);
                         }
                     }
-                    catch (BeforeDropException e)
+                    else
                     {
-                        PrintingSubsystem.Resource(e.Message);
+                        PrintingSubsystem.ImpossibleDrop(item);
+                        result = result && true;
                     }
                 }
                 else

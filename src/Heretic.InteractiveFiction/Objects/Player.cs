@@ -72,7 +72,29 @@ public class Player : AContainerObject
 
         return result.ToString();
     }
-    
+
+    public override bool RemoveItem(Item itemToRemove)
+    {
+        if (!base.RemoveItem(itemToRemove))
+        {
+            foreach (var item in this.Clothes)
+            {
+                if (item.Key == itemToRemove.Key)
+                {
+                    return this.Clothes.Remove(itemToRemove);
+                }
+                var result = item.RemoveItem(itemToRemove);
+
+                if (result)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     protected override IList<Item> FilterUnhiddenItems()
     {
         var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false)
@@ -99,7 +121,7 @@ public class Player : AContainerObject
                 {
                     result.Append(", ");    
                 }
-                result.Append(this.FirstLetterToLower(cloth.Name));
+                result.Append(this.LowerFirstChar(cloth.Name));
                 itemIndex++;
             }
         }

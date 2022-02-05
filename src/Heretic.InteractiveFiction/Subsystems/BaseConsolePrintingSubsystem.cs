@@ -465,9 +465,15 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ImpossibleDrop(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, Console.WindowWidth), this.LowerFirstChar(item.Name));
-        Console.WriteLine();
-        return true;
+        if (string.IsNullOrEmpty(item.UnDropAbleDescription))
+        {
+            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, Console.WindowWidth), this.LowerFirstChar(item.Name));
+            Console.WriteLine();
+            
+            return true;
+        }
+
+        return this.Resource(item.UnDropAbleDescription);
     }
 
     public virtual bool ItemAlreadyClosed(AContainerObject item)

@@ -73,6 +73,11 @@ public abstract class AContainerObject
     public bool IsPickAble { get; set; }
 
     /// <summary>
+    /// Can the object be dropped? 
+    /// </summary>
+    public bool IsDropAble { get; set; }
+
+    /// <summary>
     /// Can the player sit on this object?
     /// </summary>
     public bool IsSeatAble { get; set; }
@@ -81,6 +86,11 @@ public abstract class AContainerObject
     /// If the object cannot be taken, this description can explain why.
     /// </summary>
     public string UnPickAbleDescription { get; set; }
+
+    /// <summary>
+    /// If the object cannot be dropped, this description can explain why.
+    /// </summary>
+    public string UnDropAbleDescription { get; set; }
     /// <summary>
     /// The weight of the object.
     /// </summary>
@@ -414,6 +424,7 @@ public abstract class AContainerObject
         this.HideOnContainerClose = true;
         this.IsVirtual = false;
         this.IsPickAble = true;
+        this.IsDropAble = true;
         this.IsUnveilAble = true;
         this.IsLockAble = false;
         this.IsLocked = false;
@@ -425,6 +436,7 @@ public abstract class AContainerObject
         this.OpenDescription = string.Empty;
         this.CloseDescription = string.Empty;
         this.UnPickAbleDescription = string.Empty;
+        this.UnDropAbleDescription = string.Empty;
         this.LockDescription = string.Empty;
         this.ContainmentDescription = string.Empty;
         this.BrokenDescription = string.Empty;
@@ -496,14 +508,14 @@ public abstract class AContainerObject
 
                     if (index != 0)
                     {
-                        var lowerName = this.FirstLetterToLower(item.Name);
+                        var lowerName = this.LowerFirstChar(item.Name);
                         description.Append($"{lowerName}");
                     }
                     else
                     {
                         if (subItems)
                         {
-                            var lowerName = this.FirstLetterToLower(item.Name);
+                            var lowerName = this.LowerFirstChar(item.Name);
                             description.Append($"{lowerName}");
                         }
                         else
@@ -545,9 +557,9 @@ public abstract class AContainerObject
         return description.ToString();
     }
     
-    protected string FirstLetterToLower(string text)
+    protected string LowerFirstChar(string description)
     {
-        return text.First().ToString().ToLower() + text.Substring(1);
+        return description[..1].ToLower() + description[1..];
     }
 
     private string GetLinkedObjectsDescription(AContainerObject item, bool useBracket = true)
@@ -588,7 +600,7 @@ public abstract class AContainerObject
                     description.Append(", ");
                 }
                 
-                description.Append(this.FirstLetterToLower(linkedItem.Name));
+                description.Append(this.LowerFirstChar(linkedItem.Name));
 
                 linkedItemIndex++;
             }
@@ -714,7 +726,7 @@ public abstract class AContainerObject
         return default;
     }
 
-    public bool RemoveItem(Item itemToRemove)
+    public virtual bool RemoveItem(Item itemToRemove)
     {
         foreach (var item in this.Items)
         {
