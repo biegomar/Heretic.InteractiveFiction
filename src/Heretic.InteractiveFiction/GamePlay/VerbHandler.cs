@@ -87,7 +87,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
-                    item.OnPull(new ContainerObjectEventArgs());
+                    item.OnPull(new PullItemEventArgs());
 
                     return true;
                 }
@@ -127,7 +127,7 @@ internal sealed class VerbHandler
 
                 return true;
             }
-            catch (PushException ex)
+            catch (PullException ex)
             {
                 return PrintingSubsystem.Resource(ex.Message);
             }

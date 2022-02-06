@@ -75,7 +75,8 @@ public class Player : AContainerObject
 
     public override bool RemoveItem(Item itemToRemove)
     {
-        if (!base.RemoveItem(itemToRemove))
+        var baseResult = base.RemoveItem(itemToRemove);
+        if (!baseResult)
         {
             foreach (var item in this.Clothes)
             {
@@ -92,7 +93,7 @@ public class Player : AContainerObject
             }
         }
 
-        return false;
+        return baseResult;
     }
 
     protected override IList<Item> FilterUnhiddenItems()
@@ -197,6 +198,27 @@ public class Player : AContainerObject
         }
 
         return false;
+    }
+    
+    public override int GetActualPayload()
+    {
+        var sum = base.GetActualPayload();
+        if (this.Clothes.Any())
+        {
+            foreach (var item in this.Clothes)
+            {
+                if (item.Items.Any())
+                {
+                    sum += item.GetActualPayload();
+                }
+                else
+                {
+                    sum += item.Weight;
+                }
+            }
+        }
+
+        return sum;
     }
 
     public bool DropItem(Item item)

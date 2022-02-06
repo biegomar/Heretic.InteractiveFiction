@@ -284,6 +284,18 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         this.ResetColors();
         Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_III_DESCRIPTION);
         Console.WriteLine();
+        Console.Write(HelpDescriptions.PROMPT);
+        this.ForegroundColor = TextColor.Green;
+        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_IV);
+        this.ResetColors();
+        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_IV_DESCRIPTION);
+        Console.WriteLine();
+        Console.Write(HelpDescriptions.PROMPT);
+        this.ForegroundColor = TextColor.Green;
+        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_V);
+        this.ResetColors();
+        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_V_DESCRIPTION);
+        Console.WriteLine();
     }
 
     private IDictionary<string, IEnumerable<string>> GetTalkVerbs(

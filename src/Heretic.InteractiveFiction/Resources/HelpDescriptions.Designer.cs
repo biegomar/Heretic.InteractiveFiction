@@ -304,6 +304,42 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ziehe an dem Seil.
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_IV {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_IV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [zieht an dem Seil.].
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_IV_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_IV_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ziehe mir die Jacke an.
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_V {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_V", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [zieht dem Spieler die Jacke an. (im Sinne von bekleiden)].
+        /// </summary>
+        internal static string VERBS_INTERACT_ITEMS_EXAMPLE_V_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("VERBS_INTERACT_ITEMS_EXAMPLE_V_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metainformationen:.
         /// </summary>
         internal static string VERBS_METAINFO {

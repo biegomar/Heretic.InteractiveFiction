@@ -138,4 +138,16 @@
     <data name="VERBS_CONTAINER_EXAMPLE_II_DESCRIPTION" xml:space="preserve">
         <value>[das Schloß wird mit dem passenden Schlüssel aufgeschlossen.]</value>
     </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_IV" xml:space="preserve">
+        <value>ziehe an dem Seil</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_IV_DESCRIPTION" xml:space="preserve">
+        <value>[zieht an dem Seil.]</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_V" xml:space="preserve">
+        <value>ziehe mir die Jacke an</value>
+    </data>
+    <data name="VERBS_INTERACT_ITEMS_EXAMPLE_V_DESCRIPTION" xml:space="preserve">
+        <value>[zieht dem Spieler die Jacke an. (im Sinne von bekleiden)]</value>
+    </data>
 </root>

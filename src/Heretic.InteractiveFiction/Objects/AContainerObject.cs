@@ -171,7 +171,7 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> Buy;
-    public event EventHandler<ContainerObjectEventArgs> Pull;
+    public event EventHandler<PullItemEventArgs> Pull;
     public event EventHandler<PushItemEventArgs> Push;
     public event EventHandler<ContainerObjectEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
@@ -180,7 +180,7 @@ public abstract class AContainerObject
 
     public virtual void OnUse(UseItemEventArgs eventArgses)
     {
-        EventHandler<UseItemEventArgs> localEventHandler = this.Use;
+        var localEventHandler = this.Use;
         if (localEventHandler != null)
         {
             localEventHandler.Invoke(this, eventArgses);
@@ -191,9 +191,9 @@ public abstract class AContainerObject
         }
     }
     
-    public virtual void OnPull(ContainerObjectEventArgs eventArgs)
+    public virtual void OnPull(PullItemEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Pull;
+        var localEventHandler = this.Pull;
         if (localEventHandler != null)
         {
             localEventHandler.Invoke(this, eventArgs);
@@ -206,7 +206,7 @@ public abstract class AContainerObject
     
     public virtual void OnPush(PushItemEventArgs eventArgs)
     {
-        EventHandler<PushItemEventArgs> localEventHandler = this.Push;
+        var localEventHandler = this.Push;
         if (localEventHandler != null)
         {
             localEventHandler.Invoke(this, eventArgs);
@@ -850,7 +850,7 @@ public abstract class AContainerObject
         return default;
     }
 
-    public int GetActualPayload()
+    public virtual int GetActualPayload()
     {
         var sum = this.Weight;
         if (this.Items.Any())
