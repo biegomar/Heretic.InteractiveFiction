@@ -6,6 +6,22 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 {
+    private int consoleWidth;
+
+    public int ConsoleWidth
+    {
+        get
+        {
+            if (this.consoleWidth == 0)
+            {
+                return Console.WindowWidth;
+            }
+        
+            return Math.Min(Console.WindowWidth, this.consoleWidth);
+        }
+        set => consoleWidth = value;
+    }
+
     public TextColor ForegroundColor
     {
         get => (TextColor)Console.ForegroundColor;
@@ -25,14 +41,14 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ActiveLocation(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap)
     {
-        Console.Write(WordWrap(activeLocation, Console.WindowWidth));
+        Console.Write(WordWrap(activeLocation, this.ConsoleWidth));
         DestinationNode(activeLocation, locationMap);
         return true;
     }
 
     public virtual bool ActivePlayer(Player activePlayer)
     {
-        Console.Write(WordWrap(activePlayer, Console.WindowWidth));
+        Console.Write(WordWrap(activePlayer, this.ConsoleWidth));
         return true;
     }
 
@@ -40,12 +56,12 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (item == default)
         {
-            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, Console.WindowWidth));
+            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, this.ConsoleWidth));
             Console.WriteLine();
         }
         else
         {
-            Console.WriteLine(WordWrap(item.AlterEgo(), Console.WindowWidth));
+            Console.WriteLine(WordWrap(item.AlterEgo(), this.ConsoleWidth));
         }
         return true;
     }
@@ -54,7 +70,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (string.IsNullOrEmpty(itemName))
         {
-            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, Console.WindowWidth));
+            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, this.ConsoleWidth));
             Console.WriteLine();
 
         }
@@ -63,7 +79,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             var result = new StringBuilder();
             result.AppendFormat(BaseDescriptions.ALTER_EGO_DESCRIPTION, this.GetObjectName(itemName));
             result.AppendLine(string.Join(", ", itemName.Split('|')));
-            Console.WriteLine(WordWrap(result.ToString(), Console.WindowWidth));
+            Console.WriteLine(WordWrap(result.ToString(), this.ConsoleWidth));
         }
 
         return true;
@@ -71,7 +87,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool CanNotUseObject(string objectName)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_UNKNOWN, Console.WindowWidth), objectName);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_UNKNOWN, this.ConsoleWidth), objectName);
         Console.WriteLine();
 
         return true;
@@ -86,12 +102,12 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (item == default)
         {
-            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, Console.WindowWidth));
+            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, this.ConsoleWidth));
             Console.WriteLine();
         }
         else
         {
-            Console.Write(WordWrap(item, Console.WindowWidth));
+            Console.Write(WordWrap(item, this.ConsoleWidth));
         }
         return true;
     }
@@ -430,7 +446,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         var history = new StringBuilder(historyCollection.Count);
         history.AppendJoin(Environment.NewLine, historyCollection);
 
-        Console.WriteLine(WordWrap(history, Console.WindowWidth));
+        Console.WriteLine(WordWrap(history, this.ConsoleWidth));
 
         return true;
     }
@@ -470,7 +486,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemPickupSuccess(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -479,7 +495,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (string.IsNullOrEmpty(item.UnDropAbleDescription))
         {
-            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, Console.WindowWidth), this.LowerFirstChar(item.Name));
+            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), this.LowerFirstChar(item.Name));
             Console.WriteLine();
             
             return true;
@@ -490,42 +506,42 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemAlreadyClosed(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_CLOSED, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_CLOSED, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public virtual bool ItemClosed(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.NOW_CLOSED, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.NOW_CLOSED, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public bool ItemAlreadyBroken(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_BROKEN, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_BROKEN, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public virtual bool ItemAlreadyOpen(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_OPEN, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_OPEN, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public virtual bool ItemAlreadyUnlocked(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_UNLOCKED, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_UNLOCKED, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public bool ItemEaten(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, this.ConsoleWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -534,11 +550,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (string.IsNullOrEmpty(item.UnbreakableDescription))
         {
-            Console.Write(WordWrap(BaseDescriptions.ITEM_UNBREAKABLE, Console.WindowWidth), item.Name);    
+            Console.Write(WordWrap(BaseDescriptions.ITEM_UNBREAKABLE, this.ConsoleWidth), item.Name);    
         }
         else
         {
-            Console.Write(WordWrap(item.UnbreakableDescription, Console.WindowWidth));
+            Console.Write(WordWrap(item.UnbreakableDescription, this.ConsoleWidth));
         }
         
         Console.WriteLine();
@@ -547,21 +563,21 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemNotEatable(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_EATABLE, Console.WindowWidth));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_EATABLE, this.ConsoleWidth));
         Console.WriteLine();
         return true;
     }
 
     public bool ItemSeated(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
 
     public bool ItemNotSeatable(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -569,8 +585,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     public virtual bool ItemStillLocked(AContainerObject item)
     {
         Console.Write(!string.IsNullOrEmpty(item.LockDescription)
-            ? WordWrap(item.LockDescription, Console.WindowWidth)
-            : string.Format(WordWrap(BaseDescriptions.ITEM_STILL_LOCKED, Console.WindowWidth), item.Name));
+            ? WordWrap(item.LockDescription, this.ConsoleWidth)
+            : string.Format(WordWrap(BaseDescriptions.ITEM_STILL_LOCKED, this.ConsoleWidth), item.Name));
 
         Console.WriteLine();
         return true;
@@ -578,28 +594,28 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemUnlocked(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_UNLOCKED, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_UNLOCKED, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public virtual bool ItemNotLockAble(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_LOCKABLE, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_LOCKABLE, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public virtual bool ItemOpen(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.NOW_OPEN, Console.WindowWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.NOW_OPEN, this.ConsoleWidth), item.Name);
         Console.WriteLine();
         return true;
     }
 
     public virtual bool ItemDropSuccess(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -625,7 +641,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
                 {
                     if (item.ShowInDescription)
                     {
-                        Console.Write(WordWrap(item, Console.WindowWidth));    
+                        Console.Write(WordWrap(item, this.ConsoleWidth));    
                     }
                 }
 
@@ -647,7 +663,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool NoAnswer(string phrase)
     {
-        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.NO_ANSWER, Console.WindowWidth), phrase)}");
+        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.NO_ANSWER, this.ConsoleWidth), phrase)}");
         return true;
     }
 
@@ -660,13 +676,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             _ => BaseDescriptions.GENDER_UNKNOWN
         };
         
-        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.ASK_FOR_INVISIBLE_OBJECT, Console.WindowWidth), genderSwitch)}");
+        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.ASK_FOR_INVISIBLE_OBJECT, this.ConsoleWidth), genderSwitch)}");
         return true;
     }
 
     public virtual bool NoAnswerToQuestion(string phrase)
     {
-        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.NO_ANSWER_TO_QUESTION, Console.WindowWidth), phrase)}");
+        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.NO_ANSWER_TO_QUESTION, this.ConsoleWidth), phrase)}");
         return true;
     }
 
@@ -676,7 +692,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (!string.IsNullOrEmpty(resource))
         {
-            Console.Write(WordWrap(resource, Console.WindowWidth));
+            Console.Write(WordWrap(resource, this.ConsoleWidth));
             Console.WriteLine();
         }
         return true;
@@ -686,7 +702,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (!string.IsNullOrEmpty(resource) && !string.IsNullOrEmpty(text))
         {
-            Console.Write(WordWrap(resource, Console.WindowWidth), text);
+            Console.Write(WordWrap(resource, this.ConsoleWidth), text);
             Console.WriteLine();
         }
         return true;
@@ -705,11 +721,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             var talk = character.Talk();
             if (!string.IsNullOrEmpty(talk))
             {
-                Console.WriteLine(WordWrap(talk, Console.WindowWidth));
+                Console.WriteLine(WordWrap(talk, this.ConsoleWidth));
             }
             else
             {
-                Console.WriteLine(WordWrap(BaseDescriptions.WHAT, Console.WindowWidth));
+                Console.WriteLine(WordWrap(BaseDescriptions.WHAT, this.ConsoleWidth));
             }
             Console.WriteLine();
         }
@@ -724,7 +740,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool WrongKey(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, this.ConsoleWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }
@@ -772,7 +788,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ImpossibleUnlock(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, Console.WindowWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), this.LowerFirstChar(item.Name));
         Console.WriteLine();
         return true;
     }

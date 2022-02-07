@@ -4,6 +4,7 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public interface IPrintingSubsystem
 {
+    int ConsoleWidth { get; set; }
     TextColor ForegroundColor { get; set; }
     TextColor BackgroundColor { get; set; }
     void ResetColors();

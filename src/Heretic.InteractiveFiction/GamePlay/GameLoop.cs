@@ -11,9 +11,10 @@ public class GameLoop
     private readonly Queue<string> commands;
     private readonly IPrintingSubsystem printingSubsystem;
 
-    public GameLoop(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider, IGamePrerequisitesAssembler gamePrerequisitesAssembler, Universe universe, string fileName)
+    public GameLoop(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider, IGamePrerequisitesAssembler gamePrerequisitesAssembler, Universe universe, string fileName, int consoleWidth)
     {
         this.printingSubsystem = printingSubsystem;
+        this.printingSubsystem.ConsoleWidth = consoleWidth;
         this.universe = universe;
         (this.universe.LocationMap, this.universe.ActiveLocation, this.universe.ActivePlayer) = gamePrerequisitesAssembler.AssembleGame();
         this.processor = new InputProcessor(printingSubsystem, resourceProvider, this.universe);
