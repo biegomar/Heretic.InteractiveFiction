@@ -629,23 +629,28 @@ public abstract class AContainerObject
         return this.PrintUnhiddenObjects(unhiddenItems);
     }
 
-    public Item GetUnhiddenItemByKey(string key)
+    public Item GetUnhiddenItemByKey(string key, IList<Item> items = null)
     {
+        items = items ?? new List<Item>();
         var unhiddenItems = this.FilterUnhiddenItems();
 
         if (unhiddenItems.Any())
         {
             foreach (var item in unhiddenItems)
             {
-                if (item.Key == key)
+                if (!items.Contains(item))
                 {
-                    return item;
-                }
-                var result = item.GetUnhiddenItemByKey(key);
+                    if (item.Key == key)
+                    {
+                        return item;
+                    }
+                    items.Add(item);
+                    var result = item.GetUnhiddenItemByKey(key, items);
 
-                if (result != default)
-                {
-                    return result;
+                    if (result != default)
+                    {
+                        return result;
+                    }    
                 }
             }
         }
