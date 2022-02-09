@@ -592,7 +592,7 @@ public abstract class AContainerObject
             {
                 if (linkedItemIndex == 0)
                 {
-                    description.Append(' ').Append(BaseDescriptions.LINKED_TO);
+                    description.Append(BaseDescriptions.LINKED_TO);
                     
                 }
                 else
