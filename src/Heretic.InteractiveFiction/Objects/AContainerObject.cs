@@ -44,6 +44,30 @@ public abstract class AContainerObject
     /// </summary>
     public string UnbreakableDescription { get; set; }
     /// <summary>
+    /// If the object cannot be taken, this description can explain why.
+    /// </summary>
+    public string UnPickAbleDescription { get; set; }
+    /// <summary>
+    /// If the object cannot be dropped, this description can explain why.
+    /// </summary>
+    public string UnDropAbleDescription { get; set; }
+    /// <summary>
+    /// Gives a more detailed description about the state of a locked object.
+    /// </summary>
+    public string LockDescription { get; set; }
+    /// <summary>
+    /// Gives a more detailed description about the state of an opened object.
+    /// </summary>
+    public string OpenDescription { get; init; }
+    /// <summary>
+    /// Gives a more detailed description about the state of a closed object.
+    /// </summary>
+    public string CloseDescription { get; init; }
+    /// <summary>
+    /// This description can be used if the object is linked to another.
+    /// </summary>
+    public string LinkedToDescription { get; set; }
+    /// <summary>
     /// Can this object be broken?
     /// </summary>
     public bool IsBreakable { get; set; }
@@ -81,16 +105,6 @@ public abstract class AContainerObject
     /// Can the player sit on this object?
     /// </summary>
     public bool IsSeatAble { get; set; }
-
-    /// <summary>
-    /// If the object cannot be taken, this description can explain why.
-    /// </summary>
-    public string UnPickAbleDescription { get; set; }
-
-    /// <summary>
-    /// If the object cannot be dropped, this description can explain why.
-    /// </summary>
-    public string UnDropAbleDescription { get; set; }
     /// <summary>
     /// The weight of the object.
     /// </summary>
@@ -112,10 +126,6 @@ public abstract class AContainerObject
     /// </summary>
     public bool IsLocked { get; set; }
     /// <summary>
-    /// Gives a more detailed description about the state of a locked object.
-    /// </summary>
-    public string LockDescription { get; set; }
-    /// <summary>
     /// Can this object be closed?
     /// </summary>
     public bool IsCloseAble { get; init; }
@@ -123,15 +133,6 @@ public abstract class AContainerObject
     /// Is this object closed?
     /// </summary>
     public bool IsClosed { get; set; }
-    /// <summary>
-    /// Gives a more detailed description about the state of an opened object.
-    /// </summary>
-    public string OpenDescription { get; init; }
-    /// <summary>
-    /// Gives a more detailed description about the state of a closed object.
-    /// </summary>
-    public string CloseDescription { get; init; }
-
     /// <summary>
     /// The list of contained objects.
     /// </summary>
@@ -441,6 +442,7 @@ public abstract class AContainerObject
         this.ContainmentDescription = string.Empty;
         this.BrokenDescription = string.Empty;
         this.UnbreakableDescription = string.Empty;
+        this.LinkedToDescription = string.Empty;
     }
 
     protected virtual string GetVariationOfYouSee()
@@ -565,9 +567,9 @@ public abstract class AContainerObject
     private string GetLinkedObjectsDescription(AContainerObject item, bool useBracket = true)
     {
         var description = new StringBuilder();
-        var unhiddenLinkedItemsWithContainment = item.LinkedTo.Where(x => !x.IsHidden && !string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
-        var unhiddenLinkedItemsWithoutContainment =item.LinkedTo.Where(x => !x.IsHidden && string.IsNullOrEmpty(x.ContainmentDescription)).ToList();
-        if (unhiddenLinkedItemsWithContainment.Any() ||unhiddenLinkedItemsWithoutContainment.Any())
+        var unhiddenLinkedItemsWithLinkedTo = item.LinkedTo.Where(x => !x.IsHidden && !string.IsNullOrEmpty(x.LinkedToDescription)).ToList();
+        var unhiddenLinkedItemsWithoutLinkedTo =item.LinkedTo.Where(x => !x.IsHidden && string.IsNullOrEmpty(x.LinkedToDescription)).ToList();
+        if (unhiddenLinkedItemsWithLinkedTo.Any() ||unhiddenLinkedItemsWithoutLinkedTo.Any())
         {
             if (useBracket)
             {
@@ -575,20 +577,20 @@ public abstract class AContainerObject
             }
 
             int linkedItemIndex = 0;
-            foreach (var linkedItem in unhiddenLinkedItemsWithContainment)
+            foreach (var linkedItem in unhiddenLinkedItemsWithLinkedTo)
             {
                 if (linkedItemIndex > 0)
                 {
                     description.Append(' ');
                 }
                 
-                description.Append(linkedItem.ContainmentDescription);
+                description.Append(linkedItem.LinkedToDescription);
                 
                 linkedItemIndex++;
             }
             
             linkedItemIndex = 0;
-            foreach (var linkedItem in unhiddenLinkedItemsWithoutContainment)
+            foreach (var linkedItem in unhiddenLinkedItemsWithoutLinkedTo)
             {
                 if (linkedItemIndex == 0)
                 {
