@@ -496,13 +496,13 @@ public abstract class AContainerObject
                 {
                     if (index != 0)
                     {
-                        if (unhiddenObjects.Count == 2)
+                        if (unHiddenObjectsWithoutContainmentDescription.Count == 2)
                         {
                             description.Append($" {BaseDescriptions.AND} ");
                         }
                         else
                         {
-                            description.Append(index == unhiddenObjects.Count - 1 ? $" {BaseDescriptions.AND} " : ", ");
+                            description.Append(index == unHiddenObjectsWithoutContainmentDescription.Count - 1 ? $" {BaseDescriptions.AND} " : ", ");
                         }
                     }
 
