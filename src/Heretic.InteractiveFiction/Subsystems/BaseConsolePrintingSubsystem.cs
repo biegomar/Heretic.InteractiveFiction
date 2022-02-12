@@ -161,8 +161,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.UP),
             nameof(Verbs.DOWN),
             nameof(Verbs.GO),
-            nameof(Verbs.WAYS),
-            nameof(Verbs.JUMP),
+            nameof(Verbs.WAYS)
         };
             
         var result = verbResource.Where(x => directionVerbKeys.Contains(x.Key)).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
@@ -263,6 +262,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.EAT),
             nameof(Verbs.SIT),
             nameof(Verbs.STANDUP),
+            nameof(Verbs.JUMP),
+            nameof(Verbs.CLIMB),
             nameof(Verbs.WRITE),
         };
             

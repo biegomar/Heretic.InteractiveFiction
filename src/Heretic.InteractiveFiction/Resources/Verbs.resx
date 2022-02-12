@@ -243,4 +243,7 @@
   <data name="PUSH" xml:space="preserve">
     <value>Drücke|Drück|Schiebe|Schieb|Stecke|Steck</value>
   </data>
+  <data name="CLIMB" xml:space="preserve">
+    <value>Klettere|Kletter|Steige|Steig</value>
+  </data>
 </root>

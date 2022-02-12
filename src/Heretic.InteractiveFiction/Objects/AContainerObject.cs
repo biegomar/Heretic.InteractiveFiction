@@ -172,6 +172,8 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> Buy;
+    public event EventHandler<ContainerObjectEventArgs> Climb;
+    public event EventHandler<ContainerObjectEventArgs> Jump;
     public event EventHandler<PullItemEventArgs> Pull;
     public event EventHandler<PushItemEventArgs> Push;
     public event EventHandler<ContainerObjectEventArgs> Turn;
@@ -179,16 +181,42 @@ public abstract class AContainerObject
     public event EventHandler<UseItemEventArgs> Use;
     public event EventHandler<WriteEventArgs> Write;
 
-    public virtual void OnUse(UseItemEventArgs eventArgses)
+    public virtual void OnUse(UseItemEventArgs eventArgs)
     {
         var localEventHandler = this.Use;
         if (localEventHandler != null)
         {
-            localEventHandler.Invoke(this, eventArgses);
+            localEventHandler.Invoke(this, eventArgs);
         }
         else
         {
             throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+    
+    public virtual void OnJump(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Jump;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new JumpException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+    
+    public virtual void OnClimb(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Climb;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new ClimbException(BaseDescriptions.NOTHING_HAPPENS);
         }
     }
     

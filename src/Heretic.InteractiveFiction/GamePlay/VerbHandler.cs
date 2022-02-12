@@ -395,6 +395,58 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Jump(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.JUMP].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var item = this.GetUnhiddenItemByNameActive(subject);
+
+            if (item != default)
+            {
+                try
+                {
+                    item.OnJump(new ContainerObjectEventArgs());
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
+    internal bool Climb(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.CLIMB].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var item = this.GetUnhiddenItemByNameActive(subject);
+
+            if (item != default)
+            {
+                try
+                {
+                    item.OnClimb(new ContainerObjectEventArgs());
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
 
     internal bool Close(string verb, string subject)
     {

@@ -498,4 +498,7 @@
   <data name="WEARING_ITEMS" xml:space="preserve">
     <value>Folgende Dinge hast Du angezogen: </value>
   </data>
+  <data name="CLIMB" xml:space="preserve">
+    <value>Klettere, bzw. steige auf ein Objekt.</value>
+  </data>
 </root>
