@@ -510,4 +510,7 @@
   <data name="ITEM_CLIMBED" xml:space="preserve">
     <value>Du bist auf {0} gestiegen.</value>
   </data>
+  <data name="DESCENDING" xml:space="preserve">
+    <value>Du bist heruntergestiegen.</value>
+  </data>
 </root>

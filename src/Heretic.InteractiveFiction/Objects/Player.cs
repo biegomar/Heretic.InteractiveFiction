@@ -273,6 +273,18 @@ public class Player : AContainerObject
         return false;
     }
 
+    public bool Descend()
+    {
+        if (this.HasClimbed)
+        {
+            this.HasClimbed = false;
+            this.ClimbedObject = null;
+            return true;
+        }
+
+        return false;
+    }
+
     public int GetMaxPayload()
     {
         var sum = MaxPayload;

@@ -124,6 +124,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Absteigen|Herabsteigen.
+        /// </summary>
+        internal static string DESCEND {
+            get {
+                return ResourceManager.GetString("DESCEND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Runter.
         /// </summary>
         internal static string DOWN {

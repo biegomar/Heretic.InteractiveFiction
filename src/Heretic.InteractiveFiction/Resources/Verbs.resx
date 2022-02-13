@@ -246,4 +246,7 @@
   <data name="CLIMB" xml:space="preserve">
     <value>Klettere|Kletter|Steige|Steig</value>
   </data>
+  <data name="DESCEND" xml:space="preserve">
+    <value>Absteigen|Herabsteigen</value>
+  </data>
 </root>

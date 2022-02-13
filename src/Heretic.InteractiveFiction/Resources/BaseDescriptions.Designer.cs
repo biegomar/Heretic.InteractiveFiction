@@ -241,6 +241,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du bist heruntergestiegen..
+        /// </summary>
+        public static string DESCENDING {
+            get {
+                return ResourceManager.GetString("DESCENDING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Das scheint nicht zu funktionieren..
         /// </summary>
         public static string DOES_NOT_WORK {

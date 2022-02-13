@@ -701,6 +701,29 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Descend(string input)
+    {
+        if (this.universe.VerbResources[VerbKeys.DESCEND].Contains(input, StringComparer.InvariantCultureIgnoreCase))
+        {
+            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != default)
+            {
+                var item = this.universe.ActivePlayer.ClimbedObject;
+                var eventArgs = new ContainerObjectEventArgs();
+                
+                this.universe.ActivePlayer.OnBeforeDescend(eventArgs);
+                item.OnBeforeDescend(eventArgs);
+                this.universe.ActivePlayer.Descend();
+                var result = PrintingSubsystem.Resource(BaseDescriptions.DESCENDING);
+                item.OnAfterDescend(eventArgs);
+                this.universe.ActivePlayer.OnAfterDescend(eventArgs);
+                return result;
+            }
+            return PrintingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
+        }
+
+        return false;
+    }
+    
     internal bool Ask(string verb, string characterName, string subjectName)
     {
         if (this.universe.VerbResources[VerbKeys.ASK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
@@ -1081,6 +1104,11 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.GO].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
+            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
+            {
+                return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+            }
+            
             return this.ChangeLocationByName(subject);
         }
 
@@ -1174,6 +1202,12 @@ internal sealed class VerbHandler
     {
         if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
         {
+            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
+            {
+                PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                return;
+            }
+            
             var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
             var newLocationMap = mappings.Where(i => !i.IsHidden).SingleOrDefault(x => x.Direction == direction);
             if (newLocationMap != default)

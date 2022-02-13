@@ -180,6 +180,8 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterSitDown; 
     public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
+    public event EventHandler<ContainerObjectEventArgs> BeforeDescend;
+    public event EventHandler<ContainerObjectEventArgs> AfterDescend;
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<ContainerObjectEventArgs> Jump;
     public event EventHandler<PullItemEventArgs> Pull;
@@ -273,6 +275,18 @@ public abstract class AContainerObject
         }
     }
 
+    public virtual void OnBeforeDescend(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeDescend;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterDescend(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterDescend;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
     public virtual void OnBeforeDrop(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.BeforeDrop;
