@@ -410,7 +410,7 @@ internal sealed class VerbHandler
 
                     return true;
                 }
-                catch (Exception ex)
+                catch (JumpException ex)
                 {
                     return PrintingSubsystem.Resource(ex.Message);
                 }
@@ -426,20 +426,18 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.CLIMB].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
+            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
+            {
+                return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+            }
+            
             var item = this.GetUnhiddenItemByNameActive(subject);
 
-            if (item != default)
+            if (item is { IsClimbAble: true })
             {
-                try
-                {
-                    item.OnClimb(new ContainerObjectEventArgs());
-
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    return PrintingSubsystem.Resource(ex.Message);
-                }
+                this.universe.ActivePlayer.HasClimbed = true;
+                this.universe.ActivePlayer.ClimbedObject = item;
+                return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.Name);
             }
 
             return PrintingSubsystem.ItemNotVisible();
@@ -1029,8 +1027,16 @@ internal sealed class VerbHandler
                 }
                 else
                 {
-                    result = result && universe.PickObject(item);
-                    item.OnAfterTake(new ContainerObjectEventArgs());
+                    try
+                    {
+                        item.OnBeforeTake(new ContainerObjectEventArgs());
+                        result = result && universe.PickObject(item);
+                        item.OnAfterTake(new ContainerObjectEventArgs());
+                    }
+                    catch (TakeException ex)
+                    {
+                        result = result && PrintingSubsystem.Resource(ex.Message);
+                    }
                 }
             }
         }
@@ -1048,8 +1054,16 @@ internal sealed class VerbHandler
                 var result = true;
                 foreach (var item in subjects)
                 {
-                    result = result && universe.PickObject(item);
-                    item.OnAfterTake(new ContainerObjectEventArgs());
+                    try
+                    {
+                        item.OnBeforeTake(new ContainerObjectEventArgs());
+                        result = result && universe.PickObject(item);
+                        item.OnAfterTake(new ContainerObjectEventArgs());
+                    }
+                    catch (TakeException ex)
+                    {
+                        result = result && PrintingSubsystem.Resource(ex.Message);
+                    }
                 }
 
                 return result;

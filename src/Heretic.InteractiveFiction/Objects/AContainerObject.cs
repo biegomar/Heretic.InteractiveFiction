@@ -68,6 +68,10 @@ public abstract class AContainerObject
     /// </summary>
     public string LinkedToDescription { get; set; }
     /// <summary>
+    /// This description can be used if the object is climbed by the player.
+    /// </summary>
+    public string ClimbedDescription { get; set; }
+    /// <summary>
     /// Can this object be broken?
     /// </summary>
     public bool IsBreakable { get; set; }
@@ -105,6 +109,10 @@ public abstract class AContainerObject
     /// Can the player sit on this object?
     /// </summary>
     public bool IsSeatAble { get; set; }
+    /// <summary>
+    /// Can th player climb on this object?
+    /// </summary>
+    public bool IsClimbAble { get; set; }
     /// <summary>
     /// The weight of the object.
     /// </summary>
@@ -166,13 +174,13 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> BeforeOpen;
     public event EventHandler<ContainerObjectEventArgs> AfterOpen;
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
+    public event EventHandler<ContainerObjectEventArgs> BeforeTake;
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
     public event EventHandler<ContainerObjectEventArgs> BeforeSitDown;
     public event EventHandler<ContainerObjectEventArgs> AfterSitDown; 
     public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> Buy;
-    public event EventHandler<ContainerObjectEventArgs> Climb;
     public event EventHandler<ContainerObjectEventArgs> Jump;
     public event EventHandler<PullItemEventArgs> Pull;
     public event EventHandler<PushItemEventArgs> Push;
@@ -206,20 +214,7 @@ public abstract class AContainerObject
             throw new JumpException(BaseDescriptions.NOTHING_HAPPENS);
         }
     }
-    
-    public virtual void OnClimb(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.Climb;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            throw new ClimbException(BaseDescriptions.NOTHING_HAPPENS);
-        }
-    }
-    
+
     public virtual void OnPull(PullItemEventArgs eventArgs)
     {
         var localEventHandler = this.Pull;
@@ -261,13 +256,13 @@ public abstract class AContainerObject
     
     public virtual void OnWrite(WriteEventArgs eventArgs)
     {
-        EventHandler<WriteEventArgs> localEventHandler = this.Write;
+        var localEventHandler = this.Write;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnBuy(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.Buy;
+        var localEventHandler = this.Buy;
         if (localEventHandler != null)
         {
             localEventHandler.Invoke(this, eventArgs);
@@ -280,25 +275,25 @@ public abstract class AContainerObject
 
     public virtual void OnBeforeDrop(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeDrop;
+        var localEventHandler = this.BeforeDrop;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnAfterDrop(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterDrop;
+        var localEventHandler = this.AfterDrop;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnBeforeEat(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeEat;
+        var localEventHandler = this.BeforeEat;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnAfterEat(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterEat;
+        var localEventHandler = this.AfterEat;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
@@ -331,55 +326,61 @@ public abstract class AContainerObject
     
     public virtual void OnBeforeSitDown(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeSitDown;
+        var localEventHandler = this.BeforeSitDown;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnAfterSitDown(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterSitDown;
+        var localEventHandler = this.AfterSitDown;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnBeforeStandUp(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeStandUp;
+        var localEventHandler = this.BeforeStandUp;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnAfterStandUp(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterStandUp;
+        var localEventHandler = this.AfterStandUp;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnAfterGive(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterGive;
+        var localEventHandler = this.AfterGive;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnAfterLook(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterLook;
+        var localEventHandler = this.AfterLook;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
+    public virtual void OnBeforeTake(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeTake;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
     public virtual void OnAfterTake(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterTake;
+        var localEventHandler = this.AfterTake;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnBeforeChangeLocation(ChangeLocationEventArgs eventArgs)
     {
-        EventHandler<ChangeLocationEventArgs> localEventHandler = this.BeforeChangeLocation;
+        var localEventHandler = this.BeforeChangeLocation;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual ChangeLocationStatus OnAfterChangeLocation(ChangeLocationEventArgs eventArgs)
     {
-        EventHandler<ChangeLocationEventArgs> localEventHandler = this.AfterChangeLocation;
+        var localEventHandler = this.AfterChangeLocation;
         if (localEventHandler != null)
         {
             localEventHandler(this, eventArgs);
@@ -404,25 +405,25 @@ public abstract class AContainerObject
 
     public virtual void OnBeforeClose(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeClose;
+        var localEventHandler = this.BeforeClose;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnAfterClose(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterClose;
+        var localEventHandler = this.AfterClose;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnBeforeOpen(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.BeforeOpen;
+        var localEventHandler = this.BeforeOpen;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnAfterOpen(ContainerObjectEventArgs eventArgs)
     {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterOpen;
+        var localEventHandler = this.AfterOpen;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
@@ -460,6 +461,7 @@ public abstract class AContainerObject
         this.IsClosed = false;
         this.IsCloseAble = false;
         this.IsSeatAble = false;
+        this.IsClimbAble = false;
         this.name = string.Empty;
         this.Description = string.Empty;
         this.OpenDescription = string.Empty;
@@ -471,6 +473,7 @@ public abstract class AContainerObject
         this.BrokenDescription = string.Empty;
         this.UnbreakableDescription = string.Empty;
         this.LinkedToDescription = string.Empty;
+        this.ClimbedDescription = string.Empty;
     }
 
     protected virtual string GetVariationOfYouSee()
@@ -604,7 +607,7 @@ public abstract class AContainerObject
                 description.Append(" (");    
             }
 
-            int linkedItemIndex = 0;
+            var linkedItemIndex = 0;
             foreach (var linkedItem in unhiddenLinkedItemsWithLinkedTo)
             {
                 if (linkedItemIndex > 0)

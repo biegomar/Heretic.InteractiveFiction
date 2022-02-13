@@ -11,12 +11,17 @@ public class Player : AContainerObject
 
     public bool IsSitting { get; set; }
 
+    public bool HasClimbed { get; set; }
+
     public AContainerObject Seat { get; set; }
+
+    public AContainerObject ClimbedObject { get; set; }
 
     public Player()
     {
         this.Clothes = new List<Item>();
         this.IsSitting = false;
+        this.HasClimbed = false;
     }
     
     public override string ToString()
@@ -67,6 +72,18 @@ public class Player : AContainerObject
         if (this.IsSitting && this.Seat != default)
         {
             result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.Seat.Name));
+        }
+        
+        if (this.HasClimbed && this.ClimbedObject != default)
+        {
+            if (string.IsNullOrEmpty(this.ClimbedObject.ClimbedDescription))
+            {
+                result.AppendLine(string.Format(BaseDescriptions.CLIMBING_ON, this.ClimbedObject.Name));    
+            }
+            else
+            {
+                result.AppendLine(this.ClimbedObject.ClimbedDescription);
+            }
         }
 
 

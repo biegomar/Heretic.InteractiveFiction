@@ -501,4 +501,13 @@
   <data name="CLIMB" xml:space="preserve">
     <value>Klettere, bzw. steige auf ein Objekt.</value>
   </data>
+  <data name="CLIMBING_ON" xml:space="preserve">
+    <value>Du bist auf {0} geklettert.</value>
+  </data>
+  <data name="ALREADY_CLIMBED" xml:space="preserve">
+    <value>Klettere zunächst von Deiner aktuellen Position wieder nach unten.</value>
+  </data>
+  <data name="ITEM_CLIMBED" xml:space="preserve">
+    <value>Du bist auf {0} gestiegen.</value>
+  </data>
 </root>

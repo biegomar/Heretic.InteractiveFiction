@@ -79,6 +79,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Klettere zunächst von Deiner aktuellen Position wieder nach unten..
+        /// </summary>
+        public static string ALREADY_CLIMBED {
+            get {
+                return ResourceManager.GetString("ALREADY_CLIMBED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist bereits geschlossen..
         /// </summary>
         public static string ALREADY_CLOSED {
@@ -201,6 +210,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string CLIMB {
             get {
                 return ResourceManager.GetString("CLIMB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du bist auf {0} geklettert..
+        /// </summary>
+        public static string CLIMBING_ON {
+            get {
+                return ResourceManager.GetString("CLIMBING_ON", resourceCulture);
             }
         }
         
@@ -489,6 +507,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string ITEM_ALREADY_OWNED {
             get {
                 return ResourceManager.GetString("ITEM_ALREADY_OWNED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du bist auf {0} gestiegen..
+        /// </summary>
+        public static string ITEM_CLIMBED {
+            get {
+                return ResourceManager.GetString("ITEM_CLIMBED", resourceCulture);
             }
         }
         
