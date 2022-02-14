@@ -517,7 +517,7 @@
     <value>Speichert Deinen aktuellen Spielstand.</value>
   </data>
   <data name="GAME_SAVED" xml:space="preserve">
-    <value>Dein Spiel wurde gespeichert.</value>
+    <value>Dein Spiel wurde gespeichert unter: {0}</value>
   </data>
   <data name="SAVE_NAME" xml:space="preserve">
     <value>heretic_savedgame.txt</value>

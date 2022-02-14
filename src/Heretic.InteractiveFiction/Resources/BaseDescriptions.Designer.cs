@@ -295,7 +295,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dein Spiel wurde gespeichert..
+        ///   Looks up a localized string similar to Dein Spiel wurde gespeichert unter: {0}.
         /// </summary>
         public static string GAME_SAVED {
             get {

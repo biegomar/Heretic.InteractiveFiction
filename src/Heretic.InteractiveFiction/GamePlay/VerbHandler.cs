@@ -262,12 +262,13 @@ internal sealed class VerbHandler
 
                 var docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-                using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, BaseDescriptions.SAVE_NAME)))
+                var combine = Path.Combine(docPath, BaseDescriptions.SAVE_NAME);
+                using (StreamWriter outputFile = new StreamWriter(combine))
                 {
                     outputFile.Write(history.ToString());
                 }
 
-                return PrintingSubsystem.Resource(BaseDescriptions.GAME_SAVED);
+                return PrintingSubsystem.FormattedResource(BaseDescriptions.GAME_SAVED, combine);
             }
 
             return false;
