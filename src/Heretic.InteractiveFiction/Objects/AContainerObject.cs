@@ -149,7 +149,7 @@ public abstract class AContainerObject
     /// <summary>
     /// The list of surrounding objects.
     /// </summary>
-    public IDictionary<string, string> Surroundings { get; init; }
+    public IDictionary<string, Func<string>> Surroundings { get; init; }
 
     public ICollection<Item> LinkedTo { get; init; }
 
@@ -465,7 +465,7 @@ public abstract class AContainerObject
     {
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
-        this.Surroundings = new Dictionary<string, string>();
+        this.Surroundings = new Dictionary<string, Func<string>>();
         this.LinkedTo = new List<Item>();
         this.FirstLookDescription = string.Empty;
         this.IsBreakable = false;

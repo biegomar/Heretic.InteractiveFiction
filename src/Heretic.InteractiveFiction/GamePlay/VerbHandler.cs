@@ -64,7 +64,7 @@ internal sealed class VerbHandler
             var itemKey = this.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
-                var result = PrintingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]);
+                var result = PrintingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]());
                 
                 // surroundings only exist within the active location.
                 this.universe.ActiveLocation.OnAfterLook(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
@@ -1465,7 +1465,7 @@ internal sealed class VerbHandler
         return result;
     }
     
-    private IEnumerable<string> GetSurroundingKeys(IDictionary<string, string> surroundings)
+    private IEnumerable<string> GetSurroundingKeys(IDictionary<string, Func<string>> surroundings)
     {
         return surroundings.Keys.ToList();
     }
