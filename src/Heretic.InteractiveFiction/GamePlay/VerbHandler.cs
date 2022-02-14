@@ -224,8 +224,15 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.WRITE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            this.universe.ActiveLocation.OnWrite(new WriteEventArgs() {Text = text});
-            return true;
+            try
+            {
+                this.universe.ActiveLocation.OnWrite(new WriteEventArgs() {Text = text});
+                return true;
+            }
+            catch (WriteException ex)
+            {
+                return PrintingSubsystem.Resource(ex.Message);
+            }
         }
 
         return false;

@@ -259,7 +259,14 @@ public abstract class AContainerObject
     public virtual void OnWrite(WriteEventArgs eventArgs)
     {
         var localEventHandler = this.Write;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new WriteException(BaseDescriptions.NOTHING_HAPPENS);
+        }
     }
 
     public virtual void OnBuy(ContainerObjectEventArgs eventArgs)
