@@ -513,4 +513,13 @@
   <data name="DESCENDING" xml:space="preserve">
     <value>Du bist heruntergestiegen.</value>
   </data>
+  <data name="SAVE" xml:space="preserve">
+    <value>Speichert Deinen aktuellen Spielstand.</value>
+  </data>
+  <data name="GAME_SAVED" xml:space="preserve">
+    <value>Dein Spiel wurde gespeichert.</value>
+  </data>
+  <data name="SAVE_NAME" xml:space="preserve">
+    <value>heretic_savedgame.txt</value>
+  </data>
 </root>

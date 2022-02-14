@@ -250,6 +250,34 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Save(string input, ICollection<string> historyCollection)
+    {
+        try
+        {
+            if (this.universe.VerbResources[VerbKeys.SAVE].Contains(input, StringComparer.InvariantCultureIgnoreCase))
+            {
+                var history = new StringBuilder(historyCollection.Count);
+                history.AppendJoin(Environment.NewLine, historyCollection);
+
+                var docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, BaseDescriptions.SAVE_NAME)))
+                {
+                    outputFile.Write(history.ToString());
+                }
+
+                return PrintingSubsystem.Resource(BaseDescriptions.GAME_SAVED);
+            }
+
+            return false;
+        }
+        catch (Exception e)
+        {
+            PrintingSubsystem.Resource(e.Message);
+            return false;
+        }
+    }
 
     internal bool Score(string input)
     {

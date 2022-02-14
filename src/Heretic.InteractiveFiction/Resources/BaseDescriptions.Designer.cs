@@ -295,6 +295,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dein Spiel wurde gespeichert..
+        /// </summary>
+        public static string GAME_SAVED {
+            get {
+                return ResourceManager.GetString("GAME_SAVED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to sie.
         /// </summary>
         public static string GENDER_FEMALE {
@@ -957,6 +966,24 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string SAME_ACTION_AGAIN {
             get {
                 return ResourceManager.GetString("SAME_ACTION_AGAIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speichert Deinen aktuellen Spielstand..
+        /// </summary>
+        public static string SAVE {
+            get {
+                return ResourceManager.GetString("SAVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to heretic_savedgame.txt.
+        /// </summary>
+        public static string SAVE_NAME {
+            get {
+                return ResourceManager.GetString("SAVE_NAME", resourceCulture);
             }
         }
         

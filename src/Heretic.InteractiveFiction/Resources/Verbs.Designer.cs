@@ -322,6 +322,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save|speichern.
+        /// </summary>
+        internal static string SAVE {
+            get {
+                return ResourceManager.GetString("SAVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sag|Sage|Antworte.
         /// </summary>
         internal static string SAY {

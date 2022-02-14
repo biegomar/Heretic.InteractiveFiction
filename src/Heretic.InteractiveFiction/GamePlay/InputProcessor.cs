@@ -30,12 +30,15 @@ public sealed class InputProcessor
 
         var sentence = this.inputAnalyzer.Analyze(input);
 
-        if (this.historyAdministrator.IsLastHistoryEntryTheSame(sentence))
+        if (!this.universe.VerbResources[VerbKeys.SAVE].Contains(sentence[0], StringComparer.InvariantCultureIgnoreCase))
         {
-            PrintingSubsystem.SameActionAgain();
-        }
+            if (this.historyAdministrator.IsLastHistoryEntryTheSame(sentence))
+            {
+                PrintingSubsystem.SameActionAgain();
+            }
 
-        this.historyAdministrator.Add(input);
+            this.historyAdministrator.Add(input);
+        }
 
         var result = sentence.Length switch
         {
@@ -74,6 +77,7 @@ public sealed class InputProcessor
         result = result || verbHandler.StandUp(processingInput);
         result = result || verbHandler.Descend(processingInput);
         result = result || verbHandler.History(processingInput, this.historyAdministrator.All);
+        result = result || verbHandler.Save(processingInput, this.historyAdministrator.All);
 
         if (!result)
         {

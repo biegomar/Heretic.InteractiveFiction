@@ -249,4 +249,7 @@
   <data name="DESCEND" xml:space="preserve">
     <value>Absteigen|Herabsteigen</value>
   </data>
+  <data name="SAVE" xml:space="preserve">
+    <value>Save|speichern</value>
+  </data>
 </root>
