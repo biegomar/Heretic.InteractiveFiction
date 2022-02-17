@@ -343,7 +343,7 @@
     <value>Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!</value>
   </data>
   <data name="TO_HEAVY" xml:space="preserve">
-    <value>Der Gegenstand ist zu schwer, um ihn noch zu tragen! Vielleicht benötigst Du eine größe Transportmöglichkeit, oder Du wirfst einige Sachen weg.</value>
+    <value>Der Gegenstand ist zu schwer, um ihn noch zu tragen! Vielleicht benötigst Du eine größere Transportmöglichkeit, oder Du wirfst einige Sachen weg.</value>
   </data>
   <data name="ALREADY_CLOSED" xml:space="preserve">
     <value>{0} ist bereits geschlossen.</value>

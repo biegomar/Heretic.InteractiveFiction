@@ -1096,7 +1096,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Der Gegenstand ist zu schwer, um ihn noch zu tragen! Vielleicht benötigst Du eine größe Transportmöglichkeit, oder Du wirfst einige Sachen weg..
+        ///   Looks up a localized string similar to Der Gegenstand ist zu schwer, um ihn noch zu tragen! Vielleicht benötigst Du eine größere Transportmöglichkeit, oder Du wirfst einige Sachen weg..
         /// </summary>
         public static string TO_HEAVY {
             get {

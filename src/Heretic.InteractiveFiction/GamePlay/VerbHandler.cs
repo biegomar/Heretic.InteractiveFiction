@@ -322,12 +322,16 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
-                // if (!universe.AreLocationPostProcessingEventsAvailable(Keys.USE, item) && !universe.AreItemPostProcessingEventsAvailable(Keys.USE, item))
-                // {
-                //     return PrintingSubsystem.NoEvent();
-                // }
+                try
+                {
+                    item.OnUse(new UseItemEventArgs());
 
-                return true;
+                    return true;
+                }
+                catch (UseException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
             }
 
             return PrintingSubsystem.ItemNotOwned();
