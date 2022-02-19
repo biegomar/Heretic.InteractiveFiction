@@ -50,7 +50,7 @@ public interface IPrintingSubsystem
     bool NoAnswerToQuestion(string phrase);
     bool Opening();
     bool Resource(string resource);
-    bool FormattedResource(string resource, string text);
+    bool FormattedResource(string resource, string text, bool lowerFirstLetter = false);
     bool Score(int score, int maxScore);
     bool Talk(Character character);
     bool TitleAndScore(int score, int maxScore);

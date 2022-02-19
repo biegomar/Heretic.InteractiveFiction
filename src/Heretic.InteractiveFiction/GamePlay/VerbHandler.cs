@@ -477,7 +477,7 @@ internal sealed class VerbHandler
             {
                 this.universe.ActivePlayer.HasClimbed = true;
                 this.universe.ActivePlayer.ClimbedObject = item;
-                return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.Name);
+                return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.Name, true);
             }
 
             return PrintingSubsystem.ItemNotVisible();
@@ -665,7 +665,7 @@ internal sealed class VerbHandler
                 this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
                 onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                 this.universe.ActivePlayer.SitDown(onlySeat);
-                var result = PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.Name);
+                var result = PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.Name, true);
                 onlySeat.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                 this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
 

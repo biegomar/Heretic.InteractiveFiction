@@ -78,7 +78,7 @@ public class Player : AContainerObject
         {
             if (string.IsNullOrEmpty(this.ClimbedObject.ClimbedDescription))
             {
-                result.AppendLine(string.Format(BaseDescriptions.CLIMBING_ON, this.ClimbedObject.Name));    
+                result.AppendLine(string.Format(BaseDescriptions.CLIMBING_ON, this.LowerFirstChar(this.ClimbedObject.Name)));    
             }
             else
             {

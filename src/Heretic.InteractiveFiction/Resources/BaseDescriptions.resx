@@ -522,4 +522,7 @@
   <data name="SAVE_NAME" xml:space="preserve">
     <value>heretic_savedgame.txt</value>
   </data>
+  <data name="DESCEND" xml:space="preserve">
+    <value>Steige von dem Objekt herab, auf das Du geklettert bist.</value>
+  </data>
 </root>

@@ -265,6 +265,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.STANDUP),
             nameof(Verbs.JUMP),
             nameof(Verbs.CLIMB),
+            nameof(Verbs.DESCEND),
             nameof(Verbs.WRITE),
         };
             
@@ -700,11 +701,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public bool FormattedResource(string resource, string text)
+    public bool FormattedResource(string resource, string text, bool lowerFirstLetter = false)
     {
         if (!string.IsNullOrEmpty(resource) && !string.IsNullOrEmpty(text))
         {
-            Console.Write(WordWrap(resource, this.ConsoleWidth), text);
+            Console.Write(WordWrap(resource, this.ConsoleWidth), lowerFirstLetter ? this.LowerFirstChar(text): text);
             Console.WriteLine();
         }
         return true;

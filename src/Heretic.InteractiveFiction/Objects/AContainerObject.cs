@@ -24,7 +24,7 @@ public abstract class AContainerObject
     /// <summary>
     /// The detailed description of the object. It is used during printout.
     /// </summary>
-    public string Description { get; init; }
+    public string Description { get; set; }
     /// <summary>
     /// The first look description is only used during the first printout and contains additional information.
     /// </summary>
@@ -58,11 +58,11 @@ public abstract class AContainerObject
     /// <summary>
     /// Gives a more detailed description about the state of an opened object.
     /// </summary>
-    public string OpenDescription { get; init; }
+    public string OpenDescription { get; set; }
     /// <summary>
     /// Gives a more detailed description about the state of a closed object.
     /// </summary>
-    public string CloseDescription { get; init; }
+    public string CloseDescription { get; set; }
     /// <summary>
     /// This description can be used if the object is linked to another.
     /// </summary>
