@@ -2,6 +2,7 @@
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.GamePlay.EventSystem;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.Objects;
@@ -93,6 +94,9 @@ public class Universe
         if (!this.SolvedQuests.Contains(quest))
         {
             this.SolvedQuests.Add(quest);
+            printingSubsystem.ForegroundColor = TextColor.Magenta;
+            printingSubsystem.FormattedResource(BaseDescriptions.QUEST_SOLVED, quest);
+            printingSubsystem.ResetColors();
         }
     }
 

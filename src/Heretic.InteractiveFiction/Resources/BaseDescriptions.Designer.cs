@@ -943,6 +943,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;&lt;Glückwunsch! Du hast gerade die Quest &apos;{0}&apos; gelöst.&gt;&gt;.
+        /// </summary>
+        public static string QUEST_SOLVED {
+            get {
+                return ResourceManager.GetString("QUEST_SOLVED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beende das Spiel.
         /// </summary>
         public static string QUIT {

@@ -525,4 +525,7 @@
   <data name="DESCEND" xml:space="preserve">
     <value>Steige von dem Objekt herab, auf das Du geklettert bist.</value>
   </data>
+  <data name="QUEST_SOLVED" xml:space="preserve">
+    <value>&lt;&lt;Glückwunsch! Du hast gerade die Quest '{0}' gelöst.&gt;&gt;</value>
+  </data>
 </root>
