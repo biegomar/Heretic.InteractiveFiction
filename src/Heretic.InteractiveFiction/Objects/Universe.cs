@@ -23,6 +23,9 @@ public class Universe
         }
     }
 
+    public int NumberOfSolvedQuests => this.SolvedQuests.Count;
+
+
     public readonly IDictionary<string, IEnumerable<string>> VerbResources;
     public readonly IDictionary<string, IEnumerable<string>> ItemResources;
     public readonly IDictionary<string, IEnumerable<string>> CharacterResources;
@@ -33,15 +36,13 @@ public class Universe
     public LocationMap LocationMap { get; set; }
     public Location ActiveLocation { get; set; }
     public Player ActivePlayer { get; set; }
-
     public bool IsPeriodicEventActivated { get => this.periodicEvent.Active; set => this.periodicEvent.Active = value; }
-
+    public ICollection<string> Quests { get; set; }
     public readonly IDictionary<string, int> ScoreBoard = new Dictionary<string, int>();
-
     public event EventHandler<PeriodicEventArgs> PeriodicEvents;
 
     private readonly IPrintingSubsystem printingSubsystem;
-    private ICollection<string> SolvedQuests;
+    private IList<string> SolvedQuests;
     private int maxScore;
     private PeriodicEvent periodicEvent;
 

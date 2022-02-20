@@ -690,6 +690,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     }
 
     public abstract bool Opening();
+    
+    public abstract bool Closing();
 
     public virtual bool Resource(string resource)
     {

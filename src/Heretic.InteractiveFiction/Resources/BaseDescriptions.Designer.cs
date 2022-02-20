@@ -961,6 +961,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Das Spiel wird beendet..
+        /// </summary>
+        public static string QUIT_GAME {
+            get {
+                return ResourceManager.GetString("QUIT_GAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Die Tür scheint verschlossen zu sein..
         /// </summary>
         public static string ROOM_LOCKDESCRIPTION {

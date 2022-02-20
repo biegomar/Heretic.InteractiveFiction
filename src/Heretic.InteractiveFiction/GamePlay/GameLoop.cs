@@ -1,3 +1,5 @@
+using System.Threading;
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
@@ -15,9 +17,8 @@ public class GameLoop
     {
         this.printingSubsystem = printingSubsystem;
         this.printingSubsystem.ConsoleWidth = consoleWidth;
-        this.universe = universe;
-        (this.universe.LocationMap, this.universe.ActiveLocation, this.universe.ActivePlayer) = gamePrerequisitesAssembler.AssembleGame();
-        this.processor = new InputProcessor(printingSubsystem, resourceProvider, this.universe);
+        this.universe = gamePrerequisitesAssembler.AssembleGame(universe);
+        this.processor = new InputProcessor(printingSubsystem, this.universe);
         this.commands = new Queue<string>();
         if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
         {
@@ -29,15 +30,26 @@ public class GameLoop
 
     public void Run()
     {
-        bool unfinished;
-        do
+        try
         {
-            printingSubsystem.Prompt();
-            printingSubsystem.ForegroundColor = TextColor.Green;
-            var input = GetInput();
-            printingSubsystem.ResetColors();
-            unfinished = this.processor.Process(input);
-        } while (unfinished);
+            bool unfinished;
+            do
+            {
+                printingSubsystem.Prompt();
+                printingSubsystem.ForegroundColor = TextColor.Green;
+                var input = GetInput();
+                printingSubsystem.ResetColors();
+                unfinished = this.processor.Process(input);
+            } while (unfinished);
+        }
+        catch (QuitGameException e)
+        {
+            printingSubsystem.Resource(e.Message);
+        }
+        catch (GameWonException e)
+        {
+            FinalizeGame();
+        }
     }
 
     private Queue<string> GetCommandList(string fileName)
@@ -66,5 +78,11 @@ public class GameLoop
         printingSubsystem.ResetColors();
         Console.ReadKey();
         printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+    }
+
+    private void FinalizeGame()
+    {
+        printingSubsystem.Closing();
+        Console.ReadKey();
     }
 }

@@ -49,6 +49,7 @@ public interface IPrintingSubsystem
     bool NoAnswerToInvisibleObject(Character character);
     bool NoAnswerToQuestion(string phrase);
     bool Opening();
+    bool Closing();
     bool Resource(string resource);
     bool FormattedResource(string resource, string text, bool lowerFirstLetter = false);
     bool Score(int score, int maxScore);

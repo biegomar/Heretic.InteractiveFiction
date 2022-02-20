@@ -1,5 +1,8 @@
-﻿using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+﻿using System.Threading;
+using Heretic.InteractiveFiction.Exceptions;
+using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -12,7 +15,7 @@ public sealed class InputProcessor
     private readonly InputAnalyzer inputAnalyzer;
     private readonly IPrintingSubsystem PrintingSubsystem;
 
-    public InputProcessor(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider, Universe universe)
+    public InputProcessor(IPrintingSubsystem printingSubsystem, Universe universe)
     {
         this.PrintingSubsystem = printingSubsystem;
         this.universe = universe;
@@ -25,7 +28,7 @@ public sealed class InputProcessor
     {
         if (verbHandler.Quit(input))
         {
-            return false;
+            throw new QuitGameException(BaseDescriptions.QUIT_GAME);
         }
 
         var sentence = this.inputAnalyzer.Analyze(input);
@@ -48,16 +51,26 @@ public sealed class InputProcessor
             _ => PrintingSubsystem.Misconcept()
         };
 
+        FirePeriodicEvent();
+
+        PrintingSubsystem.TitleAndScore(universe.Score, universe.MaxScore);
+        
+        if (this.universe.Quests.Count == this.universe.NumberOfSolvedQuests)
+        {
+            throw new GameWonException();
+        }
+        
+        return result;
+    }
+
+    private void FirePeriodicEvent()
+    {
         var eventArgs = new PeriodicEventArgs();
         this.universe.RaisePeriodicEvents(eventArgs);
         if (!string.IsNullOrEmpty(eventArgs.Message))
         {
             PrintingSubsystem.Resource(eventArgs.Message);
         }
-
-        PrintingSubsystem.TitleAndScore(universe.Score, universe.MaxScore);
-
-        return result;
     }
 
     private bool ProcessSingleVerb(string input)
