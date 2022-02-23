@@ -11,11 +11,13 @@ internal sealed class VerbHandler
 {
     private readonly Universe universe;
     private readonly IPrintingSubsystem PrintingSubsystem;
+    private bool isHintActive;
 
     internal VerbHandler(Universe universe, IPrintingSubsystem printingSubsystem)
     {
         this.PrintingSubsystem = printingSubsystem;
         this.universe = universe;
+        this.isHintActive = false;
     }
 
     internal bool Quit(string input)
@@ -32,8 +34,7 @@ internal sealed class VerbHandler
 
         return false;
     }
-
-
+    
     internal bool Look(string verb)
     {
         if (this.universe.VerbResources[VerbKeys.LOOK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
@@ -73,6 +74,26 @@ internal sealed class VerbHandler
             }
 
             return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
+    internal bool Hint(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.HINT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            if (subject == BaseDescriptions.ON.ToLower())
+            {
+                isHintActive = true;
+                return PrintingSubsystem.Resource(BaseDescriptions.HINT_ON);
+            }
+            
+            if (subject == BaseDescriptions.OFF.ToLower())
+            {
+                isHintActive = false;
+                return PrintingSubsystem.Resource(BaseDescriptions.HINT_OFF);
+            }
         }
 
         return false;

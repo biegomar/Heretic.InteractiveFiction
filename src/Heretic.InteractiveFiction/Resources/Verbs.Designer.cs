@@ -196,6 +196,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hint|Tipp.
+        /// </summary>
+        internal static string HINT {
+            get {
+                return ResourceManager.GetString("HINT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History|Hist|Verlauf.
         /// </summary>
         internal static string HISTORY {
@@ -232,7 +241,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schaue|Schau|Lies|Untersuche|U|Zeige|Zeig|Look|L|Show.
+        ///   Looks up a localized string similar to Schaue|Schau|Lies|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show.
         /// </summary>
         internal static string LOOK {
             get {

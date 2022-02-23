@@ -17,6 +17,7 @@ public static class VerbKeys
     public static string GIVE => nameof(GIVE);
     public static string GO => nameof(GO);
     public static string HELP => nameof(HELP);
+    public static string HINT => nameof(HINT);
     public static string HISTORY => nameof(HISTORY);
     public static string INV => nameof(INV);
     public static string JUMP => nameof(JUMP);

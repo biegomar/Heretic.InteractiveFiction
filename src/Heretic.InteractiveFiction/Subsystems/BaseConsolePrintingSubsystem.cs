@@ -207,6 +207,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.HISTORY),
             nameof(Verbs.NAME),
             nameof(Verbs.HELP),
+            nameof(Verbs.HINT),
             nameof(Verbs.SAVE),
             nameof(Verbs.QUIT)
         };

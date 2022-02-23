@@ -30,6 +30,10 @@ public abstract class AContainerObject
     /// </summary>
     public string FirstLookDescription { get; set; }
     /// <summary>
+    /// The hint description is shown when the hint system has been activated.
+    /// </summary>
+    public string Hint { get; set; }
+    /// <summary>
     /// This description can be used to describe the discover situation in more detail. It is used during printout instead of the name of the object.
     /// It is only valid in the context of the location where it was found and is deleted after a pickup.
     /// </summary>
@@ -495,6 +499,7 @@ public abstract class AContainerObject
         this.UnbreakableDescription = string.Empty;
         this.LinkedToDescription = string.Empty;
         this.ClimbedDescription = string.Empty;
+        this.Hint = string.Empty;
     }
 
     protected virtual string GetVariationOfYouSee()

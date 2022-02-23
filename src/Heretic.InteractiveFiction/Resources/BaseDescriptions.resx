@@ -531,4 +531,19 @@
   <data name="QUIT_GAME" xml:space="preserve">
     <value>Das Spiel wird beendet.</value>
   </data>
+  <data name="HINT" xml:space="preserve">
+    <value>Schaltet das kontextbasierte Tipp-System an oder aus.</value>
+  </data>
+  <data name="ON" xml:space="preserve">
+    <value>ON</value>
+  </data>
+  <data name="OFF" xml:space="preserve">
+    <value>OFF</value>
+  </data>
+  <data name="HINT_ON" xml:space="preserve">
+    <value>Das Tipp-System wurde aktiviert.</value>
+  </data>
+  <data name="HINT_OFF" xml:space="preserve">
+    <value>Das Tipp-System wurde deaktiviert.</value>
+  </data>
 </root>

@@ -412,6 +412,33 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schaltet das kontextbasierte Tipp-System an oder aus..
+        /// </summary>
+        public static string HINT {
+            get {
+                return ResourceManager.GetString("HINT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Das Tipp-System wurde deaktiviert..
+        /// </summary>
+        public static string HINT_OFF {
+            get {
+                return ResourceManager.GetString("HINT_OFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Das Tipp-System wurde aktiviert..
+        /// </summary>
+        public static string HINT_ON {
+            get {
+                return ResourceManager.GetString("HINT_ON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Liste alle bisherigen Kommandos auf.
         /// </summary>
         public static string HISTORY {
@@ -894,6 +921,24 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string NW {
             get {
                 return ResourceManager.GetString("NW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OFF.
+        /// </summary>
+        public static string OFF {
+            get {
+                return ResourceManager.GetString("OFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ON.
+        /// </summary>
+        public static string ON {
+            get {
+                return ResourceManager.GetString("ON", resourceCulture);
             }
         }
         
