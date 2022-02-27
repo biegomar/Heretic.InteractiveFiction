@@ -127,7 +127,7 @@
     <value>Runter</value>
   </data>
   <data name="DROP" xml:space="preserve">
-    <value>Leg|verliere|Drop</value>
+    <value>Leg|Lege|verliere|Drop</value>
   </data>
   <data name="E" xml:space="preserve">
     <value>Osten|Ost|O|E</value>
@@ -151,7 +151,7 @@
     <value>Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock</value>
   </data>
   <data name="LOOK" xml:space="preserve">
-    <value>Schaue|Schau|Lies|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show</value>
+    <value>Schaue|Schau|Lies|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X</value>
   </data>
   <data name="N" xml:space="preserve">
     <value>Norden|Nord|N</value>

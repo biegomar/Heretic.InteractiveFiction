@@ -124,10 +124,10 @@
     <value>und|oder</value>
   </data>
   <data name="ARTICLE" xml:space="preserve">
-    <value>mein|meine|sein|seine|dein|deine|der|die|das|den|dem|du|dich</value>
+    <value>mein|meine|sein|seine|dein|deine|der|die|das|den|dem|du</value>
   </data>
   <data name="ON" xml:space="preserve">
-    <value>auf|in|ins|an|am|zum|zur|zu|mit|ab|nach|unter|um</value>
+    <value>auf|in|ins|an|am|zum|zur|zu|mit|ab|nach|unter|um|hin</value>
   </data>
   <data name="TO_BE" xml:space="preserve">
     <value>ist</value>

@@ -180,8 +180,10 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
     public event EventHandler<ContainerObjectEventArgs> BeforeTake;
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
-    public event EventHandler<ContainerObjectEventArgs> BeforeSitDown;
-    public event EventHandler<ContainerObjectEventArgs> AfterSitDown; 
+    public event EventHandler<ContainerObjectEventArgs> Take;
+    public event EventHandler<SitDownEventArgs> BeforeSitDown;
+    public event EventHandler<SitDownEventArgs> AfterSitDown;
+    public event EventHandler<SitDownEventArgs> SitDown;
     public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     public event EventHandler<ContainerObjectEventArgs> BeforeDescend;
@@ -346,19 +348,31 @@ public abstract class AContainerObject
         {
             throw new BreakException(BaseDescriptions.NOTHING_HAPPENS);
         }
-        localEventHandler?.Invoke(this, eventArgs);
     }
     
-    public virtual void OnBeforeSitDown(ContainerObjectEventArgs eventArgs)
+    public virtual void OnBeforeSitDown(SitDownEventArgs eventArgs)
     {
         var localEventHandler = this.BeforeSitDown;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
-    public virtual void OnAfterSitDown(ContainerObjectEventArgs eventArgs)
+    public virtual void OnAfterSitDown(SitDownEventArgs eventArgs)
     {
         var localEventHandler = this.AfterSitDown;
         localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnSitDown(SitDownEventArgs eventArgs)
+    {
+        var localEventHandler = this.SitDown;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new SitDownException(BaseDescriptions.NO_SEAT);
+        }
     }
     
     public virtual void OnBeforeStandUp(ContainerObjectEventArgs eventArgs)
@@ -395,6 +409,19 @@ public abstract class AContainerObject
     {
         var localEventHandler = this.AfterTake;
         localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnTake(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Take;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new TakeException(BaseDescriptions.IMPOSSIBLE_SINGLE_ITEM_PICKUP);
+        }
     }
 
     public virtual void OnBeforeChangeLocation(ChangeLocationEventArgs eventArgs)

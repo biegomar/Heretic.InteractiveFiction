@@ -79,7 +79,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mein|meine|sein|seine|dein|deine|der|die|das|den|dem|du|dich.
+        ///   Looks up a localized string similar to mein|meine|sein|seine|dein|deine|der|die|das|den|dem|du.
         /// </summary>
         public static string ARTICLE {
             get {
@@ -88,7 +88,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to auf|in|ins|an|am|zum|zur|zu|mit|ab|nach|unter|um.
+        ///   Looks up a localized string similar to auf|in|ins|an|am|zum|zur|zu|mit|ab|nach|unter|um|hin.
         /// </summary>
         public static string ON {
             get {

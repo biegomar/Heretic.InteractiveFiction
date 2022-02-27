@@ -142,7 +142,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leg|verliere|Drop.
+        ///   Looks up a localized string similar to Leg|Lege|verliere|Drop.
         /// </summary>
         internal static string DROP {
             get {
@@ -241,7 +241,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schaue|Schau|Lies|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show.
+        ///   Looks up a localized string similar to Schaue|Schau|Lies|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X.
         /// </summary>
         internal static string LOOK {
             get {

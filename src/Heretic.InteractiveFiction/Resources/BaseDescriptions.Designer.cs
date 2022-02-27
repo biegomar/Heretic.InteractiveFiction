@@ -493,11 +493,20 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!.
+        ///   Looks up a localized string similar to Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!|Ich glaube nicht, dass Du das gebrauchen kannst|Nein, auf keinen Fall!|Ein Tipp: Du brauchst das nicht und deshalb lassen wir das liegen..
         /// </summary>
         public static string IMPOSSIBLE_PICKUP {
             get {
                 return ResourceManager.GetString("IMPOSSIBLE_PICKUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du kannst das nicht mitnehmen..
+        /// </summary>
+        public static string IMPOSSIBLE_SINGLE_ITEM_PICKUP {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_SINGLE_ITEM_PICKUP", resourceCulture);
             }
         }
         

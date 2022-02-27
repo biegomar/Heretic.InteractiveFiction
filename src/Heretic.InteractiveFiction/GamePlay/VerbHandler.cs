@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Objects;
@@ -676,12 +677,21 @@ internal sealed class VerbHandler
 
             if (seatCount == 0)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.NO_SEAT);
+                try
+                {
+                    // surroundings only exist within the active location.
+                    this.universe.ActiveLocation.OnSitDown(new SitDownEventArgs());
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return PrintingSubsystem.Resource(e.Message);
+                }
             }
             
             if (seatCount == 1)
             {
-                var onlySeat = this.universe.ActiveLocation.Items.First(x => x.IsSeatAble);
+                var onlySeat = this.universe.ActiveLocation.Items.Single(x => x.IsSeatAble);
                 
                 this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
                 onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
@@ -703,6 +713,11 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
+            if (this.GetUnhiddenObjectByName(subject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.SitDown(verb);
+            }
+            
             var key = this.GetItemKeyByName(subject);
             var item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
 
@@ -731,11 +746,34 @@ internal sealed class VerbHandler
             var itemKey = this.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.SURROUNDING_NOT_SEATABLE);
+                try
+                {
+                    this.universe.ActiveLocation.OnSitDown(new SitDownEventArgs {ExternalItemKey = itemKey});
+                }
+                catch (Exception e)
+                {
+                    return PrintingSubsystem.Resource(e.Message);
+                }
             }
 
             return PrintingSubsystem.ItemNotVisible();
         }
+        return false;
+    }
+
+    internal bool SitDown(string verb, string processingSubject, string processingObject)
+    {
+        if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            
+            if (this.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.SitDown(verb, processingObject);
+            }
+            
+            return PrintingSubsystem.ItemNotVisible();
+        }
+
         return false;
     }
     
@@ -1093,15 +1131,22 @@ internal sealed class VerbHandler
                     var character = this.universe.ActiveLocation.GetCharacterByKey(characterKey);
                     if (character != default)
                     {
-                        result = result &&
-                                 PrintingSubsystem.ImpossiblePickup(character);
+                        result = result && PrintingSubsystem.ImpossiblePickup(character);
                     }
                     else
                     {
+                        // lets have a look at surroundings.
                         var itemKey = this.GetItemKeyByName(subject);
                         if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
                         {
-                            result = result && PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_PICKUP);
+                            try
+                            {
+                                this.universe.ActiveLocation.OnTake(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
+                            }
+                            catch (Exception e)
+                            {
+                                result = result && PrintingSubsystem.Resource(e.Message);
+                            }
                         }
                         else
                         {

@@ -480,7 +480,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             }
         }
 
-        return Resource(BaseDescriptions.IMPOSSIBLE_PICKUP);
+        return Resource(this.GetRandomPhrase(BaseDescriptions.IMPOSSIBLE_PICKUP));
     }
 
     public virtual bool ItemToHeavy()
@@ -842,6 +842,16 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         var sentence = itemName.Split('|');
         return sentence[0].Trim();
+    }
+    
+    private string GetRandomPhrase(string message)
+    {
+        var phrases = message.Split("|");
+
+        var rand = new Random();
+        var index = rand.Next(phrases.Length);
+
+        return phrases[index];
     }
 
     public abstract bool Credits();
