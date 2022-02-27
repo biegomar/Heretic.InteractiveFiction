@@ -99,6 +99,16 @@ internal sealed class VerbHandler
 
         return false;
     }
+
+    internal bool Remark(string verb)
+    {
+        if (this.universe.VerbResources[VerbKeys.REM].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
     
     internal bool Pull(string verb, string subject)
     {

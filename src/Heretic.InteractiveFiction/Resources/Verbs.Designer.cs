@@ -322,6 +322,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kommentar|Comment|Remark|REM.
+        /// </summary>
+        internal static string REM {
+            get {
+                return ResourceManager.GetString("REM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Süden|Süd|Sued|Sueden|S.
         /// </summary>
         internal static string S {

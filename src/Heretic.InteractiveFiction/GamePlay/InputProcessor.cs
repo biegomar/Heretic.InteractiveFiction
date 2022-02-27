@@ -43,6 +43,11 @@ public sealed class InputProcessor
             this.historyAdministrator.Add(input);
         }
 
+        if (this.universe.VerbResources[VerbKeys.REM].Contains(sentence[0], StringComparer.InvariantCultureIgnoreCase))
+        {
+            return true;
+        }
+        
         var result = sentence.Length switch
         {
             1 => this.ProcessSingleVerb(sentence[0]),
@@ -89,6 +94,7 @@ public sealed class InputProcessor
         result = result || verbHandler.SitDown(processingInput);
         result = result || verbHandler.StandUp(processingInput);
         result = result || verbHandler.Descend(processingInput);
+        result = result || verbHandler.Remark(processingInput);
         result = result || verbHandler.History(processingInput, this.historyAdministrator.All);
         result = result || verbHandler.Save(processingInput, this.historyAdministrator.All);
 

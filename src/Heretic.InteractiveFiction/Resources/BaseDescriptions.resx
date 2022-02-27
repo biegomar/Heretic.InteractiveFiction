@@ -549,4 +549,7 @@
   <data name="IMPOSSIBLE_SINGLE_ITEM_PICKUP" xml:space="preserve">
     <value>Du kannst das nicht mitnehmen.</value>
   </data>
+  <data name="REM" xml:space="preserve">
+    <value>Fügt dem internen Protokoll einen Kommentar hinzu.</value>
+  </data>
 </root>

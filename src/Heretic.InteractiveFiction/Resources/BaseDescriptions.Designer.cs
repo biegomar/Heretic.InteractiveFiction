@@ -1024,6 +1024,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fügt dem internen Protokoll einen Kommentar hinzu..
+        /// </summary>
+        public static string REM {
+            get {
+                return ResourceManager.GetString("REM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Die Tür scheint verschlossen zu sein..
         /// </summary>
         public static string ROOM_LOCKDESCRIPTION {

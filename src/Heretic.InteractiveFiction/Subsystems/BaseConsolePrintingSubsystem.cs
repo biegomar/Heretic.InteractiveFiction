@@ -208,6 +208,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.NAME),
             nameof(Verbs.HELP),
             nameof(Verbs.HINT),
+            nameof(Verbs.REM),
             nameof(Verbs.SAVE),
             nameof(Verbs.QUIT)
         };

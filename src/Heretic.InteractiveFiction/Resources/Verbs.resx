@@ -255,4 +255,7 @@
   <data name="HINT" xml:space="preserve">
     <value>Hint|Tipp</value>
   </data>
+  <data name="REM" xml:space="preserve">
+    <value>Kommentar|Comment|Remark|REM</value>
+  </data>
 </root>
