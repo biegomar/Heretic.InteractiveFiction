@@ -208,7 +208,7 @@
     <value>Westen|West|W</value>
   </data>
   <data name="WAYS" xml:space="preserve">
-    <value>Wege|Auswege|Weg|Ausweg</value>
+    <value>Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang</value>
   </data>
   <data name="ALTER_EGO" xml:space="preserve">
     <value>Alter|Alterego|Alternativ|Alternative|Alias</value>

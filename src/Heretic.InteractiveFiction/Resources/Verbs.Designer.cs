@@ -466,7 +466,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wege|Auswege|Weg|Ausweg.
+        ///   Looks up a localized string similar to Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang.
         /// </summary>
         internal static string WAYS {
             get {

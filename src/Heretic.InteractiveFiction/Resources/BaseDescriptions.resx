@@ -448,8 +448,8 @@
     <value>Schreibe oder tippe etwas</value>
   </data>
   <data name="ITEM_ONLY_SEAT" xml:space="preserve">
-        <value>Scheinbar gibt es in diesem Raum nur eine richtige Sitzmöglichkeit. Daher nimmt Du einfach auf {0} Platz.</value>
-    </data>
+    <value>Scheinbar gibt es in diesem Raum nur eine richtige Sitzmöglichkeit. Daher nimmst Du einfach auf {0} Platz.</value>
+  </data>
   <data name="NO_SEAT" xml:space="preserve">
     <value>Hier gibt es scheinbar keine Sitzmöglichkeit. Also bleibst Du einfach stehen.</value>
   </data>

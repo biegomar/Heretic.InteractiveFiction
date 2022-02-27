@@ -664,7 +664,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scheinbar gibt es in diesem Raum nur eine richtige Sitzmöglichkeit. Daher nimmt Du einfach auf {0} Platz..
+        ///   Looks up a localized string similar to Scheinbar gibt es in diesem Raum nur eine richtige Sitzmöglichkeit. Daher nimmst Du einfach auf {0} Platz..
         /// </summary>
         public static string ITEM_ONLY_SEAT {
             get {
