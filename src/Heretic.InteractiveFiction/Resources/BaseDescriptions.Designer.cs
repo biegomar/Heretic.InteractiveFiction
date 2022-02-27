@@ -484,6 +484,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Das funktioniert nicht wie erwartet..
+        /// </summary>
+        public static string IMPOSSIBLE_CLOSE {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_CLOSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du kannst {0} nicht fallen lassen. Ist es noch mit einem anderen Gegenstand verbunden?.
         /// </summary>
         public static string IMPOSSIBLE_DROP {

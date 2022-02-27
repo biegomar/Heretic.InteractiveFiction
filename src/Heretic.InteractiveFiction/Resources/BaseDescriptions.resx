@@ -555,4 +555,7 @@
   <data name="IMPOSSIBLE_CLIMB" xml:space="preserve">
     <value>Es gibt keinen Grund, das zu tun.</value>
   </data>
+  <data name="IMPOSSIBLE_CLOSE" xml:space="preserve">
+    <value>Das funktioniert nicht wie erwartet.</value>
+  </data>
 </root>

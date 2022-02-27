@@ -172,6 +172,7 @@ public abstract class AContainerObject
     public event EventHandler<ContainerObjectEventArgs> Climb;
     public event EventHandler<ContainerObjectEventArgs> BeforeClose;
     public event EventHandler<ContainerObjectEventArgs> AfterClose;
+    public event EventHandler<ContainerObjectEventArgs> Close;
     public event EventHandler<ContainerObjectEventArgs> BeforeDrop;
     public event EventHandler<ContainerObjectEventArgs> AfterDrop;
     public event EventHandler<ContainerObjectEventArgs> BeforeEat;
@@ -493,6 +494,19 @@ public abstract class AContainerObject
     {
         var localEventHandler = this.AfterClose;
         localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnClose(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Close;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new CloseException(BaseDescriptions.IMPOSSIBLE_CLOSE);
+        }
     }
 
     public virtual void OnBeforeOpen(ContainerObjectEventArgs eventArgs)
