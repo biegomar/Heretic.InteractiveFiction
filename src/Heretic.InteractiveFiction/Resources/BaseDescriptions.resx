@@ -558,4 +558,7 @@
   <data name="IMPOSSIBLE_CLOSE" xml:space="preserve">
     <value>Das funktioniert nicht wie erwartet.</value>
   </data>
+  <data name="YOU_SEE_SINGULAR" xml:space="preserve">
+    <value>darin befindet sich:</value>
+  </data>
 </root>

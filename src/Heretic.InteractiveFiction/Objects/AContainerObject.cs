@@ -571,9 +571,9 @@ public abstract class AContainerObject
         this.Hint = string.Empty;
     }
 
-    protected virtual string GetVariationOfYouSee()
+    protected virtual string GetVariationOfYouSee(int itemCount)
     {
-        return BaseDescriptions.YOU_SEE;
+        return itemCount == 1 ? BaseDescriptions.YOU_SEE_SINGULAR : BaseDescriptions.YOU_SEE;
     }
 
     protected virtual string GetVariationOfHereSingle()
@@ -615,7 +615,7 @@ public abstract class AContainerObject
             {
                 if (subItems)
                 {
-                    description.Append($" ({GetVariationOfYouSee()} ");
+                    description.Append($" ({GetVariationOfYouSee(unHiddenObjectsWithoutContainmentDescription.Count)} ");
                 }
 
                 var index = 0;

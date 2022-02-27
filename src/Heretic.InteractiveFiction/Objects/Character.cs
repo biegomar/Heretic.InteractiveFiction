@@ -67,7 +67,7 @@ public sealed class Character : AContainerObject
         return string.Format(BaseDescriptions.INVENTORY_TEMPLATE, this.GenderSpeech());
     }
 
-    protected override string GetVariationOfYouSee()
+    protected override string GetVariationOfYouSee(int itemCount)
     {
         return this.Gender switch
         {

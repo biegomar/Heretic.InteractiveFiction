@@ -1382,5 +1382,14 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("YOU_SEE_MALE", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to darin befindet sich:.
+        /// </summary>
+        public static string YOU_SEE_SINGULAR {
+            get {
+                return ResourceManager.GetString("YOU_SEE_SINGULAR", resourceCulture);
+            }
+        }
     }
 }
