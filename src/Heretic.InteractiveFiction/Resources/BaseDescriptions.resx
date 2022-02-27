@@ -552,4 +552,7 @@
   <data name="REM" xml:space="preserve">
     <value>Fügt dem internen Protokoll einen Kommentar hinzu.</value>
   </data>
+  <data name="IMPOSSIBLE_CLIMB" xml:space="preserve">
+    <value>Es gibt keinen Grund, das zu tun.</value>
+  </data>
 </root>

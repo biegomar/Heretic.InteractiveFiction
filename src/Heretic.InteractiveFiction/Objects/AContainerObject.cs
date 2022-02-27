@@ -167,6 +167,9 @@ public abstract class AContainerObject
     public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
     public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
     public event EventHandler<BreakItemEventArg> Break;
+    public event EventHandler<ContainerObjectEventArgs> BeforeClimb;
+    public event EventHandler<ContainerObjectEventArgs> AfterClimb;
+    public event EventHandler<ContainerObjectEventArgs> Climb;
     public event EventHandler<ContainerObjectEventArgs> BeforeClose;
     public event EventHandler<ContainerObjectEventArgs> AfterClose;
     public event EventHandler<ContainerObjectEventArgs> BeforeDrop;
@@ -285,6 +288,31 @@ public abstract class AContainerObject
         else
         {
             throw new BuyException(BaseDescriptions.ON_BUY_EXCEPTION);
+        }
+    }
+    
+    public virtual void OnBeforeClimb(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeClimb;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterClimb(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterClimb;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnClimb(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Climb;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            throw new ClimbException(BaseDescriptions.IMPOSSIBLE_CLIMB);
         }
     }
 

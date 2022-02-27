@@ -475,6 +475,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Es gibt keinen Grund, das zu tun..
+        /// </summary>
+        public static string IMPOSSIBLE_CLIMB {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_CLIMB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du kannst {0} nicht fallen lassen. Ist es noch mit einem anderen Gegenstand verbunden?.
         /// </summary>
         public static string IMPOSSIBLE_DROP {

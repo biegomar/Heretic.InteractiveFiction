@@ -512,6 +512,24 @@ internal sealed class VerbHandler
                 return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.Name, true);
             }
 
+            // lets have a look at surroundings.
+            if (item == default)
+            {
+                var itemKey = this.GetItemKeyByName(subject);
+                if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+                {
+                    try
+                    {
+                        this.universe.ActiveLocation.OnClimb(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return PrintingSubsystem.Resource(e.Message);
+                    }
+                }
+            }
+            
             return PrintingSubsystem.ItemNotVisible();
         }
 

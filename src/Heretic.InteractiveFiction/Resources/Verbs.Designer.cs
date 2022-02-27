@@ -376,7 +376,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setze|Setzen|Setz|Hinsetzen.
+        ///   Looks up a localized string similar to Setze|Setzen|Setz|Hinsetzen|Sitze.
         /// </summary>
         internal static string SIT {
             get {
