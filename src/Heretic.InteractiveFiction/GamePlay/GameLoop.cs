@@ -78,11 +78,15 @@ public class GameLoop
         printingSubsystem.ResetColors();
         Console.ReadKey();
         printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+        printingSubsystem.ForegroundColor = TextColor.DarkCyan;
+        printingSubsystem.Resource(BaseDescriptions.HELP_WANTED);
+        printingSubsystem.ResetColors();
     }
 
     private void FinalizeGame()
     {
         printingSubsystem.Closing();
+        printingSubsystem.Credits();
         Console.ReadKey();
     }
 }

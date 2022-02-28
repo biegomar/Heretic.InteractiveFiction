@@ -196,6 +196,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;&lt;Benutze das Kommando &apos;name&apos;, um Dir im Spiel einen Namen zu geben.&gt;&gt;.
+        /// </summary>
+        public static string CHANGE_NAME {
+            get {
+                return ResourceManager.GetString("CHANGE_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diese Person sehe ich hier nicht..
         /// </summary>
         public static string CHARACTER_NOT_VISIBLE {
@@ -367,7 +376,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo Fremder (willst Du mir eigentlich Deinen richtigen Namen nennen?),.
+        ///   Looks up a localized string similar to Hallo Fremder,.
         /// </summary>
         public static string HELLO_STRANGER {
             get {
@@ -385,7 +394,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (schreibe &apos;hilfe&apos;, um Hilfe zu erhalten.).
+        ///   Looks up a localized string similar to &lt;&lt;Schreibe &apos;hilfe&apos;, um Hilfe zu erhalten.&gt;&gt;.
         /// </summary>
         public static string HELP_WANTED {
             get {

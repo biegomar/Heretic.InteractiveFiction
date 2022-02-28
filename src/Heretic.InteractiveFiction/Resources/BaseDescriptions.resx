@@ -166,7 +166,7 @@
     <value>Hallo {0},</value>
   </data>
   <data name="HELLO_STRANGER" xml:space="preserve">
-    <value>Hallo Fremder (willst Du mir eigentlich Deinen richtigen Namen nennen?),</value>
+    <value>Hallo Fremder,</value>
   </data>
   <data name="NOTHING" xml:space="preserve">
     <value>Du hast aktuell keine Gegenstände bei Dir.</value>
@@ -229,7 +229,7 @@
     <value>Zeige diese Hilfeseite</value>
   </data>
   <data name="HELP_WANTED" xml:space="preserve">
-    <value>(schreibe 'hilfe', um Hilfe zu erhalten.)</value>
+    <value>&lt;&lt;Schreibe 'hilfe', um Hilfe zu erhalten.&gt;&gt;</value>
   </data>
   <data name="ALTER_EGO" xml:space="preserve">
     <value>Alternative Bezeichnungen für Personen und Gegenstände</value>
@@ -560,5 +560,8 @@
   </data>
   <data name="YOU_SEE_SINGULAR" xml:space="preserve">
     <value>darin befindet sich:</value>
+  </data>
+  <data name="CHANGE_NAME" xml:space="preserve">
+    <value>&lt;&lt;Benutze das Kommando 'name', um Dir im Spiel einen Namen zu geben.&gt;&gt;</value>
   </data>
 </root>
