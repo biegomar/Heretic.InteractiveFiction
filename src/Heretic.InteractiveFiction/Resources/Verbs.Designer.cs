@@ -313,7 +313,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quit|Exit|Ende|Q.
+        ///   Looks up a localized string similar to Quit|Ende|Q.
         /// </summary>
         internal static string QUIT {
             get {
