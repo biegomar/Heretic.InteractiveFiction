@@ -170,7 +170,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     }    
     
     
-    private void VerbGroupDirections(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbGroupDirections(IDictionary<string, IEnumerable<string>> verbResource)
     {
         Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_DIRECTIONS.Length));
@@ -218,7 +218,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return result;
     } 
     
-    private void VerbMetaInfos(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbMetaInfos(IDictionary<string, IEnumerable<string>> verbResource)
     {
         Console.WriteLine(HelpDescriptions.VERBS_METAINFO);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_METAINFO.Length));
@@ -276,7 +276,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return result;
     } 
     
-    private void VerbInteractItems(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbInteractItems(IDictionary<string, IEnumerable<string>> verbResource)
     {
         Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_INTERACT_ITEMS.Length));
@@ -335,7 +335,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return result;
     }
     
-    private void VerbTalks(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbTalks(IDictionary<string, IEnumerable<string>> verbResource)
     {
         Console.WriteLine(HelpDescriptions.VERBS_TALKS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_TALKS.Length));
@@ -383,7 +383,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return result;
     } 
    
-    private void VerbContainers(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbContainers(IDictionary<string, IEnumerable<string>> verbResource)
     {
         Console.WriteLine(HelpDescriptions.VERBS_CONTAINER);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_CONTAINER.Length));
@@ -414,7 +414,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private void GeneralHelp()
+    protected void GeneralHelp()
     {
         Console.WriteLine(HelpDescriptions.HELP_DESCRIPTION);
         Console.WriteLine(new string('-', HelpDescriptions.HELP_DESCRIPTION.Length));
