@@ -6,7 +6,7 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public abstract class AContainerObject
 {
-    private string name;
+    protected string name;
 
     /// <summary>
     /// This is the name of the object. This name is used as headline during printout.
@@ -16,11 +16,47 @@ public abstract class AContainerObject
         get => this.GetObjectName();
         set => name = value;
     }
+    
+    public string AccusativeIndefiniteArticleName
+    {
+        get => this.GetAccusativeIndefiniteArticleName();
+        set => name = value;
+    }
+    
+    public string AccusativeArticleName
+    {
+        get => this.GetAccusativeArticleName();
+        set => name = value;
+    }
+    
+    public string NominativeIndefiniteArticleName
+    {
+        get => this.GetNominativeIndefiniteArticleName();
+        set => name = value;
+    }
+    
+    public string DativeIndefiniteArticleName
+    {
+        get => this.GetDativeIndefiniteArticleName();
+        set => name = value;
+    }
+    
+    public string DativeArticleName
+    {
+        get => this.GetDativeArticleName();
+        set => name = value;
+    }
 
     /// <summary>
     /// The unique key that is representing the object.
     /// </summary>
     public string Key { get; init; }
+
+    /// <summary>
+    /// Used to define some grammar rules.
+    /// </summary>
+    public Grammars Grammar { get; set; }
+
     /// <summary>
     /// The detailed description of the object. It is used during printout.
     /// </summary>
@@ -533,9 +569,15 @@ public abstract class AContainerObject
             throw new UnlockException(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, this.Name, eventArgs.Key.Name));
         }
     }
+
+    protected AContainerObject(Grammars grammar): base()
+    {
+        this.Grammar = grammar;
+    }
     
     protected AContainerObject()
     {
+        this.Grammar = new Grammars();
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.Surroundings = new Dictionary<string, Func<string>>();
@@ -578,12 +620,7 @@ public abstract class AContainerObject
 
     protected virtual string GetVariationOfHereSingle()
     {
-        return BaseDescriptions.HERE_SINGLE;
-    }
-
-    protected virtual string GetVariationOfHerePlural()
-    {
-        return BaseDescriptions.HERE_PLURAL;
+        return BaseDescriptions.HERE;
     }
 
     private string PrintUnhiddenObjects(ICollection<AContainerObject> unhiddenObjects, bool subItems = false)
@@ -636,19 +673,27 @@ public abstract class AContainerObject
 
                     if (index != 0)
                     {
-                        var lowerName = this.LowerFirstChar(item.Name);
-                        description.Append($"{lowerName}");
+                        if (subItems)
+                        {
+                            var lowerName = this.LowerFirstChar(item.NominativeIndefiniteArticleName);
+                            description.Append($"{lowerName}");
+                        }
+                        else
+                        {
+                            var lowerName = this.LowerFirstChar(item.AccusativeIndefiniteArticleName);
+                            description.Append($"{lowerName}");
+                        }
                     }
                     else
                     {
                         if (subItems)
                         {
-                            var lowerName = this.LowerFirstChar(item.Name);
+                            var lowerName = this.LowerFirstChar(item.NominativeIndefiniteArticleName);
                             description.Append($"{lowerName}");
                         }
                         else
                         {
-                            description.Append($"{item.Name}");
+                            description.Append($"{item.AccusativeIndefiniteArticleName}");
                         }
                     }
 
@@ -675,9 +720,7 @@ public abstract class AContainerObject
                 }
                 else
                 {
-                    description.AppendLine(index == 1
-                        ? $" {GetVariationOfHereSingle()}"
-                        : $" {GetVariationOfHerePlural()}");
+                    description.AppendLine($" {GetVariationOfHereSingle()}");
                 }
             }
         }
@@ -687,14 +730,15 @@ public abstract class AContainerObject
     
     protected string LowerFirstChar(string description)
     {
-        return description[..1].ToLower() + description[1..];
+        var lowerDescription = description[..1].ToLower() + description[1..];
+        return lowerDescription.Trim();
     }
 
     private string GetLinkedObjectsDescription(AContainerObject item, bool useBracket = true)
     {
         var description = new StringBuilder();
         var unhiddenLinkedItemsWithLinkedTo = item.LinkedTo.Where(x => !x.IsHidden && !string.IsNullOrEmpty(x.LinkedToDescription)).ToList();
-        var unhiddenLinkedItemsWithoutLinkedTo =item.LinkedTo.Where(x => !x.IsHidden && string.IsNullOrEmpty(x.LinkedToDescription)).ToList();
+        var unhiddenLinkedItemsWithoutLinkedTo = item.LinkedTo.Where(x => !x.IsHidden && string.IsNullOrEmpty(x.LinkedToDescription)).ToList();
         if (unhiddenLinkedItemsWithLinkedTo.Any() ||unhiddenLinkedItemsWithoutLinkedTo.Any())
         {
             if (useBracket)
@@ -720,7 +764,7 @@ public abstract class AContainerObject
             {
                 if (linkedItemIndex == 0)
                 {
-                    description.Append(BaseDescriptions.LINKED_TO);
+                    description.Append(string.Format(BaseDescriptions.LINKED_TO, item.Name));
                     
                 }
                 else
@@ -728,7 +772,7 @@ public abstract class AContainerObject
                     description.Append(", ");
                 }
                 
-                description.Append(this.LowerFirstChar(linkedItem.Name));
+                description.Append(this.LowerFirstChar(linkedItem.DativeIndefiniteArticleName));
 
                 linkedItemIndex++;
             }
@@ -737,6 +781,8 @@ public abstract class AContainerObject
             {
                 description.Append(')');    
             }
+            
+            description.Append('.');
         }
 
         return description.ToString();
@@ -1019,12 +1065,48 @@ public abstract class AContainerObject
         return string.Join(", ", characterNames);
     }
 
-    private string GetObjectName()
+    protected virtual string GetObjectName()
     {
         var sentence = this.name.Split('|');
-        return sentence[0].Trim();
+        return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}");
     }
 
+    private string GetNominativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        var nominative = this.Grammar.GetNominativeIndefiniteArticle();
+        if (string.IsNullOrEmpty(nominative))
+        {
+            return $" {sentence[0].Trim()}";    
+        }
+        
+        return $"{nominative} {sentence[0].Trim()}";
+    }
+    
+    private string GetDativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetDativeIndefiniteArticle()} {sentence[0].Trim()}");
+    }
+    
+    private string GetDativeArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetDativeArticle()} {sentence[0].Trim()}");
+    }
+    
+    private string GetAccusativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {sentence[0].Trim()}");
+    }
+    
+    private string GetAccusativeArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetAccusativeArticle()} {sentence[0].Trim()}");
+    }
+    
     public override string ToString()
     {
         var description = new StringBuilder();

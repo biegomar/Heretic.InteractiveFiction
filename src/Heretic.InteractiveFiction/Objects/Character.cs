@@ -7,7 +7,6 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class Character : AContainerObject
 {
-    public Genders Gender { get; set; }
     public string TalkDescription { get; set; }
     public string StandardPhrases { get; set; }
     public bool Talked { get; set; }
@@ -18,7 +17,6 @@ public sealed class Character : AContainerObject
 
     public Character() : base()
     {
-        this.Gender = Genders.Female;
         this.IsPickAble = false;
     }
 
@@ -49,7 +47,7 @@ public sealed class Character : AContainerObject
 
     private string GenderSpeech()
     {
-        return this.Gender switch
+        return this.Grammar.Gender switch
         {
             Genders.Female => BaseDescriptions.GENDER_FEMALE,
             Genders.Male => BaseDescriptions.GENDER_MALE,
@@ -62,14 +60,9 @@ public sealed class Character : AContainerObject
         return string.Format(BaseDescriptions.INVENTORY_TEMPLATE, this.GenderSpeech());
     }
 
-    protected override string GetVariationOfHerePlural()
-    {
-        return string.Format(BaseDescriptions.INVENTORY_TEMPLATE, this.GenderSpeech());
-    }
-
     protected override string GetVariationOfYouSee(int itemCount)
     {
-        return this.Gender switch
+        return this.Grammar.Gender switch
         {
             Genders.Female => BaseDescriptions.YOU_SEE_FEMALE,
             Genders.Male => BaseDescriptions.YOU_SEE_MALE,

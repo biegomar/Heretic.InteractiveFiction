@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>0.6.9</PackageVersion>
+        <PackageVersion>0.7.0</PackageVersion>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
         <Authors>Marc Biegota</Authors>
         <Description>Heretic Interactive Fiction - an interactive fiction programming framework</Description>
@@ -26,6 +26,10 @@
       <EmbeddedResource Update="Resources\HelpDescriptions.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>HelpDescriptions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Grammar.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Grammar.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 
@@ -50,6 +54,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>HelpDescriptions.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Grammar.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Grammar.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LINKED_TO" xml:space="preserve">
-    <value>Ist verbunden mit: </value>
+    <value>{0} ist verbunden mit </value>
   </data>
   <data name="NOTHING_HAPPENS" xml:space="preserve">
     <value>Nichts passiert!</value>
@@ -229,7 +229,7 @@
     <value>Zeige diese Hilfeseite</value>
   </data>
   <data name="HELP_WANTED" xml:space="preserve">
-    <value>&lt;&lt;Schreibe 'hilfe', um Hilfe zu erhalten.&gt;&gt;</value>
+    <value>&lt;&lt; Schreibe 'hilfe', um Hilfe zu erhalten. &gt;&gt;</value>
   </data>
   <data name="ALTER_EGO" xml:space="preserve">
     <value>Alternative Bezeichnungen für Personen und Gegenstände</value>
@@ -412,7 +412,7 @@
     <value>Das wirkt nicht so, als könne man es essen!</value>
   </data>
   <data name="START_THE_GAME" xml:space="preserve">
-    <value>&lt;&lt;...drücke eine Taste, um das Spiel zu starten...&gt;&gt;</value>
+    <value>&lt;&lt; ...drücke eine Taste, um das Spiel zu starten... &gt;&gt;</value>
   </data>
   <data name="IMPOSSIBLE_UNLOCK_SURROUNDINGS" xml:space="preserve">
     <value>Womit möchtest Du das denn aufschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?</value>
@@ -501,9 +501,6 @@
   <data name="CLIMB" xml:space="preserve">
     <value>Klettere, bzw. steige auf ein Objekt.</value>
   </data>
-  <data name="CLIMBING_ON" xml:space="preserve">
-    <value>Du bist auf {0} geklettert.</value>
-  </data>
   <data name="ALREADY_CLIMBED" xml:space="preserve">
     <value>Klettere zunächst von Deiner aktuellen Position wieder nach unten.</value>
   </data>
@@ -526,7 +523,7 @@
     <value>Steige von dem Objekt herab, auf das Du geklettert bist.</value>
   </data>
   <data name="QUEST_SOLVED" xml:space="preserve">
-    <value>&lt;&lt;Glückwunsch! Du hast gerade die Quest '{0}' gelöst.&gt;&gt;</value>
+    <value>&lt;&lt; Glückwunsch! Du hast gerade die Quest '{0}' gelöst. &gt;&gt;</value>
   </data>
   <data name="QUIT_GAME" xml:space="preserve">
     <value>Das Spiel wird beendet.</value>
@@ -563,5 +560,8 @@
   </data>
   <data name="CHANGE_NAME" xml:space="preserve">
     <value>&lt;&lt;Benutze das Kommando 'name', um Dir im Spiel einen Namen zu geben.&gt;&gt;</value>
+  </data>
+  <data name="HERE" xml:space="preserve">
+    <value>kannst Du hier sehen.</value>
   </data>
 </root>

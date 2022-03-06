@@ -509,7 +509,7 @@ internal sealed class VerbHandler
             {
                 this.universe.ActivePlayer.HasClimbed = true;
                 this.universe.ActivePlayer.ClimbedObject = item;
-                return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.Name, true);
+                return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.AccusativeArticleName, true);
             }
 
             // lets have a look at surroundings.
@@ -738,8 +738,8 @@ internal sealed class VerbHandler
                 
                 this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
                 onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                this.universe.ActivePlayer.SitDown(onlySeat);
-                var result = PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.Name, true);
+                this.universe.ActivePlayer.SitDownOnSeat(onlySeat);
+                var result = PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.DativeArticleName, true);
                 onlySeat.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                 this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
 
@@ -775,7 +775,7 @@ internal sealed class VerbHandler
                 {
                     this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = item});
                     item.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                    this.universe.ActivePlayer.SitDown(item);
+                    this.universe.ActivePlayer.SitDownOnSeat(item);
                     var result = PrintingSubsystem.ItemSeated(item);
                     item.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                     this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = item});
@@ -1329,6 +1329,7 @@ internal sealed class VerbHandler
         if (this.universe.VerbResources[VerbKeys.NAME].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
             this.universe.ActivePlayer.Name = subject;
+            this.universe.ActivePlayer.IsStranger = false;
             PrintingSubsystem.ActivePlayer(this.universe.ActivePlayer);
 
             return true;

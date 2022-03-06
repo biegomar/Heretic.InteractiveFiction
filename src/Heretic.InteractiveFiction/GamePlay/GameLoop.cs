@@ -46,7 +46,7 @@ public class GameLoop
         {
             printingSubsystem.Resource(e.Message);
         }
-        catch (GameWonException e)
+        catch (GameWonException)
         {
             FinalizeGame();
         }

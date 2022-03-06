@@ -10,6 +10,7 @@ public class Player : AContainerObject
     public ICollection<Item> Clothes { get; set; }
 
     public bool IsSitting { get; set; }
+    public bool IsStranger { get; set; }
 
     public bool HasClimbed { get; set; }
 
@@ -22,12 +23,19 @@ public class Player : AContainerObject
         this.Clothes = new List<Item>();
         this.IsSitting = false;
         this.HasClimbed = false;
+        this.IsStranger = true;
     }
-    
+
+    protected override string GetObjectName()
+    {
+        var sentence = this.name.Split('|');
+        return sentence[0].Trim();
+    }
+
     public override string ToString()
     {
         var result = new StringBuilder();
-        if (this.Name == string.Empty)
+        if (this.IsStranger)
         {
             result.AppendLine(BaseDescriptions.HELLO_STRANGER);
         }
@@ -71,14 +79,14 @@ public class Player : AContainerObject
 
         if (this.IsSitting && this.Seat != default)
         {
-            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.Seat.Name));
+            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.LowerFirstChar(this.Seat.DativeArticleName)));
         }
         
         if (this.HasClimbed && this.ClimbedObject != default)
         {
             if (string.IsNullOrEmpty(this.ClimbedObject.ClimbedDescription))
             {
-                result.AppendLine(string.Format(BaseDescriptions.CLIMBING_ON, this.LowerFirstChar(this.ClimbedObject.Name)));    
+                result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, this.LowerFirstChar(this.ClimbedObject.AccusativeArticleName)));    
             }
             else
             {
@@ -139,7 +147,7 @@ public class Player : AContainerObject
                 {
                     result.Append(", ");    
                 }
-                result.Append(this.LowerFirstChar(cloth.Name));
+                result.Append(this.LowerFirstChar(cloth.AccusativeIndefiniteArticleName));
                 itemIndex++;
             }
         }
@@ -249,7 +257,7 @@ public class Player : AContainerObject
         return false;
     }
 
-    public bool SitDown(AContainerObject seat)
+    public bool SitDownOnSeat(AContainerObject seat)
     {
         if (seat.IsSeatAble && !this.IsSitting)
         {
@@ -304,9 +312,8 @@ public class Player : AContainerObject
     {
         var baseResult = base.PrintItems(subItems);
 
-        var result = baseResult.Replace(BaseDescriptions.HERE_PLURAL, BaseDescriptions.INVENTORY);
-        result = result.Replace(BaseDescriptions.HERE_SINGLE, BaseDescriptions.INVENTORY);
-
+        var result = baseResult.Replace(BaseDescriptions.HERE, BaseDescriptions.INVENTORY);
+        
         return result;
     }
 }

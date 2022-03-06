@@ -223,15 +223,6 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du bist auf {0} geklettert..
-        /// </summary>
-        public static string CLIMBING_ON {
-            get {
-                return ResourceManager.GetString("CLIMBING_ON", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Schließe einen Gegenstand.
         /// </summary>
         public static string CLOSE {
@@ -394,11 +385,20 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;&lt;Schreibe &apos;hilfe&apos;, um Hilfe zu erhalten.&gt;&gt;.
+        ///   Looks up a localized string similar to &lt;&lt; Schreibe &apos;hilfe&apos;, um Hilfe zu erhalten. &gt;&gt;.
         /// </summary>
         public static string HELP_WANTED {
             get {
                 return ResourceManager.GetString("HELP_WANTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to kannst Du hier sehen..
+        /// </summary>
+        public static string HERE {
+            get {
+                return ResourceManager.GetString("HERE", resourceCulture);
             }
         }
         
@@ -754,7 +754,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ist verbunden mit: .
+        ///   Looks up a localized string similar to {0} ist verbunden mit .
         /// </summary>
         public static string LINKED_TO {
             get {
@@ -1024,7 +1024,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;&lt;Glückwunsch! Du hast gerade die Quest &apos;{0}&apos; gelöst.&gt;&gt;.
+        ///   Looks up a localized string similar to &lt;&lt; Glückwunsch! Du hast gerade die Quest &apos;{0}&apos; gelöst. &gt;&gt;.
         /// </summary>
         public static string QUEST_SOLVED {
             get {
@@ -1168,7 +1168,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;&lt;...drücke eine Taste, um das Spiel zu starten...&gt;&gt;.
+        ///   Looks up a localized string similar to &lt;&lt; ...drücke eine Taste, um das Spiel zu starten... &gt;&gt;.
         /// </summary>
         public static string START_THE_GAME {
             get {

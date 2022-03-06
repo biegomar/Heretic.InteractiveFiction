@@ -491,7 +491,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemPickupSuccess(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
         Console.WriteLine();
         return true;
     }
@@ -500,7 +500,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (string.IsNullOrEmpty(item.UnDropAbleDescription))
         {
-            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
             Console.WriteLine();
             
             return true;
@@ -546,7 +546,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemEaten(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
         Console.WriteLine();
         return true;
     }
@@ -582,7 +582,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemNotSeatable(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
         Console.WriteLine();
         return true;
     }
@@ -620,7 +620,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemDropSuccess(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
         Console.WriteLine();
         return true;
     }
@@ -674,7 +674,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool NoAnswerToInvisibleObject(Character character)
     {
-        string genderSwitch = character.Gender switch
+        string genderSwitch = character.Grammar.Gender switch
         {
             Genders.Female => BaseDescriptions.GENDER_FEMALE,
             Genders.Male => BaseDescriptions.GENDER_MALE,
@@ -795,7 +795,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ImpossibleUnlock(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
         Console.WriteLine();
         return true;
     }
