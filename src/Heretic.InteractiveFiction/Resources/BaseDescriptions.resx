@@ -184,7 +184,7 @@
     <value>verhindert, dass Du weitere Gegenstände mitnehmen kannst.</value>
   </data>
   <data name="INVENTORY" xml:space="preserve">
-    <value>trägst Du bei Dir.</value>
+    <value>Bei Dir trägst Du </value>
   </data>
   <data name="NO_WAY" xml:space="preserve">
     <value>Du kannst dort nicht hingehen!</value>
@@ -562,6 +562,6 @@
     <value>&lt;&lt;Benutze das Kommando 'name', um Dir im Spiel einen Namen zu geben.&gt;&gt;</value>
   </data>
   <data name="HERE" xml:space="preserve">
-    <value>kannst Du hier sehen.</value>
+    <value>Du siehst </value>
   </data>
 </root>

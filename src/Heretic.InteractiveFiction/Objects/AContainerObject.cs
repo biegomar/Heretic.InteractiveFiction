@@ -654,6 +654,10 @@ public abstract class AContainerObject
                 {
                     description.Append($" ({GetVariationOfYouSee(unHiddenObjectsWithoutContainmentDescription.Count)} ");
                 }
+                else
+                {
+                    description.Append($"{GetVariationOfHereSingle()}");
+                }
 
                 var index = 0;
 
@@ -671,30 +675,15 @@ public abstract class AContainerObject
                         }
                     }
 
-                    if (index != 0)
+                    if (subItems)
                     {
-                        if (subItems)
-                        {
-                            var lowerName = this.LowerFirstChar(item.NominativeIndefiniteArticleName);
-                            description.Append($"{lowerName}");
-                        }
-                        else
-                        {
-                            var lowerName = this.LowerFirstChar(item.AccusativeIndefiniteArticleName);
-                            description.Append($"{lowerName}");
-                        }
+                        var lowerName = this.LowerFirstChar(item.NominativeIndefiniteArticleName);
+                        description.Append($"{lowerName}");
                     }
                     else
                     {
-                        if (subItems)
-                        {
-                            var lowerName = this.LowerFirstChar(item.NominativeIndefiniteArticleName);
-                            description.Append($"{lowerName}");
-                        }
-                        else
-                        {
-                            description.Append($"{item.AccusativeIndefiniteArticleName}");
-                        }
+                        var lowerName = this.LowerFirstChar(item.AccusativeIndefiniteArticleName);
+                        description.Append($"{lowerName}");
                     }
 
                     if (!item.IsCloseAble || item.IsCloseAble && !item.IsClosed)
@@ -720,7 +709,7 @@ public abstract class AContainerObject
                 }
                 else
                 {
-                    description.AppendLine($" {GetVariationOfHereSingle()}");
+                    description.Append('.');
                 }
             }
         }
@@ -781,8 +770,6 @@ public abstract class AContainerObject
             {
                 description.Append(')');    
             }
-            
-            description.Append('.');
         }
 
         return description.ToString();

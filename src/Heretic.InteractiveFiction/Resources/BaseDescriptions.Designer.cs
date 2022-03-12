@@ -394,7 +394,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to kannst Du hier sehen..
+        ///   Looks up a localized string similar to Du siehst .
         /// </summary>
         public static string HERE {
             get {
@@ -574,7 +574,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to trägst Du bei Dir..
+        ///   Looks up a localized string similar to Bei Dir trägst Du .
         /// </summary>
         public static string INVENTORY {
             get {
