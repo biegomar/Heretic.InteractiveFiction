@@ -85,7 +85,11 @@ internal sealed class InputAnalyzer
                 itemObject = this.GetItem(normList.Keys.ToList());
                 if (itemObject == string.Empty)
                 {
-                    itemObject = parts[0];
+                    itemObject = this.GetLocation(normList.Keys.ToList());
+                    if (itemObject == string.Empty)
+                    {
+                        itemObject = parts[0];
+                    }
                 }
             }
 
@@ -143,6 +147,19 @@ internal sealed class InputAnalyzer
         foreach (var word in sentence)
         {
             if (this.universe.CharacterResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            {
+                return word;
+            }
+        }
+
+        return string.Empty;
+    }
+    
+    private string GetLocation(IList<string> sentence)
+    {
+        foreach (var word in sentence)
+        {
+            if (this.universe.LocationResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
             {
                 return word;
             }
