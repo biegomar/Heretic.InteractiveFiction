@@ -144,37 +144,6 @@ public class Universe
         return printingSubsystem.ItemNotVisible();
     }
 
-    public AContainerObject GetObjectFromWorldByKey(string key)
-    {
-        foreach (var location in this.LocationMap.Keys)
-        {
-            var result = findObject(key, location);
-            if (result != default && result.Key == key)
-            {
-                return result;
-            }
-        }
-
-        return findObject(key, this.ActivePlayer) ?? default;
-    }
-
-    private AContainerObject findObject(string key, AContainerObject containerObject)
-    {
-        if (containerObject.Key == key)
-        {
-            return containerObject;
-        }
-
-        AContainerObject result = containerObject.GetItemByKey(key);
-        if (result != default)
-        {
-            return result;
-        }
-
-        result = containerObject.GetCharacterByKey(key);
-        return result ?? default;
-    }
-
     public void UnveilFirstLevelObjects(AContainerObject container)
     {
         if (container == default)
@@ -227,6 +196,42 @@ public class Universe
         }
 
         return default;
+    }
+    
+    public Location GetLocationByKey(string key)
+    {
+        return this.LocationMap.Keys.SingleOrDefault(l => l.Key == key);
+    }
+    
+    public AContainerObject GetObjectFromWorldByKey(string key)
+    {
+        foreach (var location in this.LocationMap.Keys)
+        {
+            var result = findObject(key, location);
+            if (result != default && result.Key == key)
+            {
+                return result;
+            }
+        }
+
+        return findObject(key, this.ActivePlayer) ?? default;
+    }
+
+    private AContainerObject findObject(string key, AContainerObject containerObject)
+    {
+        if (containerObject.Key == key)
+        {
+            return containerObject;
+        }
+
+        AContainerObject result = containerObject.GetItemByKey(key);
+        if (result != default)
+        {
+            return result;
+        }
+
+        result = containerObject.GetCharacterByKey(key);
+        return result ?? default;
     }
 
     private int GetMaxScore()

@@ -133,7 +133,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Runter.
+        ///   Looks up a localized string similar to Runter|Hinunter|Herab.
         /// </summary>
         internal static string DOWN {
             get {
@@ -439,7 +439,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hoch|Rauf.
+        ///   Looks up a localized string similar to Hoch|Rauf|Hinauf.
         /// </summary>
         internal static string UP {
             get {
