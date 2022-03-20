@@ -559,12 +559,15 @@
     <value>darin befindet sich:</value>
   </data>
   <data name="CHANGE_NAME" xml:space="preserve">
-    <value>&lt;&lt;Benutze das Kommando 'name', um Dir im Spiel einen Namen zu geben.&gt;&gt;</value>
+    <value>&lt;&lt; Benutze das Kommando 'name', um Dir im Spiel einen Namen zu geben. &gt;&gt;</value>
   </data>
   <data name="HERE" xml:space="preserve">
     <value>Du siehst </value>
   </data>
   <data name="FRAMEWORK_VERSION" xml:space="preserve">
-    <value>Based on Heretic.InteractiveFiction v{0}</value>
+    <value>Realized with Heretic.InteractiveFiction v{0}</value>
+  </data>
+  <data name="ALREADY_SITTING" xml:space="preserve">
+    <value>Stehe zunächst von Deiner aktuellen Position wieder auf.</value>
   </data>
 </root>

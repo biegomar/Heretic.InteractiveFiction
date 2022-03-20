@@ -1357,6 +1357,12 @@ internal sealed class VerbHandler
                 PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
                 return;
             }
+
+            if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != null)    
+            {
+                PrintingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
+                return;
+            }
             
             var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
             var newLocationMap = mappings.Where(i => !i.IsHidden).SingleOrDefault(x => x.Direction == direction);
@@ -1410,6 +1416,11 @@ internal sealed class VerbHandler
         {
             if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
             {
+                if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
+                {
+                    return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                }
+                
                 var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
                 var newLocation = mappings.Where(i => !i.IsHidden).SingleOrDefault(x => x.Location.Key == locationKey);
                 if (newLocation != default)

@@ -588,7 +588,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemSeated(AContainerObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), this.LowerFirstChar(item.DativeArticleName));
         Console.WriteLine();
         return true;
     }

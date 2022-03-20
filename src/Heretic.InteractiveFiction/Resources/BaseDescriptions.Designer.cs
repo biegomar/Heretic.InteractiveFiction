@@ -106,6 +106,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stehe zunächst von Deiner aktuellen Position wieder auf..
+        /// </summary>
+        public static string ALREADY_SITTING {
+            get {
+                return ResourceManager.GetString("ALREADY_SITTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist bereits entriegelt..
         /// </summary>
         public static string ALREADY_UNLOCKED {
@@ -196,7 +205,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;&lt;Benutze das Kommando &apos;name&apos;, um Dir im Spiel einen Namen zu geben.&gt;&gt;.
+        ///   Looks up a localized string similar to &lt;&lt; Benutze das Kommando &apos;name&apos;, um Dir im Spiel einen Namen zu geben. &gt;&gt;.
         /// </summary>
         public static string CHANGE_NAME {
             get {
@@ -304,7 +313,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Based on Heretic.InteractiveFiction v{0}.
+        ///   Looks up a localized string similar to Realized with Heretic.InteractiveFiction v{0}.
         /// </summary>
         public static string FRAMEWORK_VERSION {
             get {
