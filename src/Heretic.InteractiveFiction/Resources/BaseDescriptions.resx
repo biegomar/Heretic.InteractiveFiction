@@ -564,4 +564,7 @@
   <data name="HERE" xml:space="preserve">
     <value>Du siehst </value>
   </data>
+  <data name="FRAMEWORK_VERSION" xml:space="preserve">
+    <value>Based on Heretic.InteractiveFiction v{0}</value>
+  </data>
 </root>

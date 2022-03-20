@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Reflection;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 
@@ -8,6 +9,18 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 {
     private int consoleWidth;
 
+    protected virtual string GetVersionNumber()
+    {
+        try
+        {
+            return string.Format(BaseDescriptions.FRAMEWORK_VERSION, Assembly.GetAssembly(typeof(BaseConsolePrintingSubsystem)).GetCustomAttribute<AssemblyFileVersionAttribute>().Version);
+        }
+        catch (Exception)
+        {
+            return string.Empty;
+        }
+        
+    }
     public int ConsoleWidth
     {
         get

@@ -304,6 +304,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Based on Heretic.InteractiveFiction v{0}.
+        /// </summary>
+        public static string FRAMEWORK_VERSION {
+            get {
+                return ResourceManager.GetString("FRAMEWORK_VERSION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dein Spiel wurde gespeichert unter: {0}.
         /// </summary>
         public static string GAME_SAVED {
