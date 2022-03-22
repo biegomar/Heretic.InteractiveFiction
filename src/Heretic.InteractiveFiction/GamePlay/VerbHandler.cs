@@ -536,6 +536,22 @@ internal sealed class VerbHandler
         return false;
     }
 
+    internal bool Climb(string verb, string processingSubject, string processingObject)
+    {
+        if (this.universe.VerbResources[VerbKeys.CLIMB].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            
+            if (this.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.Climb(verb, processingObject);
+            }
+            
+            return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
     internal bool Close(string verb, string subject)
     {
         if (this.universe.VerbResources[VerbKeys.CLOSE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))

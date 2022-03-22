@@ -97,7 +97,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Klettere|Kletter|Steige|Steig.
+        ///   Looks up a localized string similar to Klettere|Kletter|Steige|Steig|Stelle|Stell.
         /// </summary>
         internal static string CLIMB {
             get {
