@@ -30,18 +30,20 @@ public sealed class InputProcessor
         {
             throw new QuitGameException(BaseDescriptions.QUIT_GAME);
         }
+        
+        if (verbHandler.Save(input, this.historyAdministrator.All))
+        {
+            return true;
+        }
 
         var sentence = this.inputAnalyzer.Analyze(input);
-
-        if (!this.universe.VerbResources[VerbKeys.SAVE].Contains(sentence[0], StringComparer.InvariantCultureIgnoreCase))
+        
+        if (this.historyAdministrator.IsLastHistoryEntryTheSame(sentence))
         {
-            if (this.historyAdministrator.IsLastHistoryEntryTheSame(sentence))
-            {
-                PrintingSubsystem.SameActionAgain();
-            }
-
-            this.historyAdministrator.Add(input);
+            PrintingSubsystem.SameActionAgain();
         }
+
+        this.historyAdministrator.Add(input);
 
         if (this.universe.VerbResources[VerbKeys.REM].Contains(sentence[0], StringComparer.InvariantCultureIgnoreCase))
         {
@@ -96,7 +98,6 @@ public sealed class InputProcessor
         result = result || verbHandler.Descend(processingInput);
         result = result || verbHandler.Remark(processingInput);
         result = result || verbHandler.History(processingInput, this.historyAdministrator.All);
-        result = result || verbHandler.Save(processingInput, this.historyAdministrator.All);
 
         if (!result)
         {

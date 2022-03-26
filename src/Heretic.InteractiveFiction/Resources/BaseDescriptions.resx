@@ -340,7 +340,7 @@
     <value>Du kannst {0} nicht fallen lassen. Ist es noch mit einem anderen Gegenstand verbunden?</value>
   </data>
   <data name="IMPOSSIBLE_PICKUP" xml:space="preserve">
-    <value>Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!|Ich glaube nicht, dass Du das gebrauchen kannst|Nein, auf keinen Fall!|Ein Tipp: Du brauchst das nicht und deshalb lassen wir das liegen.</value>
+    <value>Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!|Ich glaube nicht, dass Du das gebrauchen kannst.|Nein, auf keinen Fall!|Ein Tipp: Du brauchst das nicht und deshalb lassen wir das liegen.</value>
   </data>
   <data name="TO_HEAVY" xml:space="preserve">
     <value>Der Gegenstand ist zu schwer, um ihn noch zu tragen! Vielleicht benötigst Du eine größere Transportmöglichkeit, oder Du wirfst einige Sachen weg.</value>
@@ -502,7 +502,7 @@
     <value>Klettere, bzw. steige auf ein Objekt.</value>
   </data>
   <data name="ALREADY_CLIMBED" xml:space="preserve">
-    <value>Klettere zunächst von Deiner aktuellen Position wieder nach unten.</value>
+    <value>Steig zunächst von Deiner aktuellen Position herab.</value>
   </data>
   <data name="ITEM_CLIMBED" xml:space="preserve">
     <value>Du bist auf {0} gestiegen.</value>
@@ -569,5 +569,8 @@
   </data>
   <data name="ALREADY_SITTING" xml:space="preserve">
     <value>Stehe zunächst von Deiner aktuellen Position wieder auf.</value>
+  </data>
+  <data name="END_THE_GAME" xml:space="preserve">
+    <value>&lt;&lt; ...drücke eine Taste, um das Spiel zu beenden... &gt;&gt;</value>
   </data>
 </root>

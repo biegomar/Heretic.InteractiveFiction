@@ -12,6 +12,7 @@ public class GameLoop
     private readonly InputProcessor processor;
     private readonly Queue<string> commands;
     private readonly IPrintingSubsystem printingSubsystem;
+    private const string SAVE = "SAVE";
 
     public GameLoop(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider, IGamePrerequisitesAssembler gamePrerequisitesAssembler, Universe universe, string fileName, int consoleWidth)
     {
@@ -87,6 +88,11 @@ public class GameLoop
     {
         printingSubsystem.Closing();
         printingSubsystem.Credits();
+        this.processor.Process(SAVE);
+        Console.WriteLine();
+        printingSubsystem.ForegroundColor = TextColor.DarkCyan;
+        printingSubsystem.Resource(BaseDescriptions.END_THE_GAME);
+        printingSubsystem.ResetColors();
         Console.ReadKey();
     }
 }

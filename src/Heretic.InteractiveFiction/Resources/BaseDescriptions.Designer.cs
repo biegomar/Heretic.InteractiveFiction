@@ -79,7 +79,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Klettere zunächst von Deiner aktuellen Position wieder nach unten..
+        ///   Looks up a localized string similar to Steig zunächst von Deiner aktuellen Position herab..
         /// </summary>
         public static string ALREADY_CLIMBED {
             get {
@@ -313,6 +313,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;&lt; ...drücke eine Taste, um das Spiel zu beenden... &gt;&gt;.
+        /// </summary>
+        public static string END_THE_GAME {
+            get {
+                return ResourceManager.GetString("END_THE_GAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Realized with Heretic.InteractiveFiction v{0}.
         /// </summary>
         public static string FRAMEWORK_VERSION {
@@ -538,7 +547,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!|Ich glaube nicht, dass Du das gebrauchen kannst|Nein, auf keinen Fall!|Ein Tipp: Du brauchst das nicht und deshalb lassen wir das liegen..
+        ///   Looks up a localized string similar to Oh wirklich? Mal ganz realistisch. Das kannst Du nicht mitnehmen!|Ich glaube nicht, dass Du das gebrauchen kannst.|Nein, auf keinen Fall!|Ein Tipp: Du brauchst das nicht und deshalb lassen wir das liegen..
         /// </summary>
         public static string IMPOSSIBLE_PICKUP {
             get {

@@ -72,4 +72,13 @@
     <data name="DATIVE_ARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
         <value>Dem</value>
     </data>
+    <data name="ACCUSATIVE_ARTICLE_FEMALE_PLURAL" xml:space="preserve">
+        <value>Die</value>
+    </data>
+    <data name="ACCUSATIVE_ARTICLE_MALE_PLURAL" xml:space="preserve">
+        <value>Die</value>
+    </data>
+    <data name="ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL" xml:space="preserve">
+        <value>Die</value>
+    </data>
 </root>

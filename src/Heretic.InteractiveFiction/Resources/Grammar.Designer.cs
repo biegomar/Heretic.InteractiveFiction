@@ -63,9 +63,27 @@ namespace Heretic.InteractiveFiction.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Die.
         /// </summary>
+        internal static string ACCUSATIVE_ARTICLE_FEMALE_PLURAL {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_ARTICLE_FEMALE_PLURAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die.
+        /// </summary>
         internal static string ACCUSATIVE_ARTICLE_FEMALE_SINGULAR {
             get {
                 return ResourceManager.GetString("ACCUSATIVE_ARTICLE_FEMALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die.
+        /// </summary>
+        internal static string ACCUSATIVE_ARTICLE_MALE_PLURAL {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_ARTICLE_MALE_PLURAL", resourceCulture);
             }
         }
         
@@ -75,6 +93,15 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string ACCUSATIVE_ARTICLE_MALE_SINGULAR {
             get {
                 return ResourceManager.GetString("ACCUSATIVE_ARTICLE_MALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Die.
+        /// </summary>
+        internal static string ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL", resourceCulture);
             }
         }
         

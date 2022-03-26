@@ -419,12 +419,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         this.ResetColors();
         Console.WriteLine(HelpDescriptions.VERBS_CONTAINER_EXAMPLE_II_DESCRIPTION);
         Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_III);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_III_DESCRIPTION);
-        Console.WriteLine();
     }
 
     protected void GeneralHelp()

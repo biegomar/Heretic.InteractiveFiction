@@ -114,30 +114,51 @@ public class Grammars
     
     public string GetAccusativeIndefiniteArticle()
     {
-        var result = this.Gender switch
+        if (IsSingular)
         {
-            Genders.Female => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
-            Genders.Male => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
-            Genders.Neutrum => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
-            Genders.Unknown => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
-            _ => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR
-        };
+            var result = this.Gender switch
+            {
+                Genders.Female => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
+                Genders.Male => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+                _ => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR
+            };
+
+            return result;
+        }
         
-        return result;
+        return string.Empty;
     }
     
     public string GetAccusativeArticle()
     {
-        var result = this.Gender switch
+        if (IsSingular)
         {
-            Genders.Female => Resources.Grammar.ACCUSATIVE_ARTICLE_FEMALE_SINGULAR,
-            Genders.Male => Resources.Grammar.ACCUSATIVE_ARTICLE_MALE_SINGULAR,
-            Genders.Neutrum => Resources.Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR,
-            Genders.Unknown => Resources.Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR,
-            _ => Resources.Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR
-        };
+            var result = this.Gender switch
+            {
+                Genders.Female => Grammar.ACCUSATIVE_ARTICLE_FEMALE_SINGULAR,
+                Genders.Male => Grammar.ACCUSATIVE_ARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                _ => Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR
+            };
         
-        return result;
+            return result;
+        }
+        else
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => Grammar.ACCUSATIVE_ARTICLE_FEMALE_PLURAL,
+                Genders.Male => Grammar.ACCUSATIVE_ARTICLE_MALE_PLURAL,
+                Genders.Neutrum => Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
+                Genders.Unknown => Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
+                _ => Grammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL
+            };
+        
+            return result;
+        }
     }
 
     private void GenderFemale(bool isSingular = true)
