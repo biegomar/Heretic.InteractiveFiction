@@ -3,13 +3,20 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>0.7.2</PackageVersion>
+        <VersionPrefix>0.7.3</VersionPrefix>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
         <Authors>Marc Biegota</Authors>
         <Description>Heretic Interactive Fiction - an interactive fiction programming framework</Description>
         <Copyright>Copyright © 2022</Copyright>
-        <AssemblyVersion>0.7.2</AssemblyVersion>
-        <FileVersion>0.7.2</FileVersion>
+        <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+        <FileVersion>$(VersionPrefix)</FileVersion>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>C:\Users\marcb\source\repos\InteractiveFiction\Heretic.InteractiveFiction\LICENSE</PackageLicenseFile>
+        <NeutralLanguage>de</NeutralLanguage>
+        <PackageTags>InteractiveFiction; Interactive Fiction; Textadventure; Text Adventure </PackageTags>
+        <RepositoryUrl>https://github.com/biegomar/Heretic.InteractiveFiction</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageIcon>fire.ico</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -52,6 +59,14 @@
         <DependentUpon>PackingWords.resx</DependentUpon>
       </Compile>
       <Compile Remove="Subsystems\PrintingSubsystemColors.cs" />
+      <None Include="..\..\assets\fire.ico">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
       <Compile Update="Resources\HelpDescriptions.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

@@ -1,6 +1,6 @@
 # Heretic.InteractiveFiction
 
-Dies ist ein Framework für die Erstellung von Interactive Fiction für Programmierer - nicht für Schreiber!
+Dies ist ein Framework zur Erstellung von Interactive Fiction. Gedacht ist es in erster Linie für Programmierer - nicht für Schreiber!
 
 # Roadmap
 ## v1.0
