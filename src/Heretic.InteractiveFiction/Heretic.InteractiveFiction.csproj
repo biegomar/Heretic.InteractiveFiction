@@ -6,7 +6,7 @@
         <VersionPrefix>0.7.3</VersionPrefix>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
         <Authors>Marc Biegota</Authors>
-        <Description>Heretic Interactive Fiction - an interactive fiction programming framework</Description>
+        <Description>Heretic Interactive Fiction - a framework for programming interactive fiction</Description>
         <Copyright>Copyright © 2022</Copyright>
         <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
         <FileVersion>$(VersionPrefix)</FileVersion>
