@@ -17,6 +17,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageIcon>fire.png</PackageIcon>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageVersion>0.7.5</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
