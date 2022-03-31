@@ -3,22 +3,23 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <VersionPrefix>0.7.4</VersionPrefix>
+        <VersionPrefix>0.7.7</VersionPrefix>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
         <Authors>Marc Biegota</Authors>
-        <Description>This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers!
-            Heretic.InteractiveFiction intends to return to the old text adventure days of the 1980s and evoke the spirit and mood of the genre.</Description>
+        <Description>This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers! 
+Heretic.InteractiveFiction intends to return to the old text adventure days of the 1980s and evoke the spirit and mood of the genre.
+</Description>
         <Copyright>Copyright © 2022</Copyright>
         <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
         <FileVersion>$(VersionPrefix)</FileVersion>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <NeutralLanguage>de</NeutralLanguage>
-        <PackageTags>InteractiveFiction; Interactive Fiction; Textadventure; Text Adventure </PackageTags>
+        <PackageTags>InteractiveFiction;Interactive Fiction;Textadventure;Text Adventure;IF</PackageTags>
         <RepositoryUrl>https://github.com/biegomar/Heretic.InteractiveFiction</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageIcon>fire.png</PackageIcon>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageVersion>0.7.6</PackageVersion>
+        <PackageVersion>$(VersionPrefix)</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
