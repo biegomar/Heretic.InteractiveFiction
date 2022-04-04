@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Heretic.InteractiveFiction" Version="0.7.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Descriptions.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Descriptions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Descriptions.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Descriptions.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

@@ -14,7 +14,7 @@ public class GameLoop
     private readonly IPrintingSubsystem printingSubsystem;
     private const string SAVE = "SAVE";
 
-    public GameLoop(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider, IGamePrerequisitesAssembler gamePrerequisitesAssembler, Universe universe, string fileName, int consoleWidth)
+    public GameLoop(IPrintingSubsystem printingSubsystem, IGamePrerequisitesAssembler gamePrerequisitesAssembler, Universe universe, string fileName, int consoleWidth)
     {
         this.printingSubsystem = printingSubsystem;
         this.printingSubsystem.ConsoleWidth = consoleWidth;
