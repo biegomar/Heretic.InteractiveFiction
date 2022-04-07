@@ -42,8 +42,23 @@ public interface IResourceProvider
         return result;
     }
 
-    IDictionary<string, IEnumerable<string>> GetConversationsAnswersFromResources();
-    IDictionary<string, IEnumerable<string>> GetItemsFromResources();
-    IDictionary<string, IEnumerable<string>> GetCharactersFromResources();
-    IDictionary<string, IEnumerable<string>> GetLocationsFromResources();
+    public IDictionary<string, IEnumerable<string>> GetConversationsAnswersFromResources()
+    {
+        return new Dictionary<string, IEnumerable<string>>();
+    }
+    
+    public IDictionary<string, IEnumerable<string>> GetItemsFromResources()
+    {
+        return new Dictionary<string, IEnumerable<string>>();
+    }
+    
+    public IDictionary<string, IEnumerable<string>> GetCharactersFromResources()
+    {
+        return new Dictionary<string, IEnumerable<string>>();
+    }
+    
+    public IDictionary<string, IEnumerable<string>> GetLocationsFromResources()
+    {
+        return new Dictionary<string, IEnumerable<string>>();
+    }
 }

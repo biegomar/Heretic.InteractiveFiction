@@ -2,7 +2,7 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public class Grammars
+public sealed class Grammars
 {
     public Genders Gender { get; set; }
     public bool IsSingular { get; set; }

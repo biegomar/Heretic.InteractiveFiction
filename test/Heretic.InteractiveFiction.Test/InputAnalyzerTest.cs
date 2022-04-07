@@ -11,13 +11,14 @@ namespace Heretic.Test;
 public class InputAnalyzerTest
 {
     private IPrintingSubsystem printingSubsystem => Mock.Of<IPrintingSubsystem>();
+    private IGamePrerequisitesAssembler gamePrerequisitesAssembler => Mock.Of<IGamePrerequisitesAssembler>();
 
     [Theory]
     [InlineData("l", new[] { "l" })]
     [InlineData("look", new[] { "look" })]
     public void SingleWordsTest(string input, string[] expected)
     {
-        var universe = new Universe(printingSubsystem, new ResourceProviderMock(), new PeriodicEvent());
+        var universe = new Universe(printingSubsystem, new ResourceProviderMock());
         var sut = new InputAnalyzer(universe);
 
         var actual = sut.Analyze(input);
@@ -34,7 +35,7 @@ public class InputAnalyzerTest
     [InlineData("Rede mit dem Tankwart ", new[] { "Rede", "Tankwart" })]
     public void TwoWordsTest(string input, string[] expected)
     {
-        var universe = new Universe(printingSubsystem, new ResourceProviderMock(), new PeriodicEvent());
+        var universe = new Universe(printingSubsystem, new ResourceProviderMock());
         var sut = new InputAnalyzer(universe);
 
         var actual = sut.Analyze(input);

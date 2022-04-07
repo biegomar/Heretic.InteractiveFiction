@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.Objects;
 
-public class Location : AContainerObject
+public sealed class Location : AContainerObject
 {
     public Location() : base()
     {

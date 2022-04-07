@@ -8,22 +8,40 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Heretic.InteractiveFiction" Version="0.7.8" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Update="Descriptions.resx">
+      <EmbeddedResource Update="Resources\Locations.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Locations.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Descriptions.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Descriptions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Items.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Items.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Descriptions.Designer.cs">
+      <Compile Update="Resources\Locations.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Locations.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Descriptions.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Descriptions.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\Items.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Items.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\src\Heretic.InteractiveFiction\Heretic.InteractiveFiction.csproj" />
     </ItemGroup>
 
 </Project>

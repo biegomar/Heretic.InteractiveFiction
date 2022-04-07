@@ -27,4 +27,13 @@
     <data name="CREDITS" xml:space="preserve">
         <value>Written by me.</value>
     </data>
+    <data name="LIVINGROOM" xml:space="preserve">
+        <value>Du befindest Dich in einem Wohnraum.</value>
+    </data>
+    <data name="PLAYER" xml:space="preserve">
+        <value>Das bist Du.</value>
+    </data>
+    <data name="QUEST_I" xml:space="preserve">
+        <value>Schalte das Licht an.</value>
+    </data>
 </root>

@@ -6,31 +6,46 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay;
 
-public class GameLoop
+public sealed class GameLoop
 {
     private readonly Universe universe;
     private readonly InputProcessor processor;
-    private readonly Queue<string> commands;
+    private Queue<string> commands;
     private readonly IPrintingSubsystem printingSubsystem;
     private const string SAVE = "SAVE";
 
-    public GameLoop(IPrintingSubsystem printingSubsystem, IGamePrerequisitesAssembler gamePrerequisitesAssembler, Universe universe, string fileName, int consoleWidth)
+    public GameLoop(IPrintingSubsystem printingSubsystem, Universe universe, IGamePrerequisitesAssembler gamePrerequisitesAssembler, int consoleWidth = 0)
     {
         this.printingSubsystem = printingSubsystem;
         this.printingSubsystem.ConsoleWidth = consoleWidth;
-        this.universe = gamePrerequisitesAssembler.AssembleGame(universe);
+
+        this.universe = universe;
+        
         this.processor = new InputProcessor(printingSubsystem, this.universe);
         this.commands = new Queue<string>();
+        
+        AssemblyGame(gamePrerequisitesAssembler);
+        
+        InitializeScreen();
+    }
+    
+    private void AssemblyGame(IGamePrerequisitesAssembler gamePrerequisitesAssembler)
+    {
+        var gamePrerequisites = gamePrerequisitesAssembler.AssembleGame();
+        this.universe.LocationMap = gamePrerequisites.LocationMap;
+        this.universe.ActiveLocation = gamePrerequisites.ActiveLocation;
+        this.universe.ActivePlayer = gamePrerequisites.ActivePlayer;
+        this.universe.Quests = gamePrerequisites.Quests;
+        this.universe.SetPeriodicEvent(gamePrerequisites.PeriodicEvent);
+    }
+
+    public void Run(string fileName = "")
+    {
         if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
         {
             this.commands = GetCommandList(fileName);
         }
-
-        InitializeScreen();
-    }
-
-    public void Run()
-    {
+        
         try
         {
             bool unfinished;

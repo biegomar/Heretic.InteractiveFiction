@@ -1,3 +1,4 @@
+using Heretic.InteractiveFiction.LogCabin.Resources;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 

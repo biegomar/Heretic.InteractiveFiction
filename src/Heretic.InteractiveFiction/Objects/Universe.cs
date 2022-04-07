@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public class Universe
+public sealed class Universe
 {
     public int Score;
 
@@ -42,15 +42,12 @@ public class Universe
     public event EventHandler<PeriodicEventArgs> PeriodicEvents;
 
     private readonly IPrintingSubsystem printingSubsystem;
-    private IList<string> SolvedQuests;
+    private readonly IList<string> SolvedQuests;
     private int maxScore;
     private PeriodicEvent periodicEvent;
 
-    public Universe(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider, PeriodicEvent periodicEvent)
+    public Universe(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider)
     {
-        this.periodicEvent = periodicEvent;
-        this.periodicEvent.Active = false;
-        this.PeriodicEvents += this.periodicEvent.RaiseEvent;
         this.printingSubsystem = printingSubsystem;
         this.SolvedQuests = new List<string>();
         this.Score = 0;
@@ -63,9 +60,19 @@ public class Universe
         this.LocationMap = new LocationMap(new LocationComparer());
     }
 
+    public void SetPeriodicEvent(PeriodicEvent periodicEvent)
+    {
+        if (periodicEvent != null)
+        {
+            this.periodicEvent = periodicEvent;
+            this.periodicEvent.Active = false;
+            this.PeriodicEvents += this.periodicEvent.RaiseEvent;    
+        }
+    }
+
     public void RaisePeriodicEvents(PeriodicEventArgs eventArgs)
     {
-        EventHandler<PeriodicEventArgs> localEventHandler = this.PeriodicEvents;
+        var localEventHandler = this.PeriodicEvents;
         localEventHandler?.Invoke(this, eventArgs);
     }
 

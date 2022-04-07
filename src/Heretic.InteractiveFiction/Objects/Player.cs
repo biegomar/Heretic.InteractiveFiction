@@ -2,7 +2,7 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public class Player : AContainerObject
+public sealed class Player : AContainerObject
 {
     public bool HasPaymentMethod { get; set; }
     public Item PaymentMethod { get; set; }

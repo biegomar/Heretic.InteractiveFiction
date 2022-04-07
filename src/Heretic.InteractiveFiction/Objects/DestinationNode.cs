@@ -2,7 +2,7 @@
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public class DestinationNode
+public sealed class DestinationNode
 {
     public Directions Direction { get; set; }
     public Location Location { get; set; }

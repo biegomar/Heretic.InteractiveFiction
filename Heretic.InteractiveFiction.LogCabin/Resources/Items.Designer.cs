@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Heretic.InteractiveFiction.LogCabin {
+namespace Heretic.InteractiveFiction.LogCabin.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Heretic.InteractiveFiction.LogCabin {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Descriptions {
+    internal class Items {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Descriptions() {
+        internal Items() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Heretic.InteractiveFiction.LogCabin {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Heretic.InteractiveFiction.LogCabin.Descriptions", typeof(Descriptions).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Heretic.InteractiveFiction.LogCabin.Resources.Items", typeof(Items).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,33 +57,6 @@ namespace Heretic.InteractiveFiction.LogCabin {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thank you for playing the Log Cabin!.
-        /// </summary>
-        internal static string CLOSING {
-            get {
-                return ResourceManager.GetString("CLOSING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Written by me..
-        /// </summary>
-        internal static string CREDITS {
-            get {
-                return ResourceManager.GetString("CREDITS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Welcome to the Log Cabin!.
-        /// </summary>
-        internal static string OPENING {
-            get {
-                return ResourceManager.GetString("OPENING", resourceCulture);
             }
         }
     }
