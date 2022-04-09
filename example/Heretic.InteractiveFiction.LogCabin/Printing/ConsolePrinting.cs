@@ -2,7 +2,7 @@ using Heretic.InteractiveFiction.LogCabin.Resources;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
-namespace Heretic.InteractiveFiction.LogCabin;
+namespace Heretic.InteractiveFiction.LogCabin.Printing;
 
 internal sealed class ConsolePrinting: BaseConsolePrintingSubsystem
 {

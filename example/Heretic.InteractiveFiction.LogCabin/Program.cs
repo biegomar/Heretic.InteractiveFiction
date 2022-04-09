@@ -2,6 +2,8 @@
 
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.LogCabin;
+using Heretic.InteractiveFiction.LogCabin.GamePlay;
+using Heretic.InteractiveFiction.LogCabin.Printing;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Subsystems;
 

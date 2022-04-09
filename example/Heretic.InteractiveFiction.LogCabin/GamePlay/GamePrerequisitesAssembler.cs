@@ -3,7 +3,7 @@ using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.LogCabin.Resources;
 using Heretic.InteractiveFiction.Objects;
 
-namespace Heretic.InteractiveFiction.LogCabin;
+namespace Heretic.InteractiveFiction.LogCabin.GamePlay;
 
 internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
 {
