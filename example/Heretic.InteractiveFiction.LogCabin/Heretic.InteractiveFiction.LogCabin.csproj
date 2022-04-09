@@ -41,7 +41,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Heretic.InteractiveFiction\Heretic.InteractiveFiction.csproj" />
+      <ProjectReference Include="..\..\src\Heretic.InteractiveFiction\Heretic.InteractiveFiction.csproj" />
     </ItemGroup>
 
 </Project>
