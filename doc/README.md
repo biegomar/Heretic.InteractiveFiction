@@ -1,5 +1,8 @@
 # How to use Heretic.InteractiveFiction
 
+## Sample Adventure
+A manageable but constantly growing text adventure that illustrates the functionalities of Heretic.InteractiveFiction can be found [_here_](https://github.com/biegomar/Heretic.InteractiveFiction/tree/feature/example/samples/Heretic.InteractiveFiction.LogCabin). This documentation often refers to this sample.
+
 ## 1. Setup a new console project
 
 ```shell

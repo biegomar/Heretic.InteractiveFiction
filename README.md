@@ -6,6 +6,9 @@
 This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers!  
 Heretic.InteractiveFiction intends to return to the old text adventure days of the 1980s and evoke the spirit and mood of the genre.
 
+# Documentation
+A documentation based on a manageable, but constantly growing text adventure, which illustrates the capabilities of Heretic.InteractiveFiction, can be found [_here_](https://github.com/biegomar/Heretic.InteractiveFiction/tree/main/doc).
+
 # Features
 * Multiplayer capability.
 * Multilingual capability.
