@@ -22,7 +22,7 @@ But what's so special about these resource files? Well, it makes sense to provid
 This is achieved by the fact that the values of the resources are a number of words separated from each other by the pipe (|). This method gives you an easy way to store multiple names.  
 
 Example:  
-![Resource file example](LocalizationManager.png "Resource file example")
+![Resource file example](assets/LocalizationManager.png "Resource file example")
 
 ### 2.1 The IResourceProvider interface
 But to make the listed names usable in your adventure, there is the IResourceProvider interface, that you have to implement in your game. It comes as no surprise that the interface provides four methods that have to be implemented:
@@ -146,4 +146,4 @@ internal static class Keys
 
 ### 4.2 The class hierarchy
 
-![Objects](Objects.png)
+![Objects](assets/Objects.png)
