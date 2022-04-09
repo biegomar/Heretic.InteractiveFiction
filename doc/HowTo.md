@@ -133,7 +133,17 @@ internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
 }
 ```
 
+### 4.1 Keys
+Every object in your world has a unique, text-based key. You should maintain these keys in a central place - e.g. the Keys file.
 
-### 4.1 The class hierarchy
+```csharp
+internal static class Keys
+{
+    internal static string LIVINGROOM = "LIVINGROOM";
+    internal static string PLAYER = "PLAYER";
+}
+```
+
+### 4.2 The class hierarchy
 
 ![Objects](Objects.png)
