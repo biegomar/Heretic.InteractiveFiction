@@ -40,7 +40,8 @@ internal class ResourceProvider: IResourceProvider { }
 The default implementation of the interface is then used here, which does not yet evaluate pipes. But we will come back to this later.
 
 ## 3. Ramp up your console printing
-Heretic provides a simple way to print text to the console. You can use the abstract class and extend it to create your own print methods. Or you can implement your own class based on the underlying interface IPrintingSubsystem. But using the abstract class is easier in the beginning.
+Heretic provides a simple way to print text to the console. You can use the abstract class and extend it to create your own print methods. Or you can implement your own class based on the underlying interface IPrintingSubsystem. But using the abstract class is easier in the beginning.  
+Four methods must be overwritten from the base class and provided with their own texts:
 
 ```csharp
 internal sealed class ConsolePrinting: BaseConsolePrintingSubsystem

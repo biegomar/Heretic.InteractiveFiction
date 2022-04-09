@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <VersionPrefix>0.7.8</VersionPrefix>
+        <VersionPrefix>0.7.9</VersionPrefix>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
         <Authors>Marc Biegota</Authors>
         <Description>This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers! 
