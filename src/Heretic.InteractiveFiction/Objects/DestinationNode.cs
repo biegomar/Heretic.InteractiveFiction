@@ -12,7 +12,7 @@ public sealed class DestinationNode
     /// This description is displayed when the location is listed in a way description.
     /// If the value is not set, a standardized message is shown.
     /// </summary>
-    public string DestinationDescription { get; init; }
+    public string DestinationDescription { get; set; }
 
     public DestinationNode()
     {

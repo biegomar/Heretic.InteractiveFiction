@@ -4,5 +4,5 @@ namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
 public class BreakItemEventArg: ContainerObjectEventArgs
 {
-    public AContainerObject ItemToUse { get; init; }
+    public AContainerObject ItemToUse { get; set; }
 }

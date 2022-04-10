@@ -8,10 +8,10 @@ public class PeriodicEvent
 
     public bool Active { get; set; }
 
-    public int MinDistanceBetweenEvents { get; init; }
-    public int MaxDistanceBetweenEvents { get; init; }
-    public int AverageDistanceBetweenEvents { get; init; }
-    public string Phrases { get; init; }
+    public int MinDistanceBetweenEvents { get; set; }
+    public int MaxDistanceBetweenEvents { get; set; }
+    public int AverageDistanceBetweenEvents { get; set; }
+    public string Phrases { get; set; }
 
     public void RaiseEvent(object sender, PeriodicEventArgs eventArgs)
     {

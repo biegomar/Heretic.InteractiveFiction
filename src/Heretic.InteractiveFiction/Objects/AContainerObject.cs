@@ -50,7 +50,7 @@ namespace Heretic.InteractiveFiction.Objects
         /// <summary>
         /// The unique key that is representing the object.
         /// </summary>
-        public string Key { get; init; }
+        public string Key { get; set; }
 
         /// <summary>
         /// Used to define some grammar rules.
@@ -160,7 +160,7 @@ namespace Heretic.InteractiveFiction.Objects
         /// <summary>
         /// If this object is a container, you can specify how much weight it can hold.
         /// </summary>
-        public int MaxPayload { get; init; }
+        public int MaxPayload { get; set; }
         /// <summary>
         /// Determines whether simply looking at the surroundings will make this object visible.
         /// </summary>
@@ -168,7 +168,7 @@ namespace Heretic.InteractiveFiction.Objects
         /// <summary>
         /// Determines whether an object is lockable.
         /// </summary>
-        public bool IsLockAble { get; init; }
+        public bool IsLockAble { get; set; }
         /// <summary>
         /// Is the object locked?
         /// </summary>
@@ -176,7 +176,7 @@ namespace Heretic.InteractiveFiction.Objects
         /// <summary>
         /// Can this object be closed?
         /// </summary>
-        public bool IsCloseAble { get; init; }
+        public bool IsCloseAble { get; set; }
         /// <summary>
         /// Is this object closed?
         /// </summary>
@@ -184,14 +184,14 @@ namespace Heretic.InteractiveFiction.Objects
         /// <summary>
         /// The list of contained objects.
         /// </summary>
-        public ICollection<Item> Items { get; init; }
+        public ICollection<Item> Items { get; set; }
 
         /// <summary>
         /// The list of surrounding objects.
         /// </summary>
-        public IDictionary<string, Func<string>> Surroundings { get; init; }
+        public IDictionary<string, Func<string>> Surroundings { get; set; }
 
-        public ICollection<Item> LinkedTo { get; init; }
+        public ICollection<Item> LinkedTo { get; set; }
 
         /// <summary>
         /// The list of contained characters.
@@ -199,7 +199,7 @@ namespace Heretic.InteractiveFiction.Objects
         /// A magician in a huge box.
         /// </example>
         /// </summary>
-        public ICollection<Character> Characters { get; init; }
+        public ICollection<Character> Characters { get; set; }
         public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
         public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
         public event EventHandler<BreakItemEventArg> Break;
