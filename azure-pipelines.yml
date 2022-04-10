@@ -38,3 +38,9 @@ steps:
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.symbols.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: '036c7387-bd55-403b-bfbb-62bfc76e14d6/43a4376f-0cc6-4d91-a527-bee4677071c6'
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Nuget Heretic.InteractiveFiction'
