@@ -21,7 +21,7 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageVersion>$(VersionPrefix)</PackageVersion>
         <PackageProjectUrl>https://github.com/biegomar/Heretic.InteractiveFiction</PackageProjectUrl>
-        <PackageReleaseNotes>Initial version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Add first documentation and sample game.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
