@@ -12,7 +12,7 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <Copyright>Copyright © 2022</Copyright>
         <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
         <FileVersion>$(VersionPrefix)</FileVersion>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
         <NeutralLanguage>de</NeutralLanguage>
         <PackageTags>InteractiveFiction;Interactive Fiction;Textadventure;Text Adventure;IF</PackageTags>
         <RepositoryUrl>https://github.com/biegomar/Heretic.InteractiveFiction</RepositoryUrl>
@@ -72,6 +72,10 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <Pack>True</Pack>
         <PackagePath>\</PackagePath>
       </None>
+        <None Include="..\..\PACKAGE.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
         <None Include="..\..\LICENSE">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
