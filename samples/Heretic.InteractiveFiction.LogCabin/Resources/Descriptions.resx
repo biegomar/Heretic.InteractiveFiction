@@ -18,15 +18,6 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="OPENING" xml:space="preserve">
-        <value>Welcome to the Log Cabin!</value>
-    </data>
-    <data name="CLOSING" xml:space="preserve">
-        <value>Thank you for playing the Log Cabin!</value>
-    </data>
-    <data name="CREDITS" xml:space="preserve">
-        <value>Written by me.</value>
-    </data>
     <data name="LIVINGROOM" xml:space="preserve">
         <value>Du befindest Dich in einem Wohnraum.</value>
     </data>
@@ -35,5 +26,14 @@
     </data>
     <data name="QUEST_I" xml:space="preserve">
         <value>Schalte das Licht an.</value>
+    </data>
+    <data name="OPENING" xml:space="preserve">
+        <value>Willkommen in der Waldhütte.</value>
+    </data>
+    <data name="CLOSING" xml:space="preserve">
+        <value>Vielen Dank, dass Du 'Die Waldhütte' gespielt hast.</value>
+    </data>
+    <data name="CREDITS" xml:space="preserve">
+        <value>Geschrieben von Marc Biegota.</value>
     </data>
 </root>

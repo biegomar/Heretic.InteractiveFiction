@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <EmbeddedResource Update="Resources\Items.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Items.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
       <EmbeddedResource Update="Resources\Locations.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Locations.Designer.cs</LastGenOutput>
@@ -16,13 +20,14 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Descriptions.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Items.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Items.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Update="Resources\Items.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Items.resx</DependentUpon>
+      </Compile>
       <Compile Update="Resources\Locations.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
@@ -32,11 +37,6 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Descriptions.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Resources\Items.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Items.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

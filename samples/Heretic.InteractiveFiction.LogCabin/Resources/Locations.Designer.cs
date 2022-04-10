@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Heretic.InteractiveFiction.LogCabin.Resources {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -36,7 +39,7 @@ namespace Heretic.InteractiveFiction.LogCabin.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Heretic.InteractiveFiction.LogCabin.Locations", typeof(Locations).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Heretic.InteractiveFiction.LogCabin.Resources.Locations", typeof(Locations).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

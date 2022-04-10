@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Heretic.InteractiveFiction.LogCabin.Resources {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -36,7 +39,7 @@ namespace Heretic.InteractiveFiction.LogCabin.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Heretic.InteractiveFiction.LogCabin.Descriptions", typeof(Descriptions).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Heretic.InteractiveFiction.LogCabin.Resources.Descriptions", typeof(Descriptions).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,7 +61,7 @@ namespace Heretic.InteractiveFiction.LogCabin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for playing the Log Cabin!.
+        ///   Looks up a localized string similar to Vielen Dank, dass Du &apos;Die Waldhütte&apos; gespielt hast..
         /// </summary>
         internal static string CLOSING {
             get {
@@ -67,7 +70,7 @@ namespace Heretic.InteractiveFiction.LogCabin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Written by me..
+        ///   Looks up a localized string similar to Geschrieben von Marc Biegota..
         /// </summary>
         internal static string CREDITS {
             get {
@@ -85,7 +88,7 @@ namespace Heretic.InteractiveFiction.LogCabin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to the Log Cabin!.
+        ///   Looks up a localized string similar to Willkommen in der Waldhütte..
         /// </summary>
         internal static string OPENING {
             get {
