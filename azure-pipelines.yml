@@ -27,10 +27,9 @@ steps:
     command: 'test'
     projects: '**/*.Test.csproj'
 - task: DotNetCoreCLI@2
-  displayName: 'Prepare Nuget package'
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
+    packagesToPack: '**/*.csproj;!**/*.Tests.csproj;!**/*.LogCabin.csproj'
     versioningScheme: 'off'
 - task: DotNetCoreCLI@2
   inputs:
