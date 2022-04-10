@@ -36,4 +36,22 @@
     <data name="CREDITS" xml:space="preserve">
         <value>Geschrieben von Marc Biegota.</value>
     </data>
+    <data name="CHEST" xml:space="preserve">
+        <value>Bei der Truhe handelt es sich um eine massive Kiste aus dicken, naturbelassenen Brettern. Der breite Deckel bietet genug Platz, um sich darauf zu setzen. </value>
+    </data>
+    <data name="PLANK" xml:space="preserve">
+        <value>Die Bretter sind aus Eichenholz, grob geschliffen und ansonsten unbehandelt.</value>
+    </data>
+    <data name="CHEST_LOCKED" xml:space="preserve">
+        <value>Die Truhe wird durch ein Zahlenschloß gesichert.</value>
+    </data>
+    <data name="NUMBER_LOCK" xml:space="preserve">
+        <value>Das Nummernschloß hat sechs Ziffern. Einfach eine Nummer zu erraten scheint aussichtslos.</value>
+    </data>
+    <data name="DOOR" xml:space="preserve">
+        <value>Die Tür scheint Dein Weg nach Draußen zu sein. Sie besteht aus massiven Holzbohlen, die schon die Idee zu nichte machen, sie mit Gewalt öffnen zu wollen.</value>
+    </data>
+    <data name="DOOR_FIRSTLOOK" xml:space="preserve">
+        <value>Du drückst die Türklinke nach unten und versuchst die Tür zu öffnen. Sie ist verschlossen und bewegt sich keinen Millimeter.</value>
+    </data>
 </root>
