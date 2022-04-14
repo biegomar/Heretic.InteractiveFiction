@@ -573,4 +573,10 @@
   <data name="END_THE_GAME" xml:space="preserve">
     <value>&lt;&lt; ...drücke eine Taste, um das Spiel zu beenden... &gt;&gt;</value>
   </data>
+  <data name="ITEM_STILL_CLOSED" xml:space="preserve">
+    <value>{0} ist noch geschlossen.</value>
+  </data>
+  <data name="ITEM_DROP_INTO" xml:space="preserve">
+    <value>Du hast {0} in {1} gelegt.</value>
+  </data>
 </root>

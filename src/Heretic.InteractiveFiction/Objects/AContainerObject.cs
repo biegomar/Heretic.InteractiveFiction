@@ -202,7 +202,7 @@ namespace Heretic.InteractiveFiction.Objects
         public ICollection<Character> Characters { get; set; }
         public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
         public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
-        public event EventHandler<BreakItemEventArg> Break;
+        public event EventHandler<BreakItemEventArgs> Break;
         public event EventHandler<ContainerObjectEventArgs> BeforeClimb;
         public event EventHandler<ContainerObjectEventArgs> AfterClimb;
         public event EventHandler<ContainerObjectEventArgs> Climb;
@@ -365,13 +365,13 @@ namespace Heretic.InteractiveFiction.Objects
             localEventHandler?.Invoke(this, eventArgs);
         }
     
-        public virtual void OnBeforeDrop(ContainerObjectEventArgs eventArgs)
+        public virtual void OnBeforeDrop(DropItemEventArgs eventArgs)
         {
             var localEventHandler = this.BeforeDrop;
             localEventHandler?.Invoke(this, eventArgs);
         }
 
-        public virtual void OnAfterDrop(ContainerObjectEventArgs eventArgs)
+        public virtual void OnAfterDrop(DropItemEventArgs eventArgs)
         {
             var localEventHandler = this.AfterDrop;
             localEventHandler?.Invoke(this, eventArgs);
@@ -389,12 +389,12 @@ namespace Heretic.InteractiveFiction.Objects
             localEventHandler?.Invoke(this, eventArgs);
         }
     
-        public virtual void OnBreak(BreakItemEventArg eventArgs)
+        public virtual void OnBreak(BreakItemEventArgs eventArgses)
         {
             var localEventHandler = this.Break;
             if (localEventHandler != null)
             {
-                localEventHandler.Invoke(this, eventArgs);
+                localEventHandler.Invoke(this, eventArgses);
             }
             else
             {

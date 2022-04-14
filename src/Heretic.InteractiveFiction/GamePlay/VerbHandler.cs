@@ -1012,7 +1012,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
-                    item.OnBreak(new BreakItemEventArg());
+                    item.OnBreak(new BreakItemEventArgs());
                     return true;
                 }
                 catch (BreakException ex)
@@ -1027,7 +1027,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
-                    this.universe.ActiveLocation.OnBreak(new BreakItemEventArg());
+                    this.universe.ActiveLocation.OnBreak(new BreakItemEventArgs());
                     return true;
                 }
                 catch (BreakException ex)
@@ -1057,7 +1057,7 @@ internal sealed class VerbHandler
                         {
                             try
                             {
-                                item.OnBreak(new BreakItemEventArg() { ItemToUse = toolItem });
+                                item.OnBreak(new BreakItemEventArgs() { ItemToUse = toolItem });
                                 return true;
                             }
                             catch (BreakException ex)
@@ -1081,7 +1081,7 @@ internal sealed class VerbHandler
                     // surroundings only exist within the active location.
                     try
                     {
-                        this.universe.ActiveLocation.OnBreak(new BreakItemEventArg() { ItemToUse = toolItem });
+                        this.universe.ActiveLocation.OnBreak(new BreakItemEventArgs() { ItemToUse = toolItem });
                         return true;
                     }
                     catch (BreakException ex)
@@ -1301,7 +1301,7 @@ internal sealed class VerbHandler
                     {
                         try
                         {
-                            item.OnBeforeDrop(new ContainerObjectEventArgs());
+                            item.OnBeforeDrop(new DropItemEventArgs());
 
                             var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
                             result = result && singleDropResult;
@@ -1309,7 +1309,7 @@ internal sealed class VerbHandler
                             {
                                 this.universe.ActiveLocation.Items.Add(item);
                                 PrintingSubsystem.ItemDropSuccess(item);
-                                item.OnAfterDrop(new ContainerObjectEventArgs());
+                                item.OnAfterDrop(new DropItemEventArgs());
                             }
                             else
                             {
@@ -1337,6 +1337,75 @@ internal sealed class VerbHandler
             return result;
         }
 
+        return false;
+    }
+
+    internal bool Drop(string verb, string subjectName, string objectName)
+    {
+        if (this.universe.VerbResources[VerbKeys.DROP].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var subjectKey = this.GetItemKeyByName(subjectName);
+
+            var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == subjectKey);
+            var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == subjectKey);
+            
+            if (isPlayerItem || isPlayerCloths)
+            {
+                var itemToDrop = isPlayerItem ? 
+                    this.universe.ActivePlayer.Items.Single(i => i.Key == subjectKey): 
+                    this.universe.ActivePlayer.Clothes.Single(x => x.Key == subjectKey);
+
+                if (itemToDrop.IsDropAble)
+                {
+                    var objectKey = this.GetItemKeyByName(objectName);
+
+                    isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == objectKey);
+                    isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == objectKey);
+                    var isItemInLocation = this.universe.ActiveLocation.Items.Any(x => x.Key == objectKey);
+                    
+                    if (isPlayerItem || isPlayerCloths || isItemInLocation)
+                    {
+                        var itemContainer = isPlayerItem ? 
+                            this.universe.ActivePlayer.Items.Single(i => i.Key == objectKey) : 
+                            isPlayerCloths ? 
+                                this.universe.ActivePlayer.Clothes.Single(x => x.Key == objectKey): 
+                                this.universe.ActiveLocation.Items.Single(x => x.Key == objectKey);
+
+                        if (itemContainer.IsCloseAble && !itemContainer.IsClosed)
+                        {
+                            try
+                            {
+                                itemToDrop.OnBeforeDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
+
+                                var removeSuccess = this.universe.ActivePlayer.RemoveItem(itemToDrop);
+                            
+                                if (removeSuccess)
+                                {
+                                    itemContainer.Items.Add(itemToDrop);
+                                    PrintingSubsystem.ItemDropSuccess(itemToDrop, itemContainer);
+                                    itemContainer.OnAfterDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
+                                    return true;
+                                }
+
+                                return PrintingSubsystem.ImpossibleDrop(itemContainer);
+                            }
+                            catch (BeforeDropException e)
+                            {
+                                return PrintingSubsystem.Resource(e.Message);
+                            }
+                        }
+                        
+                        return PrintingSubsystem.ItemStillClosed(itemContainer);
+                    }
+                    
+                    return PrintingSubsystem.ImpossibleDrop(itemToDrop);
+                }
+
+                return PrintingSubsystem.ImpossibleDrop(itemToDrop);
+            }
+            return PrintingSubsystem.ItemNotOwned();
+        }
+        
         return false;
     }
 

@@ -530,6 +530,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool ItemStillClosed(AContainerObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_STILL_CLOSED, this.ConsoleWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+
     public bool ItemAlreadyBroken(AContainerObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.ALREADY_BROKEN, this.ConsoleWidth), item.Name);
@@ -628,6 +635,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     public virtual bool ItemDropSuccess(AContainerObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
+        Console.WriteLine();
+        return true;
+    }
+
+    public bool ItemDropSuccess(AContainerObject itemToDrop, AContainerObject containerItem)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP_INTO, this.ConsoleWidth), this.LowerFirstChar(itemToDrop.AccusativeArticleName), this.LowerFirstChar(containerItem.AccusativeArticleName));
         Console.WriteLine();
         return true;
     }

@@ -646,6 +646,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du hast {0} in {1} gelegt..
+        /// </summary>
+        public static string ITEM_DROP_INTO {
+            get {
+                return ResourceManager.GetString("ITEM_DROP_INTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du hast {0} gegessen..
         /// </summary>
         public static string ITEM_EATEN {
@@ -723,6 +732,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string ITEM_SEATED {
             get {
                 return ResourceManager.GetString("ITEM_SEATED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ist noch geschlossen..
+        /// </summary>
+        public static string ITEM_STILL_CLOSED {
+            get {
+                return ResourceManager.GetString("ITEM_STILL_CLOSED", resourceCulture);
             }
         }
         

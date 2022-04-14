@@ -161,6 +161,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Break(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.SitDown(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Climb(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Drop(processingVerb, processingSubject, processingObject);
 
         if (!result)
         {

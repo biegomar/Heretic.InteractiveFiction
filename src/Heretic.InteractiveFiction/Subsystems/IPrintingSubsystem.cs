@@ -27,6 +27,7 @@ public interface IPrintingSubsystem
     bool ImpossibleUnlock(AContainerObject item);
     bool ItemAlreadyClosed(AContainerObject item);
     bool ItemClosed(AContainerObject item);
+    bool ItemStillClosed(AContainerObject item);
     bool ItemAlreadyBroken(AContainerObject item);
     bool ItemAlreadyOpen(AContainerObject item);
     bool ItemAlreadyUnlocked(AContainerObject item);
@@ -40,6 +41,7 @@ public interface IPrintingSubsystem
     bool ItemNotLockAble(AContainerObject item);
     bool ItemOpen(AContainerObject item);
     bool ItemDropSuccess(AContainerObject item);
+    bool ItemDropSuccess(AContainerObject itemToDrop, AContainerObject containerItem);
     bool ItemNotOwned();
     bool ItemAlreadyOwned();
     bool DestinationNode(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap);

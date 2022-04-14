@@ -20,7 +20,7 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <RepositoryType>git</RepositoryType>
         <PackageIcon>fire.png</PackageIcon>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageVersion>$(VersionPrefix)</PackageVersion>
+        <PackageVersion>0.8.1</PackageVersion>
         <PackageProjectUrl>https://github.com/biegomar/Heretic.InteractiveFiction</PackageProjectUrl>
         <PackageReleaseNotes>Change TFM to netstandard2.1</PackageReleaseNotes>
     </PropertyGroup>
