@@ -1397,8 +1397,6 @@ internal sealed class VerbHandler
                         
                         return PrintingSubsystem.ItemStillClosed(itemContainer);
                     }
-                    
-                    return PrintingSubsystem.ImpossibleDrop(itemToDrop);
                 }
 
                 return PrintingSubsystem.ImpossibleDrop(itemToDrop);
