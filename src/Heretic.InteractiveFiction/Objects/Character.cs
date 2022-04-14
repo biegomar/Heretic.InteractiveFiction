@@ -5,7 +5,7 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public sealed class Character : AContainerObject
+public sealed class Character : AHereticObject
 {
     public string TalkDescription { get; set; }
     public string StandardPhrases { get; set; }

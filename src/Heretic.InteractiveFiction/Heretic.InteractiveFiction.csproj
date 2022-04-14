@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>10</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <VersionPrefix>0.8.0</VersionPrefix>
+        <VersionPrefix>0.8.1</VersionPrefix>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
         <Authors>Marc Biegota</Authors>
         <Description>This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers! 
@@ -20,9 +20,9 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <RepositoryType>git</RepositoryType>
         <PackageIcon>fire.png</PackageIcon>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageVersion>0.8.1</PackageVersion>
+        <PackageVersion>$(VersionPrefix)</PackageVersion>
         <PackageProjectUrl>https://github.com/biegomar/Heretic.InteractiveFiction</PackageProjectUrl>
-        <PackageReleaseNotes>Change TFM to netstandard2.1</PackageReleaseNotes>
+        <PackageReleaseNotes>*** BREAKING CHANGE: rename AContainerObject -> AHereticObject</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

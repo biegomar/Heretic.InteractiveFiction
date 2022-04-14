@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.Objects;
 
-public sealed class Item : AContainerObject
+public sealed class Item : AHereticObject
 {
     public bool IsBlockingPickUp { get; set; }
     public Item() : base()

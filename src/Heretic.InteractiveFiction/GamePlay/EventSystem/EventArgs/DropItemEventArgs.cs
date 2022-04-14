@@ -4,5 +4,5 @@ namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
 public class DropItemEventArgs: ContainerObjectEventArgs
 {
-    public AContainerObject ItemContainer { get; set; }
+    public AHereticObject ItemContainer { get; set; }
 }

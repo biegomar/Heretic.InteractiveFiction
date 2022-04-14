@@ -2,7 +2,7 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public sealed class Player : AContainerObject
+public sealed class Player : AHereticObject
 {
     public bool HasPaymentMethod { get; set; }
     public Item PaymentMethod { get; set; }
@@ -14,9 +14,9 @@ public sealed class Player : AContainerObject
 
     public bool HasClimbed { get; set; }
 
-    public AContainerObject Seat { get; set; }
+    public AHereticObject Seat { get; set; }
 
-    public AContainerObject ClimbedObject { get; set; }
+    public AHereticObject ClimbedObject { get; set; }
 
     public Player()
     {
@@ -257,7 +257,7 @@ public sealed class Player : AContainerObject
         return false;
     }
 
-    public bool SitDownOnSeat(AContainerObject seat)
+    public bool SitDownOnSeat(AHereticObject seat)
     {
         if (seat.IsSeatAble && !this.IsSitting)
         {

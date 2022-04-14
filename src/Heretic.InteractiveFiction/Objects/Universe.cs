@@ -151,7 +151,7 @@ public sealed class Universe
         return printingSubsystem.ItemNotVisible();
     }
 
-    public void UnveilFirstLevelObjects(AContainerObject container)
+    public void UnveilFirstLevelObjects(AHereticObject container)
     {
         if (container == default)
         {
@@ -210,7 +210,7 @@ public sealed class Universe
         return this.LocationMap.Keys.SingleOrDefault(l => l.Key == key);
     }
     
-    public AContainerObject GetObjectFromWorldByKey(string key)
+    public AHereticObject GetObjectFromWorldByKey(string key)
     {
         foreach (var location in this.LocationMap.Keys)
         {
@@ -224,14 +224,14 @@ public sealed class Universe
         return findObject(key, this.ActivePlayer) ?? default;
     }
 
-    private AContainerObject findObject(string key, AContainerObject containerObject)
+    private AHereticObject findObject(string key, AHereticObject containerObject)
     {
         if (containerObject.Key == key)
         {
             return containerObject;
         }
 
-        AContainerObject result = containerObject.GetItemByKey(key);
+        AHereticObject result = containerObject.GetItemByKey(key);
         if (result != default)
         {
             return result;

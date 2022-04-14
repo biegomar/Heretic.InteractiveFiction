@@ -4,5 +4,5 @@ namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
 public class UnlockContainerEventArgs : ContainerObjectEventArgs
 {
-    public AContainerObject Key { get; set; }
+    public AHereticObject Key { get; set; }
 }

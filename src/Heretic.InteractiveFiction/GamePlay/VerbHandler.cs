@@ -602,7 +602,7 @@ internal sealed class VerbHandler
         return false;
     }
     
-    private void HideItemsOnClose(AContainerObject item)
+    private void HideItemsOnClose(AHereticObject item)
     {
         if (item.IsClosed)
         {
@@ -1596,7 +1596,7 @@ internal sealed class VerbHandler
         return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
     }
 
-    private AContainerObject GetUnhiddenObjectFromWorldByName(string itemName)
+    private AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
     {
         var item = this.universe.GetObjectFromWorldByKey(this.GetItemKeyByName(itemName));
 
@@ -1736,9 +1736,9 @@ internal sealed class VerbHandler
         return string.Empty;
     }
 
-    private AContainerObject GetUnhiddenObjectByName(string objectName)
+    private AHereticObject GetUnhiddenObjectByName(string objectName)
     {
-        AContainerObject containerObject = this.GetUnhiddenItemByNameActive(objectName);
+        AHereticObject containerObject = this.GetUnhiddenItemByNameActive(objectName);
         if (containerObject == default)
         {
             containerObject = this.GetUnhiddenCharacterByName(objectName);

@@ -4,7 +4,7 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects
 {
-    public class AContainerObject
+    public class AHereticObject
     {
         protected string name;
 
@@ -570,12 +570,12 @@ namespace Heretic.InteractiveFiction.Objects
             }
         }
 
-        protected AContainerObject(Grammars grammar): base()
+        protected AHereticObject(Grammars grammar): base()
         {
             this.Grammar = grammar;
         }
     
-        protected AContainerObject()
+        protected AHereticObject()
         {
             this.Grammar = new Grammars();
             this.Items = new List<Item>();
@@ -623,7 +623,7 @@ namespace Heretic.InteractiveFiction.Objects
             return BaseDescriptions.HERE;
         }
 
-        private string PrintUnhiddenObjects(ICollection<AContainerObject> unhiddenObjects, bool subItems = false)
+        private string PrintUnhiddenObjects(ICollection<AHereticObject> unhiddenObjects, bool subItems = false)
         {
             var description = new StringBuilder();
 
@@ -690,7 +690,7 @@ namespace Heretic.InteractiveFiction.Objects
                         {
                             if (item.Items.Any(i => i.IsHidden == false))
                             {
-                                var subItemList = item.Items.Where(i => i.IsHidden == false).ToList<AContainerObject>();
+                                var subItemList = item.Items.Where(i => i.IsHidden == false).ToList<AHereticObject>();
                                 description.Append(item.PrintUnhiddenObjects(subItemList, true));
                             }
                         }
@@ -723,7 +723,7 @@ namespace Heretic.InteractiveFiction.Objects
             return lowerDescription.Trim();
         }
 
-        private string GetLinkedObjectsDescription(AContainerObject item, bool useBracket = true)
+        private string GetLinkedObjectsDescription(AHereticObject item, bool useBracket = true)
         {
             var description = new StringBuilder();
             var unhiddenLinkedItemsWithLinkedTo = item.LinkedTo.Where(x => !x.IsHidden && !string.IsNullOrEmpty(x.LinkedToDescription)).ToList();
@@ -777,7 +777,7 @@ namespace Heretic.InteractiveFiction.Objects
 
         protected virtual string PrintCharacters()
         {
-            var unhiddenItems = this.Characters.Where(i => i.IsHidden == false).ToList<AContainerObject>();
+            var unhiddenItems = this.Characters.Where(i => i.IsHidden == false).ToList<AHereticObject>();
 
             return this.PrintUnhiddenObjects(unhiddenItems);
         }
@@ -785,7 +785,7 @@ namespace Heretic.InteractiveFiction.Objects
         protected virtual string PrintItems(bool subItems = false)
         {
 
-            var unhiddenItems = this.Items.Where(i => i.IsHidden == false).ToList<AContainerObject>();
+            var unhiddenItems = this.Items.Where(i => i.IsHidden == false).ToList<AHereticObject>();
 
             return this.PrintUnhiddenObjects(unhiddenItems);
         }
@@ -974,7 +974,7 @@ namespace Heretic.InteractiveFiction.Objects
             return default;
         }
 
-        public AContainerObject GetOwnerOfUnhiddenItemByKey(string key)
+        public AHereticObject GetOwnerOfUnhiddenItemByKey(string key)
         {
             var unhiddenItems = this.Items.Where(i => !i.IsHidden).ToList();
 
