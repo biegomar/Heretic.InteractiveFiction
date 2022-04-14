@@ -646,6 +646,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool ItemIsNotAContainer(AHereticObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_A_CONTAINER, this.ConsoleWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+
     public virtual bool ItemNotOwned()
     {
         return Resource(BaseDescriptions.ITEM_NOT_OWNED);

@@ -42,6 +42,7 @@ public interface IPrintingSubsystem
     bool ItemOpen(AHereticObject item);
     bool ItemDropSuccess(AHereticObject item);
     bool ItemDropSuccess(AHereticObject itemToDrop, AHereticObject containerItem);
+    bool ItemIsNotAContainer(AHereticObject item);
     bool ItemNotOwned();
     bool ItemAlreadyOwned();
     bool DestinationNode(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap);

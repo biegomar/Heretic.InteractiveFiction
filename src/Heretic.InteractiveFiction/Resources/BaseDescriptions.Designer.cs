@@ -664,6 +664,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} kann keine anderen Objekte beinhalten oder aufnehmen..
+        /// </summary>
+        public static string ITEM_NOT_A_CONTAINER {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_A_CONTAINER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Das wirkt nicht so, als könne man es essen!.
         /// </summary>
         public static string ITEM_NOT_EATABLE {

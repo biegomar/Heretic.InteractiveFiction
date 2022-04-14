@@ -1371,31 +1371,36 @@ internal sealed class VerbHandler
                                 this.universe.ActivePlayer.Clothes.Single(x => x.Key == objectKey): 
                                 this.universe.ActiveLocation.Items.Single(x => x.Key == objectKey);
 
-                        if (itemContainer.IsCloseAble && !itemContainer.IsClosed)
+                        if (itemContainer.IsContainer)
                         {
-                            try
+                            if (!itemContainer.IsCloseAble || itemContainer.IsCloseAble && !itemContainer.IsClosed)
                             {
-                                itemToDrop.OnBeforeDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
-
-                                var removeSuccess = this.universe.ActivePlayer.RemoveItem(itemToDrop);
-                            
-                                if (removeSuccess)
+                                try
                                 {
-                                    itemContainer.Items.Add(itemToDrop);
-                                    PrintingSubsystem.ItemDropSuccess(itemToDrop, itemContainer);
-                                    itemContainer.OnAfterDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
-                                    return true;
-                                }
+                                    itemToDrop.OnBeforeDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
 
-                                return PrintingSubsystem.ImpossibleDrop(itemContainer);
+                                    var removeSuccess = this.universe.ActivePlayer.RemoveItem(itemToDrop);
+                            
+                                    if (removeSuccess)
+                                    {
+                                        itemContainer.Items.Add(itemToDrop);
+                                        PrintingSubsystem.ItemDropSuccess(itemToDrop, itemContainer);
+                                        itemContainer.OnAfterDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
+                                        return true;
+                                    }
+
+                                    return PrintingSubsystem.ImpossibleDrop(itemContainer);
+                                }
+                                catch (BeforeDropException e)
+                                {
+                                    return PrintingSubsystem.Resource(e.Message);
+                                }
                             }
-                            catch (BeforeDropException e)
-                            {
-                                return PrintingSubsystem.Resource(e.Message);
-                            }
+                            
+                            return PrintingSubsystem.ItemStillClosed(itemContainer);
                         }
                         
-                        return PrintingSubsystem.ItemStillClosed(itemContainer);
+                        return PrintingSubsystem.ItemIsNotAContainer(itemContainer);
                     }
                 }
 

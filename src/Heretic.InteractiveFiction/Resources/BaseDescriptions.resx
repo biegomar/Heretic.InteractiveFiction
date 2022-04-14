@@ -579,4 +579,7 @@
   <data name="ITEM_DROP_INTO" xml:space="preserve">
     <value>Du hast {0} in {1} gelegt.</value>
   </data>
+  <data name="ITEM_NOT_A_CONTAINER" xml:space="preserve">
+    <value>{0} kann keine anderen Objekte beinhalten oder aufnehmen.</value>
+  </data>
 </root>

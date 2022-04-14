@@ -182,6 +182,10 @@ namespace Heretic.InteractiveFiction.Objects
         /// </summary>
         public bool IsClosed { get; set; }
         /// <summary>
+        /// Is this object a container and can it hold other objects?
+        /// </summary>
+        public bool IsContainer { get; set; }
+        /// <summary>
         /// The list of contained objects.
         /// </summary>
         public ICollection<Item> Items { get; set; }
@@ -583,6 +587,7 @@ namespace Heretic.InteractiveFiction.Objects
             this.Surroundings = new Dictionary<string, Func<string>>();
             this.LinkedTo = new List<Item>();
             this.FirstLookDescription = string.Empty;
+            this.IsContainer = false;
             this.IsBreakable = false;
             this.IsBroken = false;
             this.IsEatable = false;
