@@ -588,4 +588,11 @@
   <data name="YOU_SEE_SURFACE_SINGULAR" xml:space="preserve">
     <value>darauf befindet sich:</value>
   </data>
+  <data name="LETTER_CONTENT" xml:space="preserve">
+    <value>Dort steht geschrieben: 
+"{0}"</value>
+  </data>
+  <data name="NO_LETTER_CONTENT" xml:space="preserve">
+    <value>Scheinbar gibt es dort nichts zu lesen.</value>
+  </data>
 </root>

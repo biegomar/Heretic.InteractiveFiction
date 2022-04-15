@@ -808,6 +808,16 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dort steht geschrieben: 
+        ///&quot;{0}&quot;.
+        /// </summary>
+        public static string LETTER_CONTENT {
+            get {
+                return ResourceManager.GetString("LETTER_CONTENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist verbunden mit .
         /// </summary>
         public static string LINKED_TO {
@@ -921,6 +931,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string NO_EVENT {
             get {
                 return ResourceManager.GetString("NO_EVENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scheinbar gibt es dort nichts zu lesen..
+        /// </summary>
+        public static string NO_LETTER_CONTENT {
+            get {
+                return ResourceManager.GetString("NO_LETTER_CONTENT", resourceCulture);
             }
         }
         

@@ -113,6 +113,10 @@ namespace Heretic.InteractiveFiction.Objects
         /// </summary>
         public string ClimbedDescription { get; set; }
         /// <summary>
+        /// This description can be used if the object is readable.
+        /// </summary>
+        public string LetterContentDescription { get; set; }
+        /// <summary>
         /// Can this object be broken?
         /// </summary>
         public bool IsBreakable { get; set; }
@@ -183,6 +187,10 @@ namespace Heretic.InteractiveFiction.Objects
         /// </summary>
         public bool IsClosed { get; set; }
         /// <summary>
+        /// Is there anything to read on the object?
+        /// </summary>
+        public bool IsReadable { get; set; }
+        /// <summary>
         /// Is this object a container and can it hold other objects?
         /// </summary>
         public bool IsContainer { get; set; }
@@ -226,6 +234,8 @@ namespace Heretic.InteractiveFiction.Objects
         public event EventHandler<ContainerObjectEventArgs> Open;
         public event EventHandler<ContainerObjectEventArgs> BeforeOpen;
         public event EventHandler<ContainerObjectEventArgs> AfterOpen;
+        public event EventHandler<ContainerObjectEventArgs> BeforeRead;
+        public event EventHandler<ContainerObjectEventArgs> AfterRead;
         public event EventHandler<ContainerObjectEventArgs> AfterLook;
         public event EventHandler<ContainerObjectEventArgs> BeforeTake;
         public event EventHandler<ContainerObjectEventArgs> AfterTake;
@@ -565,6 +575,18 @@ namespace Heretic.InteractiveFiction.Objects
             var localEventHandler = this.AfterOpen;
             localEventHandler?.Invoke(this, eventArgs);
         }
+        
+        public virtual void OnBeforeRead(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforeRead;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+    
+        public virtual void OnAfterRead(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterRead;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
 
         public virtual void OnUnlock(UnlockContainerEventArgs eventArgs)
         {
@@ -609,6 +631,7 @@ namespace Heretic.InteractiveFiction.Objects
             this.IsCloseAble = false;
             this.IsSeatAble = false;
             this.IsClimbAble = false;
+            this.IsReadable = false;
             this.name = string.Empty;
             this.Description = string.Empty;
             this.OpenDescription = string.Empty;
@@ -621,6 +644,7 @@ namespace Heretic.InteractiveFiction.Objects
             this.UnbreakableDescription = string.Empty;
             this.LinkedToDescription = string.Empty;
             this.ClimbedDescription = string.Empty;
+            this.LetterContentDescription = string.Empty;
             this.Hint = string.Empty;
         }
 

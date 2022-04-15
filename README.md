@@ -1,8 +1,8 @@
 # Heretic.InteractiveFiction
+[![Build Status](https://biegota.visualstudio.com/Games/_apis/build/status/Heretic-CI?branchName=master)](https://biegota.visualstudio.com/Games/_build/latest?definitionId=7&branchName=master)
 [![NuGet version (Heretic.InteractiveFiction)](https://img.shields.io/nuget/v/Heretic.InteractiveFiction)](https://www.nuget.org/packages/Heretic.InteractiveFiction/)
 [![NuGet downloads (Heretic.InteractiveFiction)](https://img.shields.io/nuget/dt/Heretic.InteractiveFiction)](https://www.nuget.org/packages/Heretic.InteractiveFiction/)
-[![Build Status](https://biegota.visualstudio.com/Games/_apis/build/status/Heretic-CI?branchName=master)](https://biegota.visualstudio.com/Games/_build/latest?definitionId=7&branchName=master)
-
+![GitHub](https://img.shields.io/github/license/biegomar/heretic.interactivefiction)  
 This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers!  
 Heretic.InteractiveFiction intends to return to the old text adventure days of the 1980s and evoke the spirit and mood of the genre.
 

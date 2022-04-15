@@ -241,7 +241,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schaue|Schau|Lies|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X.
+        ///   Looks up a localized string similar to Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X.
         /// </summary>
         internal static string LOOK {
             get {
@@ -318,6 +318,15 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string QUIT {
             get {
                 return ResourceManager.GetString("QUIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lies|Lese.
+        /// </summary>
+        internal static string READ {
+            get {
+                return ResourceManager.GetString("READ", resourceCulture);
             }
         }
         

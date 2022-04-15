@@ -80,6 +80,37 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Read(string verb, string subject)
+    {
+        if (this.universe.VerbResources[VerbKeys.READ].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            var item = this.GetUnhiddenObjectByName(subject);
+            if (item is { IsReadable: true })
+            {
+                try
+                {
+                    item.OnBeforeRead(new ContainerObjectEventArgs());
+
+                    var result = string.IsNullOrWhiteSpace(item.LetterContentDescription) ? 
+                        PrintingSubsystem.Resource(BaseDescriptions.NO_LETTER_CONTENT) : 
+                        PrintingSubsystem.FormattedResource(BaseDescriptions.LETTER_CONTENT, item.LetterContentDescription);
+                    
+                    item.OnAfterLook(new ContainerObjectEventArgs());
+
+                    return result;
+                }
+                catch (ReadException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
     internal bool Hint(string verb, string subject)
     {
         if (this.universe.VerbResources[VerbKeys.HINT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
@@ -123,7 +154,7 @@ internal sealed class VerbHandler
 
                     return true;
                 }
-                catch (Exception ex)
+                catch (PullException ex)
                 {
                     return PrintingSubsystem.Resource(ex.Message);
                 }
@@ -181,7 +212,7 @@ internal sealed class VerbHandler
 
                     return true;
                 }
-                catch (Exception ex)
+                catch (PushException ex)
                 {
                     return PrintingSubsystem.Resource(ex.Message);
                 }

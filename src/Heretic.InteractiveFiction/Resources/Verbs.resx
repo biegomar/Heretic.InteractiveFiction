@@ -151,7 +151,7 @@
     <value>Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock</value>
   </data>
   <data name="LOOK" xml:space="preserve">
-    <value>Schaue|Schau|Lies|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X</value>
+    <value>Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X</value>
   </data>
   <data name="N" xml:space="preserve">
     <value>Norden|Nord|N</value>
@@ -257,5 +257,8 @@
   </data>
   <data name="REM" xml:space="preserve">
     <value>Kommentar|Comment|Remark|REM</value>
+  </data>
+  <data name="READ" xml:space="preserve">
+    <value>Lies|Lese</value>
   </data>
 </root>
