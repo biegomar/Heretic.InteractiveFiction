@@ -1454,5 +1454,23 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("YOU_SEE_SINGULAR", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to darauf befinden sich:.
+        /// </summary>
+        public static string YOU_SEE_SURFACE {
+            get {
+                return ResourceManager.GetString("YOU_SEE_SURFACE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to darauf befindet sich:.
+        /// </summary>
+        public static string YOU_SEE_SURFACE_SINGULAR {
+            get {
+                return ResourceManager.GetString("YOU_SEE_SURFACE_SINGULAR", resourceCulture);
+            }
+        }
     }
 }

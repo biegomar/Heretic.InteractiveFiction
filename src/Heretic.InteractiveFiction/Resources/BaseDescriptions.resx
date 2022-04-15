@@ -582,4 +582,10 @@
   <data name="ITEM_NOT_A_CONTAINER" xml:space="preserve">
     <value>{0} kann keine anderen Objekte beinhalten oder aufnehmen.</value>
   </data>
+  <data name="YOU_SEE_SURFACE" xml:space="preserve">
+    <value>darauf befinden sich:</value>
+  </data>
+  <data name="YOU_SEE_SURFACE_SINGULAR" xml:space="preserve">
+    <value>darauf befindet sich:</value>
+  </data>
 </root>

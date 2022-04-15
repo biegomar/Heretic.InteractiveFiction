@@ -1,4 +1,5 @@
-﻿using Heretic.InteractiveFiction.Exceptions;
+﻿using System.Runtime.CompilerServices;
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Resources;
 
@@ -185,6 +186,10 @@ namespace Heretic.InteractiveFiction.Objects
         /// Is this object a container and can it hold other objects?
         /// </summary>
         public bool IsContainer { get; set; }
+        /// <summary>
+        /// Is the object a container that holds its contents on the surface (e.g. a table)?
+        /// </summary>
+        public bool IsSurfaceContainer { get; set; }
         /// <summary>
         /// The list of contained objects.
         /// </summary>
@@ -588,6 +593,7 @@ namespace Heretic.InteractiveFiction.Objects
             this.LinkedTo = new List<Item>();
             this.FirstLookDescription = string.Empty;
             this.IsContainer = false;
+            this.IsSurfaceContainer = false;
             this.IsBreakable = false;
             this.IsBroken = false;
             this.IsEatable = false;
@@ -620,6 +626,11 @@ namespace Heretic.InteractiveFiction.Objects
 
         protected virtual string GetVariationOfYouSee(int itemCount)
         {
+            if (this.IsSurfaceContainer)
+            {
+                return itemCount == 1 ? BaseDescriptions.YOU_SEE_SURFACE_SINGULAR : BaseDescriptions.YOU_SEE_SURFACE;
+            }
+            
             return itemCount == 1 ? BaseDescriptions.YOU_SEE_SINGULAR : BaseDescriptions.YOU_SEE;
         }
 
