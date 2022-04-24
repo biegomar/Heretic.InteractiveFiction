@@ -226,8 +226,8 @@ namespace Heretic.InteractiveFiction.Objects
         public event EventHandler<ContainerObjectEventArgs> BeforeClose;
         public event EventHandler<ContainerObjectEventArgs> AfterClose;
         public event EventHandler<ContainerObjectEventArgs> Close;
-        public event EventHandler<ContainerObjectEventArgs> BeforeDrop;
-        public event EventHandler<ContainerObjectEventArgs> AfterDrop;
+        public event EventHandler<DropItemEventArgs> BeforeDrop;
+        public event EventHandler<DropItemEventArgs> AfterDrop;
         public event EventHandler<ContainerObjectEventArgs> BeforeEat;
         public event EventHandler<ContainerObjectEventArgs> AfterEat; 
         public event EventHandler<ContainerObjectEventArgs> AfterGive;
@@ -752,6 +752,12 @@ namespace Heretic.InteractiveFiction.Objects
                         description.Append('.');
                     }
                 }
+
+                if (!subItems)
+                {
+                    description.AppendLine();    
+                }
+                
             }
 
             return description.ToString();
@@ -804,6 +810,11 @@ namespace Heretic.InteractiveFiction.Objects
                     description.Append(this.LowerFirstChar(linkedItem.DativeIndefiniteArticleName));
 
                     linkedItemIndex++;
+                }
+
+                if (linkedItemIndex > 0)
+                {
+                    description.Append('.');
                 }
 
                 if (useBracket)
