@@ -63,17 +63,23 @@ public sealed class Player : AHereticObject
             }
             else
             {
-                var actualPayload = this.GetActualPayload();
+                if (this.GetMaxPayload() > 0)
+                {
+                    var actualPayload = this.GetActualPayload();
 
-                result.AppendLine(string.Format(BaseDescriptions.ACTUAL_PAYLOAD, (float)actualPayload / 1000,
-                    (float)(this.GetMaxPayload() - actualPayload) / 1000));
+                    result.AppendLine(string.Format(BaseDescriptions.ACTUAL_PAYLOAD, (float)actualPayload / 1000,
+                        (float)(this.GetMaxPayload() - actualPayload) / 1000));
+                }
             }
 
             result.Append(this.PrintItems());
         }
         else
         {
-            result.AppendLine(string.Format(BaseDescriptions.MAX_PAYLOAD, (float)this.GetMaxPayload() / 1000));
+            if (this.GetMaxPayload() > 0)
+            {
+                result.AppendLine(string.Format(BaseDescriptions.MAX_PAYLOAD, (float)this.GetMaxPayload() / 1000));
+            }
             result.AppendLine(BaseDescriptions.NOTHING);
         }
 
