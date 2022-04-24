@@ -95,7 +95,7 @@ internal sealed class VerbHandler
                         PrintingSubsystem.Resource(BaseDescriptions.NO_LETTER_CONTENT) : 
                         PrintingSubsystem.FormattedResource(BaseDescriptions.LETTER_CONTENT, item.LetterContentDescription);
                     
-                    item.OnAfterLook(new ContainerObjectEventArgs());
+                    item.OnAfterRead(new ContainerObjectEventArgs());
 
                     return result;
                 }
@@ -664,15 +664,22 @@ internal sealed class VerbHandler
                         return PrintingSubsystem.ItemAlreadyOpen(item);
                     }
 
-                    item.OnBeforeOpen(new ContainerObjectEventArgs());
+                    try
+                    {
+                        item.OnBeforeOpen(new ContainerObjectEventArgs());
                     
-                    item.IsClosed = false;
-                    this.universe.UnveilFirstLevelObjects(item);
-                    var result = PrintingSubsystem.ItemOpen(item);
+                        item.IsClosed = false;
+                        this.universe.UnveilFirstLevelObjects(item);
+                        var result = PrintingSubsystem.ItemOpen(item);
 
-                    item.OnAfterOpen(new ContainerObjectEventArgs());
+                        item.OnAfterOpen(new ContainerObjectEventArgs());
 
-                    return result;
+                        return result;
+                    }
+                    catch (OpenException e)
+                    {
+                        return PrintingSubsystem.Resource(e.Message);
+                    }
                 }
 
                 return PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_OPEN);
@@ -1347,7 +1354,7 @@ internal sealed class VerbHandler
                                 PrintingSubsystem.ImpossibleDrop(item);
                             }
                         }
-                        catch (BeforeDropException e)
+                        catch (DropException e)
                         {
                             PrintingSubsystem.Resource(e.Message);
                         }
@@ -1422,7 +1429,7 @@ internal sealed class VerbHandler
 
                                     return PrintingSubsystem.ImpossibleDrop(itemContainer);
                                 }
-                                catch (BeforeDropException e)
+                                catch (DropException e)
                                 {
                                     return PrintingSubsystem.Resource(e.Message);
                                 }
