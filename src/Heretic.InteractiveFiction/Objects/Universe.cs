@@ -120,8 +120,9 @@ public sealed class Universe
 
             if (owner == default)
             {
-                return false;
+                return !item.IsPickAble && printingSubsystem.ImpossiblePickup(item);
             }
+            
             if (owner.Key == this.ActivePlayer.Key)
             {
                 return printingSubsystem.ItemAlreadyOwned();
