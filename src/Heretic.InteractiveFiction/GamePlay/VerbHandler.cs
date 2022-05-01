@@ -12,12 +12,14 @@ internal sealed class VerbHandler
 {
     private readonly Universe universe;
     private readonly IPrintingSubsystem PrintingSubsystem;
+    private readonly ObjectHandler objectHandler;
     private bool isHintActive;
 
     internal VerbHandler(Universe universe, IPrintingSubsystem printingSubsystem)
     {
         this.PrintingSubsystem = printingSubsystem;
         this.universe = universe;
+        this.objectHandler = new ObjectHandler(this.universe);
         this.isHintActive = false;
     }
 
@@ -1224,7 +1226,7 @@ internal sealed class VerbHandler
                 var item = this.GetUnhiddenItemByNameActive(subject);
                 if (item == default)
                 {
-                    var characterKey = this.GetCharacterKeyByName(subject);
+                    var characterKey = this.objectHandler.GetCharacterKeyByName(subject);
                     var character = this.universe.ActiveLocation.GetCharacterByKey(characterKey);
                     if (character != default)
                     {
@@ -1399,15 +1401,20 @@ internal sealed class VerbHandler
 
                     isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == objectKey);
                     isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == objectKey);
+                    var isPlayerLinkedToObject = this.universe.ActivePlayer.LinkedTo.Any(x => x.Key == objectKey);
                     var isItemInLocation = this.universe.ActiveLocation.Items.Any(x => x.Key == objectKey);
-                    
-                    if (isPlayerItem || isPlayerCloths || isItemInLocation)
+
+                    if (isPlayerItem || isPlayerLinkedToObject || isPlayerCloths || isItemInLocation)
                     {
-                        var itemContainer = isPlayerItem ? 
-                            this.universe.ActivePlayer.Items.Single(i => i.Key == objectKey) : 
-                            isPlayerCloths ? 
-                                this.universe.ActivePlayer.Clothes.Single(x => x.Key == objectKey): 
-                                this.universe.ActiveLocation.Items.Single(x => x.Key == objectKey);
+                        var itemContainer = isPlayerItem
+                            ?
+                            this.universe.ActivePlayer.Items.Single(i => i.Key == objectKey)
+                            : isPlayerCloths
+                                ? this.universe.ActivePlayer.Clothes.Single(x => x.Key == objectKey)
+                                : isPlayerLinkedToObject
+                                    ? this.universe.ActivePlayer.LinkedTo.Single(x => x.Key == objectKey)
+                                    :
+                                    this.universe.ActiveLocation.Items.Single(x => x.Key == objectKey);
 
                         if (itemContainer.IsContainer)
                         {
@@ -1758,25 +1765,12 @@ internal sealed class VerbHandler
 
     private Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
     {
-        return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.GetCharacterKeyByName(itemName));
+        return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.objectHandler.GetCharacterKeyByName(itemName));
     }
 
     private Character GetUnhiddenCharacterByName(string itemName)
     {
-        return this.GetUnhiddenCharacterByKey(this.GetCharacterKeyByName(itemName));
-    }
-
-    private string GetCharacterKeyByName(string itemName)
-    {
-        foreach (var (key, value) in this.universe.CharacterResources)
-        {
-            if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
-            {
-                return key;
-            }
-        }
-
-        return string.Empty;
+        return this.GetUnhiddenCharacterByKey(this.objectHandler.GetCharacterKeyByName(itemName));
     }
 
     private AHereticObject GetUnhiddenObjectByName(string objectName)
@@ -1789,7 +1783,7 @@ internal sealed class VerbHandler
 
         if (containerObject == default)
         {
-            var key = this.GetCharacterKeyByName(objectName);
+            var key = this.objectHandler.GetCharacterKeyByName(objectName);
             if (key == this.universe.ActivePlayer.Key)
             {
                 containerObject = this.universe.ActivePlayer;
