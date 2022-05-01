@@ -65,7 +65,7 @@ internal sealed class VerbHandler
             }
 
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(subject);
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 var result = PrintingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]());
@@ -271,7 +271,7 @@ internal sealed class VerbHandler
                 return result;
             }
 
-            var itemKey = this.GetItemKeyByName(subject);
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 var joint = string.Join('|', this.universe.ItemResources[itemKey]);
@@ -382,7 +382,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.USE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var key = this.GetItemKeyByName(subject);
+            var key = this.objectHandler.GetItemKeyByName(subject);
             var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
 
             if (item != default)
@@ -447,7 +447,7 @@ internal sealed class VerbHandler
                 return PrintingSubsystem.PayWithWhat();
             }
 
-            var key = this.GetItemKeyByName(subject);
+            var key = this.objectHandler.GetItemKeyByName(subject);
             var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
             if (item != default)
             {
@@ -548,7 +548,7 @@ internal sealed class VerbHandler
             // lets have a look at surroundings.
             if (item == default)
             {
-                var itemKey = this.GetItemKeyByName(subject);
+                var itemKey = this.objectHandler.GetItemKeyByName(subject);
                 if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
                 {
                     try
@@ -615,7 +615,7 @@ internal sealed class VerbHandler
             }
 
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(subject);
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 try
@@ -688,7 +688,7 @@ internal sealed class VerbHandler
             }
             
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(subject);
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 // surroundings only exist within the active location.
@@ -734,7 +734,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.EAT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var key = this.GetItemKeyByName(subject);
+            var key = this.objectHandler.GetItemKeyByName(subject);
             var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
 
             if (item == default)
@@ -817,7 +817,7 @@ internal sealed class VerbHandler
                 return this.SitDown(verb);
             }
             
-            var key = this.GetItemKeyByName(subject);
+            var key = this.objectHandler.GetItemKeyByName(subject);
             var item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
 
             if (item == default)
@@ -842,7 +842,7 @@ internal sealed class VerbHandler
             }
             
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(subject);
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 try
@@ -941,7 +941,7 @@ internal sealed class VerbHandler
                 item = this.GetUnhiddenCharacterByName(subjectName);
                 if (item == default)
                 {
-                    item = this.GetVirtualItemByName(subjectName);
+                    item = this.objectHandler.GetVirtualItemByName(subjectName);
                     if (item == default)
                     {
                         return PrintingSubsystem.NoAnswerToInvisibleObject(character);
@@ -976,7 +976,7 @@ internal sealed class VerbHandler
                 return PrintingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
 
-            var key = this.GetConversationAnswerKeyByPhrase(phrase);
+            var key = this.objectHandler.GetConversationAnswerKeyByName(phrase);
             if (string.IsNullOrEmpty(key))
             {
                 return PrintingSubsystem.NoAnswer(phrase);
@@ -1009,7 +1009,7 @@ internal sealed class VerbHandler
             }
 
             //...and I can give only items that i own.
-            var key = this.GetItemKeyByName(itemName);
+            var key = this.objectHandler.GetItemKeyByName(itemName);
             var item = this.universe.ActivePlayer.GetItemByKey(key);
             if (item == default)
             {
@@ -1030,19 +1030,6 @@ internal sealed class VerbHandler
         return false;
     }
 
-    private string GetConversationAnswerKeyByPhrase(string phrase)
-    {
-        foreach (var (key, value) in this.universe.ConversationAnswersResources)
-        {
-            if (value.Contains(phrase, StringComparer.InvariantCultureIgnoreCase))
-            {
-                return key;
-            }
-        }
-
-        return string.Empty;
-    }
-    
     internal bool Break(string verb, string subject)
     {
         if (this.universe.VerbResources[VerbKeys.BREAK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
@@ -1062,7 +1049,7 @@ internal sealed class VerbHandler
             }
             
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(subject);
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 try
@@ -1113,7 +1100,7 @@ internal sealed class VerbHandler
             }
 
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(subject);
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 if (toolItem != default)
@@ -1149,7 +1136,7 @@ internal sealed class VerbHandler
             }
             
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(unlockObject);
+            var itemKey = this.objectHandler.GetItemKeyByName(unlockObject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 return PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_UNLOCK_SURROUNDINGS);
@@ -1197,7 +1184,7 @@ internal sealed class VerbHandler
             }
 
             // lets have a look at surroundings.
-            var itemKey = this.GetItemKeyByName(unlockObject);
+            var itemKey = this.objectHandler.GetItemKeyByName(unlockObject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 if (key != default)
@@ -1235,7 +1222,7 @@ internal sealed class VerbHandler
                     else
                     {
                         // lets have a look at surroundings.
-                        var itemKey = this.GetItemKeyByName(subject);
+                        var itemKey = this.objectHandler.GetItemKeyByName(subject);
                         if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
                         {
                             try
@@ -1327,7 +1314,7 @@ internal sealed class VerbHandler
             var result = true;
             foreach (var subject in subjects)
             {
-                var key = this.GetItemKeyByName(subject);
+                var key = this.objectHandler.GetItemKeyByName(subject);
 
                 var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == key);
                 var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == key);
@@ -1384,7 +1371,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.DROP].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var subjectKey = this.GetItemKeyByName(subjectName);
+            var subjectKey = this.objectHandler.GetItemKeyByName(subjectName);
 
             var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == subjectKey);
             var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == subjectKey);
@@ -1397,7 +1384,7 @@ internal sealed class VerbHandler
 
                 if (itemToDrop.IsDropAble)
                 {
-                    var objectKey = this.GetItemKeyByName(objectName);
+                    var objectKey = this.objectHandler.GetItemKeyByName(objectName);
 
                     isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == objectKey);
                     isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == objectKey);
@@ -1544,7 +1531,7 @@ internal sealed class VerbHandler
 
     internal bool ChangeLocationByName(string input)
     {
-        var locationKey = this.GetLocationKeyByName(input);
+        var locationKey = this.objectHandler.GetLocationKeyByName(input);
         if (!string.IsNullOrEmpty(locationKey))
         {
             if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
@@ -1643,12 +1630,12 @@ internal sealed class VerbHandler
 
     private Item GetUnhiddenItemByNameActive(string itemName)
     {
-        return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
+        return this.GetUnhiddenItemByKeyActive(this.objectHandler.GetItemKeyByName(itemName));
     }
 
     private AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
     {
-        var item = this.universe.GetObjectFromWorldByKey(this.GetItemKeyByName(itemName));
+        var item = this.universe.GetObjectFromWorldByKey(this.objectHandler.GetItemKeyByName(itemName));
 
         if (item == default || item.IsHidden)
         {
@@ -1658,106 +1645,12 @@ internal sealed class VerbHandler
         return item;
     }
 
-    private Item GetVirtualItemByName(string itemName)
-    {
-        return this.GetVirtualItemByKey(this.GetItemKeyByName(itemName));
-    }
-
-    private string GetItemKeyByName(string itemName)
-    {
-        if (GetPrioritizedItemKeys(itemName) is { } itemKey && !string.IsNullOrEmpty(itemKey))
-        {
-            return itemKey;
-        }
-
-        foreach (var (key, value) in this.universe.ItemResources)
-        {
-            if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
-            {
-                return key;
-            }
-        }
-
-        return string.Empty;
-    }
-
-    private string GetPrioritizedItemKeys(string itemName)
-    {
-        var allActiveLocationItemKeys = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items)
-            .Union(this.GetSurroundingKeys(this.universe.ActiveLocation.Surroundings));
-        var allActivePlayerItemKeys = this.GetItemKeysRecursive(this.universe.ActivePlayer.Items);
-        var prioritizedKeysOfActiveLocationAndPlayer = allActiveLocationItemKeys.Union(allActivePlayerItemKeys).ToList();
-        var prioritizedItemResources =
-            this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key));
-
-        foreach (var (key, value) in prioritizedItemResources)
-        {
-            if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
-            {
-                return key;
-            }
-        }
-
-        return string.Empty;
-    }
-
-    private IEnumerable<string> GetItemKeysRecursive(IEnumerable<Item> items)
-    {
-        var result = new List<string>();
-        foreach (var item in items)
-        {
-            if (item.Items.Any())
-            {
-                result.AddRange(this.GetItemKeysRecursive(item.Items));
-            }
-
-            //TODO - also recursive, but break on circular references.
-            if (item.LinkedTo.Any())
-            {
-                result.AddRange(item.LinkedTo.Select(x => x.Key));
-            }
-            
-            result.Add(item.Key);
-        }
-
-        return result;
-    }
-    
-    private IEnumerable<string> GetSurroundingKeys(IDictionary<string, Func<string>> surroundings)
-    {
-        return surroundings.Keys.ToList();
-    }
-
-    private string GetLocationKeyByName(string locationName)
-    {
-        foreach (var (key, value) in this.universe.LocationResources)
-        {
-            if (value.Contains(locationName, StringComparer.InvariantCultureIgnoreCase))
-            {
-                return key;
-            }
-        }
-
-        return string.Empty;
-    }
-
     private Item GetUnhiddenItemByKeyActive(string key)
     {
         var result = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
         if (result == default)
         {
             result = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
-        }
-
-        return result;
-    }
-
-    private Item GetVirtualItemByKey(string key)
-    {
-        var result = this.universe.ActiveLocation.GetVirtualItemByKey(key);
-        if (result == default)
-        {
-            result = this.universe.ActivePlayer.GetVirtualItemByKey(key);
         }
 
         return result;
