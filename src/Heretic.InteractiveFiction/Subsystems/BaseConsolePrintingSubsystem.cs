@@ -641,7 +641,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemDropSuccess(AHereticObject itemToDrop, AHereticObject containerItem)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP_INTO, this.ConsoleWidth), this.LowerFirstChar(itemToDrop.AccusativeArticleName), this.LowerFirstChar(containerItem.AccusativeArticleName));
+        Console.Write(
+            containerItem.IsSurfaceContainer
+                ? WordWrap(BaseDescriptions.ITEM_DROP_ONTO, this.ConsoleWidth)
+                : WordWrap(BaseDescriptions.ITEM_DROP_INTO, this.ConsoleWidth),
+            this.LowerFirstChar(itemToDrop.AccusativeArticleName),
+            this.LowerFirstChar(containerItem.AccusativeArticleName));
+
         Console.WriteLine();
         return true;
     }

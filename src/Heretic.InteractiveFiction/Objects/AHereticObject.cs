@@ -907,6 +907,11 @@ namespace Heretic.InteractiveFiction.Objects
             return default;
         }
 
+        /// <summary>
+        /// Tries to get an item from the list of items or from the list of characters recursively.
+        /// </summary>
+        /// <param name="key">Key of the item.</param>
+        /// <returns>The item, otherwise default.</returns>
         public Item GetItemByKey(string key)
         {
             foreach (var item in this.Items)
@@ -943,6 +948,11 @@ namespace Heretic.InteractiveFiction.Objects
             return default;
         }
 
+        /// <summary>
+        /// Tries to remove an item from the list of items or from the list of characters recursively.
+        /// </summary>
+        /// <param name="itemToRemove">The item to be removed.</param>
+        /// <returns>True if successful, false otherwise.</returns>
         public virtual bool RemoveItem(Item itemToRemove)
         {
             foreach (var item in this.Items)
@@ -1005,20 +1015,28 @@ namespace Heretic.InteractiveFiction.Objects
 
         public Character GetCharacterByKey(string key)
         {
-            if (this.Characters.Any())
+            foreach (var character in this.Characters)
             {
-                foreach (var character in this.Characters)
+                if (character.Key == key)
                 {
-                    if (character.Key == key)
-                    {
-                        return character;
-                    }
-                    var result = character.GetCharacterByKey(key);
+                    return character;
+                }
 
-                    if (result != default)
-                    {
-                        return result;
-                    }
+                var result = character.GetCharacterByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+            
+            foreach (var item in this.Items)
+            {
+                var result = item.GetCharacterByKey(key);
+
+                if (result != default)
+                {
+                    return result;
                 }
             }
 

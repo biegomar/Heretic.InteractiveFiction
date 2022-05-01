@@ -655,6 +655,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du hast {0} auf {1} gelegt..
+        /// </summary>
+        public static string ITEM_DROP_ONTO {
+            get {
+                return ResourceManager.GetString("ITEM_DROP_ONTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du hast {0} gegessen..
         /// </summary>
         public static string ITEM_EATEN {

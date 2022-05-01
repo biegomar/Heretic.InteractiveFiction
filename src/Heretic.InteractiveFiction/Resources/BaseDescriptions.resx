@@ -595,4 +595,7 @@
   <data name="NO_LETTER_CONTENT" xml:space="preserve">
     <value>Scheinbar gibt es dort nichts zu lesen.</value>
   </data>
+  <data name="ITEM_DROP_ONTO" xml:space="preserve">
+    <value>Du hast {0} auf {1} gelegt.</value>
+  </data>
 </root>
