@@ -41,6 +41,79 @@ internal sealed class ObjectHandler
         return this.GetVirtualItemByKey(this.GetItemKeyByName(itemName));
     }
     
+    internal AHereticObject GetUnhiddenObjectByName(string objectName)
+    {
+        AHereticObject containerObject = this.GetUnhiddenItemByNameActive(objectName);
+        if (containerObject == default)
+        {
+            containerObject = this.GetUnhiddenCharacterByName(objectName);
+        }
+
+        if (containerObject == default)
+        {
+            var key = this.GetCharacterKeyByName(objectName);
+            if (key == this.universe.ActivePlayer.Key)
+            {
+                containerObject = this.universe.ActivePlayer;
+            }
+        }
+
+        return containerObject;
+    }
+    
+    internal Character GetUnhiddenCharacterByName(string itemName)
+    {
+        return this.GetUnhiddenCharacterByKey(this.GetCharacterKeyByName(itemName));
+    }
+    
+    private Character GetUnhiddenCharacterByKey(string key)
+    {
+        if (this.universe.GetObjectFromWorldByKey(key) is Character { IsHidden: false } character)
+        {
+            return character;
+        }
+
+        return default;
+    }
+    
+    internal Item GetUnhiddenItemByNameActive(string itemName)
+    {
+        return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
+    }
+    
+    internal Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
+    {
+        return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.GetCharacterKeyByName(itemName));
+    }
+    
+    internal AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
+    {
+        var item = this.universe.GetObjectFromWorldByKey(this.GetItemKeyByName(itemName));
+
+        if (item == default || item.IsHidden)
+        {
+            return default;
+        }
+
+        return item;
+    }
+    
+    private Item GetUnhiddenItemByKeyActive(string key)
+    {
+        var result = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
+        if (result == default)
+        {
+            result = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
+        }
+
+        return result;
+    }
+    
+    private Character GetUnhiddenCharacterByKeyFromActiveLocation(string key)
+    {
+        return this.universe.ActiveLocation.GetUnhiddenCharacterByKey(key);
+    }
+    
     private Item GetVirtualItemByKey(string key)
     {
         var result = this.universe.ActiveLocation.GetVirtualItemByKey(key);
