@@ -618,7 +618,7 @@ internal sealed class VerbHandler
                     item.OnBeforeClose(new ContainerObjectEventArgs());
 
                     item.IsClosed = true;
-                    this.HideItemsOnClose(item);
+                    this.objectHandler.HideItemsOnClose(item);
                     var result = PrintingSubsystem.ItemClosed(item);
 
                     item.OnAfterClose(new ContainerObjectEventArgs());
@@ -648,17 +648,6 @@ internal sealed class VerbHandler
         }
 
         return false;
-    }
-    
-    private void HideItemsOnClose(AHereticObject item)
-    {
-        if (item.IsClosed)
-        {
-            foreach (var child in item.Items.Where(x => x.HideOnContainerClose))
-            {
-                child.IsHidden = true;
-            }
-        }
     }
 
     internal bool Open(string verb, string subject)

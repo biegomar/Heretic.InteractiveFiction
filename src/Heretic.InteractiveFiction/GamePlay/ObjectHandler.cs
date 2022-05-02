@@ -98,6 +98,17 @@ internal sealed class ObjectHandler
         return item;
     }
     
+    internal void HideItemsOnClose(AHereticObject item)
+    {
+        if (item.IsClosed)
+        {
+            foreach (var child in item.Items.Where(x => x.HideOnContainerClose))
+            {
+                child.IsHidden = true;
+            }
+        }
+    }
+    
     private Item GetUnhiddenItemByKeyActive(string key)
     {
         var result = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
