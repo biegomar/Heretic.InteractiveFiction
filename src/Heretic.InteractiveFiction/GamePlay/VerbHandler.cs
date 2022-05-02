@@ -219,6 +219,21 @@ internal sealed class VerbHandler
                     return PrintingSubsystem.Resource(ex.Message);
                 }
             }
+            
+            // lets have a look at surroundings.
+            var itemKey = this.objectHandler.GetItemKeyByName(subject);
+            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
+            {
+                try
+                {
+                    this.universe.ActiveLocation.OnPush(new PushItemEventArgs() {ExternalItemKey = itemKey});
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return PrintingSubsystem.Resource(e.Message);
+                }
+            }
 
             return PrintingSubsystem.ItemNotVisible();
         }
