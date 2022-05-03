@@ -142,7 +142,7 @@
     <value>History|Hist|Verlauf</value>
   </data>
   <data name="INV" xml:space="preserve">
-    <value>Inventar|inv</value>
+    <value>Inventar|inv|i</value>
   </data>
   <data name="JUMP" xml:space="preserve">
     <value>Spring|Springe</value>
