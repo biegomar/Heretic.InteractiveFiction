@@ -142,6 +142,42 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ihn.
+        /// </summary>
+        internal static string ACCUSATIVE_PRONOUN_HE {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_HE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es.
+        /// </summary>
+        internal static string ACCUSATIVE_PRONOUN_IT {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_IT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sie.
+        /// </summary>
+        internal static string ACCUSATIVE_PRONOUN_SHE {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_SHE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dich.
+        /// </summary>
+        internal static string ACCUSATIVE_PRONOUN_YOU {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_YOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Die.
         /// </summary>
         internal static string ARTICLE_FEMALE_SINGULAR {
@@ -223,6 +259,42 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ihm.
+        /// </summary>
+        internal static string DATIVE_PRONOUN_HE {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_HE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ihm.
+        /// </summary>
+        internal static string DATIVE_PRONOUN_IT {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_IT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ihr.
+        /// </summary>
+        internal static string DATIVE_PRONOUN_SHE {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_SHE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dir.
+        /// </summary>
+        internal static string DATIVE_PRONOUN_YOU {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_YOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eine.
         /// </summary>
         internal static string NOMINATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR {
@@ -246,6 +318,42 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR {
             get {
                 return ResourceManager.GetString("NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Er.
+        /// </summary>
+        internal static string NOMINATIVE_PRONOUN_HE {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_HE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es.
+        /// </summary>
+        internal static string NOMINATIVE_PRONOUN_IT {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_IT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sie.
+        /// </summary>
+        internal static string NOMINATIVE_PRONOUN_SHE {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_SHE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du.
+        /// </summary>
+        internal static string NOMINATIVE_PRONOUN_YOU {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_YOU", resourceCulture);
             }
         }
     }

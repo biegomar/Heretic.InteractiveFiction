@@ -6,10 +6,12 @@ namespace Heretic.InteractiveFiction.GamePlay;
 internal sealed class InputAnalyzer
 {
     private readonly Universe universe;
+    private readonly ObjectHandler objectHandler;
 
     internal InputAnalyzer(Universe universe)
     {
         this.universe = universe;
+        this.objectHandler = new ObjectHandler(universe);
     }
 
     internal string[] Analyze(string input)
@@ -146,7 +148,8 @@ internal sealed class InputAnalyzer
     {
         foreach (var word in sentence)
         {
-            if (this.universe.CharacterResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            var key = this.objectHandler.GetCharacterKeyByName(word);
+            if (!string.IsNullOrEmpty(key))
             {
                 return word;
             }

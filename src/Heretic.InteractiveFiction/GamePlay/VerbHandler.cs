@@ -19,7 +19,7 @@ internal sealed class VerbHandler
     {
         this.PrintingSubsystem = printingSubsystem;
         this.universe = universe;
-        this.objectHandler = new ObjectHandler(this.universe);
+        this.objectHandler = new ObjectHandler(universe);
         this.isHintActive = false;
     }
 
@@ -77,6 +77,19 @@ internal sealed class VerbHandler
             }
 
             return PrintingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
+    internal bool Look(string verb, string processingSubject, string processingObject)
+    {
+        if (this.universe.VerbResources[VerbKeys.LOOK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.Look(verb, processingObject);
+            }
         }
 
         return false;
@@ -489,6 +502,19 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Buy(string verb, string processingSubject, string processingObject)
+    {
+        if (this.universe.VerbResources[VerbKeys.BUY].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.Buy(verb, processingObject);
+            }
+        }
+
+        return false;
+    }
 
     internal bool Turn(string verb, string subject)
     {
@@ -880,6 +906,7 @@ internal sealed class VerbHandler
         return false;
     }
     
+    
     internal bool StandUp(string input)
     {
         if (this.universe.VerbResources[VerbKeys.STANDUP].Contains(input, StringComparer.InvariantCultureIgnoreCase))
@@ -1261,6 +1288,19 @@ internal sealed class VerbHandler
         }
 
         return result;
+    }
+    
+    internal bool Take(string verb, string processingSubject, IEnumerable<string> processingObjects)
+    {
+        if (this.universe.VerbResources[VerbKeys.TAKE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        {
+            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.Take(verb, processingObjects);
+            }
+        }
+
+        return false;
     }
 
     internal bool Take(string verb)

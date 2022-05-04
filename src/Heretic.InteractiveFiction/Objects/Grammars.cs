@@ -6,46 +6,51 @@ public sealed class Grammars
 {
     public Genders Gender { get; set; }
     public bool IsSingular { get; set; }
+    public bool IsPlayer { get; set; }
     public string Article { get; set; }
     public string IndefiniteArticle { get; set; }
-
-    public Grammars()
+    
+    public Grammars(Genders gender = Genders.Female, bool isSingular = true, bool isPlayer = false)
     {
-        this.GenderFemale();
-    }
+        Initialize(gender, isSingular, isPlayer);
 
-    public Grammars(Genders gender, bool isSingular = true)
-    {
         switch (gender)
         {
             case Genders.Female:
             {
-                GenderFemale(isSingular);
+                GenderFemale();
                 break;
             }
             case Genders.Male:
             {
-                GenderMale(isSingular);
+                GenderMale();
                 break;
             }
             case Genders.Neutrum:
             {
-                GenderNeutrum(isSingular);
+                GenderNeutrum();
                 break;
             }
             case Genders.Unknown:
             {
-                GenderNeutrum(isSingular);
+                GenderNeutrum();
                 break;
             }
             default:
             {
-                GenderNeutrum(isSingular);
+                GenderNeutrum();
                 break;
             }
         }
     }
-    
+
+    private void Initialize(Genders gender, bool isSingular, bool isPlayer)
+    {
+        this.IsSingular = isSingular;
+        this.IsPlayer = isPlayer;
+        this.Gender = gender;
+    }
+
     public string GetArticle()
     {
         var result = this.Gender switch
@@ -74,6 +79,63 @@ public sealed class Grammars
             };
         
             return result;
+        }
+        
+        return string.Empty;
+    }
+    
+    public string GetNominativePronoun()
+    {
+        if (IsSingular)
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => Grammar.NOMINATIVE_PRONOUN_SHE,
+                Genders.Male => Grammar.NOMINATIVE_PRONOUN_HE,
+                Genders.Neutrum => Grammar.NOMINATIVE_PRONOUN_IT,
+                Genders.Unknown => Grammar.NOMINATIVE_PRONOUN_SHE,
+                _ => Grammar.NOMINATIVE_PRONOUN_SHE
+            };
+
+            return IsPlayer ? Grammar.NOMINATIVE_PRONOUN_YOU : result;
+        }
+        
+        return string.Empty;
+    }
+    
+    public string GetDativePronoun()
+    {
+        if (IsSingular)
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => Grammar.DATIVE_PRONOUN_SHE,
+                Genders.Male => Grammar.DATIVE_PRONOUN_HE,
+                Genders.Neutrum => Grammar.DATIVE_PRONOUN_IT,
+                Genders.Unknown => Grammar.DATIVE_PRONOUN_SHE,
+                _ => Grammar.DATIVE_PRONOUN_SHE
+            };
+
+            return IsPlayer ? Grammar.DATIVE_PRONOUN_YOU : result;
+        }
+        
+        return string.Empty;
+    }
+    
+    public string GetAccusativePronoun()
+    {
+        if (IsSingular)
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => Grammar.ACCUSATIVE_PRONOUN_SHE,
+                Genders.Male => Grammar.ACCUSATIVE_PRONOUN_HE,
+                Genders.Neutrum => Grammar.ACCUSATIVE_PRONOUN_IT,
+                Genders.Unknown => Grammar.ACCUSATIVE_PRONOUN_SHE,
+                _ => Grammar.ACCUSATIVE_PRONOUN_SHE
+            };
+
+            return IsPlayer ? Grammar.ACCUSATIVE_PRONOUN_YOU : result;
         }
         
         return string.Empty;
@@ -161,26 +223,20 @@ public sealed class Grammars
         }
     }
 
-    private void GenderFemale(bool isSingular = true)
+    private void GenderFemale()
     {
-        this.Gender = Genders.Female;
-        this.IsSingular = isSingular;
         this.Article = Grammar.ARTICLE_FEMALE_SINGULAR;
         this.IndefiniteArticle = Grammar.ACCUSATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR;
     }
     
-    private void GenderMale(bool isSingular = true)
+    private void GenderMale()
     {
-        this.Gender = Genders.Male;
-        this.IsSingular = isSingular;
         this.Article = Grammar.ARTICLE_MALE_SINGULAR;
         this.IndefiniteArticle = Grammar.ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR;
     }
     
-    private void GenderNeutrum(bool isSingular = true)
+    private void GenderNeutrum()
     {
-        this.Gender = Genders.Neutrum;
-        this.IsSingular = isSingular;
         this.Article = Grammar.ARTICLE_NEUTRUM_SINGULAR;
         this.IndefiniteArticle = Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR;
     }

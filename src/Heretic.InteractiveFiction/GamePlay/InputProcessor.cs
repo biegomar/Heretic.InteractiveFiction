@@ -151,8 +151,12 @@ public sealed class InputProcessor
         var processingVerb = verb.ToLower();
         var processingSubject = subject.ToLower();
         var processingObject = objectName.ToLower();
+        
+        var commaSeparatedList = processingObject.Split(",");
 
         var result = verbHandler.Ask(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Look(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Take(processingVerb, processingSubject, commaSeparatedList);
         result = result || verbHandler.Say(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Give(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject, processingObject);
@@ -163,6 +167,7 @@ public sealed class InputProcessor
         result = result || verbHandler.SitDown(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Climb(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Drop(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Buy(processingVerb, processingSubject, processingObject);
 
         if (!result)
         {

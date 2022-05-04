@@ -13,7 +13,20 @@ internal sealed class ObjectHandler
     
     internal string GetCharacterKeyByName(string itemName)
     {
-        return this.GetKeyByName(itemName, this.universe.CharacterResources);
+        var key = this.GetKeyByName(itemName, this.universe.CharacterResources);
+
+        if (string.IsNullOrEmpty(key))
+        {
+            var upperItemName = itemName.ToUpperInvariant();
+            if (upperItemName == this.universe.ActivePlayer.Grammar.GetAccusativePronoun().ToUpperInvariant() 
+                || upperItemName == this.universe.ActivePlayer.Grammar.GetDativePronoun().ToUpperInvariant()  
+                || upperItemName == this.universe.ActivePlayer.Grammar.GetAccusativePronoun().ToUpperInvariant())
+            {
+                key = this.universe.ActivePlayer.Key;
+            }
+        }
+
+        return key;
     }
     
     internal string GetLocationKeyByName(string locationName)

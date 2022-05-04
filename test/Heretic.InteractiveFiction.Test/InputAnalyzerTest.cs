@@ -11,6 +11,7 @@ namespace Heretic.Test;
 public class InputAnalyzerTest
 {
     private IPrintingSubsystem printingSubsystem => Mock.Of<IPrintingSubsystem>();
+    private Player player => Fixture.GetPlayer();
     private IGamePrerequisitesAssembler gamePrerequisitesAssembler => Mock.Of<IGamePrerequisitesAssembler>();
 
     [Theory]
@@ -33,9 +34,25 @@ public class InputAnalyzerTest
     [InlineData("schaue auf den Mann", new[] { "schaue", "Mann" })]
     [InlineData("Mann schaue auf den ", new[] { "schaue", "Mann" })]
     [InlineData("Rede mit dem Tankwart ", new[] { "Rede", "Tankwart" })]
+    [InlineData("schaue dich an", new[] { "schaue", "dich" })]
     public void TwoWordsTest(string input, string[] expected)
     {
         var universe = new Universe(printingSubsystem, new ResourceProviderMock());
+        universe.ActivePlayer = player;
+        var sut = new InputAnalyzer(universe);
+
+        var actual = sut.Analyze(input);
+
+        Assert.Equal(expected[0], actual[0]);
+        Assert.Equal(expected[1], actual[1]);
+    }
+    
+    [Theory]
+    [InlineData("schaue dir den Mann an", new[] { "schaue", "dir", "Mann" })]
+    public void ThreeWordsTest(string input, string[] expected)
+    {
+        var universe = new Universe(printingSubsystem, new ResourceProviderMock());
+        universe.ActivePlayer = player;
         var sut = new InputAnalyzer(universe);
 
         var actual = sut.Analyze(input);

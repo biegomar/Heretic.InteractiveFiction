@@ -81,4 +81,40 @@
     <data name="ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL" xml:space="preserve">
         <value>Die</value>
     </data>
+    <data name="NOMINATIVE_PRONOUN_YOU" xml:space="preserve">
+        <value>Du</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_HE" xml:space="preserve">
+        <value>Er</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_SHE" xml:space="preserve">
+        <value>Sie</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_IT" xml:space="preserve">
+        <value>Es</value>
+    </data>
+    <data name="DATIVE_PRONOUN_YOU" xml:space="preserve">
+        <value>Dir</value>
+    </data>
+    <data name="DATIVE_PRONOUN_HE" xml:space="preserve">
+        <value>Ihm</value>
+    </data>
+    <data name="DATIVE_PRONOUN_SHE" xml:space="preserve">
+        <value>Ihr</value>
+    </data>
+    <data name="DATIVE_PRONOUN_IT" xml:space="preserve">
+        <value>Ihm</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_YOU" xml:space="preserve">
+        <value>Dich</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_HE" xml:space="preserve">
+        <value>Ihn</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_SHE" xml:space="preserve">
+        <value>Sie</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_IT" xml:space="preserve">
+        <value>Es</value>
+    </data>
 </root>
