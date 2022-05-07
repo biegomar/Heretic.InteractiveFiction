@@ -53,7 +53,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.LOOK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var item = this.objectHandler.GetUnhiddenObjectByName(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndStoreAsActiveObject(subject);
             if (item != default)
             {
                 this.universe.UnveilFirstLevelObjects(item);

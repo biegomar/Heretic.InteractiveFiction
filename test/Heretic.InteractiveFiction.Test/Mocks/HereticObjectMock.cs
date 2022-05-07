@@ -1,6 +1,6 @@
 using Heretic.InteractiveFiction.Objects;
 
-namespace Heretic.Test.Mocks;
+namespace Heretic.InteractiveFiction.Test.Mocks;
 
 public class HereticObjectMock: AHereticObject
 {

@@ -1,12 +1,11 @@
 using Heretic.InteractiveFiction.GamePlay;
-using Heretic.InteractiveFiction.GamePlay.EventSystem;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Subsystems;
-using Heretic.Test.Mocks;
-using Xunit;
+using Heretic.InteractiveFiction.Test.Mocks;
 using Moq;
+using Xunit;
 
-namespace Heretic.Test;
+namespace Heretic.InteractiveFiction.Test;
 
 public class InputAnalyzerTest
 {
@@ -35,6 +34,8 @@ public class InputAnalyzerTest
     [InlineData("Mann schaue auf den ", new[] { "schaue", "Mann" })]
     [InlineData("Rede mit dem Tankwart ", new[] { "Rede", "Tankwart" })]
     [InlineData("schaue dich an", new[] { "schaue", "dich" })]
+    [InlineData("lege die kerze hin", new[] { "lege", "kerze" })]
+    [InlineData("lege sie hin", new[] { "lege", "sie" })]
     public void TwoWordsTest(string input, string[] expected)
     {
         var universe = new Universe(printingSubsystem, new ResourceProviderMock());
@@ -49,6 +50,16 @@ public class InputAnalyzerTest
     
     [Theory]
     [InlineData("schaue dir den Mann an", new[] { "schaue", "dir", "Mann" })]
+    [InlineData("schaue dir die kerze an", new[] { "schaue", "dir", "kerze" })]
+    [InlineData("schaue sie dir an", new[] { "schaue", "dir", "sie" })]
+    [InlineData("schaue dir sie an", new[] { "schaue", "dir", "sie" })]
+    [InlineData("schaue ihn dir an", new[] { "schaue", "dir", "ihn" })]
+    [InlineData("schaue dir ihn an", new[] { "schaue", "dir", "ihn" })]
+    [InlineData("schaue es dir an", new[] { "schaue", "dir", "es" })]
+    [InlineData("schaue dir es an", new[] { "schaue", "dir", "es" })]
+    [InlineData("nimm dir die Kerze", new[] { "nimm", "dir", "Kerze" })]
+    [InlineData("nimm sie dir", new[] { "nimm", "dir", "sie" })]
+    [InlineData("nimm dir sie", new[] { "nimm", "dir", "sie" })]
     public void ThreeWordsTest(string input, string[] expected)
     {
         var universe = new Universe(printingSubsystem, new ResourceProviderMock());
@@ -59,5 +70,6 @@ public class InputAnalyzerTest
 
         Assert.Equal(expected[0], actual[0]);
         Assert.Equal(expected[1], actual[1]);
+        Assert.Equal(expected[2], actual[2]);
     }
 }

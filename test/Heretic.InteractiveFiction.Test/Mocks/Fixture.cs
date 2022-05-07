@@ -1,6 +1,6 @@
 using Heretic.InteractiveFiction.Objects;
 
-namespace Heretic.Test;
+namespace Heretic.InteractiveFiction.Test.Mocks;
 
 internal static class Fixture
 {

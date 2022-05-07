@@ -124,7 +124,7 @@
     <value>Schließe|Schließ|Schliesse|Schliess</value>
   </data>
   <data name="DOWN" xml:space="preserve">
-    <value>Runter|Hinunter|Herab</value>
+    <value>Runter|Hinunter|Herab|R</value>
   </data>
   <data name="DROP" xml:space="preserve">
     <value>Leg|Lege|verliere|Drop</value>
@@ -199,7 +199,7 @@
     <value>Entriegel|Entriegeln|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock</value>
   </data>
   <data name="UP" xml:space="preserve">
-    <value>Hoch|Rauf|Hinauf</value>
+    <value>Hoch|Rauf|Hinauf|H</value>
   </data>
   <data name="USE" xml:space="preserve">
     <value>Benutze|Nutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>

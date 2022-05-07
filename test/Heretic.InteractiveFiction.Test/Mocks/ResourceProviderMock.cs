@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Heretic.InteractiveFiction.GamePlay;
 
-namespace Heretic.Test.Mocks;
+namespace Heretic.InteractiveFiction.Test.Mocks;
 
 public class ResourceProviderMock: IResourceProvider
 {

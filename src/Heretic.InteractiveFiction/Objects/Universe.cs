@@ -36,6 +36,7 @@ public sealed class Universe
     public LocationMap LocationMap { get; set; }
     public Location ActiveLocation { get; set; }
     public Player ActivePlayer { get; set; }
+    public AHereticObject ActiveObject { get; set; }
     public bool IsPeriodicEventActivated { get => this.periodicEvent.Active; set => this.periodicEvent.Active = value; }
     public ICollection<string> Quests { get; set; }
     public readonly IDictionary<string, int> ScoreBoard = new Dictionary<string, int>();
@@ -58,6 +59,7 @@ public sealed class Universe
         this.PackingWordsResources = resourceProvider.GetPackingWordsFromResources();
         this.ConversationAnswersResources = resourceProvider.GetConversationsAnswersFromResources();
         this.LocationMap = new LocationMap(new LocationComparer());
+        this.ActiveObject = null;
     }
 
     public void SetPeriodicEvent(PeriodicEvent periodicEvent)

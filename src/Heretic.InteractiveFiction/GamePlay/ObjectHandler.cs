@@ -73,6 +73,17 @@ internal sealed class ObjectHandler
 
         return containerObject;
     }
+
+    internal AHereticObject GetUnhiddenObjectByNameAndStoreAsActiveObject(string objectName)
+    {
+        var result = this.GetUnhiddenObjectByName(objectName);
+        if (result != default)
+        {
+            this.universe.ActiveObject = result;
+        }
+
+        return result;
+    }
     
     internal Character GetUnhiddenCharacterByName(string itemName)
     {
@@ -163,6 +174,31 @@ internal sealed class ObjectHandler
     }
     
     private string GetPrioritizedItemKeys(string itemName)
+    {
+        var result = this.GetFirstPriorityItemKey(itemName);
+        if (string.IsNullOrEmpty(result))
+        {
+            return this.GetSecondPriorityItemKeys(itemName);
+        }
+
+        return result;
+    }
+
+    private string GetFirstPriorityItemKey(string itemName)
+    {
+        var upperItemName = itemName.ToUpperInvariant();
+        var universeActiveObject = this.universe.ActiveObject;
+        if (universeActiveObject != null && (upperItemName == universeActiveObject.Grammar.GetAccusativePronoun().ToUpperInvariant() 
+                                             || upperItemName == universeActiveObject.Grammar.GetDativePronoun().ToUpperInvariant()  
+                                             || upperItemName == universeActiveObject.Grammar.GetAccusativePronoun().ToUpperInvariant()))
+        {
+            return this.universe.ActiveObject.Key;
+        }
+
+        return string.Empty;
+    }
+
+    private string GetSecondPriorityItemKeys(string itemName)
     {
         var allActiveLocationItemKeys = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items)
             .Union(this.GetSurroundingKeys(this.universe.ActiveLocation.Surroundings));

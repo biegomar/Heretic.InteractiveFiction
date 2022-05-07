@@ -1,8 +1,7 @@
-using Heretic.Test.Mocks;
+using Heretic.InteractiveFiction.Test.Mocks;
 using Xunit;
-using Moq;
 
-namespace Heretic.Test;
+namespace Heretic.InteractiveFiction.Test;
 
 public class AHereticObjectTest
 {
