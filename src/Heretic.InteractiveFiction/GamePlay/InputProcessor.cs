@@ -37,11 +37,6 @@ public sealed class InputProcessor
         }
 
         var sentence = this.inputAnalyzer.Analyze(input);
-        
-        if (this.historyAdministrator.IsLastHistoryEntryTheSame(sentence))
-        {
-            PrintingSubsystem.SameActionAgain();
-        }
 
         this.historyAdministrator.Add(input);
 
