@@ -11,13 +11,13 @@ namespace Heretic.InteractiveFiction.GamePlay;
 internal sealed class VerbHandler
 {
     private readonly Universe universe;
-    private readonly IPrintingSubsystem PrintingSubsystem;
+    private readonly IPrintingSubsystem printingSubsystem;
     private readonly ObjectHandler objectHandler;
     private bool isHintActive;
 
     internal VerbHandler(Universe universe, IPrintingSubsystem printingSubsystem)
     {
-        this.PrintingSubsystem = printingSubsystem;
+        this.printingSubsystem = printingSubsystem;
         this.universe = universe;
         this.objectHandler = new ObjectHandler(universe);
         this.isHintActive = false;
@@ -32,7 +32,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.CREDITS].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            return PrintingSubsystem.Credits();
+            return printingSubsystem.Credits();
         }
 
         return false;
@@ -43,7 +43,7 @@ internal sealed class VerbHandler
         if (this.universe.VerbResources[VerbKeys.LOOK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
             this.universe.UnveilFirstLevelObjects(this.universe.ActiveLocation);
-            return PrintingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+            return printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
         }
 
         return false;
@@ -58,7 +58,7 @@ internal sealed class VerbHandler
             {
                 this.objectHandler.StoreAsActiveObject(item);
                 this.universe.UnveilFirstLevelObjects(item);
-                var result = PrintingSubsystem.PrintObject(item);
+                var result = printingSubsystem.PrintObject(item);
 
                 item.OnAfterLook(new ContainerObjectEventArgs());
 
@@ -69,7 +69,7 @@ internal sealed class VerbHandler
             var itemKey = this.objectHandler.GetItemKeyByName(subject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
-                var result = PrintingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]());
+                var result = printingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]());
                 
                 // surroundings only exist within the active location.
                 this.universe.ActiveLocation.OnAfterLook(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
@@ -77,7 +77,7 @@ internal sealed class VerbHandler
                 return result;
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -109,8 +109,8 @@ internal sealed class VerbHandler
                     item.OnBeforeRead(new ContainerObjectEventArgs());
 
                     var result = string.IsNullOrWhiteSpace(item.LetterContentDescription) ? 
-                        PrintingSubsystem.Resource(BaseDescriptions.NO_LETTER_CONTENT) : 
-                        PrintingSubsystem.FormattedResource(BaseDescriptions.LETTER_CONTENT, item.LetterContentDescription);
+                        printingSubsystem.Resource(BaseDescriptions.NO_LETTER_CONTENT) : 
+                        printingSubsystem.FormattedResource(BaseDescriptions.LETTER_CONTENT, item.LetterContentDescription);
                     
                     item.OnAfterRead(new ContainerObjectEventArgs());
 
@@ -118,11 +118,11 @@ internal sealed class VerbHandler
                 }
                 catch (ReadException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -135,13 +135,13 @@ internal sealed class VerbHandler
             if (subject == BaseDescriptions.ON.ToLower())
             {
                 isHintActive = true;
-                return PrintingSubsystem.Resource(BaseDescriptions.HINT_ON);
+                return printingSubsystem.Resource(BaseDescriptions.HINT_ON);
             }
             
             if (subject == BaseDescriptions.OFF.ToLower())
             {
                 isHintActive = false;
-                return PrintingSubsystem.Resource(BaseDescriptions.HINT_OFF);
+                return printingSubsystem.Resource(BaseDescriptions.HINT_OFF);
             }
         }
 
@@ -174,11 +174,11 @@ internal sealed class VerbHandler
                 }
                 catch (PullException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -192,7 +192,7 @@ internal sealed class VerbHandler
 
             if (subject == default)
             {
-                return PrintingSubsystem.CanNotUseObject(subjectName);
+                return printingSubsystem.CanNotUseObject(subjectName);
             }
             
             this.objectHandler.StoreAsActiveObject(subject);
@@ -201,7 +201,7 @@ internal sealed class VerbHandler
 
             if (item == default)
             {
-                return PrintingSubsystem.CanNotUseObject(objectName);
+                return printingSubsystem.CanNotUseObject(objectName);
             }
 
             try
@@ -212,7 +212,7 @@ internal sealed class VerbHandler
             }
             catch (PullException ex)
             {
-                return PrintingSubsystem.Resource(ex.Message);
+                return printingSubsystem.Resource(ex.Message);
             }
         }
 
@@ -235,7 +235,7 @@ internal sealed class VerbHandler
                 }
                 catch (PushException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
             
@@ -250,11 +250,11 @@ internal sealed class VerbHandler
                 }
                 catch (Exception e)
                 {
-                    return PrintingSubsystem.Resource(e.Message);
+                    return printingSubsystem.Resource(e.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -268,7 +268,7 @@ internal sealed class VerbHandler
 
             if (subject == default)
             {
-                return PrintingSubsystem.CanNotUseObject(subjectName);
+                return printingSubsystem.CanNotUseObject(subjectName);
             }
             
             this.objectHandler.StoreAsActiveObject(subject);
@@ -277,7 +277,7 @@ internal sealed class VerbHandler
 
             if (item == default)
             {
-                return PrintingSubsystem.CanNotUseObject(objectName);
+                return printingSubsystem.CanNotUseObject(objectName);
             }
 
             try
@@ -288,7 +288,7 @@ internal sealed class VerbHandler
             }
             catch (PushException ex)
             {
-                return PrintingSubsystem.Resource(ex.Message);
+                return printingSubsystem.Resource(ex.Message);
             }
         }
 
@@ -303,7 +303,7 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByName(subject);
             if (item != default)
             {
-                var result = PrintingSubsystem.AlterEgo(item);
+                var result = printingSubsystem.AlterEgo(item);
                 return result;
             }
 
@@ -311,10 +311,10 @@ internal sealed class VerbHandler
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
                 var joint = string.Join('|', this.universe.ItemResources[itemKey]);
-                return PrintingSubsystem.AlterEgo(joint);
+                return printingSubsystem.AlterEgo(joint);
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
 
         }
 
@@ -332,7 +332,7 @@ internal sealed class VerbHandler
             }
             catch (WriteException ex)
             {
-                return PrintingSubsystem.Resource(ex.Message);
+                return printingSubsystem.Resource(ex.Message);
             }
         }
 
@@ -343,7 +343,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.HELP].Contains(input, StringComparer.InvariantCultureIgnoreCase))
         {
-            return PrintingSubsystem.Help(this.universe.VerbResources);
+            return printingSubsystem.Help(this.universe.VerbResources);
         }
 
         return false;
@@ -353,7 +353,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.HISTORY].Contains(input, StringComparer.InvariantCultureIgnoreCase))
         {
-            return PrintingSubsystem.History(historyCollection);
+            return printingSubsystem.History(historyCollection);
         }
 
         return false;
@@ -376,14 +376,14 @@ internal sealed class VerbHandler
                     outputFile.Write(history.ToString());
                 }
 
-                return PrintingSubsystem.FormattedResource(BaseDescriptions.GAME_SAVED, combine);
+                return printingSubsystem.FormattedResource(BaseDescriptions.GAME_SAVED, combine);
             }
 
             return false;
         }
         catch (Exception e)
         {
-            PrintingSubsystem.Resource(e.Message);
+            printingSubsystem.Resource(e.Message);
             return false;
         }
     }
@@ -392,7 +392,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.SCORE].Contains(input, StringComparer.InvariantCultureIgnoreCase))
         {
-            return PrintingSubsystem.Score(universe.Score, universe.MaxScore);
+            return printingSubsystem.Score(universe.Score, universe.MaxScore);
         }
 
         return false;
@@ -405,10 +405,10 @@ internal sealed class VerbHandler
             if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation) 
                 && this.universe.LocationMap[this.universe.ActiveLocation].Any(l => !l.IsHidden))
             {
-                return PrintingSubsystem.DestinationNode(this.universe.ActiveLocation, this.universe.LocationMap);
+                return printingSubsystem.DestinationNode(this.universe.ActiveLocation, this.universe.LocationMap);
             }
 
-            return PrintingSubsystem.Resource(BaseDescriptions.NO_WAYS);
+            return printingSubsystem.Resource(BaseDescriptions.NO_WAYS);
         }
 
         return false;
@@ -432,11 +432,11 @@ internal sealed class VerbHandler
                 }
                 catch (UseException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotOwned();
+            return printingSubsystem.ItemNotOwned();
         }
 
         return false;
@@ -450,7 +450,7 @@ internal sealed class VerbHandler
 
             if (subject == default)
             {
-                return PrintingSubsystem.CanNotUseObject(subjectName);
+                return printingSubsystem.CanNotUseObject(subjectName);
             }
 
             this.objectHandler.StoreAsActiveObject(subject);
@@ -459,7 +459,7 @@ internal sealed class VerbHandler
 
             if (item == default)
             {
-                return PrintingSubsystem.CanNotUseObject(objectName);
+                return printingSubsystem.CanNotUseObject(objectName);
             }
 
             try
@@ -470,7 +470,7 @@ internal sealed class VerbHandler
             }
             catch (UseException ex)
             {
-                return PrintingSubsystem.Resource(ex.Message);
+                return printingSubsystem.Resource(ex.Message);
             }
         }
 
@@ -483,14 +483,14 @@ internal sealed class VerbHandler
         {
             if (!this.universe.ActivePlayer.HasPaymentMethod)
             {
-                return PrintingSubsystem.PayWithWhat();
+                return printingSubsystem.PayWithWhat();
             }
 
             var key = this.objectHandler.GetItemKeyByName(subject);
             var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
             if (item != default)
             {
-                return PrintingSubsystem.ItemAlreadyOwned();
+                return printingSubsystem.ItemAlreadyOwned();
             }
 
             item = this.universe.ActiveLocation.GetItemByKey(key);
@@ -505,11 +505,11 @@ internal sealed class VerbHandler
                 }
                 catch (Exception ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -545,11 +545,11 @@ internal sealed class VerbHandler
                 }
                 catch (Exception ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -572,11 +572,11 @@ internal sealed class VerbHandler
                 }
                 catch (JumpException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -588,7 +588,7 @@ internal sealed class VerbHandler
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
             }
             
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
@@ -598,7 +598,7 @@ internal sealed class VerbHandler
             {
                 this.universe.ActivePlayer.HasClimbed = true;
                 this.universe.ActivePlayer.ClimbedObject = item;
-                return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.AccusativeArticleName, true);
+                return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.AccusativeArticleName, true);
             }
 
             // lets have a look at surroundings.
@@ -614,12 +614,12 @@ internal sealed class VerbHandler
                     }
                     catch (Exception e)
                     {
-                        return PrintingSubsystem.Resource(e.Message);
+                        return printingSubsystem.Resource(e.Message);
                     }
                 }
             }
             
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -635,7 +635,7 @@ internal sealed class VerbHandler
                 return this.Climb(verb, processingObject);
             }
             
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -654,14 +654,14 @@ internal sealed class VerbHandler
                 {
                     if (item.IsClosed)
                     {
-                        return PrintingSubsystem.ItemAlreadyClosed(item);
+                        return printingSubsystem.ItemAlreadyClosed(item);
                     }
 
                     item.OnBeforeClose(new ContainerObjectEventArgs());
 
                     item.IsClosed = true;
                     this.objectHandler.HideItemsOnClose(item);
-                    var result = PrintingSubsystem.ItemClosed(item);
+                    var result = printingSubsystem.ItemClosed(item);
 
                     item.OnAfterClose(new ContainerObjectEventArgs());
 
@@ -682,11 +682,11 @@ internal sealed class VerbHandler
                 }
                 catch (Exception e)
                 {
-                    return PrintingSubsystem.Resource(e.Message);
+                    return printingSubsystem.Resource(e.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -705,12 +705,12 @@ internal sealed class VerbHandler
                 {
                     if (item.IsLocked)
                     {
-                        return PrintingSubsystem.ItemStillLocked(item);
+                        return printingSubsystem.ItemStillLocked(item);
                     }
 
                     if (!item.IsClosed)
                     {
-                        return PrintingSubsystem.ItemAlreadyOpen(item);
+                        return printingSubsystem.ItemAlreadyOpen(item);
                     }
 
                     try
@@ -719,7 +719,7 @@ internal sealed class VerbHandler
                     
                         item.IsClosed = false;
                         this.universe.UnveilFirstLevelObjects(item);
-                        var result = PrintingSubsystem.ItemOpen(item);
+                        var result = printingSubsystem.ItemOpen(item);
 
                         item.OnAfterOpen(new ContainerObjectEventArgs());
 
@@ -727,11 +727,11 @@ internal sealed class VerbHandler
                     }
                     catch (OpenException e)
                     {
-                        return PrintingSubsystem.Resource(e.Message);
+                        return printingSubsystem.Resource(e.Message);
                     }
                 }
 
-                return PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_OPEN);
+                return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_OPEN);
             }
             
             // lets have a look at surroundings.
@@ -746,11 +746,11 @@ internal sealed class VerbHandler
                 }
                 catch (OpenException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -764,10 +764,10 @@ internal sealed class VerbHandler
 
             if (character == default)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
+                return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
 
-            var result = PrintingSubsystem.Talk(character);
+            var result = printingSubsystem.Talk(character);
 
             character.OnAfterTalk(new ContainerObjectEventArgs());
 
@@ -799,17 +799,17 @@ internal sealed class VerbHandler
                 {
                     item.OnBeforeEat(new ContainerObjectEventArgs());
 
-                    var result = PrintingSubsystem.ItemEaten(item);
+                    var result = printingSubsystem.ItemEaten(item);
 
                     item.OnAfterEat(new ContainerObjectEventArgs());
 
                     return result;
                 }
                 
-                return PrintingSubsystem.ItemNotEatable(item);
+                return printingSubsystem.ItemNotEatable(item);
             }
 
-            return PrintingSubsystem.ItemNotOwned();
+            return printingSubsystem.ItemNotOwned();
         }
 
         return false;
@@ -831,7 +831,7 @@ internal sealed class VerbHandler
                 }
                 catch (Exception e)
                 {
-                    return PrintingSubsystem.Resource(e.Message);
+                    return printingSubsystem.Resource(e.Message);
                 }
             }
             
@@ -843,14 +843,14 @@ internal sealed class VerbHandler
                 this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
                 onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                 this.universe.ActivePlayer.SitDownOnSeat(onlySeat);
-                var result = PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.DativeArticleName, true);
+                var result = printingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.DativeArticleName, true);
                 onlySeat.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                 this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
 
                 return result;
             }
 
-            return PrintingSubsystem.Resource(BaseDescriptions.MORE_SEATS);
+            return printingSubsystem.Resource(BaseDescriptions.MORE_SEATS);
         }
         
         return false;
@@ -881,13 +881,13 @@ internal sealed class VerbHandler
                     this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = item});
                     item.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                     this.universe.ActivePlayer.SitDownOnSeat(item);
-                    var result = PrintingSubsystem.ItemSeated(item);
+                    var result = printingSubsystem.ItemSeated(item);
                     item.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                     this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = item});
                     
                     return result;
                 }    
-                return PrintingSubsystem.ItemNotSeatable(item);
+                return printingSubsystem.ItemNotSeatable(item);
             }
             
             // lets have a look at surroundings.
@@ -900,11 +900,11 @@ internal sealed class VerbHandler
                 }
                 catch (Exception e)
                 {
-                    return PrintingSubsystem.Resource(e.Message);
+                    return printingSubsystem.Resource(e.Message);
                 }
             }
 
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
         return false;
     }
@@ -919,7 +919,7 @@ internal sealed class VerbHandler
                 return this.SitDown(verb, processingObject);
             }
             
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -939,12 +939,12 @@ internal sealed class VerbHandler
                 this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
                 item.OnBeforeStandUp(eventArgs);
                 this.universe.ActivePlayer.StandUp();
-                var result = PrintingSubsystem.Resource(BaseDescriptions.STANDING_UP);
+                var result = printingSubsystem.Resource(BaseDescriptions.STANDING_UP);
                 item.OnAfterStandUp(eventArgs);
                 this.universe.ActivePlayer.OnAfterStandUp(eventArgs);
                 return result;
             }
-            return PrintingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
+            return printingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
         }
 
         return false;
@@ -962,12 +962,12 @@ internal sealed class VerbHandler
                 this.universe.ActivePlayer.OnBeforeDescend(eventArgs);
                 item.OnBeforeDescend(eventArgs);
                 this.universe.ActivePlayer.Descend();
-                var result = PrintingSubsystem.Resource(BaseDescriptions.DESCENDING);
+                var result = printingSubsystem.Resource(BaseDescriptions.DESCENDING);
                 item.OnAfterDescend(eventArgs);
                 this.universe.ActivePlayer.OnAfterDescend(eventArgs);
                 return result;
             }
-            return PrintingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
+            return printingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
         }
 
         return false;
@@ -982,7 +982,7 @@ internal sealed class VerbHandler
 
             if (character == default)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
+                return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
 
             //but I can speak about every unhidden or virtual item or character in the world
@@ -995,7 +995,7 @@ internal sealed class VerbHandler
                     item = this.objectHandler.GetVirtualItemByName(subjectName);
                     if (item == default)
                     {
-                        return PrintingSubsystem.NoAnswerToInvisibleObject(character);
+                        return printingSubsystem.NoAnswerToInvisibleObject(character);
                     }
                 }
             }
@@ -1006,7 +1006,7 @@ internal sealed class VerbHandler
             }
             catch (Exception ex)
             {
-                PrintingSubsystem.NoAnswerToQuestion(ex.Message);
+                printingSubsystem.NoAnswerToQuestion(ex.Message);
 
             }
 
@@ -1024,13 +1024,13 @@ internal sealed class VerbHandler
             var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
             if (character == default)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
+                return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
 
             var key = this.objectHandler.GetConversationAnswerKeyByName(phrase);
             if (string.IsNullOrEmpty(key))
             {
-                return PrintingSubsystem.NoAnswer(phrase);
+                return printingSubsystem.NoAnswer(phrase);
             }
 
             try
@@ -1039,7 +1039,7 @@ internal sealed class VerbHandler
             }
             catch (Exception ex)
             {
-                PrintingSubsystem.Resource(ex.Message);
+                printingSubsystem.Resource(ex.Message);
             }
 
             return true;
@@ -1056,7 +1056,7 @@ internal sealed class VerbHandler
             var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
             if (character == default)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
+                return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
 
             //...and I can give only items that i own.
@@ -1064,7 +1064,7 @@ internal sealed class VerbHandler
             var item = this.universe.ActivePlayer.GetItemByKey(key);
             if (item == default)
             {
-                return PrintingSubsystem.ItemNotOwned();
+                return printingSubsystem.ItemNotOwned();
             }
 
             this.objectHandler.StoreAsActiveObject(item);
@@ -1096,7 +1096,7 @@ internal sealed class VerbHandler
                 }
                 catch (BreakException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
             
@@ -1111,7 +1111,7 @@ internal sealed class VerbHandler
                 }
                 catch (BreakException ex)
                 {
-                    return PrintingSubsystem.Resource(ex.Message);
+                    return printingSubsystem.Resource(ex.Message);
                 }
             }
         }
@@ -1141,14 +1141,14 @@ internal sealed class VerbHandler
                             }
                             catch (BreakException ex)
                             {
-                                return PrintingSubsystem.Resource(ex.Message);
+                                return printingSubsystem.Resource(ex.Message);
                             }
                         }
-                        return PrintingSubsystem.ItemAlreadyBroken(item);
+                        return printingSubsystem.ItemAlreadyBroken(item);
                     }
-                    return PrintingSubsystem.ItemUnbreakable(item);
+                    return printingSubsystem.ItemUnbreakable(item);
                 }
-                return PrintingSubsystem.ToolNotVisible();
+                return printingSubsystem.ToolNotVisible();
             }
 
             // lets have a look at surroundings.
@@ -1165,13 +1165,13 @@ internal sealed class VerbHandler
                     }
                     catch (BreakException ex)
                     {
-                        return PrintingSubsystem.Resource(ex.Message);
+                        return printingSubsystem.Resource(ex.Message);
                     }
                 }
-                return PrintingSubsystem.ToolNotVisible();
+                return printingSubsystem.ToolNotVisible();
             }
             
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
         
         return false;
@@ -1185,14 +1185,14 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(unlockObject);
             if (item != default)
             {
-                return PrintingSubsystem.ImpossibleUnlock(item);
+                return printingSubsystem.ImpossibleUnlock(item);
             }
             
             // lets have a look at surroundings.
             var itemKey = this.objectHandler.GetItemKeyByName(unlockObject);
             if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_UNLOCK_SURROUNDINGS);
+                return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_UNLOCK_SURROUNDINGS);
             }
         }
 
@@ -1225,16 +1225,16 @@ internal sealed class VerbHandler
                                 }
                                 catch (UnlockException e)
                                 {
-                                    return PrintingSubsystem.Resource(e.Message);
+                                    return printingSubsystem.Resource(e.Message);
                                 }
                                 
                             }
                         }
-                        return PrintingSubsystem.ItemAlreadyUnlocked(item);
+                        return printingSubsystem.ItemAlreadyUnlocked(item);
                     }
-                    return PrintingSubsystem.ItemNotLockAble(item);
+                    return printingSubsystem.ItemNotLockAble(item);
                 }
-                return PrintingSubsystem.KeyNotVisible();
+                return printingSubsystem.KeyNotVisible();
             }
 
             // lets have a look at surroundings.
@@ -1247,10 +1247,10 @@ internal sealed class VerbHandler
                     this.universe.ActiveLocation.OnUnlock(new UnlockContainerEventArgs {Key = key, ExternalItemKey = itemKey});
                     return true;
                 }
-                return PrintingSubsystem.KeyNotVisible();
+                return printingSubsystem.KeyNotVisible();
             }
             
-            return PrintingSubsystem.ItemNotVisible();
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -1271,7 +1271,7 @@ internal sealed class VerbHandler
                     var character = this.universe.ActiveLocation.GetCharacterByKey(characterKey);
                     if (character != default)
                     {
-                        result = result && PrintingSubsystem.ImpossiblePickup(character);
+                        result = result && printingSubsystem.ImpossiblePickup(character);
                     }
                     else
                     {
@@ -1285,12 +1285,12 @@ internal sealed class VerbHandler
                             }
                             catch (Exception e)
                             {
-                                result = result && PrintingSubsystem.Resource(e.Message);
+                                result = result && printingSubsystem.Resource(e.Message);
                             }
                         }
                         else
                         {
-                            result = result && PrintingSubsystem.ItemNotVisible();    
+                            result = result && printingSubsystem.ItemNotVisible();    
                         }
                     }
                 }
@@ -1305,7 +1305,7 @@ internal sealed class VerbHandler
                     }
                     catch (TakeException ex)
                     {
-                        result = result && PrintingSubsystem.Resource(ex.Message);
+                        result = result && printingSubsystem.Resource(ex.Message);
                     }
                 }
             }
@@ -1345,7 +1345,7 @@ internal sealed class VerbHandler
                     }
                     catch (TakeException ex)
                     {
-                        result = result && PrintingSubsystem.Resource(ex.Message);
+                        result = result && printingSubsystem.Resource(ex.Message);
                     }
                 }
 
@@ -1353,7 +1353,7 @@ internal sealed class VerbHandler
             }
             else
             {
-                return PrintingSubsystem.NothingToTake();
+                return printingSubsystem.NothingToTake();
             }
         }
 
@@ -1366,7 +1366,7 @@ internal sealed class VerbHandler
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
             {
-                return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
             }
             
             return this.ChangeLocationByName(location);
@@ -1403,28 +1403,28 @@ internal sealed class VerbHandler
                             if (singleDropResult)
                             {
                                 this.universe.ActiveLocation.Items.Add(item);
-                                PrintingSubsystem.ItemDropSuccess(item);
+                                printingSubsystem.ItemDropSuccess(item);
                                 item.OnAfterDrop(new DropItemEventArgs());
                             }
                             else
                             {
-                                PrintingSubsystem.ImpossibleDrop(item);
+                                printingSubsystem.ImpossibleDrop(item);
                             }
                         }
                         catch (DropException e)
                         {
-                            PrintingSubsystem.Resource(e.Message);
+                            printingSubsystem.Resource(e.Message);
                         }
                     }
                     else
                     {
-                        PrintingSubsystem.ImpossibleDrop(item);
+                        printingSubsystem.ImpossibleDrop(item);
                         result = result && true;
                     }
                 }
                 else
                 {
-                    PrintingSubsystem.ItemNotOwned();
+                    printingSubsystem.ItemNotOwned();
                 }
 
             }
@@ -1486,29 +1486,29 @@ internal sealed class VerbHandler
                                     if (removeSuccess)
                                     {
                                         itemContainer.Items.Add(itemToDrop);
-                                        PrintingSubsystem.ItemDropSuccess(itemToDrop, itemContainer);
+                                        printingSubsystem.ItemDropSuccess(itemToDrop, itemContainer);
                                         itemContainer.OnAfterDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
                                         return true;
                                     }
 
-                                    return PrintingSubsystem.ImpossibleDrop(itemContainer);
+                                    return printingSubsystem.ImpossibleDrop(itemContainer);
                                 }
                                 catch (DropException e)
                                 {
-                                    return PrintingSubsystem.Resource(e.Message);
+                                    return printingSubsystem.Resource(e.Message);
                                 }
                             }
                             
-                            return PrintingSubsystem.ItemStillClosed(itemContainer);
+                            return printingSubsystem.ItemStillClosed(itemContainer);
                         }
                         
-                        return PrintingSubsystem.ItemIsNotAContainer(itemContainer);
+                        return printingSubsystem.ItemIsNotAContainer(itemContainer);
                     }
                 }
 
-                return PrintingSubsystem.ImpossibleDrop(itemToDrop);
+                return printingSubsystem.ImpossibleDrop(itemToDrop);
             }
-            return PrintingSubsystem.ItemNotOwned();
+            return printingSubsystem.ItemNotOwned();
         }
         
         return false;
@@ -1520,7 +1520,7 @@ internal sealed class VerbHandler
         {
             this.universe.ActivePlayer.Name = subject;
             this.universe.ActivePlayer.IsStranger = false;
-            PrintingSubsystem.ActivePlayer(this.universe.ActivePlayer);
+            printingSubsystem.ActivePlayer(this.universe.ActivePlayer);
 
             return true;
         }
@@ -1532,7 +1532,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.INV].Contains(input, StringComparer.InvariantCultureIgnoreCase))
         {
-            PrintingSubsystem.ActivePlayer(this.universe.ActivePlayer);
+            printingSubsystem.ActivePlayer(this.universe.ActivePlayer);
             return true;
         }
 
@@ -1544,13 +1544,13 @@ internal sealed class VerbHandler
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
             {
-                PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
                 return;
             }
 
             if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != null)    
             {
-                PrintingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
+                printingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
                 return;
             }
             
@@ -1568,7 +1568,7 @@ internal sealed class VerbHandler
                             this.universe.ActiveLocation = newLocationMap.Location;
                             this.objectHandler.ClearActiveObjectIfNotInInventory();
 
-                            PrintingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+                            printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
                         }
                     }
 
@@ -1577,26 +1577,26 @@ internal sealed class VerbHandler
 
                     if (status == ChangeLocationStatus.IsLocked)
                     {
-                        PrintingSubsystem.WayIsLocked(newLocationMap.Location);
+                        printingSubsystem.WayIsLocked(newLocationMap.Location);
                     }
                     else if (status == ChangeLocationStatus.IsClosed)
                     {
-                        PrintingSubsystem.WayIsClosed(newLocationMap.Location);
+                        printingSubsystem.WayIsClosed(newLocationMap.Location);
                     }
                 }
                 catch (BeforeChangeLocationException ex)
                 {
-                    PrintingSubsystem.Resource(ex.Message);
+                    printingSubsystem.Resource(ex.Message);
                 }
             }
             else
             {
-                PrintingSubsystem.Resource(BaseDescriptions.NO_WAY);
+                printingSubsystem.Resource(BaseDescriptions.NO_WAY);
             }
         }
         else
         {
-            PrintingSubsystem.Resource(BaseDescriptions.NO_WAY);
+            printingSubsystem.Resource(BaseDescriptions.NO_WAY);
         }
     }
 
@@ -1609,12 +1609,12 @@ internal sealed class VerbHandler
             {
                 if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
                 {
-                    return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                    return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
                 }
                 
                 if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != null)    
                 {
-                    return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
+                    return printingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
                 }
                 
                 var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
@@ -1625,14 +1625,14 @@ internal sealed class VerbHandler
                     {
                         this.universe.ActiveLocation = newLocation.Location;
                         this.objectHandler.ClearActiveObjectIfNotInInventory();
-                        return PrintingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+                        return printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
                     }
 
-                    return PrintingSubsystem.Resource(BaseDescriptions.ROOM_LOCKDESCRIPTION);
+                    return printingSubsystem.Resource(BaseDescriptions.ROOM_LOCKDESCRIPTION);
                 }
             }
 
-            return PrintingSubsystem.Resource(BaseDescriptions.NO_WAY);
+            return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
         }
 
         return false;
