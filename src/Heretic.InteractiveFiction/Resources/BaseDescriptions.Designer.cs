@@ -1007,6 +1007,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Da gibt es nichts zu lesen..
+        /// </summary>
+        public static string NOTHING_TO_READ {
+            get {
+                return ResourceManager.GetString("NOTHING_TO_READ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Es gibt hier keine Gegenstände die Du mitnehmen kannst..
         /// </summary>
         public static string NOTHING_TO_TAKE {

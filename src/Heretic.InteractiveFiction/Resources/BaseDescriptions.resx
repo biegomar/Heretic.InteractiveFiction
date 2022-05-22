@@ -598,4 +598,7 @@
   <data name="ITEM_DROP_ONTO" xml:space="preserve">
     <value>Du hast {0} auf {1} gelegt.</value>
   </data>
+  <data name="NOTHING_TO_READ" xml:space="preserve">
+    <value>Da gibt es nichts zu lesen.</value>
+  </data>
 </root>

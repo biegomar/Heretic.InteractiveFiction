@@ -2,7 +2,6 @@ using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class BreakItemEventArgs: ContainerObjectEventArgs
+public class BreakItemEventArgs: UseItemEventArgs
 {
-    public AHereticObject ItemToUse { get; set; }
 }

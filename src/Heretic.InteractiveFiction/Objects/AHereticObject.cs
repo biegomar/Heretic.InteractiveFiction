@@ -238,8 +238,9 @@ namespace Heretic.InteractiveFiction.Objects
         public event EventHandler<ContainerObjectEventArgs> Open;
         public event EventHandler<ContainerObjectEventArgs> BeforeOpen;
         public event EventHandler<ContainerObjectEventArgs> AfterOpen;
-        public event EventHandler<ContainerObjectEventArgs> BeforeRead;
-        public event EventHandler<ContainerObjectEventArgs> AfterRead;
+        public event EventHandler<ReadItemEventArgs> Read;
+        public event EventHandler<ReadItemEventArgs> BeforeRead;
+        public event EventHandler<ReadItemEventArgs> AfterRead;
         public event EventHandler<ContainerObjectEventArgs> AfterLook;
         public event EventHandler<ContainerObjectEventArgs> BeforeTake;
         public event EventHandler<ContainerObjectEventArgs> AfterTake;
@@ -255,7 +256,7 @@ namespace Heretic.InteractiveFiction.Objects
         public event EventHandler<ContainerObjectEventArgs> Jump;
         public event EventHandler<PullItemEventArgs> Pull;
         public event EventHandler<PushItemEventArgs> Push;
-        public event EventHandler<ContainerObjectEventArgs> Turn;
+        public event EventHandler<TurnItemEventArgs> Turn;
         public event EventHandler<UnlockContainerEventArgs> Unlock;
         public event EventHandler<UseItemEventArgs> Use;
         public event EventHandler<WriteEventArgs> Write;
@@ -282,7 +283,7 @@ namespace Heretic.InteractiveFiction.Objects
             }
             else
             {
-                throw new JumpException(BaseDescriptions.NOTHING_HAPPENS);
+                throw new JumpException(BaseDescriptions.DOES_NOT_WORK);
             }
         }
 
@@ -295,7 +296,7 @@ namespace Heretic.InteractiveFiction.Objects
             }
             else
             {
-                throw new PullException(BaseDescriptions.NOTHING_HAPPENS);
+                throw new PullException(BaseDescriptions.DOES_NOT_WORK);
             }
         }
     
@@ -335,6 +336,19 @@ namespace Heretic.InteractiveFiction.Objects
             else
             {
                 throw new WriteException(BaseDescriptions.NOTHING_HAPPENS);
+            }
+        }
+        
+        public virtual void OnRead(ReadItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.Read;
+            if (localEventHandler != null)
+            {
+                localEventHandler.Invoke(this, eventArgs);
+            }
+            else
+            {
+                throw new PushException(BaseDescriptions.NOTHING_TO_READ);
             }
         }
 
@@ -425,7 +439,7 @@ namespace Heretic.InteractiveFiction.Objects
             }
         }
     
-        public virtual void OnTurn(ContainerObjectEventArgs eventArgs)
+        public virtual void OnTurn(TurnItemEventArgs eventArgs)
         {
             var localEventHandler = this.Turn;
             if (localEventHandler != null)
@@ -434,7 +448,7 @@ namespace Heretic.InteractiveFiction.Objects
             }
             else
             {
-                throw new BreakException(BaseDescriptions.NOTHING_HAPPENS);
+                throw new BreakException(BaseDescriptions.DOES_NOT_WORK);
             }
         }
     
@@ -580,13 +594,13 @@ namespace Heretic.InteractiveFiction.Objects
             localEventHandler?.Invoke(this, eventArgs);
         }
         
-        public virtual void OnBeforeRead(ContainerObjectEventArgs eventArgs)
+        public virtual void OnBeforeRead(ReadItemEventArgs eventArgs)
         {
             var localEventHandler = this.BeforeRead;
             localEventHandler?.Invoke(this, eventArgs);
         }
     
-        public virtual void OnAfterRead(ContainerObjectEventArgs eventArgs)
+        public virtual void OnAfterRead(ReadItemEventArgs eventArgs)
         {
             var localEventHandler = this.AfterRead;
             localEventHandler?.Invoke(this, eventArgs);
