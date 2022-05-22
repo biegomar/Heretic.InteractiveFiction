@@ -199,6 +199,10 @@ namespace Heretic.InteractiveFiction.Objects
         /// </summary>
         public bool IsSurfaceContainer { get; set; }
         /// <summary>
+        /// If the object is a surrounding, then it will not be listed in the room description.
+        /// </summary>
+        public bool IsSurrounding { get; set; }
+        /// <summary>
         /// The list of contained objects.
         /// </summary>
         public ICollection<Item> Items { get; set; }
@@ -616,6 +620,7 @@ namespace Heretic.InteractiveFiction.Objects
             this.FirstLookDescription = string.Empty;
             this.IsContainer = false;
             this.IsSurfaceContainer = false;
+            this.IsSurrounding = false;
             this.IsBreakable = false;
             this.IsBroken = false;
             this.IsEatable = false;
