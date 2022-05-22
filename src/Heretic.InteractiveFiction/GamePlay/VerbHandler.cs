@@ -1,6 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.Runtime.InteropServices;
-using Heretic.InteractiveFiction.Exceptions;
+﻿using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
