@@ -9,11 +9,20 @@ namespace Heretic.InteractiveFiction.Test;
 
 public class VerbHandlerTest
 {
-    private VerbHandler SetUp()
+    private VerbHandler _sut;
+    private Universe _universe;
+
+    public VerbHandlerTest()
     {
         var printingSubsystem = new Mock<IPrintingSubsystem>();
         printingSubsystem.SetReturnsDefault(true);
         
+        this._universe = GetUniverse(printingSubsystem);
+        this._sut = new VerbHandler(_universe, printingSubsystem.Object);
+    }
+
+    private Universe GetUniverse(Mock<IPrintingSubsystem> printingSubsystem)
+    {
         var universe = new Universe(printingSubsystem.Object, new ResourceProviderMock());
         var smallWorldAssembler = new SmallWorldAssembler();
         var gamePrerequisites = smallWorldAssembler.AssembleGame();
@@ -23,9 +32,9 @@ public class VerbHandlerTest
         universe.Quests = gamePrerequisites.Quests;
         universe.SetPeriodicEvent(gamePrerequisites.PeriodicEvent);
         
-        return new VerbHandler(universe, printingSubsystem.Object);
+        return universe;
     }
-    
+
     [Theory]
     [InlineData("Schaue", true)]
     [InlineData("Schau", true)]
@@ -43,8 +52,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void LookTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Look(verb);
+        var actual = _sut.Look(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -57,8 +65,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void CreditsTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Credits(verb);
+        var actual = _sut.Credits(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -69,8 +76,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void DescendTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Descend(verb);
+        var actual = _sut.Descend(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -87,8 +93,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void WaysTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Ways(verb);
+        var actual = _sut.Ways(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -99,8 +104,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void HelpTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Help(verb);
+        var actual = _sut.Help(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -112,8 +116,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void InventoryTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Inventory(verb);
+        var actual = _sut.Inventory(verb);
         Assert.Equal(expected, actual);
     }
     
@@ -124,8 +127,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void QuitTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Quit(verb);
+        var actual = _sut.Quit(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -138,8 +140,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void RemarkTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Remark(verb);
+        var actual = _sut.Remark(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -151,8 +152,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void ScoreTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Score(verb);
+        var actual = _sut.Score(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -166,8 +166,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void SitDownTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.SitDown(verb);
+        var actual = _sut.SitDown(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -178,8 +177,7 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void StandUpTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.StandUp(verb);
+        var actual = _sut.StandUp(verb);
         
         Assert.Equal(expected, actual);
     }
@@ -191,20 +189,34 @@ public class VerbHandlerTest
     [InlineData("FALSCH", false)]
     public void TakeTest(string verb, bool expected)
     {
-        var sut = SetUp();
-        var actual = sut.Take(verb);
+        var actual = _sut.Take(verb);
         
         Assert.Equal(expected, actual);
     }
     
     [Theory]
     [InlineData("Schaue", "Kerze", true)]
+    [InlineData("Schaue", "UnknownObject", true)]
+    [InlineData("FALSCH", "Kerze", false)]
     public void LookAtItemTest(string verb, string item, bool expected)
     {
-        var sut = SetUp();
-        
-        var actual = sut.Look(verb, item);
+        var actual = _sut.Look(verb, item);
 
         Assert.Equal(expected, actual);
+    }
+    
+    [Theory]
+    [InlineData("Kerze", "CANDLE", true)]
+    public void SetPronoun_Look_Test(string subject, string expectedKey, bool expected)
+    {
+        _universe.ActiveObject = default;
+        
+        _sut.Look("Schaue", subject);
+        var actualObject = _universe.ActiveObject;
+        var actual = actualObject != default;
+        var actualKey = actualObject?.Key;
+        
+        Assert.Equal(expected, actual);
+        Assert.Equal(expectedKey, actualKey);
     }
 }

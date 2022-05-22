@@ -36,13 +36,17 @@ internal class SmallWorldAssembler: IGamePrerequisitesAssembler
     
     private static Player GetPlayer()
     {
-        return new Player
+        var player = new Player
         {
             Key = "PLAYER",
             Name = "Player",
             Description = "A player",
             Grammar = new Grammars(isPlayer:true)
         };
+        
+        player.Items.Add(GetKnife());
+
+        return player;
     }
     
     private static Location GetLivingRoom()
@@ -89,6 +93,20 @@ internal class SmallWorldAssembler: IGamePrerequisitesAssembler
         };
 
         return candle;
+    }
+    
+    private static Item GetKnife()
+    {
+        var knife = new Item()
+        {
+            Key = "KNIFE",
+            Name = "KNIFE",
+            Description = "KNIFE",
+            ContainmentDescription = "KNIFE_CONTAINMENT",
+            Grammar = new Grammars(gender: Genders.Neutrum)
+        };
+
+        return knife;
     }
     
     private static IEnumerable<DestinationNode> LivingRoomLocationMap()

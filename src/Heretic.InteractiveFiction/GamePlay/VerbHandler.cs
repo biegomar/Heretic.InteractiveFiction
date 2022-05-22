@@ -53,9 +53,10 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.LOOK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameAndStoreAsActiveObject(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByName(subject);
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 this.universe.UnveilFirstLevelObjects(item);
                 var result = PrintingSubsystem.PrintObject(item);
 
@@ -104,6 +105,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
+                    this.objectHandler.StoreAsActiveObject(item);
                     item.OnBeforeRead(new ContainerObjectEventArgs());
 
                     var result = string.IsNullOrWhiteSpace(item.LetterContentDescription) ? 
@@ -165,6 +167,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
+                    this.objectHandler.StoreAsActiveObject(item);
                     item.OnPull(new PullItemEventArgs());
 
                     return true;
@@ -191,6 +194,8 @@ internal sealed class VerbHandler
             {
                 return PrintingSubsystem.CanNotUseObject(subjectName);
             }
+            
+            this.objectHandler.StoreAsActiveObject(subject);
 
             var item = this.objectHandler.GetUnhiddenObjectByName(objectName);
 
@@ -223,6 +228,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
+                    this.objectHandler.StoreAsActiveObject(item);
                     item.OnPush(new PushItemEventArgs());
 
                     return true;
@@ -264,6 +270,8 @@ internal sealed class VerbHandler
             {
                 return PrintingSubsystem.CanNotUseObject(subjectName);
             }
+            
+            this.objectHandler.StoreAsActiveObject(subject);
 
             var item = this.objectHandler.GetUnhiddenObjectByName(objectName);
 
@@ -415,6 +423,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 try
                 {
                     item.OnUse(new UseItemEventArgs());
@@ -444,6 +453,8 @@ internal sealed class VerbHandler
                 return PrintingSubsystem.CanNotUseObject(subjectName);
             }
 
+            this.objectHandler.StoreAsActiveObject(subject);
+            
             var item = this.objectHandler.GetUnhiddenObjectByName(objectName);
 
             if (item == default)
@@ -488,6 +499,7 @@ internal sealed class VerbHandler
                 try
                 {
                     item.OnBuy(new ContainerObjectEventArgs());
+                    this.objectHandler.StoreAsActiveObject(item);
 
                     return true;
                 }
@@ -524,6 +536,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 try
                 {
                     item.OnTurn(new ContainerObjectEventArgs());
@@ -552,6 +565,7 @@ internal sealed class VerbHandler
             {
                 try
                 {
+                    this.objectHandler.StoreAsActiveObject(item);
                     item.OnJump(new ContainerObjectEventArgs());
 
                     return true;
@@ -578,6 +592,7 @@ internal sealed class VerbHandler
             }
             
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            this.objectHandler.StoreAsActiveObject(item);
 
             if (item is { IsClimbAble: true })
             {
@@ -631,6 +646,7 @@ internal sealed class VerbHandler
         if (this.universe.VerbResources[VerbKeys.CLOSE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            this.objectHandler.StoreAsActiveObject(item);
 
             if (item != default)
             {
@@ -684,6 +700,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 if (item.IsCloseAble)
                 {
                     if (item.IsLocked)
@@ -821,6 +838,7 @@ internal sealed class VerbHandler
             if (seatCount == 1)
             {
                 var onlySeat = this.universe.ActiveLocation.Items.Single(x => x.IsSeatAble);
+                this.objectHandler.StoreAsActiveObject(onlySeat);
                 
                 this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
                 onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
@@ -857,6 +875,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 if (item.IsSeatAble)
                 {
                     this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = item});
@@ -914,6 +933,7 @@ internal sealed class VerbHandler
             if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != default)
             {
                 var item = this.universe.ActivePlayer.Seat;
+                this.objectHandler.StoreAsActiveObject(item);
                 var eventArgs = new ContainerObjectEventArgs();
                 
                 this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
@@ -1047,6 +1067,7 @@ internal sealed class VerbHandler
                 return PrintingSubsystem.ItemNotOwned();
             }
 
+            this.objectHandler.StoreAsActiveObject(item);
             character.Items.Add(item);
             this.universe.ActivePlayer.RemoveItem(item);
 
@@ -1158,6 +1179,7 @@ internal sealed class VerbHandler
 
     internal bool Unlock(string verb, string unlockObject)
     {
+        //TODO noch nicht fertig!
         if (this.universe.VerbResources[VerbKeys.UNLOCK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(unlockObject);
@@ -1186,6 +1208,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 if (key != default)
                 {
                     if (item.IsLockAble)
@@ -1277,6 +1300,7 @@ internal sealed class VerbHandler
                     {
                         item.OnBeforeTake(new ContainerObjectEventArgs());
                         result = result && universe.PickObject(item);
+                        this.objectHandler.StoreAsActiveObject(item);
                         item.OnAfterTake(new ContainerObjectEventArgs());
                     }
                     catch (TakeException ex)
@@ -1336,7 +1360,7 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Go(string verb, string subject)
+    internal bool Go(string verb, string location)
     {
         if (this.universe.VerbResources[VerbKeys.GO].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
@@ -1345,7 +1369,7 @@ internal sealed class VerbHandler
                 return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
             }
             
-            return this.ChangeLocationByName(subject);
+            return this.ChangeLocationByName(location);
         }
 
         return false;
@@ -1426,6 +1450,8 @@ internal sealed class VerbHandler
                     this.universe.ActivePlayer.Items.Single(i => i.Key == subjectKey): 
                     this.universe.ActivePlayer.Clothes.Single(x => x.Key == subjectKey);
 
+                this.objectHandler.StoreAsActiveObject(itemToDrop);
+                
                 if (itemToDrop.IsDropAble)
                 {
                     var objectKey = this.objectHandler.GetItemKeyByName(objectName);
@@ -1540,6 +1566,7 @@ internal sealed class VerbHandler
                         if (!newLocationMap.Location.IsClosed)
                         {
                             this.universe.ActiveLocation = newLocationMap.Location;
+                            this.objectHandler.ClearActiveObjectIfNotInInventory();
 
                             PrintingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
                         }
@@ -1585,6 +1612,11 @@ internal sealed class VerbHandler
                     return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
                 }
                 
+                if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != null)    
+                {
+                    return PrintingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
+                }
+                
                 var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
                 var newLocation = mappings.Where(i => !i.IsHidden).SingleOrDefault(x => x.Location.Key == locationKey);
                 if (newLocation != default)
@@ -1592,6 +1624,7 @@ internal sealed class VerbHandler
                     if (!newLocation.Location.IsLocked)
                     {
                         this.universe.ActiveLocation = newLocation.Location;
+                        this.objectHandler.ClearActiveObjectIfNotInInventory();
                         return PrintingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
                     }
 

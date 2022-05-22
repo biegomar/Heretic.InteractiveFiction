@@ -23,6 +23,10 @@ public class ResourceProviderMock: IResourceProvider
             {
                 "AIRLOCK_KEYPAD_GREEN_BUTTON",
                 new List<string>() {"Der grüne Knopf", "DerGrüneKnopf", "Grüner Knopf", "GrünerKnopf"}
+            },
+            {
+                "CANDLE",
+                new List<string>() {"CANDLE", "Kerze"}
             }
         };
     }

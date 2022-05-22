@@ -73,16 +73,13 @@ internal sealed class ObjectHandler
 
         return containerObject;
     }
-
-    internal AHereticObject GetUnhiddenObjectByNameAndStoreAsActiveObject(string objectName)
+    
+    internal void StoreAsActiveObject(AHereticObject hereticObject)
     {
-        var result = this.GetUnhiddenObjectByName(objectName);
-        if (result != default)
+        if (hereticObject != default)
         {
-            this.universe.ActiveObject = result;
+            this.universe.ActiveObject = hereticObject;
         }
-
-        return result;
     }
     
     internal Character GetUnhiddenCharacterByName(string itemName)
@@ -104,7 +101,7 @@ internal sealed class ObjectHandler
     {
         return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
     }
-    
+
     internal Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
     {
         return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.GetCharacterKeyByName(itemName));
@@ -129,6 +126,24 @@ internal sealed class ObjectHandler
             foreach (var child in item.Items.Where(x => x.HideOnContainerClose))
             {
                 child.IsHidden = true;
+            }
+        }
+    }
+    
+    internal void ClearActiveObject()
+    {
+        this.universe.ActiveObject = default;
+    }
+
+    internal void ClearActiveObjectIfNotInInventory()
+    {
+        var universeActiveObject = this.universe.ActiveObject;
+        if (universeActiveObject != default)
+        {
+            var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(universeActiveObject.Key);
+            if (item == default)
+            {
+                this.ClearActiveObject();
             }
         }
     }

@@ -51,6 +51,7 @@ public class HereticObjectMock: AHereticObject
             Key = "KNIFE",
             Name = "KNIFE",
             Description = "KNIFE",
+            Grammar = new Grammars(gender: Genders.Neutrum)
         };
 
         return knife;
