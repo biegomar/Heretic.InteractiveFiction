@@ -833,7 +833,7 @@ namespace Heretic.InteractiveFiction.Objects
 
         protected virtual string PrintCharacters()
         {
-            var unhiddenItems = this.Characters.Where(i => i.IsHidden == false).ToList<AHereticObject>();
+            var unhiddenItems = this.Characters.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
 
             return this.PrintUnhiddenObjects(unhiddenItems);
         }
@@ -841,9 +841,9 @@ namespace Heretic.InteractiveFiction.Objects
         protected virtual string PrintItems(bool subItems = false)
         {
 
-            var unhiddenItems = this.Items.Where(i => i.IsHidden == false).ToList<AHereticObject>();
+            var unhiddenNonSurroundingItems = this.Items.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
 
-            return this.PrintUnhiddenObjects(unhiddenItems);
+            return this.PrintUnhiddenObjects(unhiddenNonSurroundingItems);
         }
 
         public Item GetUnhiddenItemByKey(string key, IList<Item> items = null)
