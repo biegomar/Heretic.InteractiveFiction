@@ -100,7 +100,7 @@ public sealed class Grammars
             return IsPlayer ? Grammar.NOMINATIVE_PRONOUN_YOU : result;
         }
         
-        return string.Empty;
+        return Grammar.NOMINATIVE_PRONOUN_THEY;
     }
     
     public string GetDativePronoun()
@@ -119,7 +119,7 @@ public sealed class Grammars
             return IsPlayer ? Grammar.DATIVE_PRONOUN_YOU : result;
         }
         
-        return string.Empty;
+        return Grammar.DATIVE_PRONOUN_THEY;
     }
     
     public string GetAccusativePronoun()
@@ -138,7 +138,7 @@ public sealed class Grammars
             return IsPlayer ? Grammar.ACCUSATIVE_PRONOUN_YOU : result;
         }
         
-        return string.Empty;
+        return Grammar.ACCUSATIVE_PRONOUN_THEY;
     }
     
     public string GetDativeIndefiniteArticle()

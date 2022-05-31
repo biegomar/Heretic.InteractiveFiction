@@ -205,7 +205,7 @@ internal sealed class ObjectHandler
         var universeActiveObject = this.universe.ActiveObject;
         if (universeActiveObject != null && (upperItemName == universeActiveObject.Grammar.GetAccusativePronoun().ToUpperInvariant() 
                                              || upperItemName == universeActiveObject.Grammar.GetDativePronoun().ToUpperInvariant()  
-                                             || upperItemName == universeActiveObject.Grammar.GetAccusativePronoun().ToUpperInvariant()))
+                                             || upperItemName == universeActiveObject.Grammar.GetNominativePronoun().ToUpperInvariant()))
         {
             return this.universe.ActiveObject.Key;
         }

@@ -117,4 +117,13 @@
     <data name="ACCUSATIVE_PRONOUN_IT" xml:space="preserve">
         <value>Es</value>
     </data>
+    <data name="NOMINATIVE_PRONOUN_THEY" xml:space="preserve">
+        <value>Sie</value>
+    </data>
+    <data name="DATIVE_PRONOUN_THEY" xml:space="preserve">
+        <value>Ihnen</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_THEY" xml:space="preserve">
+        <value>Sie</value>
+    </data>
 </root>

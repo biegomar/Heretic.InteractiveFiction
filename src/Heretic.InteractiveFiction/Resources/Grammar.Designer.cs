@@ -169,6 +169,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sie.
+        /// </summary>
+        internal static string ACCUSATIVE_PRONOUN_THEY {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_THEY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dich.
         /// </summary>
         internal static string ACCUSATIVE_PRONOUN_YOU {
@@ -286,6 +295,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ihnen.
+        /// </summary>
+        internal static string DATIVE_PRONOUN_THEY {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_THEY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dir.
         /// </summary>
         internal static string DATIVE_PRONOUN_YOU {
@@ -345,6 +363,15 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string NOMINATIVE_PRONOUN_SHE {
             get {
                 return ResourceManager.GetString("NOMINATIVE_PRONOUN_SHE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sie.
+        /// </summary>
+        internal static string NOMINATIVE_PRONOUN_THEY {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_THEY", resourceCulture);
             }
         }
         
