@@ -7,6 +7,9 @@ namespace Heretic.InteractiveFiction.Objects
 {
     public class AHereticObject
     {
+        private readonly Func<string> descriptionFunc;
+        private string description;
+        
         protected string name;
 
         /// <summary>
@@ -61,7 +64,12 @@ namespace Heretic.InteractiveFiction.Objects
         /// <summary>
         /// The detailed description of the object. It is used during printout.
         /// </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get => this.descriptionFunc != null ? this.descriptionFunc() : description;
+            set => description = value;
+        }
+
         /// <summary>
         /// The first look description is only used during the first printout and contains additional information.
         /// </summary>
@@ -619,13 +627,9 @@ namespace Heretic.InteractiveFiction.Objects
             }
         }
 
-        protected AHereticObject(Grammars grammar): base()
+        protected AHereticObject(Func<string> descriptionFunc = null)
         {
-            this.Grammar = grammar;
-        }
-    
-        protected AHereticObject()
-        {
+            this.descriptionFunc = descriptionFunc;
             this.Grammar = new Grammars();
             this.Items = new List<Item>();
             this.Characters = new List<Character>();

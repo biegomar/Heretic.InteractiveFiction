@@ -2,7 +2,7 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class Location : AHereticObject
 {
-    public Location() : base()
+    public Location(Func<string> descriptionFunc = null) : base(descriptionFunc)
     {
         this.IsPickAble = false;
     }

@@ -15,7 +15,7 @@ public sealed class Character : AHereticObject
     public event EventHandler<ConversationEventArgs> Ask;
     public event EventHandler<ConversationEventArgs> Say;
 
-    public Character() : base()
+    public Character(Func<string> descriptionFunc = null) : base(descriptionFunc)
     {
         this.IsPickAble = false;
     }
