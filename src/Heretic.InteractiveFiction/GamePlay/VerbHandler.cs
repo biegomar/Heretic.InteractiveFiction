@@ -59,6 +59,7 @@ internal sealed class VerbHandler
                 var result = printingSubsystem.PrintObject(item);
 
                 item.OnAfterLook(new ContainerObjectEventArgs());
+                this.universe.ActiveLocation.OnAfterLook(new ContainerObjectEventArgs() {ExternalItemKey = item.Key});
 
                 return result;
             }

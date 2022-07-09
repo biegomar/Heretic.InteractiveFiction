@@ -53,16 +53,21 @@ public sealed class Grammars
 
     public string GetArticle()
     {
-        var result = this.Gender switch
+        if (IsSingular)
         {
-            Genders.Female => Resources.Grammar.ARTICLE_FEMALE_SINGULAR,
-            Genders.Male => Resources.Grammar.ARTICLE_MALE_SINGULAR,
-            Genders.Neutrum => Resources.Grammar.ARTICLE_NEUTRUM_SINGULAR,
-            Genders.Unknown => Resources.Grammar.ARTICLE_NEUTRUM_SINGULAR,
-            _ => Resources.Grammar.ARTICLE_NEUTRUM_SINGULAR
-        };
+            var result = this.Gender switch
+            {
+                Genders.Female => Resources.Grammar.ARTICLE_FEMALE_SINGULAR,
+                Genders.Male => Resources.Grammar.ARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => Resources.Grammar.ARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => Resources.Grammar.ARTICLE_NEUTRUM_SINGULAR,
+                _ => Resources.Grammar.ARTICLE_NEUTRUM_SINGULAR
+            };
+
+            return result;
+        }
         
-        return result;
+        return string.Empty;
     }
     
     public string GetNominativeIndefiniteArticle()

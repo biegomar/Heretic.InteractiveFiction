@@ -750,7 +750,7 @@ public partial class AHereticObject
     protected virtual string GetObjectName()
     {
         var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}");
+        return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}").Trim();
     }
 
     private string GetNominativeIndefiniteArticleName()
