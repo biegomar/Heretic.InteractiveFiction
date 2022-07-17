@@ -273,14 +273,7 @@ public partial class AHereticObject
         public virtual void OnSitDown(SitDownEventArgs eventArgs)
         {
             var localEventHandler = this.SitDown;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new SitDownException(BaseDescriptions.NO_SEAT);
-            }
+            localEventHandler?.Invoke(this, eventArgs);
         }
     
         public virtual void OnBeforeStandUp(ContainerObjectEventArgs eventArgs)

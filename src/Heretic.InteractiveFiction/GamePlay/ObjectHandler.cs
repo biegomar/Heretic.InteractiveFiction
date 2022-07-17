@@ -215,8 +215,7 @@ internal sealed class ObjectHandler
 
     private string GetSecondPriorityItemKeys(string itemName)
     {
-        var allActiveLocationItemKeys = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items)
-            .Union(this.GetSurroundingKeys(this.universe.ActiveLocation.Surroundings));
+        var allActiveLocationItemKeys = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items);
         var allActivePlayerItemKeys = this.GetItemKeysRecursive(this.universe.ActivePlayer.Items);
         var prioritizedKeysOfActiveLocationAndPlayer = allActiveLocationItemKeys.Union(allActivePlayerItemKeys).ToList();
         var prioritizedItemResources =
@@ -253,10 +252,5 @@ internal sealed class ObjectHandler
         }
 
         return result;
-    }
-    
-    private IEnumerable<string> GetSurroundingKeys(IDictionary<string, Func<string>> surroundings)
-    {
-        return surroundings.Keys.ToList();
     }
 }

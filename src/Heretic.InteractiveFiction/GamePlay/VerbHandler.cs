@@ -64,18 +64,6 @@ internal sealed class VerbHandler
                 return result;
             }
 
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                var result = printingSubsystem.Resource(this.universe.ActiveLocation.Surroundings[itemKey]());
-                
-                // surroundings only exist within the active location.
-                this.universe.ActiveLocation.OnAfterLook(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
-
-                return result;
-            }
-
             return printingSubsystem.ItemNotVisible();
         }
 
@@ -118,24 +106,6 @@ internal sealed class VerbHandler
                 catch (ReadException ex)
                 {
                     return printingSubsystem.Resource(ex.Message);
-                }
-            }
-            
-            // lets have a look at surroundings.
-            if (item == default)
-            {
-                var itemKey = this.objectHandler.GetItemKeyByName(subject);
-                if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-                {
-                    try
-                    {
-                        this.universe.ActiveLocation.OnRead(new ReadItemEventArgs() {ExternalItemKey = itemKey});
-                        return true;
-                    }
-                    catch (Exception e)
-                    {
-                        return printingSubsystem.Resource(e.Message);
-                    }
                 }
             }
 
@@ -192,21 +162,6 @@ internal sealed class VerbHandler
                 catch (PullException ex)
                 {
                     return printingSubsystem.Resource(ex.Message);
-                }
-            }
-            
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                try
-                {
-                    this.universe.ActiveLocation.OnPull(new PullItemEventArgs() {ExternalItemKey = itemKey});
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return printingSubsystem.Resource(e.Message);
                 }
             }
 
@@ -271,21 +226,6 @@ internal sealed class VerbHandler
                 }
             }
             
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                try
-                {
-                    this.universe.ActiveLocation.OnPush(new PushItemEventArgs() {ExternalItemKey = itemKey});
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return printingSubsystem.Resource(e.Message);
-                }
-            }
-
             return printingSubsystem.ItemNotVisible();
         }
 
@@ -337,13 +277,6 @@ internal sealed class VerbHandler
             {
                 var result = printingSubsystem.AlterEgo(item);
                 return result;
-            }
-
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                var joint = string.Join('|', this.universe.ItemResources[itemKey]);
-                return printingSubsystem.AlterEgo(joint);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -581,21 +514,6 @@ internal sealed class VerbHandler
                 }
             }
             
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                try
-                {
-                    this.universe.ActiveLocation.OnTurn(new TurnItemEventArgs() { ExternalItemKey = itemKey });
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return printingSubsystem.Resource(e.Message);
-                }
-            }
-
             return printingSubsystem.ItemNotVisible();
         }
 
@@ -620,21 +538,6 @@ internal sealed class VerbHandler
                 catch (JumpException ex)
                 {
                     return printingSubsystem.Resource(ex.Message);
-                }
-            }
-
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                try
-                {
-                    this.universe.ActiveLocation.OnJump(new ContainerObjectEventArgs() { ExternalItemKey = itemKey });
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return printingSubsystem.Resource(e.Message);
                 }
             }
 
@@ -663,24 +566,6 @@ internal sealed class VerbHandler
                 return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.AccusativeArticleName, true);
             }
 
-            // lets have a look at surroundings.
-            if (item == default)
-            {
-                var itemKey = this.objectHandler.GetItemKeyByName(subject);
-                if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-                {
-                    try
-                    {
-                        this.universe.ActiveLocation.OnClimb(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
-                        return true;
-                    }
-                    catch (Exception e)
-                    {
-                        return printingSubsystem.Resource(e.Message);
-                    }
-                }
-            }
-            
             return printingSubsystem.ItemNotVisible();
         }
 
@@ -733,21 +618,6 @@ internal sealed class VerbHandler
                 return false;
             }
 
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                try
-                {
-                    this.universe.ActiveLocation.OnClose(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return printingSubsystem.Resource(e.Message);
-                }
-            }
-
             return printingSubsystem.ItemNotVisible();
         }
 
@@ -781,6 +651,9 @@ internal sealed class VerbHandler
                     
                         item.IsClosed = false;
                         this.universe.UnveilFirstLevelObjects(item);
+                        
+                        item.OnOpen(new ContainerObjectEventArgs());
+                        
                         var result = printingSubsystem.ItemOpen(item);
 
                         item.OnAfterOpen(new ContainerObjectEventArgs());
@@ -796,22 +669,6 @@ internal sealed class VerbHandler
                 return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_OPEN);
             }
             
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                // surroundings only exist within the active location.
-                try
-                {
-                    this.universe.ActiveLocation.OnOpen(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
-                    return true;
-                }
-                catch (OpenException ex)
-                {
-                    return printingSubsystem.Resource(ex.Message);
-                }
-            }
-
             return printingSubsystem.ItemNotVisible();
         }
 
@@ -885,31 +742,35 @@ internal sealed class VerbHandler
 
             if (seatCount == 0)
             {
-                try
-                {
-                    // surroundings only exist within the active location.
-                    this.universe.ActiveLocation.OnSitDown(new SitDownEventArgs());
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return printingSubsystem.Resource(e.Message);
-                }
+                return printingSubsystem.Resource(BaseDescriptions.NO_SEAT);
             }
             
             if (seatCount == 1)
             {
                 var onlySeat = this.universe.ActiveLocation.Items.Single(x => x.IsSeatAble);
                 this.objectHandler.StoreAsActiveObject(onlySeat);
-                
-                this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
-                onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                this.universe.ActivePlayer.SitDownOnSeat(onlySeat);
-                var result = printingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.DativeArticleName, true);
-                onlySeat.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
 
-                return result;
+                try
+                {
+                    this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
+                    onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                
+                    this.universe.ActivePlayer.SitDownOnSeat(onlySeat);
+                    this.universe.ActivePlayer.OnSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
+                    onlySeat.OnSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                
+                    var result = printingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.DativeArticleName, true);
+                
+                    onlySeat.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                    this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
+                    
+                    return result;
+                }
+                catch (SitDownException ex)
+                {
+                    this.universe.ActivePlayer.StandUp();
+                    return printingSubsystem.Resource(ex.Message);
+                }
             }
 
             return printingSubsystem.Resource(BaseDescriptions.MORE_SEATS);
@@ -940,32 +801,31 @@ internal sealed class VerbHandler
                 this.objectHandler.StoreAsActiveObject(item);
                 if (item.IsSeatAble)
                 {
-                    this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = item});
-                    item.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                    this.universe.ActivePlayer.SitDownOnSeat(item);
-                    var result = printingSubsystem.ItemSeated(item);
-                    item.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                    this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = item});
+                    try
+                    {
+                        this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = item});
+                        item.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
                     
-                    return result;
+                        this.universe.ActivePlayer.SitDownOnSeat(item);
+                        this.universe.ActivePlayer.OnSitDown(new SitDownEventArgs {ItemToSitOn = item});
+                        item.OnSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                    
+                        var result = printingSubsystem.ItemSeated(item);
+                    
+                        item.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                        this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = item});
+                    
+                        return result;
+                    }
+                    catch (SitDownException ex)
+                    {
+                        this.universe.ActivePlayer.StandUp();
+                        return printingSubsystem.Resource(ex.Message);
+                    }
                 }    
                 return printingSubsystem.ItemNotSeatable(item);
             }
             
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                try
-                {
-                    this.universe.ActiveLocation.OnSitDown(new SitDownEventArgs {ExternalItemKey = itemKey});
-                }
-                catch (Exception e)
-                {
-                    return printingSubsystem.Resource(e.Message);
-                }
-            }
-
             return printingSubsystem.ItemNotVisible();
         }
         return false;
@@ -1161,21 +1021,6 @@ internal sealed class VerbHandler
                     return printingSubsystem.Resource(ex.Message);
                 }
             }
-            
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                try
-                {
-                    this.universe.ActiveLocation.OnBreak(new BreakItemEventArgs());
-                    return true;
-                }
-                catch (BreakException ex)
-                {
-                    return printingSubsystem.Resource(ex.Message);
-                }
-            }
         }
 
         return false;
@@ -1213,26 +1058,6 @@ internal sealed class VerbHandler
                 return printingSubsystem.ToolNotVisible();
             }
 
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(subject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                if (toolItem != default)
-                {
-                    // surroundings only exist within the active location.
-                    try
-                    {
-                        this.universe.ActiveLocation.OnBreak(new BreakItemEventArgs() { ItemToUse = toolItem });
-                        return true;
-                    }
-                    catch (BreakException ex)
-                    {
-                        return printingSubsystem.Resource(ex.Message);
-                    }
-                }
-                return printingSubsystem.ToolNotVisible();
-            }
-            
             return printingSubsystem.ItemNotVisible();
         }
         
@@ -1248,13 +1073,6 @@ internal sealed class VerbHandler
             if (item != default)
             {
                 return printingSubsystem.ImpossibleUnlock(item);
-            }
-            
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(unlockObject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_UNLOCK_SURROUNDINGS);
             }
         }
 
@@ -1299,19 +1117,6 @@ internal sealed class VerbHandler
                 return printingSubsystem.KeyNotVisible();
             }
 
-            // lets have a look at surroundings.
-            var itemKey = this.objectHandler.GetItemKeyByName(unlockObject);
-            if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-            {
-                if (key != default)
-                {
-                    // surroundings only exist within the active location.
-                    this.universe.ActiveLocation.OnUnlock(new UnlockContainerEventArgs {Key = key, ExternalItemKey = itemKey});
-                    return true;
-                }
-                return printingSubsystem.KeyNotVisible();
-            }
-            
             return printingSubsystem.ItemNotVisible();
         }
 
@@ -1337,23 +1142,7 @@ internal sealed class VerbHandler
                     }
                     else
                     {
-                        // lets have a look at surroundings.
-                        var itemKey = this.objectHandler.GetItemKeyByName(subject);
-                        if (!string.IsNullOrEmpty(itemKey) && this.universe.ActiveLocation.Surroundings.Any(x => x.Key == itemKey))
-                        {
-                            try
-                            {
-                                this.universe.ActiveLocation.OnTake(new ContainerObjectEventArgs() {ExternalItemKey = itemKey});
-                            }
-                            catch (Exception e)
-                            {
-                                result = result && printingSubsystem.Resource(e.Message);
-                            }
-                        }
-                        else
-                        {
-                            result = result && printingSubsystem.ItemNotVisible();    
-                        }
+                        result = result && printingSubsystem.ItemNotVisible();
                     }
                 }
                 else

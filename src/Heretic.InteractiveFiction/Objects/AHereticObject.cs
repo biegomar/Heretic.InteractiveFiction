@@ -218,7 +218,7 @@ public partial class AHereticObject
     /// <summary>
     /// The list of surrounding objects.
     /// </summary>
-    public IDictionary<string, Func<string>> Surroundings { get; set; }
+    //public IDictionary<string, Func<string>> Surroundings { get; set; }
 
     public ICollection<Item> LinkedTo { get; set; }
 
@@ -236,7 +236,7 @@ public partial class AHereticObject
         this.Grammar = new Grammars();
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
-        this.Surroundings = new Dictionary<string, Func<string>>();
+        //this.Surroundings = new Dictionary<string, Func<string>>();
         this.LinkedTo = new List<Item>();
         this.FirstLookDescription = string.Empty;
         this.IsContainer = false;
