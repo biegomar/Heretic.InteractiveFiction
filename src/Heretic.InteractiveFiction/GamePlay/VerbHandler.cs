@@ -21,9 +21,9 @@ internal sealed class VerbHandler
         this.isHintActive = false;
     }
 
-    internal bool Quit(string input)
+    internal bool Quit(string verb)
     {
-        return this.universe.VerbResources[VerbKeys.QUIT].Contains(input, StringComparer.InvariantCultureIgnoreCase);
+        return this.IsVerb(VerbKeys.QUIT, verb);
     }
 
     internal bool Credits(string verb)
@@ -383,9 +383,8 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.USE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var key = this.objectHandler.GetItemKeyByName(subject);
-            var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
-
+            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(subject);
+            
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -1539,5 +1538,15 @@ internal sealed class VerbHandler
         }
 
         return result;
+    }
+
+    private bool IsVerb(string verbKey, string verbToCheck)
+    {
+        var verbOverrides = this.universe.ActiveLocation.GetVerbAlternatives(verbKey);
+        var mergedVerbs = verbOverrides.Count > 0
+            ? this.universe.VerbResources[verbKey].Union(second: verbOverrides)
+            : this.universe.VerbResources[verbKey];
+        
+        return mergedVerbs.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
     }
 }

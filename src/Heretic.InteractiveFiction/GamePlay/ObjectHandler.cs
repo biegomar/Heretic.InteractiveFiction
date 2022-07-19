@@ -101,6 +101,16 @@ internal sealed class ObjectHandler
     {
         return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
     }
+    
+    internal Item GetUnhiddenItemByNameFromActiveLocation(string itemName)
+    {
+        return this.GetUnhiddenItemByKeyFromActiveLocation(this.GetItemKeyByName(itemName));
+    }
+    
+    internal Item GetUnhiddenItemByNameFromActivePlayer(string itemName)
+    {
+        return this.GetUnhiddenItemByKeyFromActivePlayer(this.GetItemKeyByName(itemName));
+    }
 
     internal Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
     {
@@ -162,6 +172,16 @@ internal sealed class ObjectHandler
     private Character GetUnhiddenCharacterByKeyFromActiveLocation(string key)
     {
         return this.universe.ActiveLocation.GetUnhiddenCharacterByKey(key);
+    }
+    
+    private Item GetUnhiddenItemByKeyFromActiveLocation(string key)
+    {
+        return this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
+    }
+    
+    private Item GetUnhiddenItemByKeyFromActivePlayer(string key)
+    {
+        return this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
     }
     
     private Item GetVirtualItemByKey(string key)
