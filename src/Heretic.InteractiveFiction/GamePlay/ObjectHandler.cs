@@ -29,15 +29,36 @@ internal sealed class ObjectHandler
         return key;
     }
     
+    internal Character GetUnhiddenCharacterByName(string itemName)
+    {
+        return this.GetUnhiddenCharacterByKey(this.GetCharacterKeyByName(itemName));
+    }
+    
+    internal Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
+    {
+        return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.GetCharacterKeyByName(itemName));
+    }
+    
+    private Character GetUnhiddenCharacterByKey(string key)
+    {
+        if (this.universe.GetObjectFromWorldByKey(key) is Character { IsHidden: false } character)
+        {
+            return character;
+        }
+
+        return default;
+    }
+    
     internal string GetLocationKeyByName(string locationName)
     {
         return this.GetKeyByName(locationName, this.universe.LocationResources);
     }
     
-    internal string GetConversationAnswerKeyByName(string phrase)
+    internal Item GetVirtualItemByName(string itemName)
     {
-        return this.GetKeyByName(phrase, this.universe.ConversationAnswersResources);
+        return this.GetVirtualItemByKey(this.GetItemKeyByName(itemName));
     }
+
     
     internal string GetItemKeyByName(string itemName)
     {
@@ -49,9 +70,31 @@ internal sealed class ObjectHandler
         return this.GetKeyByName(itemName, this.universe.ItemResources);
     }
     
-    internal Item GetVirtualItemByName(string itemName)
+    internal Item GetUnhiddenItemByNameActive(string itemName)
     {
-        return this.GetVirtualItemByKey(this.GetItemKeyByName(itemName));
+        return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
+    }
+    
+    internal Item GetUnhiddenItemByNameFromActiveLocation(string itemName)
+    {
+        return this.GetUnhiddenItemByKeyFromActiveLocation(this.GetItemKeyByName(itemName));
+    }
+    
+    internal Item GetUnhiddenItemByNameFromActivePlayer(string itemName)
+    {
+        return this.GetUnhiddenItemByKeyFromActivePlayer(this.GetItemKeyByName(itemName));
+    }
+    
+    internal AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
+    {
+        var item = this.universe.GetObjectFromWorldByKey(this.GetItemKeyByName(itemName));
+
+        if (item == default || item.IsHidden)
+        {
+            return default;
+        }
+
+        return item;
     }
     
     internal AHereticObject GetUnhiddenObjectByName(string objectName)
@@ -73,62 +116,12 @@ internal sealed class ObjectHandler
 
         return containerObject;
     }
-    
-    internal void StoreAsActiveObject(AHereticObject hereticObject)
-    {
-        if (hereticObject != default)
-        {
-            this.universe.ActiveObject = hereticObject;
-        }
-    }
-    
-    internal Character GetUnhiddenCharacterByName(string itemName)
-    {
-        return this.GetUnhiddenCharacterByKey(this.GetCharacterKeyByName(itemName));
-    }
-    
-    private Character GetUnhiddenCharacterByKey(string key)
-    {
-        if (this.universe.GetObjectFromWorldByKey(key) is Character { IsHidden: false } character)
-        {
-            return character;
-        }
 
-        return default;
-    }
-    
-    internal Item GetUnhiddenItemByNameActive(string itemName)
+    internal string GetConversationAnswerKeyByName(string phrase)
     {
-        return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
-    }
-    
-    internal Item GetUnhiddenItemByNameFromActiveLocation(string itemName)
-    {
-        return this.GetUnhiddenItemByKeyFromActiveLocation(this.GetItemKeyByName(itemName));
-    }
-    
-    internal Item GetUnhiddenItemByNameFromActivePlayer(string itemName)
-    {
-        return this.GetUnhiddenItemByKeyFromActivePlayer(this.GetItemKeyByName(itemName));
+        return this.GetKeyByName(phrase, this.universe.ConversationAnswersResources);
     }
 
-    internal Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
-    {
-        return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.GetCharacterKeyByName(itemName));
-    }
-    
-    internal AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
-    {
-        var item = this.universe.GetObjectFromWorldByKey(this.GetItemKeyByName(itemName));
-
-        if (item == default || item.IsHidden)
-        {
-            return default;
-        }
-
-        return item;
-    }
-    
     internal void HideItemsOnClose(AHereticObject item)
     {
         if (item.IsClosed)
@@ -158,6 +151,14 @@ internal sealed class ObjectHandler
         }
     }
     
+    internal void StoreAsActiveObject(AHereticObject hereticObject)
+    {
+        if (hereticObject != default)
+        {
+            this.universe.ActiveObject = hereticObject;
+        }
+    }
+
     private Item GetUnhiddenItemByKeyActive(string key)
     {
         var result = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
