@@ -419,23 +419,23 @@ internal sealed class VerbHandler
 
             this.objectHandler.StoreAsActiveObject(subject);
             
-            var item = this.objectHandler.GetUnhiddenObjectByName(objectName);
-
-            if (item == default)
+            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(objectName);
+            
+            if (item != default)
             {
-                return printingSubsystem.CanNotUseObject(objectName);
+                try
+                {
+                    subject.OnUse(new UseItemEventArgs() {ItemToUse = item});
+
+                    return true;
+                }
+                catch (UseException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
             }
 
-            try
-            {
-                subject.OnUse(new UseItemEventArgs() {ItemToUse = item});
-
-                return true;
-            }
-            catch (UseException ex)
-            {
-                return printingSubsystem.Resource(ex.Message);
-            }
+            return printingSubsystem.ItemNotOwned();
         }
 
         return false;
@@ -699,12 +699,11 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.EAT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var key = this.objectHandler.GetItemKeyByName(subject);
-            var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
+            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(subject);
 
             if (item == default)
             {
-                item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
+                item = this.objectHandler.GetUnhiddenItemByNameFromActiveLocation(subject);
                 if (item is { IsEatable: true })
                 {
                     this.universe.PickObject(item, true);
