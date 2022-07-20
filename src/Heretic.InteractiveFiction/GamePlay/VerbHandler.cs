@@ -51,7 +51,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.LOOK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var item = this.objectHandler.GetUnhiddenObjectByName(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -74,7 +74,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.LOOK].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Look(verb, processingObject);
             }
@@ -87,7 +87,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.READ].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var item = this.objectHandler.GetUnhiddenObjectByName(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
                 if (item.IsReadable)
@@ -154,7 +154,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.PULL].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var item = this.objectHandler.GetUnhiddenObjectByName(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
                 try
@@ -180,7 +180,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.PULL].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByName(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
             if (subject == default)
             {
@@ -189,7 +189,7 @@ internal sealed class VerbHandler
             
             this.objectHandler.StoreAsActiveObject(subject);
 
-            var item = this.objectHandler.GetUnhiddenObjectByName(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
 
             if (item == default)
             {
@@ -215,7 +215,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.PUSH].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var item = this.objectHandler.GetUnhiddenObjectByName(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
                 try
@@ -241,7 +241,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.PUSH].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByName(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
             if (subject == default)
             {
@@ -250,7 +250,7 @@ internal sealed class VerbHandler
             
             this.objectHandler.StoreAsActiveObject(subject);
 
-            var item = this.objectHandler.GetUnhiddenObjectByName(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
 
             if (item == default)
             {
@@ -277,7 +277,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.ALTER_EGO].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var item = this.objectHandler.GetUnhiddenObjectByName(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
                 var result = printingSubsystem.AlterEgo(item);
@@ -386,9 +386,9 @@ internal sealed class VerbHandler
 
     internal bool Use(string verb, string subject)
     {
-        if (this.universe.VerbResources[VerbKeys.USE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
+        if (this.IsVerb(VerbKeys.USE, verb))
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             
             if (item != default)
             {
@@ -415,7 +415,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.USE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByName(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
             if (subject == default)
             {
@@ -488,7 +488,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.BUY].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Buy(verb, processingObject);
             }
@@ -581,7 +581,7 @@ internal sealed class VerbHandler
         if (this.universe.VerbResources[VerbKeys.CLIMB].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
             
-            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Climb(verb, processingObject);
             }
@@ -700,43 +700,6 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Eat(string verb, string subject)
-    {
-        if (this.universe.VerbResources[VerbKeys.EAT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
-        {
-            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(subject);
-
-            if (item == default)
-            {
-                item = this.objectHandler.GetUnhiddenItemByNameFromActiveLocation(subject);
-                if (item is { IsEatable: true })
-                {
-                    this.universe.PickObject(item, true);
-                }
-            }
-
-            if (item != default)
-            {
-                if (item.IsEatable)
-                {
-                    item.OnBeforeEat(new ContainerObjectEventArgs());
-
-                    var result = printingSubsystem.ItemEaten(item);
-
-                    item.OnAfterEat(new ContainerObjectEventArgs());
-
-                    return result;
-                }
-                
-                return printingSubsystem.ItemNotEatable(item);
-            }
-
-            return printingSubsystem.ItemNotOwned();
-        }
-
-        return false;
-    }
-
     internal bool SitDown(string verb)
     {
         if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
@@ -786,7 +749,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            if (this.objectHandler.GetUnhiddenObjectByName(subject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(subject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.SitDown(verb);
             }
@@ -839,7 +802,7 @@ internal sealed class VerbHandler
         if (this.universe.VerbResources[VerbKeys.SIT].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
             
-            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.SitDown(verb, processingObject);
             }
@@ -1137,8 +1100,7 @@ internal sealed class VerbHandler
                 var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
                 if (item == default)
                 {
-                    var characterKey = this.objectHandler.GetCharacterKeyByName(subject);
-                    var character = this.universe.ActiveLocation.GetCharacterByKey(characterKey);
+                    var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(subject);
                     if (character != default)
                     {
                         result = result && printingSubsystem.ImpossiblePickup(character);
@@ -1172,7 +1134,7 @@ internal sealed class VerbHandler
     {
         if (this.universe.VerbResources[VerbKeys.TAKE].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
-            if (this.objectHandler.GetUnhiddenObjectByName(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Take(verb, processingObjects);
             }
@@ -1546,11 +1508,6 @@ internal sealed class VerbHandler
 
     private bool IsVerb(string verbKey, string verbToCheck)
     {
-        var verbOverrides = this.universe.ActiveLocation.GetVerbAlternatives(verbKey);
-        var mergedVerbs = verbOverrides.Count > 0
-            ? this.universe.VerbResources[verbKey].Union(second: verbOverrides)
-            : this.universe.VerbResources[verbKey];
-        
-        return mergedVerbs.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
+        return this.universe.IsVerb(verbKey, verbToCheck);
     }
 }

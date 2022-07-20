@@ -31,7 +31,6 @@ public interface IPrintingSubsystem
     bool ItemAlreadyBroken(AHereticObject item);
     bool ItemAlreadyOpen(AHereticObject item);
     bool ItemAlreadyUnlocked(AHereticObject item);
-    bool ItemEaten(AHereticObject item);
     bool ItemUnbreakable(AHereticObject item);
     bool ItemNotEatable(AHereticObject item);
     bool ItemSeated(AHereticObject item);

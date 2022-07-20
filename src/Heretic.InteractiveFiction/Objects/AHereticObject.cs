@@ -126,10 +126,6 @@ public partial class AHereticObject
     /// </summary>
     public bool IsBroken { get; set; }
     /// <summary>
-    /// Is this object eatable?
-    /// </summary>
-    public bool IsEatable { get; set; }
-    /// <summary>
     /// Is the object visible or hidden?
     /// </summary>
     public bool IsHidden { get; set; }
@@ -229,7 +225,6 @@ public partial class AHereticObject
         this.IsSurrounding = false;
         this.IsBreakable = false;
         this.IsBroken = false;
-        this.IsEatable = false;
         this.IsHidden = false;
         this.HideOnContainerClose = true;
         this.IsVirtual = false;

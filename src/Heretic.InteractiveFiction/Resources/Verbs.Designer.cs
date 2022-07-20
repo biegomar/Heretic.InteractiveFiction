@@ -133,7 +133,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Runter|Hinunter|Herab.
+        ///   Looks up a localized string similar to Runter|Hinunter|Herab|R|Hinab.
         /// </summary>
         internal static string DOWN {
             get {
@@ -156,15 +156,6 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string E {
             get {
                 return ResourceManager.GetString("E", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Iss|Ess|Esse.
-        /// </summary>
-        internal static string EAT {
-            get {
-                return ResourceManager.GetString("EAT", resourceCulture);
             }
         }
         
@@ -214,7 +205,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventar|inv.
+        ///   Looks up a localized string similar to Inventar|inv|i.
         /// </summary>
         internal static string INV {
             get {
@@ -448,7 +439,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hoch|Rauf|Hinauf.
+        ///   Looks up a localized string similar to Hoch|Rauf|Hinauf|H|Herauf.
         /// </summary>
         internal static string UP {
             get {

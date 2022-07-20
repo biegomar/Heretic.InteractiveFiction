@@ -135,7 +135,7 @@ internal sealed class InputAnalyzer
     {
         foreach (var word in sentence)
         {
-            if (this.universe.VerbResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            if (this.universe.IsVerb(word))
             {
                 return word;
             }

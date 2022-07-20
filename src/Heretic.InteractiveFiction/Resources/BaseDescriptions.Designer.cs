@@ -304,15 +304,6 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Iss etwas.
-        /// </summary>
-        public static string EAT {
-            get {
-                return ResourceManager.GetString("EAT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &lt;&lt; ...drücke eine Taste, um das Spiel zu beenden... &gt;&gt;.
         /// </summary>
         public static string END_THE_GAME {

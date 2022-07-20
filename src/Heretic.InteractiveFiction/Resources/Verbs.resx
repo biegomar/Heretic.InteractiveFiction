@@ -222,9 +222,6 @@
   <data name="CREDITS" xml:space="preserve">
     <value>Credits|Info|Contribute|Contrib</value>
   </data>
-  <data name="EAT" xml:space="preserve">
-    <value>Iss|Ess|Esse</value>
-  </data>
   <data name="SIT" xml:space="preserve">
     <value>Setze|Setzen|Setz|Hinsetzen|Sitze</value>
   </data>

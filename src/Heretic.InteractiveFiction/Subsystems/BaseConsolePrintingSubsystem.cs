@@ -275,7 +275,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.BREAK),
             nameof(Verbs.USE),
             nameof(Verbs.LOOK),
-            nameof(Verbs.EAT),
             nameof(Verbs.SIT),
             nameof(Verbs.STANDUP),
             nameof(Verbs.JUMP),
@@ -554,13 +553,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     public virtual bool ItemAlreadyUnlocked(AHereticObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.ALREADY_UNLOCKED, this.ConsoleWidth), item.Name);
-        Console.WriteLine();
-        return true;
-    }
-
-    public bool ItemEaten(AHereticObject item)
-    {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_EATEN, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
         Console.WriteLine();
         return true;
     }

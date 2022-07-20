@@ -61,6 +61,33 @@ public sealed class Universe
         this.LocationMap = new LocationMap(new LocationComparer());
         this.ActiveObject = null;
     }
+    
+    public bool IsVerb(string verbKey, string verbToCheck)
+    {
+        var verbOverrides = this.ActiveLocation.GetVerbAlternatives(verbKey);
+        var mergedVerbs = verbOverrides.Count > 0
+            ? this.VerbResources[verbKey].Union(second: verbOverrides)
+            : this.VerbResources[verbKey];
+        
+        return mergedVerbs.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
+    }
+    
+    public bool IsVerb(string verbToCheck)
+    {
+        var verbOverrides = this.ActiveLocation.GetAllVerbAlternatives();
+
+        if (verbOverrides.Count > 0)
+        {
+            return this.VerbResources.Values.SelectMany(x => x)
+                       .Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
+                   || verbOverrides.Values.SelectMany(x => x)
+                       .Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);    
+        }
+
+        return this.VerbResources.Values.SelectMany(x => x)
+            .Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
+
+    }
 
     public void SetPeriodicEvent(PeriodicEvent periodicEvent)
     {

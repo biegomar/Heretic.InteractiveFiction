@@ -13,7 +13,6 @@ public static class VerbKeys
     public static string DOWN => nameof(DOWN);
     public static string DROP => nameof(DROP);
     public static string E => nameof(E);
-    public static string EAT => nameof(EAT);
     public static string GIVE => nameof(GIVE);
     public static string GO => nameof(GO);
     public static string HELP => nameof(HELP);

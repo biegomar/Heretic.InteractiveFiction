@@ -14,13 +14,18 @@ public sealed class Location : AHereticObject
 
     public void AddVerbAlternative(string verbKey, string verbAlternative)
     {
-        if (this.VerbResources.ContainsKey(verbKey))
+        var inputList = verbAlternative.Split('|').ToList();
+        var normalizedList = this.NormalizeResourceList(inputList);
+        foreach (var verb in normalizedList)
         {
-            this.VerbResources[verbKey].Add(verbAlternative);
-        }
-        else
-        {
-            this.VerbResources.Add(verbKey, new []{ verbAlternative });
+            if (this.VerbResources.ContainsKey(verbKey))
+            {
+                this.VerbResources[verbKey].Add(verb);
+            }
+            else
+            {
+                this.VerbResources.Add(verbKey, new List<string> {verb});
+            }   
         }
     }
 
@@ -32,6 +37,11 @@ public sealed class Location : AHereticObject
         }
 
         return new ReadOnlyCollection<string>(new List<string>());
+    }
+
+    public ReadOnlyDictionary<string, IList<string>> GetAllVerbAlternatives()
+    {
+        return new ReadOnlyDictionary<string, IList<string>>(this.VerbResources);
     }
 
     public ICollection<Item> GetAllPickableAndUnHiddenItems()
@@ -58,5 +68,21 @@ public sealed class Location : AHereticObject
         }
 
         return firstLevel.ToList<Item>();
+    }
+    
+    private IEnumerable<string> NormalizeResourceList(IEnumerable<string> inputList)
+    {
+        var result = new List<string>();
+        foreach (var item in inputList)
+        {
+            result.Add(item);
+            var trimmedItem = string.Concat(item.Where(c => !char.IsWhiteSpace(c)));
+            if (item != trimmedItem)
+            {
+                result.Add(trimmedItem);
+            }
+        }
+
+        return result;
     }
 }

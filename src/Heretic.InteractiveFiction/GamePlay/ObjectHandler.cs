@@ -97,12 +97,12 @@ internal sealed class ObjectHandler
         return item;
     }
     
-    internal AHereticObject GetUnhiddenObjectByName(string objectName)
+    internal AHereticObject GetUnhiddenObjectByNameActive(string objectName)
     {
         AHereticObject containerObject = this.GetUnhiddenItemByNameActive(objectName);
         if (containerObject == default)
         {
-            containerObject = this.GetUnhiddenCharacterByName(objectName);
+            containerObject = this.GetUnhiddenCharacterByNameFromActiveLocation(objectName);
         }
 
         if (containerObject == default)
