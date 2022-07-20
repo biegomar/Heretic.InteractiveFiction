@@ -88,25 +88,30 @@ internal sealed class VerbHandler
         if (this.universe.VerbResources[VerbKeys.READ].Contains(verb, StringComparer.InvariantCultureIgnoreCase))
         {
             var item = this.objectHandler.GetUnhiddenObjectByName(subject);
-            if (item is { IsReadable: true })
+            if (item != default)
             {
-                try
+                if (item.IsReadable)
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
-                    item.OnBeforeRead(new ReadItemEventArgs());
+                    try
+                    {
+                        this.objectHandler.StoreAsActiveObject(item);
+                        item.OnBeforeRead(new ReadItemEventArgs());
 
-                    var result = string.IsNullOrWhiteSpace(item.LetterContentDescription) ? 
-                        printingSubsystem.Resource(BaseDescriptions.NO_LETTER_CONTENT) : 
-                        printingSubsystem.FormattedResource(BaseDescriptions.LETTER_CONTENT, item.LetterContentDescription);
+                        var result = string.IsNullOrWhiteSpace(item.LetterContentDescription) ? 
+                            printingSubsystem.Resource(BaseDescriptions.NO_LETTER_CONTENT) : 
+                            printingSubsystem.FormattedResource(BaseDescriptions.LETTER_CONTENT, item.LetterContentDescription);
                     
-                    item.OnAfterRead(new ReadItemEventArgs());
+                        item.OnAfterRead(new ReadItemEventArgs());
 
-                    return result;
+                        return result;
+                    }
+                    catch (ReadException ex)
+                    {
+                        return printingSubsystem.Resource(ex.Message);
+                    }
                 }
-                catch (ReadException ex)
-                {
-                    return printingSubsystem.Resource(ex.Message);
-                }
+
+                return printingSubsystem.Resource(BaseDescriptions.NOTHING_TO_READ);
             }
 
             return printingSubsystem.ItemNotVisible();
