@@ -18,7 +18,7 @@ public sealed class Player : AHereticObject
 
     public AHereticObject ClimbedObject { get; set; }
 
-    public Player(Func<string> descriptionFunc = null): base(descriptionFunc)
+    public Player()
     {
         this.Clothes = new List<Item>();
         this.IsSitting = false;

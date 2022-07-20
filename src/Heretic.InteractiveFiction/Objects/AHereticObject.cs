@@ -7,9 +7,6 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public partial class AHereticObject
 {
-    private readonly Func<string> descriptionFunc;
-    private string description;
-        
     protected string name;
 
     /// <summary>
@@ -64,66 +61,62 @@ public partial class AHereticObject
     /// <summary>
     /// The detailed description of the object. It is used during printout.
     /// </summary>
-    public string Description
-    {
-        get => this.descriptionFunc != null ? this.descriptionFunc() : description;
-        set => description = value;
-    }
+    public Description Description { get; set; }
 
     /// <summary>
     /// The first look description is only used during the first printout and contains additional information.
     /// </summary>
-    public string FirstLookDescription { get; set; }
+    public Description FirstLookDescription { get; set; }
     /// <summary>
     /// The hint description is shown when the hint system has been activated.
     /// </summary>
-    public string Hint { get; set; }
+    public Description Hint { get; set; }
     /// <summary>
     /// This description can be used to describe the discover situation in more detail. It is used during printout instead of the name of the object.
     /// It is only valid in the context of the location where it was found and is deleted after a pickup.
     /// </summary>
-    public string ContainmentDescription { get; set; }
+    public Description ContainmentDescription { get; set; }
     /// <summary>
     /// Is shown when the item is broken.
     /// </summary>
-    public string BrokenDescription { get; set; }
+    public Description BrokenDescription { get; set; }
     /// <summary>
     /// This description is used when the object cannot be broken.
     /// If the description is empty, a default text is generated.
     /// </summary>
-    public string UnbreakableDescription { get; set; }
+    public Description UnbreakableDescription { get; set; }
     /// <summary>
     /// If the object cannot be taken, this description can explain why.
     /// </summary>
-    public string UnPickAbleDescription { get; set; }
+    public Description UnPickAbleDescription { get; set; }
     /// <summary>
     /// If the object cannot be dropped, this description can explain why.
     /// </summary>
-    public string UnDropAbleDescription { get; set; }
+    public Description UnDropAbleDescription { get; set; }
     /// <summary>
     /// Gives a more detailed description about the state of a locked object.
     /// </summary>
-    public string LockDescription { get; set; }
+    public Description LockDescription { get; set; }
     /// <summary>
     /// Gives a more detailed description about the state of an opened object.
     /// </summary>
-    public string OpenDescription { get; set; }
+    public Description OpenDescription { get; set; }
     /// <summary>
     /// Gives a more detailed description about the state of a closed object.
     /// </summary>
-    public string CloseDescription { get; set; }
+    public Description CloseDescription { get; set; }
     /// <summary>
     /// This description can be used if the object is linked to another.
     /// </summary>
-    public string LinkedToDescription { get; set; }
+    public Description LinkedToDescription { get; set; }
     /// <summary>
     /// This description can be used if the object is climbed by the player.
     /// </summary>
-    public string ClimbedDescription { get; set; }
+    public Description ClimbedDescription { get; set; }
     /// <summary>
     /// This description can be used if the object is readable.
     /// </summary>
-    public string LetterContentDescription { get; set; }
+    public Description LetterContentDescription { get; set; }
     /// <summary>
     /// Can this object be broken?
     /// </summary>
@@ -225,14 +218,12 @@ public partial class AHereticObject
     /// </summary>
     public ICollection<Character> Characters { get; set; }
 
-    protected AHereticObject(Func<string> descriptionFunc = null)
+    protected AHereticObject()
     {
-        this.descriptionFunc = descriptionFunc;
         this.Grammar = new Grammars();
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.LinkedTo = new List<Item>();
-        this.FirstLookDescription = string.Empty;
         this.IsContainer = false;
         this.IsSurfaceContainer = false;
         this.IsSurrounding = false;
@@ -254,6 +245,7 @@ public partial class AHereticObject
         this.IsReadable = false;
         this.name = string.Empty;
         this.Description = string.Empty;
+        this.FirstLookDescription = string.Empty;
         this.OpenDescription = string.Empty;
         this.CloseDescription = string.Empty;
         this.UnPickAbleDescription = string.Empty;

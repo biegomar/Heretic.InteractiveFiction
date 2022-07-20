@@ -7,7 +7,7 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class Character : AHereticObject
 {
-    public string TalkDescription { get; set; }
+    public Description TalkDescription { get; set; }
     public string StandardPhrases { get; set; }
     public bool Talked { get; set; }
 
@@ -15,9 +15,10 @@ public sealed class Character : AHereticObject
     public event EventHandler<ConversationEventArgs> Ask;
     public event EventHandler<ConversationEventArgs> Say;
 
-    public Character(Func<string> descriptionFunc = null) : base(descriptionFunc)
+    public Character()
     {
         this.IsPickAble = false;
+        this.TalkDescription = string.Empty;
     }
 
     public string Talk()

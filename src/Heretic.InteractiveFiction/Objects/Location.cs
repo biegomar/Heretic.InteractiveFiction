@@ -6,7 +6,7 @@ public sealed class Location : AHereticObject
 {
     private IDictionary<string, IList<string>> VerbResources;
     
-    public Location(Func<string> descriptionFunc = null) : base(descriptionFunc)
+    public Location()
     {
         this.VerbResources = new Dictionary<string, IList<string>>();
         this.IsPickAble = false;
