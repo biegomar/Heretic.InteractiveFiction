@@ -26,7 +26,7 @@ public sealed class Universe
     public int NumberOfSolvedQuests => this.SolvedQuests.Count;
 
 
-    public readonly IDictionary<string, IEnumerable<string>> VerbResources;
+    public readonly IList<Verb> Verbs;
     public readonly IDictionary<string, IEnumerable<string>> ItemResources;
     public readonly IDictionary<string, IEnumerable<string>> CharacterResources;
     public readonly IDictionary<string, IEnumerable<string>> LocationResources;
@@ -52,7 +52,7 @@ public sealed class Universe
         this.printingSubsystem = printingSubsystem;
         this.SolvedQuests = new List<string>();
         this.Score = 0;
-        this.VerbResources = resourceProvider.GetVerbsFromResources();
+        this.Verbs = resourceProvider.GetVerbsFromResources();
         this.ItemResources = resourceProvider.GetItemsFromResources();
         this.CharacterResources = resourceProvider.GetCharactersFromResources();
         this.LocationResources = resourceProvider.GetLocationsFromResources();
@@ -61,31 +61,31 @@ public sealed class Universe
         this.LocationMap = new LocationMap(new LocationComparer());
         this.ActiveObject = null;
     }
-    
+
     public bool IsVerb(string verbKey, string verbToCheck)
     {
-        var verbOverrides = this.ActiveLocation.GetVerbAlternatives(verbKey);
+        var verbOverrides = this.ActiveLocation.GetOptionalVerbs(verbKey);
+        var optionalVerbNames = verbOverrides.SelectMany(verb => verb.Names).ToList();
+
         var mergedVerbs = verbOverrides.Count > 0
-            ? this.VerbResources[verbKey].Union(second: verbOverrides)
-            : this.VerbResources[verbKey];
+            ? this.Verbs.Single(verb => verb.Key == verbKey).Names.Union(optionalVerbNames)
+            : this.Verbs.Single(verb => verb.Key == verbKey).Names;
         
         return mergedVerbs.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
     }
     
     public bool IsVerb(string verbToCheck)
     {
-        var verbOverrides = this.ActiveLocation.GetAllVerbAlternatives();
-
-        if (verbOverrides.Count > 0)
+        var verbOverrides = this.ActiveLocation.OptionalVerbs;
+        var optionalVerbNames = verbOverrides.Values.SelectMany(x => x).SelectMany(verb => verb.Names).ToList();
+        
+        if (optionalVerbNames.Count > 0)
         {
-            return this.VerbResources.Values.SelectMany(x => x)
-                       .Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
-                   || verbOverrides.Values.SelectMany(x => x)
-                       .Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);    
+            return this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
+                   || optionalVerbNames.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);    
         }
 
-        return this.VerbResources.Values.SelectMany(x => x)
-            .Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
+        return this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
 
     }
 

@@ -1,25 +1,34 @@
 using System.Globalization;
 using System.Resources;
+using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.GamePlay;
 
 public interface IResourceProvider
 {
-    public IDictionary<string, IEnumerable<string>> GetVerbsFromResources()
+    public IList<Verb> GetVerbsFromResources()
     {
-        var result = new Dictionary<string, IEnumerable<string>>();
+        var result = new List<Verb>();
+         ResourceSet resourceSet =
+             Verbs.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
 
-        ResourceSet resourceSet =
-            Verbs.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-        if (resourceSet != null)
-        {
-            foreach (DictionaryEntry entry in resourceSet)
-            {
-                var inputList = entry.Value?.ToString()?.Split('|').ToList();
-                result.Add(entry.Key.ToString()!, inputList);
-            }
-        }
+         if (resourceSet != null) 
+         {
+             foreach (DictionaryEntry entry in resourceSet)
+             {
+                 var inputList = entry.Value?.ToString()?.Split('|').ToList();
+                 
+                 var verb = new Verb
+                 {
+                     Key = entry.Key.ToString()!,
+                     PrimaryName = inputList?.First(),
+                     Names = inputList
+                 };
+
+                 result.Add(verb);
+             }
+         }
 
         return result;
     }

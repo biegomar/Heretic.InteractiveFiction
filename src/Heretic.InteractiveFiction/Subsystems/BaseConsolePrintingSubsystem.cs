@@ -125,14 +125,14 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public virtual bool Help(IDictionary<string, IEnumerable<string>> verbResource)
+    public virtual bool Help(IList<Verb> verbs)
     {
         GeneralHelp();
-        VerbGroupDirections(verbResource);
-        VerbTalks(verbResource);
-        VerbInteractItems(verbResource);
-        VerbContainers(verbResource);
-        VerbMetaInfos(verbResource);
+        VerbGroupDirections(verbs);
+        VerbTalks(verbs);
+        VerbInteractItems(verbs);
+        VerbContainers(verbs);
+        VerbMetaInfos(verbs);
         
         return true;
     }
@@ -158,8 +158,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         }
     }
 
-    private IDictionary<string, IEnumerable<string>> GetDirectionVerbs(
-        IDictionary<string, IEnumerable<string>> verbResource)
+    private IDictionary<string, IEnumerable<string>> GetDirectionVerbs(IList<Verb> verbs)
     {
         var directionVerbKeys = new Collection<string>()
         {
@@ -177,17 +176,24 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.WAYS)
         };
             
-        var result = verbResource.Where(x => directionVerbKeys.Contains(x.Key)).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+        var result = FilterVerbs(verbs, directionVerbKeys);
         
         return result;
-    }    
-    
-    
-    protected void VerbGroupDirections(IDictionary<string, IEnumerable<string>> verbResource)
+    }
+
+    private static Dictionary<string, IEnumerable<string>> FilterVerbs(IList<Verb> verbs, Collection<string> verbKeys)
+    {
+        var result = verbs.Where(x => verbKeys.Contains(x.Key)).OrderBy(x => x.Key)
+            .ToDictionary(x => x.Key, x => x.Names);
+        return result;
+    }
+
+
+    protected void VerbGroupDirections(IList<Verb> verbs)
     {
         Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_DIRECTIONS.Length));
-        VerbHelp(GetDirectionVerbs(verbResource));
+        VerbHelp(GetDirectionVerbs(verbs));
         VerbGroupDirectionsExamples();
     }
 
@@ -208,8 +214,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetMetaInfoVerbs(
-        IDictionary<string, IEnumerable<string>> verbResource)
+    private IDictionary<string, IEnumerable<string>> GetMetaInfoVerbs(IList<Verb> verbs)
     {
         var directionVerbKeys = new Collection<string>()
         {
@@ -226,16 +231,16 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.QUIT)
         };
             
-        var result = verbResource.Where(x => directionVerbKeys.Contains(x.Key)).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+        var result = FilterVerbs(verbs, directionVerbKeys);
         
         return result;
     } 
     
-    protected void VerbMetaInfos(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbMetaInfos(IList<Verb> verbs)
     {
         Console.WriteLine(HelpDescriptions.VERBS_METAINFO);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_METAINFO.Length));
-        VerbHelp(GetMetaInfoVerbs(verbResource));
+        VerbHelp(GetMetaInfoVerbs(verbs));
         VerbMetaInfosExamples();
     }
 
@@ -262,8 +267,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetInteractVerbs(
-        IDictionary<string, IEnumerable<string>> verbResource)
+    private IDictionary<string, IEnumerable<string>> GetInteractVerbs(IList<Verb> verbs)
     {
         var directionVerbKeys = new Collection<string>()
         {
@@ -282,17 +286,17 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.DESCEND),
             nameof(Verbs.WRITE),
         };
-            
-        var result = verbResource.Where(x => directionVerbKeys.Contains(x.Key)).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+
+        var result = FilterVerbs(verbs, directionVerbKeys);
         
         return result;
     } 
     
-    protected void VerbInteractItems(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbInteractItems(IList<Verb> verbs)
     {
         Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_INTERACT_ITEMS.Length));
-        VerbHelp(GetInteractVerbs(verbResource));
+        VerbHelp(GetInteractVerbs(verbs));
         VerbInteractItemsExamples();
     }
 
@@ -331,8 +335,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetTalkVerbs(
-        IDictionary<string, IEnumerable<string>> verbResource)
+    private IDictionary<string, IEnumerable<string>> GetTalkVerbs(IList<Verb> verbs)
     {
         var directionVerbKeys = new Collection<string>()
         {
@@ -341,17 +344,17 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.ASK),
             nameof(Verbs.GIVE),
         };
-            
-        var result = verbResource.Where(x => directionVerbKeys.Contains(x.Key)).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+
+        var result = FilterVerbs(verbs, directionVerbKeys);
         
         return result;
     }
     
-    protected void VerbTalks(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbTalks(IList<Verb> verbs)
     {
         Console.WriteLine(HelpDescriptions.VERBS_TALKS);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_TALKS.Length));
-        VerbHelp(GetTalkVerbs(verbResource));
+        VerbHelp(GetTalkVerbs(verbs));
         VerbTalksExamples();
     }
 
@@ -378,8 +381,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetContainerVerbs(
-        IDictionary<string, IEnumerable<string>> verbResource)
+    private IDictionary<string, IEnumerable<string>> GetContainerVerbs(IList<Verb> verbs)
     {
         var directionVerbKeys = new Collection<string>()
         {
@@ -389,17 +391,17 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.LOCK),
             nameof(Verbs.TURN)
         };
-            
-        var result = verbResource.Where(x => directionVerbKeys.Contains(x.Key)).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+
+        var result = FilterVerbs(verbs, directionVerbKeys);
         
         return result;
     } 
    
-    protected void VerbContainers(IDictionary<string, IEnumerable<string>> verbResource)
+    protected void VerbContainers(IList<Verb> verbs)
     {
         Console.WriteLine(HelpDescriptions.VERBS_CONTAINER);
         Console.WriteLine(new string('-', HelpDescriptions.VERBS_CONTAINER.Length));
-        VerbHelp(GetContainerVerbs(verbResource));
+        VerbHelp(GetContainerVerbs(verbs));
         VerbContainersExamples();
     }
 

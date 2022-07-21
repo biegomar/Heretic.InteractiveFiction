@@ -40,7 +40,7 @@ public sealed class InputProcessor
 
         this.historyAdministrator.Add(input);
 
-        if (this.universe.VerbResources[VerbKeys.REM].Contains(sentence[0], StringComparer.InvariantCultureIgnoreCase))
+        if (this.universe.IsVerb(VerbKeys.REM, sentence[0]))
         {
             return true;
         }

@@ -16,7 +16,7 @@ public interface IPrintingSubsystem
     void ClearScreen();
     bool Credits();
     bool PrintObject(AHereticObject item);
-    bool Help(IDictionary<string, IEnumerable<string>> verbResource);
+    bool Help(IList<Verb> verbs);
     bool History(ICollection<string> historyCollection);
     bool ItemNotVisible();
     bool KeyNotVisible();

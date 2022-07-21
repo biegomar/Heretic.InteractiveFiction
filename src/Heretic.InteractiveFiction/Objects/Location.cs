@@ -4,44 +4,50 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class Location : AHereticObject
 {
-    private IDictionary<string, IList<string>> VerbResources;
-    
+    public IDictionary<string, IList<Verb>> OptionalVerbs { get; set; }
+
     public Location()
     {
-        this.VerbResources = new Dictionary<string, IList<string>>();
+        this.OptionalVerbs = new Dictionary<string, IList<Verb>>();
         this.IsPickAble = false;
     }
 
-    public void AddVerbAlternative(string verbKey, string verbAlternative)
+    public void AddOptionalVerb(string originalVerbKey, string newVerbName, Description newErrorMessage)
     {
-        var inputList = verbAlternative.Split('|').ToList();
-        var normalizedList = this.NormalizeResourceList(inputList);
-        foreach (var verb in normalizedList)
+        if (originalVerbKey == null)
         {
-            if (this.VerbResources.ContainsKey(verbKey))
-            {
-                this.VerbResources[verbKey].Add(verb);
-            }
-            else
-            {
-                this.VerbResources.Add(verbKey, new List<string> {verb});
-            }   
+            throw new ArgumentNullException(nameof(originalVerbKey));
+        }
+        
+        if (this.OptionalVerbs.ContainsKey(originalVerbKey))
+        {
+            throw new ArgumentException(nameof(originalVerbKey));
+        }
+
+        var names = newVerbName.Split('|').ToList();
+        
+        var optionalVerb = new Verb
+        {
+            Key = originalVerbKey,
+            PrimaryName = names.FirstOrDefault(),
+            Names = names,
+            ErrorMessage = newErrorMessage
+        };
+        
+        if (!this.OptionalVerbs.ContainsKey(originalVerbKey))
+        {
+            this.OptionalVerbs.Add(optionalVerb.Key, new List<Verb> {optionalVerb});
         }
     }
 
-    public ReadOnlyCollection<string> GetVerbAlternatives(string verbKey)
+    public ReadOnlyCollection<Verb> GetOptionalVerbs(string verbKey)
     {
-        if (this.VerbResources.ContainsKey(verbKey))
+        if (this.OptionalVerbs.ContainsKey(verbKey))
         {
-            return new ReadOnlyCollection<string>(this.VerbResources[verbKey]);    
+            return new ReadOnlyCollection<Verb>(this.OptionalVerbs[verbKey]);    
         }
 
-        return new ReadOnlyCollection<string>(new List<string>());
-    }
-
-    public ReadOnlyDictionary<string, IList<string>> GetAllVerbAlternatives()
-    {
-        return new ReadOnlyDictionary<string, IList<string>>(this.VerbResources);
+        return new ReadOnlyCollection<Verb>(new List<Verb>());
     }
 
     public ICollection<Item> GetAllPickableAndUnHiddenItems()
@@ -68,21 +74,5 @@ public sealed class Location : AHereticObject
         }
 
         return firstLevel.ToList<Item>();
-    }
-    
-    private IEnumerable<string> NormalizeResourceList(IEnumerable<string> inputList)
-    {
-        var result = new List<string>();
-        foreach (var item in inputList)
-        {
-            result.Add(item);
-            var trimmedItem = string.Concat(item.Where(c => !char.IsWhiteSpace(c)));
-            if (item != trimmedItem)
-            {
-                result.Add(trimmedItem);
-            }
-        }
-
-        return result;
     }
 }
