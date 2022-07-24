@@ -7,65 +7,88 @@ namespace Heretic.InteractiveFiction.Objects;
 public partial class AHereticObject
 {
     public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
+    public event EventHandler<ChangeLocationEventArgs> ChangeLocation;
     public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
     
+    public event EventHandler<BreakItemEventArgs> BeforeBreak;
     public event EventHandler<BreakItemEventArgs> Break;
+    public event EventHandler<BreakItemEventArgs> AfterBreak;
     
     public event EventHandler<ContainerObjectEventArgs> BeforeClimb;
-    public event EventHandler<ContainerObjectEventArgs> AfterClimb;
     public event EventHandler<ContainerObjectEventArgs> Climb;
-    
+    public event EventHandler<ContainerObjectEventArgs> AfterClimb;
+
     public event EventHandler<ContainerObjectEventArgs> BeforeClose;
-    public event EventHandler<ContainerObjectEventArgs> AfterClose;
     public event EventHandler<ContainerObjectEventArgs> Close;
-    
+    public event EventHandler<ContainerObjectEventArgs> AfterClose;
+
     public event EventHandler<DropItemEventArgs> BeforeDrop;
+    public event EventHandler<DropItemEventArgs> Drop;
     public event EventHandler<DropItemEventArgs> AfterDrop;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeEat;
-    public event EventHandler<ContainerObjectEventArgs> AfterEat;
-    
+    public event EventHandler<ContainerObjectEventArgs> BeforeGive;
+    public event EventHandler<ContainerObjectEventArgs> Give;
     public event EventHandler<ContainerObjectEventArgs> AfterGive;
     
-    public event EventHandler<ContainerObjectEventArgs> Open;
     public event EventHandler<ContainerObjectEventArgs> BeforeOpen;
+    public event EventHandler<ContainerObjectEventArgs> Open;
     public event EventHandler<ContainerObjectEventArgs> AfterOpen;
     
-    public event EventHandler<ReadItemEventArgs> Read;
     public event EventHandler<ReadItemEventArgs> BeforeRead;
+    public event EventHandler<ReadItemEventArgs> Read;
     public event EventHandler<ReadItemEventArgs> AfterRead;
     
+    public event EventHandler<ContainerObjectEventArgs> BeforeLook;
+    public event EventHandler<ContainerObjectEventArgs> Look;
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
     
     public event EventHandler<ContainerObjectEventArgs> BeforeTake;
-    public event EventHandler<ContainerObjectEventArgs> AfterTake;
     public event EventHandler<ContainerObjectEventArgs> Take;
+    public event EventHandler<ContainerObjectEventArgs> AfterTake;
     
     public event EventHandler<SitDownEventArgs> BeforeSitDown;
-    public event EventHandler<SitDownEventArgs> AfterSitDown;
     public event EventHandler<SitDownEventArgs> SitDown;
-    
+    public event EventHandler<SitDownEventArgs> AfterSitDown;
+
     public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
+    public event EventHandler<ContainerObjectEventArgs> StandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     
     public event EventHandler<ContainerObjectEventArgs> BeforeDescend;
+    public event EventHandler<ContainerObjectEventArgs> Descend;
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
     
+    public event EventHandler<ContainerObjectEventArgs> BeforeBuy;
     public event EventHandler<ContainerObjectEventArgs> Buy;
+    public event EventHandler<ContainerObjectEventArgs> AfterBuy;
     
+    public event EventHandler<ContainerObjectEventArgs> BeforeJump;
     public event EventHandler<ContainerObjectEventArgs> Jump;
+    public event EventHandler<ContainerObjectEventArgs> AfterJump;
     
+    public event EventHandler<PullItemEventArgs> BeforePull;
     public event EventHandler<PullItemEventArgs> Pull;
+    public event EventHandler<PullItemEventArgs> AfterPull;
     
+    public event EventHandler<PushItemEventArgs> BeforePush;
     public event EventHandler<PushItemEventArgs> Push;
+    public event EventHandler<PushItemEventArgs> AfterPush;
     
+    public event EventHandler<TurnItemEventArgs> BeforeTurn;
     public event EventHandler<TurnItemEventArgs> Turn;
+    public event EventHandler<TurnItemEventArgs> AfterTurn;
     
+    public event EventHandler<UnlockContainerEventArgs> BeforeUnlock;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
+    public event EventHandler<UnlockContainerEventArgs> AfterUnlock;
     
+    public event EventHandler<UseItemEventArgs> BeforeUse;
     public event EventHandler<UseItemEventArgs> Use;
+    public event EventHandler<UseItemEventArgs> AfterUse;
     
+    public event EventHandler<WriteEventArgs> BeforeWrite;
     public event EventHandler<WriteEventArgs> Write;
+    public event EventHandler<WriteEventArgs> AfterWrite;
     
     public virtual void OnUse(UseItemEventArgs eventArgs)
         {
@@ -76,6 +99,10 @@ public partial class AHereticObject
             }
             else
             {
+                if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+                {
+                    throw new UseException(eventArgs.OptionalErrorMessage);    
+                }
                 throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
             }
         }
@@ -177,23 +204,16 @@ public partial class AHereticObject
             localEventHandler?.Invoke(this, eventArgs);
         }
     
+        public virtual void OnClimb(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.Climb;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnAfterClimb(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.AfterClimb;
             localEventHandler?.Invoke(this, eventArgs);
-        }
-    
-        public virtual void OnClimb(ContainerObjectEventArgs eventArgs)
-        {
-            var localEventHandler = this.Climb;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new ClimbException(BaseDescriptions.IMPOSSIBLE_CLIMB);
-            }
         }
 
         public virtual void OnBeforeDescend(ContainerObjectEventArgs eventArgs)
@@ -220,29 +240,22 @@ public partial class AHereticObject
             localEventHandler?.Invoke(this, eventArgs);
         }
     
-        public virtual void OnBeforeEat(ContainerObjectEventArgs eventArgs)
+        public virtual void OnBeforeBreak(BreakItemEventArgs eventArgs)
         {
-            var localEventHandler = this.BeforeEat;
+            var localEventHandler = this.BeforeBreak;
             localEventHandler?.Invoke(this, eventArgs);
         }
-    
-        public virtual void OnAfterEat(ContainerObjectEventArgs eventArgs)
-        {
-            var localEventHandler = this.AfterEat;
-            localEventHandler?.Invoke(this, eventArgs);
-        }
-    
-        public virtual void OnBreak(BreakItemEventArgs eventArgses)
+        
+        public virtual void OnBreak(BreakItemEventArgs eventArgs)
         {
             var localEventHandler = this.Break;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgses);
-            }
-            else
-            {
-                throw new BreakException(BaseDescriptions.IMPOSSIBLE_BREAK);
-            }
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnAfterBreak(BreakItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterBreak;
+            localEventHandler?.Invoke(this, eventArgs);
         }
     
         public virtual void OnTurn(TurnItemEventArgs eventArgs)

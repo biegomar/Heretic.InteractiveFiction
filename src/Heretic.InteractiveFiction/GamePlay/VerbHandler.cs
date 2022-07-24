@@ -124,13 +124,13 @@ internal sealed class VerbHandler
     {
         if (this.IsVerb(VerbKeys.HINT, verb))
         {
-            if (subject == BaseDescriptions.ON.ToLower())
+            if (String.Equals(subject, BaseDescriptions.ON, StringComparison.CurrentCultureIgnoreCase))
             {
                 isHintActive = true;
                 return printingSubsystem.Resource(BaseDescriptions.HINT_ON);
             }
             
-            if (subject == BaseDescriptions.OFF.ToLower())
+            if (String.Equals(subject, BaseDescriptions.OFF, StringComparison.CurrentCultureIgnoreCase))
             {
                 isHintActive = false;
                 return printingSubsystem.Resource(BaseDescriptions.HINT_OFF);
@@ -395,7 +395,7 @@ internal sealed class VerbHandler
                 this.objectHandler.StoreAsActiveObject(item);
                 try
                 {
-                    item.OnUse(new UseItemEventArgs());
+                    item.OnUse(new UseItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage});
 
                     return true;
                 }
@@ -424,7 +424,7 @@ internal sealed class VerbHandler
 
             this.objectHandler.StoreAsActiveObject(subject);
             
-            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
             
             if (item != default)
             {
@@ -563,11 +563,37 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
             this.objectHandler.StoreAsActiveObject(item);
 
-            if (item is { IsClimbAble: true })
+            if (item != default)
             {
-                this.universe.ActivePlayer.HasClimbed = true;
-                this.universe.ActivePlayer.ClimbedObject = item;
-                return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.AccusativeArticleName, true);
+                if (item.IsClimbAble)
+                {
+                    if (!this.universe.ActivePlayer.HasClimbed)
+                    {
+                        try
+                        {
+                            var eventArgs = new ContainerObjectEventArgs();
+                            item.OnBeforeClimb(eventArgs);
+
+                            this.universe.ActivePlayer.HasClimbed = true;
+                            this.universe.ActivePlayer.ClimbedObject = item;
+                            item.OnClimb(eventArgs);
+
+                            item.OnAfterClimb(eventArgs);
+                
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.AccusativeArticleName, true);
+                        }
+                        catch (ClimbException ex)
+                        {
+                            this.universe.ActivePlayer.HasClimbed = false;
+                            this.universe.ActivePlayer.ClimbedObject = default;
+                            return printingSubsystem.Resource(ex.Message);
+                        }    
+                    }
+                    
+                    return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                }
+
+                return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_CLIMB);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -975,18 +1001,39 @@ internal sealed class VerbHandler
         if (this.IsVerb(VerbKeys.BREAK, verb))
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            
             if (item != default)
             {
-                try
+                this.objectHandler.StoreAsActiveObject(item);
+                if (item.IsBreakable)
                 {
-                    item.OnBreak(new BreakItemEventArgs());
-                    return true;
+                    if (!item.IsBroken)
+                    {
+                        try
+                        {
+                            var eventArgs = new BreakItemEventArgs();
+                            item.OnBeforeBreak(eventArgs);
+
+                            item.IsBroken = true;
+                            item.OnBreak(eventArgs);
+
+                            item.OnAfterBreak(eventArgs);
+                            return true;
+                        }
+                        catch (BreakException ex)
+                        {
+                            item.IsBroken = false;
+                            return printingSubsystem.Resource(ex.Message);
+                        }
+                    }
+
+                    return printingSubsystem.ItemAlreadyBroken(item);
                 }
-                catch (BreakException ex)
-                {
-                    return printingSubsystem.Resource(ex.Message);
-                }
+
+                return printingSubsystem.ItemUnbreakable(item);
+                
             }
+
         }
 
         return false;
@@ -1001,6 +1048,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 if (toolItem != default)
                 {
                     if (item.IsBreakable)
@@ -1009,11 +1057,18 @@ internal sealed class VerbHandler
                         {
                             try
                             {
-                                item.OnBreak(new BreakItemEventArgs() { ItemToUse = toolItem });
+                                var eventArgs = new BreakItemEventArgs() { ItemToUse = toolItem };
+                                item.OnBeforeBreak(eventArgs);
+
+                                item.IsBroken = true;
+                                item.OnBreak(eventArgs);
+
+                                item.OnAfterBreak(eventArgs);
                                 return true;
                             }
                             catch (BreakException ex)
                             {
+                                item.IsBroken = false;
                                 return printingSubsystem.Resource(ex.Message);
                             }
                         }

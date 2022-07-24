@@ -499,7 +499,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemPickupSuccess(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
         Console.WriteLine();
         return true;
     }
@@ -508,7 +508,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (string.IsNullOrEmpty(item.UnDropAbleDescription))
         {
-            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
+            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
             Console.WriteLine();
             
             return true;
@@ -574,23 +574,16 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public bool ItemNotEatable(AHereticObject item)
-    {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_EATABLE, this.ConsoleWidth));
-        Console.WriteLine();
-        return true;
-    }
-
     public bool ItemSeated(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), this.LowerFirstChar(item.DativeArticleName));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), item.DativeArticleName.LowerFirstChar());
         Console.WriteLine();
         return true;
     }
 
     public bool ItemNotSeatable(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
         Console.WriteLine();
         return true;
     }
@@ -628,7 +621,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemDropSuccess(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
+        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
         Console.WriteLine();
         return true;
     }
@@ -639,8 +632,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             containerItem.IsSurfaceContainer
                 ? WordWrap(BaseDescriptions.ITEM_DROP_ONTO, this.ConsoleWidth)
                 : WordWrap(BaseDescriptions.ITEM_DROP_INTO, this.ConsoleWidth),
-            this.LowerFirstChar(itemToDrop.AccusativeArticleName),
-            this.LowerFirstChar(containerItem.AccusativeArticleName));
+            itemToDrop.AccusativeArticleName.LowerFirstChar(),
+            containerItem.AccusativeArticleName.LowerFirstChar());
 
         Console.WriteLine();
         return true;
@@ -737,7 +730,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (!string.IsNullOrEmpty(resource) && !string.IsNullOrEmpty(text))
         {
-            Console.Write(WordWrap(resource, this.ConsoleWidth), lowerFirstLetter ? this.LowerFirstChar(text): text);
+            Console.Write(WordWrap(resource, this.ConsoleWidth), lowerFirstLetter ? text.LowerFirstChar(): text);
             Console.WriteLine();
         }
         return true;
@@ -775,7 +768,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool WrongKey(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, this.ConsoleWidth), this.LowerFirstChar(item.Name));
+        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, this.ConsoleWidth), item.Name.LowerFirstChar());
         Console.WriteLine();
         return true;
     }
@@ -823,14 +816,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ImpossibleUnlock(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), this.LowerFirstChar(item.AccusativeArticleName));
+        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
         Console.WriteLine();
         return true;
-    }
-
-    private string LowerFirstChar(string description)
-    {
-        return description[..1].ToLower() + description[1..];
     }
 
     protected virtual string WordWrap(string message, int width)

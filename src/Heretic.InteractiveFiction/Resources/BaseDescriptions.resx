@@ -405,9 +405,6 @@
   <data name="ITEM_EATEN" xml:space="preserve">
     <value>Du hast {0} gegessen.</value>
   </data>
-  <data name="ITEM_NOT_EATABLE" xml:space="preserve">
-    <value>Das wirkt nicht so, als könne man es essen!</value>
-  </data>
   <data name="START_THE_GAME" xml:space="preserve">
     <value>&lt;&lt; ...drücke eine Taste, um das Spiel zu starten... &gt;&gt;</value>
   </data>
@@ -547,7 +544,7 @@
     <value>Fügt dem internen Protokoll einen Kommentar hinzu.</value>
   </data>
   <data name="IMPOSSIBLE_CLIMB" xml:space="preserve">
-    <value>Es gibt keinen Grund, das zu tun.</value>
+    <value>Nein, ich werde dort nicht herauf klettern.</value>
   </data>
   <data name="IMPOSSIBLE_CLOSE" xml:space="preserve">
     <value>Das funktioniert nicht wie erwartet.</value>
@@ -597,5 +594,8 @@
   </data>
   <data name="NOTHING_TO_READ" xml:space="preserve">
     <value>Da gibt es nichts zu lesen.</value>
+  </data>
+  <data name="INAPPROPRIATE_TOOL" xml:space="preserve">
+    <value>Damit kannst Du {0} nichts anhaben.</value>
   </data>
 </root>

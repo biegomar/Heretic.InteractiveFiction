@@ -88,6 +88,18 @@ public sealed class Universe
         return this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
 
     }
+    
+    public Verb GetVerb(string verbToCheck)
+    {
+        var result = this.Verbs.SingleOrDefault(v => v.Names.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase));
+        if (result != default)
+        {
+            return result;
+        }
+        
+        var verbOverrides = this.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
+        return verbOverrides.SingleOrDefault(v => v.Names.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase));
+    }
 
     public void SetPeriodicEvent(PeriodicEvent periodicEvent)
     {

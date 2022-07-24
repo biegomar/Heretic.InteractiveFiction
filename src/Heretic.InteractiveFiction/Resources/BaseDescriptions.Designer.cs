@@ -502,7 +502,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Es gibt keinen Grund, das zu tun..
+        ///   Looks up a localized string similar to Nein, ich werde dort nicht herauf klettern..
         /// </summary>
         public static string IMPOSSIBLE_CLIMB {
             get {
@@ -579,6 +579,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY {
             get {
                 return ResourceManager.GetString("IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Damit kannst Du {0} nichts anhaben..
+        /// </summary>
+        public static string INAPPROPRIATE_TOOL {
+            get {
+                return ResourceManager.GetString("INAPPROPRIATE_TOOL", resourceCulture);
             }
         }
         
@@ -669,15 +678,6 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string ITEM_NOT_A_CONTAINER {
             get {
                 return ResourceManager.GetString("ITEM_NOT_A_CONTAINER", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Das wirkt nicht so, als könne man es essen!.
-        /// </summary>
-        public static string ITEM_NOT_EATABLE {
-            get {
-                return ResourceManager.GetString("ITEM_NOT_EATABLE", resourceCulture);
             }
         }
         
