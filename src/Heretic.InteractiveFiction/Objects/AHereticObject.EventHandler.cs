@@ -374,26 +374,19 @@ public partial class AHereticObject
             var localEventHandler = this.BeforeClose;
             localEventHandler?.Invoke(this, eventArgs);
         }
+        
+        public virtual void OnClose(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.Close;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
 
         public virtual void OnAfterClose(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.AfterClose;
             localEventHandler?.Invoke(this, eventArgs);
         }
-    
-        public virtual void OnClose(ContainerObjectEventArgs eventArgs)
-        {
-            var localEventHandler = this.Close;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new CloseException(BaseDescriptions.IMPOSSIBLE_CLOSE);
-            }
-        }
-
+        
         public virtual void OnBeforeOpen(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.BeforeOpen;

@@ -133,6 +133,17 @@ internal sealed class ObjectHandler
         }
     }
     
+    internal void UnhideItemsOnOpen(AHereticObject item)
+    {
+        if (!item.IsClosed)
+        {
+            foreach (var child in item.Items.Where(x => x.HideOnContainerClose))
+            {
+                child.IsHidden = false;
+            }
+        }
+    }
+    
     internal void ClearActiveObject()
     {
         this.universe.ActiveObject = default;

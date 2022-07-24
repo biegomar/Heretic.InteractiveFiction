@@ -634,15 +634,26 @@ internal sealed class VerbHandler
                         return printingSubsystem.ItemAlreadyClosed(item);
                     }
 
-                    item.OnBeforeClose(new ContainerObjectEventArgs());
+                    try
+                    {
+                        var eventArgs = new ContainerObjectEventArgs();
+                    
+                        item.OnBeforeClose(eventArgs);
 
-                    item.IsClosed = true;
-                    this.objectHandler.HideItemsOnClose(item);
-                    var result = printingSubsystem.ItemClosed(item);
+                        item.IsClosed = true;
+                        this.objectHandler.HideItemsOnClose(item);
+                        item.OnClose(new ContainerObjectEventArgs());
 
-                    item.OnAfterClose(new ContainerObjectEventArgs());
+                        item.OnAfterClose(new ContainerObjectEventArgs());
 
-                    return result;
+                        return printingSubsystem.ItemClosed(item);
+                    }
+                    catch (CloseException ex)
+                    {
+                        item.IsClosed = false;
+                        this.objectHandler.UnhideItemsOnOpen(item);
+                        return printingSubsystem.Resource(ex.Message);
+                    }
                 }
 
                 return false;
