@@ -95,13 +95,18 @@ internal sealed class VerbHandler
                     try
                     {
                         this.objectHandler.StoreAsActiveObject(item);
-                        item.OnBeforeRead(new ReadItemEventArgs());
+                        
+                        var readItemEventArgs = new ReadItemEventArgs();
+                        
+                        item.OnBeforeRead(readItemEventArgs);
 
                         var result = string.IsNullOrWhiteSpace(item.LetterContentDescription) ? 
                             printingSubsystem.Resource(BaseDescriptions.NO_LETTER_CONTENT) : 
                             printingSubsystem.FormattedResource(BaseDescriptions.LETTER_CONTENT, item.LetterContentDescription);
+                        
+                        item.OnRead(readItemEventArgs);
                     
-                        item.OnAfterRead(new ReadItemEventArgs());
+                        item.OnAfterRead(readItemEventArgs);
 
                         return result;
                     }

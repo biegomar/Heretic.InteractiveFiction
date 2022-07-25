@@ -171,19 +171,6 @@ public partial class AHereticObject
                 throw new WriteException(BaseDescriptions.NOTHING_HAPPENS);
             }
         }
-        
-        public virtual void OnRead(ReadItemEventArgs eventArgs)
-        {
-            var localEventHandler = this.Read;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new PushException(BaseDescriptions.NOTHING_TO_READ);
-            }
-        }
 
         public virtual void OnBuy(ContainerObjectEventArgs eventArgs)
         {
@@ -422,7 +409,13 @@ public partial class AHereticObject
             var localEventHandler = this.BeforeRead;
             localEventHandler?.Invoke(this, eventArgs);
         }
-    
+        
+        public virtual void OnRead(ReadItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.Read;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnAfterRead(ReadItemEventArgs eventArgs)
         {
             var localEventHandler = this.AfterRead;
