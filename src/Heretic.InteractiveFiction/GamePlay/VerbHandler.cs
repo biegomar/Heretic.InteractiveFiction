@@ -1282,10 +1282,14 @@ internal sealed class VerbHandler
 
                             var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
                             result = result && singleDropResult;
+                            
                             if (singleDropResult)
                             {
                                 this.universe.ActiveLocation.Items.Add(item);
+                                
+                                item.OnDrop(new DropItemEventArgs());
                                 printingSubsystem.ItemDropSuccess(item);
+                                
                                 item.OnAfterDrop(new DropItemEventArgs());
                             }
                             else
@@ -1295,6 +1299,7 @@ internal sealed class VerbHandler
                         }
                         catch (DropException e)
                         {
+                            this.universe.PickObject(item, true);
                             printingSubsystem.Resource(e.Message);
                         }
                     }

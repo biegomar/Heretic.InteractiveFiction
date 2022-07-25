@@ -233,6 +233,12 @@ public partial class AHereticObject
             var localEventHandler = this.BeforeDrop;
             localEventHandler?.Invoke(this, eventArgs);
         }
+        
+        public virtual void OnDrop(DropItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.Drop;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
 
         public virtual void OnAfterDrop(DropItemEventArgs eventArgs)
         {
