@@ -703,6 +703,8 @@ internal sealed class VerbHandler
                     }
                     catch (OpenException e)
                     {
+                        item.IsClosed = true;
+                        this.objectHandler.HideItemsOnClose(item);
                         return printingSubsystem.Resource(e.Message);
                     }
                 }
