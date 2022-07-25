@@ -307,6 +307,18 @@ public partial class AHereticObject
             localEventHandler?.Invoke(this, eventArgs);
         }
 
+        public virtual void OnBeforeGive(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforeGive;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnGive(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.Give;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnAfterGive(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.AfterGive;

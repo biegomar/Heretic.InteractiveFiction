@@ -985,23 +985,40 @@ internal sealed class VerbHandler
             }
 
             //...and I can give only items that i own.
-            var key = this.objectHandler.GetItemKeyByName(itemName);
-            var item = this.universe.ActivePlayer.GetItemByKey(key);
+            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(itemName);
             if (item == default)
             {
                 return printingSubsystem.ItemNotOwned();
             }
 
             this.objectHandler.StoreAsActiveObject(item);
-            character.Items.Add(item);
-            this.universe.ActivePlayer.RemoveItem(item);
 
-            var eventArgs = new ContainerObjectEventArgs();
-            this.universe.ActivePlayer.OnAfterGive(eventArgs);
-            character.OnAfterGive(eventArgs);
-            item.OnAfterGive(eventArgs);
+            try
+            {
+                var eventArgs = new ContainerObjectEventArgs();
+                this.universe.ActivePlayer.OnBeforeGive(eventArgs);
+                character.OnBeforeGive(eventArgs);
+                item.OnBeforeGive(eventArgs);
+                
+                character.Items.Add(item);
+                this.universe.ActivePlayer.RemoveItem(item);
+                
+                this.universe.ActivePlayer.OnGive(eventArgs);
+                character.OnGive(eventArgs);
+                item.OnGive(eventArgs);
+                
+                this.universe.ActivePlayer.OnAfterGive(eventArgs);
+                character.OnAfterGive(eventArgs);
+                item.OnAfterGive(eventArgs);
 
-            return true;
+                return true;
+            }
+            catch (GiveException ex)
+            {
+                this.universe.ActivePlayer.Items.Add(item);
+                character.RemoveItem(item);
+                return printingSubsystem.Resource(ex.Message);
+            }
         }
 
         return false;
