@@ -937,15 +937,28 @@ internal sealed class VerbHandler
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != default)
             {
                 var item = this.universe.ActivePlayer.ClimbedObject;
-                var eventArgs = new ContainerObjectEventArgs();
+                try
+                {
+                    var eventArgs = new ContainerObjectEventArgs();
                 
-                this.universe.ActivePlayer.OnBeforeDescend(eventArgs);
-                item.OnBeforeDescend(eventArgs);
-                this.universe.ActivePlayer.Descend();
-                var result = printingSubsystem.Resource(BaseDescriptions.DESCENDING);
-                item.OnAfterDescend(eventArgs);
-                this.universe.ActivePlayer.OnAfterDescend(eventArgs);
-                return result;
+                    this.universe.ActivePlayer.OnBeforeDescend(eventArgs);
+                    item.OnBeforeDescend(eventArgs);
+                    
+                    this.universe.ActivePlayer.Descend();
+                    this.universe.ActivePlayer.OnDescend(eventArgs);
+                    item.OnDescend(eventArgs);
+                    
+                    var result = printingSubsystem.Resource(BaseDescriptions.DESCENDING);
+                    
+                    item.OnAfterDescend(eventArgs);
+                    this.universe.ActivePlayer.OnAfterDescend(eventArgs);
+                    
+                    return result;
+                }
+                catch (DescendException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
             }
             return printingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
         }

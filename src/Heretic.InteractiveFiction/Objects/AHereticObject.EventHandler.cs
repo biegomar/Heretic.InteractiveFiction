@@ -195,6 +195,12 @@ public partial class AHereticObject
             var localEventHandler = this.BeforeDescend;
             localEventHandler?.Invoke(this, eventArgs);
         }
+        
+        public virtual void OnDescend(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.Descend;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
 
         public virtual void OnAfterDescend(ContainerObjectEventArgs eventArgs)
         {
