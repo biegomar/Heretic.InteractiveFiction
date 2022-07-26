@@ -125,17 +125,22 @@ public partial class AHereticObject
             localEventHandler?.Invoke(this, eventArgs);
         }
 
+        public virtual void OnBeforePull(PullItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforePull;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnPull(PullItemEventArgs eventArgs)
         {
             var localEventHandler = this.Pull;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new PullException(BaseDescriptions.DOES_NOT_WORK);
-            }
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnAfterPull(PullItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterPull;
+            localEventHandler?.Invoke(this, eventArgs);
         }
     
         public virtual void OnPush(PushItemEventArgs eventArgs)

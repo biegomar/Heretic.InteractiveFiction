@@ -192,10 +192,13 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
+                
                 try
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
+                    item.OnBeforePull(new PullItemEventArgs());
                     item.OnPull(new PullItemEventArgs());
+                    item.OnAfterPull(new PullItemEventArgs());
 
                     return true;
                 }
