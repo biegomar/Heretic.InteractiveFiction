@@ -236,7 +236,11 @@ internal sealed class VerbHandler
 
             try
             {
-                subject.OnPull(new PullItemEventArgs() {ItemToUse = item});
+                var eventArgs = new PullItemEventArgs() { ItemToUse = item };
+                
+                subject.OnBeforePull(eventArgs);
+                subject.OnPull(eventArgs);
+                subject.OnAfterPull(eventArgs);
 
                 return true;
             }
