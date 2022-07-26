@@ -1244,7 +1244,11 @@ internal sealed class VerbHandler
                             {
                                 try
                                 {
-                                    item.OnUnlock(new UnlockContainerEventArgs { Key = key });
+                                    var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key };
+                                    
+                                    item.OnBeforeUnlock(unlockContainerEventArgs);
+                                    item.OnUnlock(unlockContainerEventArgs);
+                                    item.OnAfterUnlock(unlockContainerEventArgs);
 
                                     return true;
                                 }
