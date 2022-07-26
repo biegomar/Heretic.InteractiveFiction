@@ -570,10 +570,15 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
+                
                 try
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
-                    item.OnJump(new ContainerObjectEventArgs());
+                    var containerObjectEventArgs = new ContainerObjectEventArgs();
+                    
+                    item.OnBeforeJump(containerObjectEventArgs);
+                    item.OnJump(containerObjectEventArgs);
+                    item.OnAfterJump(containerObjectEventArgs);
 
                     return true;
                 }

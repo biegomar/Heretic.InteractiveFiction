@@ -107,17 +107,22 @@ public partial class AHereticObject
             }
         }
     
+        public virtual void OnBeforeJump(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforeJump;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnJump(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.Jump;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new JumpException(BaseDescriptions.DOES_NOT_WORK);
-            }
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnAfterJump(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterJump;
+            localEventHandler?.Invoke(this, eventArgs);
         }
 
         public virtual void OnPull(PullItemEventArgs eventArgs)
