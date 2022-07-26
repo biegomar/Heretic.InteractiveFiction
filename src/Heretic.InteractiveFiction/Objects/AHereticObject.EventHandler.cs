@@ -312,6 +312,18 @@ public partial class AHereticObject
             localEventHandler?.Invoke(this, eventArgs);
         }
 
+        public virtual void OnBeforeLook(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforeLook;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnLook(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.Look;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnAfterLook(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.AfterLook;

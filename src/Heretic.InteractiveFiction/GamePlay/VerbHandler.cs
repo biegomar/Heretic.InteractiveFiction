@@ -40,8 +40,22 @@ internal sealed class VerbHandler
     {
         if (this.IsVerb(VerbKeys.LOOK, verb))
         {
-            this.universe.UnveilFirstLevelObjects(this.universe.ActiveLocation);
-            return printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+            try
+            {
+                var eventArgs = new ContainerObjectEventArgs();
+                
+                this.universe.ActiveLocation.OnBeforeLook(eventArgs);
+                
+                this.universe.UnveilFirstLevelObjects(this.universe.ActiveLocation);
+                this.universe.ActiveLocation.OnLook(eventArgs);
+                
+                this.universe.ActiveLocation.OnAfterLook(eventArgs);
+                return printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+            }
+            catch (LookException ex)
+            {
+                return printingSubsystem.Resource(ex.Message);
+            }
         }
 
         return false;
@@ -54,14 +68,30 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
-                this.objectHandler.StoreAsActiveObject(item);
-                this.universe.UnveilFirstLevelObjects(item);
-                var result = printingSubsystem.PrintObject(item);
+                try
+                {
+                    this.objectHandler.StoreAsActiveObject(item);
+                    
+                    var eventArgs = new ContainerObjectEventArgs();
+                    var eventArgsForActiveLocation = new ContainerObjectEventArgs() { ExternalItemKey = item.Key };
 
-                item.OnAfterLook(new ContainerObjectEventArgs());
-                this.universe.ActiveLocation.OnAfterLook(new ContainerObjectEventArgs() {ExternalItemKey = item.Key});
+                    item.OnBeforeLook(eventArgs);
+                    this.universe.ActiveLocation.OnBeforeLook(eventArgsForActiveLocation);
+                    
+                    this.universe.UnveilFirstLevelObjects(item);
+                    item.OnLook(eventArgs);
+                    this.universe.ActiveLocation.OnLook(eventArgsForActiveLocation);
+                    var result = printingSubsystem.PrintObject(item);
 
-                return result;
+                    item.OnAfterLook(new ContainerObjectEventArgs());
+                    this.universe.ActiveLocation.OnAfterLook(eventArgsForActiveLocation);
+
+                    return result;
+                }
+                catch (LookException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
             }
 
             return printingSubsystem.ItemNotVisible();
