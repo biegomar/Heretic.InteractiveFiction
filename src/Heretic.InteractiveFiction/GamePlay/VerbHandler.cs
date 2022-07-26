@@ -500,14 +500,17 @@ internal sealed class VerbHandler
             item = this.universe.ActiveLocation.GetItemByKey(key);
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
+                
                 try
                 {
+                    item.OnBeforeBuy(new ContainerObjectEventArgs());
                     item.OnBuy(new ContainerObjectEventArgs());
-                    this.objectHandler.StoreAsActiveObject(item);
-
+                    item.OnAfterBuy(new ContainerObjectEventArgs());
+                    
                     return true;
                 }
-                catch (Exception ex)
+                catch (BuyException ex)
                 {
                     return printingSubsystem.Resource(ex.Message);
                 }

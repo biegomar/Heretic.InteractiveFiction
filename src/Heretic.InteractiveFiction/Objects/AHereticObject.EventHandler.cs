@@ -159,17 +159,22 @@ public partial class AHereticObject
             }
         }
 
+        public virtual void OnBeforeBuy(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforeBuy;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnBuy(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.Buy;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new BuyException(BaseDescriptions.ON_BUY_EXCEPTION);
-            }
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnAfterBuy(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterBuy;
+            localEventHandler?.Invoke(this, eventArgs);
         }
     
         public virtual void OnBeforeClimb(ContainerObjectEventArgs eventArgs)
