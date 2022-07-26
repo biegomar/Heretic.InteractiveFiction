@@ -145,20 +145,7 @@ public partial class AHereticObject
                 throw new PushException(BaseDescriptions.DOES_NOT_WORK);
             }
         }
-    
-        public virtual void OnOpen(ContainerObjectEventArgs eventArgs)
-        {
-            var localEventHandler = this.Open;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new OpenException(BaseDescriptions.IMPOSSIBLE_OPEN);
-            }
-        }
-    
+
         public virtual void OnWrite(WriteEventArgs eventArgs)
         {
             var localEventHandler = this.Write;
@@ -400,6 +387,12 @@ public partial class AHereticObject
         public virtual void OnBeforeOpen(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.BeforeOpen;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnOpen(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.Open;
             localEventHandler?.Invoke(this, eventArgs);
         }
     
