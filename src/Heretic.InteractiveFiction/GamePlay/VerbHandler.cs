@@ -446,7 +446,11 @@ internal sealed class VerbHandler
                 this.objectHandler.StoreAsActiveObject(item);
                 try
                 {
-                    item.OnUse(new UseItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage});
+                    var useItemEventArgs = new UseItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    item.OnBeforeUse(useItemEventArgs);
+                    item.OnUse(useItemEventArgs);
+                    item.OnAfterUse(useItemEventArgs);
 
                     return true;
                 }
@@ -481,7 +485,11 @@ internal sealed class VerbHandler
             {
                 try
                 {
-                    subject.OnUse(new UseItemEventArgs() {ItemToUse = item});
+                    var useItemEventArgs = new UseItemEventArgs() {ItemToUse = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    subject.OnBeforeUse(useItemEventArgs);
+                    subject.OnUse(useItemEventArgs);
+                    subject.OnAfterUse(useItemEventArgs);
 
                     return true;
                 }
