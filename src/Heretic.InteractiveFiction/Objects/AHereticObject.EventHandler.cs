@@ -256,22 +256,28 @@ public partial class AHereticObject
             var localEventHandler = this.BeforeSitDown;
             localEventHandler?.Invoke(this, eventArgs);
         }
-    
-        public virtual void OnAfterSitDown(SitDownEventArgs eventArgs)
-        {
-            var localEventHandler = this.AfterSitDown;
-            localEventHandler?.Invoke(this, eventArgs);
-        }
-    
+        
         public virtual void OnSitDown(SitDownEventArgs eventArgs)
         {
             var localEventHandler = this.SitDown;
             localEventHandler?.Invoke(this, eventArgs);
         }
     
+        public virtual void OnAfterSitDown(SitDownEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterSitDown;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+
         public virtual void OnBeforeStandUp(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.BeforeStandUp;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnStandUp(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.StandUp;
             localEventHandler?.Invoke(this, eventArgs);
         }
     

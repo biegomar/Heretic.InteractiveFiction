@@ -792,17 +792,20 @@ internal sealed class VerbHandler
 
                 try
                 {
-                    this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
-                    onlySeat.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                    var sitDownEventArgs = new SitDownEventArgs {ItemToSitOn = onlySeat};
+                    var downEventArgs = new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer};
+                    
+                    this.universe.ActivePlayer.OnBeforeSitDown(sitDownEventArgs);
+                    onlySeat.OnBeforeSitDown(downEventArgs);
                 
                     this.universe.ActivePlayer.SitDownOnSeat(onlySeat);
-                    this.universe.ActivePlayer.OnSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
-                    onlySeat.OnSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                    this.universe.ActivePlayer.OnSitDown(sitDownEventArgs);
+                    onlySeat.OnSitDown(downEventArgs);
                 
                     var result = printingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.DativeArticleName, true);
                 
-                    onlySeat.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                    this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = onlySeat});
+                    onlySeat.OnAfterSitDown(downEventArgs);
+                    this.universe.ActivePlayer.OnAfterSitDown(sitDownEventArgs);
                     
                     return result;
                 }
@@ -843,17 +846,20 @@ internal sealed class VerbHandler
                 {
                     try
                     {
-                        this.universe.ActivePlayer.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = item});
-                        item.OnBeforeSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                        var sitDownEventArgs = new SitDownEventArgs {ItemToSitOn = item};
+                        var downEventArgs = new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer};
+                        
+                        this.universe.ActivePlayer.OnBeforeSitDown(sitDownEventArgs);
+                        item.OnBeforeSitDown(downEventArgs);
                     
                         this.universe.ActivePlayer.SitDownOnSeat(item);
-                        this.universe.ActivePlayer.OnSitDown(new SitDownEventArgs {ItemToSitOn = item});
-                        item.OnSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
+                        this.universe.ActivePlayer.OnSitDown(sitDownEventArgs);
+                        item.OnSitDown(downEventArgs);
                     
                         var result = printingSubsystem.ItemSeated(item);
                     
-                        item.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer});
-                        this.universe.ActivePlayer.OnAfterSitDown(new SitDownEventArgs {ItemToSitOn = item});
+                        item.OnAfterSitDown(downEventArgs);
+                        this.universe.ActivePlayer.OnAfterSitDown(sitDownEventArgs);
                     
                         return result;
                     }
@@ -895,16 +901,28 @@ internal sealed class VerbHandler
             if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != default)
             {
                 var item = this.universe.ActivePlayer.Seat;
-                this.objectHandler.StoreAsActiveObject(item);
-                var eventArgs = new ContainerObjectEventArgs();
+                try
+                {
+                    this.objectHandler.StoreAsActiveObject(item);
                 
-                this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
-                item.OnBeforeStandUp(eventArgs);
-                this.universe.ActivePlayer.StandUp();
-                var result = printingSubsystem.Resource(BaseDescriptions.STANDING_UP);
-                item.OnAfterStandUp(eventArgs);
-                this.universe.ActivePlayer.OnAfterStandUp(eventArgs);
-                return result;
+                    var eventArgs = new ContainerObjectEventArgs();
+                
+                    this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
+                    item.OnBeforeStandUp(eventArgs);
+                
+                    this.universe.ActivePlayer.StandUp();
+                    item.OnStandUp(eventArgs);
+                    var result = printingSubsystem.Resource(BaseDescriptions.STANDING_UP);
+                
+                    item.OnAfterStandUp(eventArgs);
+                    this.universe.ActivePlayer.OnAfterStandUp(eventArgs);
+                    return result;
+                }
+                catch (StandUpException ex)
+                {
+                    this.universe.ActivePlayer.SitDownOnSeat(item);
+                    return printingSubsystem.Resource(ex.Message);
+                }
             }
             return printingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
         }
