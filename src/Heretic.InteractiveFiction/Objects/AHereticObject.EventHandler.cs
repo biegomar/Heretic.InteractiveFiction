@@ -162,17 +162,22 @@ public partial class AHereticObject
         localEventHandler?.Invoke(this, eventArgs);
     }
 
+    public virtual void OnBeforeWrite(WriteEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeWrite;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
     public virtual void OnWrite(WriteEventArgs eventArgs)
     {
         var localEventHandler = this.Write;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            throw new WriteException(BaseDescriptions.NOTHING_HAPPENS);
-        }
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterWrite(WriteEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterWrite;
+        localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnBeforeBuy(ContainerObjectEventArgs eventArgs)

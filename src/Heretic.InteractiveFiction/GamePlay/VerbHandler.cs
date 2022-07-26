@@ -348,7 +348,12 @@ internal sealed class VerbHandler
         {
             try
             {
-                this.universe.ActiveLocation.OnWrite(new WriteEventArgs() {Text = text});
+                var writeEventArgs = new WriteEventArgs() {Text = text};
+                
+                this.universe.ActiveLocation.OnBeforeWrite(writeEventArgs);
+                this.universe.ActiveLocation.OnWrite(writeEventArgs);
+                this.universe.ActiveLocation.OnAfterWrite(writeEventArgs);
+                
                 return true;
             }
             catch (WriteException ex)
