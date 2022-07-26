@@ -58,144 +58,115 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> Descend;
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeBuy;
     public event EventHandler<ContainerObjectEventArgs> Buy;
-    public event EventHandler<ContainerObjectEventArgs> AfterBuy;
-
-    public event EventHandler<ContainerObjectEventArgs> BeforeJump;
     public event EventHandler<ContainerObjectEventArgs> Jump;
-    public event EventHandler<ContainerObjectEventArgs> AfterJump;
-
-    public event EventHandler<PullItemEventArgs> BeforePull;
     public event EventHandler<PullItemEventArgs> Pull;
-    public event EventHandler<PullItemEventArgs> AfterPull;
-
-    public event EventHandler<PushItemEventArgs> BeforePush;
     public event EventHandler<PushItemEventArgs> Push;
-    public event EventHandler<PushItemEventArgs> AfterPush;
-
-    public event EventHandler<TurnItemEventArgs> BeforeTurn;
     public event EventHandler<TurnItemEventArgs> Turn;
-    public event EventHandler<TurnItemEventArgs> AfterTurn;
-
-    public event EventHandler<UnlockContainerEventArgs> BeforeUnlock;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
-    public event EventHandler<UnlockContainerEventArgs> AfterUnlock;
-
-    public event EventHandler<UseItemEventArgs> BeforeUse;
     public event EventHandler<UseItemEventArgs> Use;
-    public event EventHandler<UseItemEventArgs> AfterUse;
-
-    public event EventHandler<WriteEventArgs> BeforeWrite;
     public event EventHandler<WriteEventArgs> Write;
-    public event EventHandler<WriteEventArgs> AfterWrite;
 
-    public virtual void OnBeforeUse(UseItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeUse;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-    
     public virtual void OnUse(UseItemEventArgs eventArgs)
     {
         var localEventHandler = this.Use;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new UseException(eventArgs.OptionalErrorMessage);    
+            }
+            throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
+        }
     }
     
-    public virtual void OnAfterUse(UseItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterUse;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnBeforeJump(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeJump;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
     public virtual void OnJump(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.Jump;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnAfterJump(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterJump;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnBeforePull(PullItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforePull;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new JumpException(eventArgs.OptionalErrorMessage);
+            }
+            throw new JumpException(BaseDescriptions.DOES_NOT_WORK);
+        }
     }
 
     public virtual void OnPull(PullItemEventArgs eventArgs)
     {
         var localEventHandler = this.Pull;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnAfterPull(PullItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterPull;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnBeforePush(PushItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforePush;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new PullException(eventArgs.OptionalErrorMessage);
+            }
+            throw new PullException(BaseDescriptions.DOES_NOT_WORK);
+        }
     }
 
     public virtual void OnPush(PushItemEventArgs eventArgs)
     {
         var localEventHandler = this.Push;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new PushException(eventArgs.OptionalErrorMessage);
+            }
+            throw new PushException(BaseDescriptions.DOES_NOT_WORK);
+        }
     }
 
-    public virtual void OnAfterPush(PushItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterPush;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnBeforeWrite(WriteEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeWrite;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-    
     public virtual void OnWrite(WriteEventArgs eventArgs)
     {
         var localEventHandler = this.Write;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new WriteException(eventArgs.OptionalErrorMessage);    
+            }
+            throw new WriteException(BaseDescriptions.NOTHING_HAPPENS);
+        }
     }
     
-    public virtual void OnAfterWrite(WriteEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterWrite;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnBeforeBuy(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeBuy;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
     public virtual void OnBuy(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.Buy;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnAfterBuy(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterBuy;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new BuyException(eventArgs.OptionalErrorMessage);
+            }
+            throw new BuyException(BaseDescriptions.ON_BUY_EXCEPTION);
+        }
     }
 
     public virtual void OnBeforeClimb(ContainerObjectEventArgs eventArgs)
@@ -270,22 +241,21 @@ public abstract partial class AHereticObject
         localEventHandler?.Invoke(this, eventArgs);
     }
 
-    public virtual void OnBeforeTurn(TurnItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeTurn;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
     public virtual void OnTurn(TurnItemEventArgs eventArgs)
     {
         var localEventHandler = this.Turn;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnAfterTurn(TurnItemEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterTurn;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new TurnException(eventArgs.OptionalErrorMessage);    
+            }
+            throw new TurnException(BaseDescriptions.DOES_NOT_WORK);
+        }
     }
 
     public virtual void OnBeforeSitDown(SitDownEventArgs eventArgs)
@@ -463,22 +433,19 @@ public abstract partial class AHereticObject
         localEventHandler?.Invoke(this, eventArgs);
     }
 
-    public virtual void OnBeforeUnlock(UnlockContainerEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeUnlock;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
     public virtual void OnUnlock(UnlockContainerEventArgs eventArgs)
     {
         var localEventHandler = this.Unlock;
-        localEventHandler?.Invoke(this, eventArgs);
-        //throw new UnlockException(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, this.Name, eventArgs.Key.Name));
-    }
-
-    public virtual void OnAfterUnlock(UnlockContainerEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterUnlock;
-        localEventHandler?.Invoke(this, eventArgs);
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new UnlockException(eventArgs.OptionalErrorMessage);    
+            }
+            throw new UnlockException(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, this.Name, eventArgs.Key.Name));
+        }
     }
 }

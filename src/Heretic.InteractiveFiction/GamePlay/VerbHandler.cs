@@ -196,10 +196,9 @@ internal sealed class VerbHandler
                 
                 try
                 {
-                    item.OnBeforePull(new PullItemEventArgs());
-                    item.OnPull(new PullItemEventArgs());
-                    item.OnAfterPull(new PullItemEventArgs());
-
+                    var pullItemEventArgs = new PullItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    item.OnPull(pullItemEventArgs);
+                    
                     return true;
                 }
                 catch (PullException ex)
@@ -236,12 +235,10 @@ internal sealed class VerbHandler
 
             try
             {
-                var eventArgs = new PullItemEventArgs() { ItemToUse = item };
+                var eventArgs = new PullItemEventArgs() { ItemToUse = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
                 
-                subject.OnBeforePull(eventArgs);
                 subject.OnPull(eventArgs);
-                subject.OnAfterPull(eventArgs);
-
+                
                 return true;
             }
             catch (PullException ex)
@@ -264,12 +261,10 @@ internal sealed class VerbHandler
                 
                 try
                 {
-                    var pushItemEventArgs = new PushItemEventArgs();
+                    var pushItemEventArgs = new PushItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
-                    item.OnBeforePush(pushItemEventArgs);
                     item.OnPush(pushItemEventArgs);
-                    item.OnAfterPush(pushItemEventArgs);
-
+                    
                     return true;
                 }
                 catch (PushException ex)
@@ -306,12 +301,10 @@ internal sealed class VerbHandler
 
             try
             {
-                var pushItemEventArgs = new PushItemEventArgs() {ItemToUse = item};
+                var pushItemEventArgs = new PushItemEventArgs() {ItemToUse = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
-                subject.OnBeforePush(pushItemEventArgs);
                 subject.OnPush(pushItemEventArgs);
-                subject.OnAfterPush(pushItemEventArgs);
-
+                
                 return true;
             }
             catch (PushException ex)
@@ -348,11 +341,9 @@ internal sealed class VerbHandler
         {
             try
             {
-                var writeEventArgs = new WriteEventArgs() {Text = text};
+                var writeEventArgs = new WriteEventArgs() {Text = text, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                 
-                this.universe.ActiveLocation.OnBeforeWrite(writeEventArgs);
                 this.universe.ActiveLocation.OnWrite(writeEventArgs);
-                this.universe.ActiveLocation.OnAfterWrite(writeEventArgs);
                 
                 return true;
             }
@@ -453,10 +444,8 @@ internal sealed class VerbHandler
                 {
                     var useItemEventArgs = new UseItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
-                    item.OnBeforeUse(useItemEventArgs);
                     item.OnUse(useItemEventArgs);
-                    item.OnAfterUse(useItemEventArgs);
-
+                    
                     return true;
                 }
                 catch (UseException ex)
@@ -492,9 +481,7 @@ internal sealed class VerbHandler
                 {
                     var useItemEventArgs = new UseItemEventArgs() {ItemToUse = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
-                    subject.OnBeforeUse(useItemEventArgs);
                     subject.OnUse(useItemEventArgs);
-                    subject.OnAfterUse(useItemEventArgs);
 
                     return true;
                 }
@@ -533,9 +520,8 @@ internal sealed class VerbHandler
                 
                 try
                 {
-                    item.OnBeforeBuy(new ContainerObjectEventArgs());
-                    item.OnBuy(new ContainerObjectEventArgs());
-                    item.OnAfterBuy(new ContainerObjectEventArgs());
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    item.OnBuy(containerObjectEventArgs);
                     
                     return true;
                 }
@@ -575,11 +561,9 @@ internal sealed class VerbHandler
                 this.objectHandler.StoreAsActiveObject(item);
                 try
                 {
-                    var turnItemEventArgs = new TurnItemEventArgs();
+                    var turnItemEventArgs = new TurnItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
-                    item.OnBeforeTurn(turnItemEventArgs);
                     item.OnTurn(turnItemEventArgs);
-                    item.OnAfterTurn(turnItemEventArgs);
 
                     return true;
                 }
@@ -607,12 +591,10 @@ internal sealed class VerbHandler
                 
                 try
                 {
-                    var containerObjectEventArgs = new ContainerObjectEventArgs();
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
-                    item.OnBeforeJump(containerObjectEventArgs);
                     item.OnJump(containerObjectEventArgs);
-                    item.OnAfterJump(containerObjectEventArgs);
-
+                    
                     return true;
                 }
                 catch (JumpException ex)
@@ -1269,12 +1251,10 @@ internal sealed class VerbHandler
                             {
                                 try
                                 {
-                                    var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key };
+                                    var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
                                     
-                                    item.OnBeforeUnlock(unlockContainerEventArgs);
                                     item.OnUnlock(unlockContainerEventArgs);
-                                    item.OnAfterUnlock(unlockContainerEventArgs);
-
+                                    
                                     return true;
                                 }
                                 catch (UnlockException e)
@@ -1424,7 +1404,9 @@ internal sealed class VerbHandler
                     {
                         try
                         {
-                            item.OnBeforeDrop(new DropItemEventArgs());
+                            var dropItemEventArgs = new DropItemEventArgs();
+                            
+                            item.OnBeforeDrop(dropItemEventArgs);
 
                             var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
                             result = result && singleDropResult;
@@ -1433,10 +1415,10 @@ internal sealed class VerbHandler
                             {
                                 this.universe.ActiveLocation.Items.Add(item);
                                 
-                                item.OnDrop(new DropItemEventArgs());
+                                item.OnDrop(dropItemEventArgs);
                                 printingSubsystem.ItemDropSuccess(item);
                                 
-                                item.OnAfterDrop(new DropItemEventArgs());
+                                item.OnAfterDrop(dropItemEventArgs);
                             }
                             else
                             {
@@ -1512,15 +1494,19 @@ internal sealed class VerbHandler
                             {
                                 try
                                 {
-                                    itemToDrop.OnBeforeDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
+                                    var dropItemEventArgs = new DropItemEventArgs() {ItemContainer = itemContainer};
+                                    
+                                    itemToDrop.OnBeforeDrop(dropItemEventArgs);
 
                                     var removeSuccess = this.universe.ActivePlayer.RemoveItem(itemToDrop);
                             
                                     if (removeSuccess)
                                     {
                                         itemContainer.Items.Add(itemToDrop);
+                                        itemContainer.OnDrop(dropItemEventArgs);
                                         printingSubsystem.ItemDropSuccess(itemToDrop, itemContainer);
-                                        itemContainer.OnAfterDrop(new DropItemEventArgs() {ItemContainer = itemContainer});
+                                        
+                                        itemContainer.OnAfterDrop(dropItemEventArgs);
                                         return true;
                                     }
 
