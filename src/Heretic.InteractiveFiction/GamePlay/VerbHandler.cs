@@ -260,10 +260,15 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
+                
                 try
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
-                    item.OnPush(new PushItemEventArgs());
+                    var pushItemEventArgs = new PushItemEventArgs();
+                    
+                    item.OnBeforePush(pushItemEventArgs);
+                    item.OnPush(pushItemEventArgs);
+                    item.OnAfterPush(pushItemEventArgs);
 
                     return true;
                 }
@@ -301,7 +306,11 @@ internal sealed class VerbHandler
 
             try
             {
-                subject.OnPush(new PushItemEventArgs() {ItemToUse = item});
+                var pushItemEventArgs = new PushItemEventArgs() {ItemToUse = item};
+                    
+                subject.OnBeforePush(pushItemEventArgs);
+                subject.OnPush(pushItemEventArgs);
+                subject.OnAfterPush(pushItemEventArgs);
 
                 return true;
             }

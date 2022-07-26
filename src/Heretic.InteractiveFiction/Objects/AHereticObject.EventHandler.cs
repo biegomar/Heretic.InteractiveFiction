@@ -143,17 +143,22 @@ public partial class AHereticObject
             localEventHandler?.Invoke(this, eventArgs);
         }
     
+        public virtual void OnBeforePush(PushItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforePush;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnPush(PushItemEventArgs eventArgs)
         {
             var localEventHandler = this.Push;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new PushException(BaseDescriptions.DOES_NOT_WORK);
-            }
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnAfterPush(PushItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterPush;
+            localEventHandler?.Invoke(this, eventArgs);
         }
 
         public virtual void OnWrite(WriteEventArgs eventArgs)
