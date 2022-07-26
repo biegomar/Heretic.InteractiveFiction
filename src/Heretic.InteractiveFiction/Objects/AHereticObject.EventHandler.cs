@@ -335,24 +335,17 @@ public partial class AHereticObject
             var localEventHandler = this.BeforeTake;
             localEventHandler?.Invoke(this, eventArgs);
         }
+        
+        public virtual void OnTake(ContainerObjectEventArgs eventArgs)
+        {
+            var localEventHandler = this.Take;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
     
         public virtual void OnAfterTake(ContainerObjectEventArgs eventArgs)
         {
             var localEventHandler = this.AfterTake;
             localEventHandler?.Invoke(this, eventArgs);
-        }
-    
-        public virtual void OnTake(ContainerObjectEventArgs eventArgs)
-        {
-            var localEventHandler = this.Take;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new TakeException(BaseDescriptions.IMPOSSIBLE_SINGLE_ITEM_PICKUP);
-            }
         }
 
         public virtual void OnBeforeChangeLocation(ChangeLocationEventArgs eventArgs)

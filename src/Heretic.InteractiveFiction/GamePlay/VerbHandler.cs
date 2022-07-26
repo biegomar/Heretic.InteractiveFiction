@@ -1234,10 +1234,13 @@ internal sealed class VerbHandler
                 {
                     try
                     {
-                        item.OnBeforeTake(new ContainerObjectEventArgs());
-                        result = result && universe.PickObject(item);
                         this.objectHandler.StoreAsActiveObject(item);
-                        item.OnAfterTake(new ContainerObjectEventArgs());
+
+                        var eventArgs = new ContainerObjectEventArgs();
+                        item.OnBeforeTake(eventArgs);
+                        result = result && universe.PickObject(item);
+                        item.OnTake(eventArgs);
+                        item.OnAfterTake(eventArgs);
                     }
                     catch (TakeException ex)
                     {
@@ -1275,9 +1278,12 @@ internal sealed class VerbHandler
                 {
                     try
                     {
-                        item.OnBeforeTake(new ContainerObjectEventArgs());
+                        var eventArgs = new ContainerObjectEventArgs();
+                        
+                        item.OnBeforeTake(eventArgs);
                         result = result && universe.PickObject(item);
-                        item.OnAfterTake(new ContainerObjectEventArgs());
+                        item.OnTake(eventArgs);
+                        item.OnAfterTake(eventArgs);
                     }
                     catch (TakeException ex)
                     {
@@ -1287,10 +1293,8 @@ internal sealed class VerbHandler
 
                 return result;
             }
-            else
-            {
-                return printingSubsystem.NothingToTake();
-            }
+            
+            return printingSubsystem.NothingToTake();
         }
 
         return false;
