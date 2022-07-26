@@ -264,17 +264,22 @@ public partial class AHereticObject
             localEventHandler?.Invoke(this, eventArgs);
         }
     
+        public virtual void OnBeforeTurn(TurnItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.BeforeTurn;
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
         public virtual void OnTurn(TurnItemEventArgs eventArgs)
         {
             var localEventHandler = this.Turn;
-            if (localEventHandler != null)
-            {
-                localEventHandler.Invoke(this, eventArgs);
-            }
-            else
-            {
-                throw new BreakException(BaseDescriptions.DOES_NOT_WORK);
-            }
+            localEventHandler?.Invoke(this, eventArgs);
+        }
+        
+        public virtual void OnAfterTurn(TurnItemEventArgs eventArgs)
+        {
+            var localEventHandler = this.AfterTurn;
+            localEventHandler?.Invoke(this, eventArgs);
         }
     
         public virtual void OnBeforeSitDown(SitDownEventArgs eventArgs)

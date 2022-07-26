@@ -562,11 +562,15 @@ internal sealed class VerbHandler
                 this.objectHandler.StoreAsActiveObject(item);
                 try
                 {
-                    item.OnTurn(new TurnItemEventArgs());
+                    var turnItemEventArgs = new TurnItemEventArgs();
+                    
+                    item.OnBeforeTurn(turnItemEventArgs);
+                    item.OnTurn(turnItemEventArgs);
+                    item.OnAfterTurn(turnItemEventArgs);
 
                     return true;
                 }
-                catch (Exception ex)
+                catch (TurnException ex)
                 {
                     return printingSubsystem.Resource(ex.Message);
                 }
