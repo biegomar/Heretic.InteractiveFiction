@@ -4,7 +4,7 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public partial class AHereticObject
+public abstract partial class AHereticObject
 {
     public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
     public event EventHandler<ChangeLocationEventArgs> ChangeLocation;

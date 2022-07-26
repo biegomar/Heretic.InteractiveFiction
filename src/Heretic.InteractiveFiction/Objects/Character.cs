@@ -5,15 +5,11 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public sealed class Character : AHereticObject
+public sealed partial class Character : AHereticObject
 {
     public Description TalkDescription { get; set; }
     public string StandardPhrases { get; set; }
     public bool Talked { get; set; }
-
-    public event EventHandler<ContainerObjectEventArgs> AfterTalk;
-    public event EventHandler<ConversationEventArgs> Ask;
-    public event EventHandler<ConversationEventArgs> Say;
 
     public Character()
     {
@@ -21,7 +17,7 @@ public sealed class Character : AHereticObject
         this.TalkDescription = string.Empty;
     }
 
-    public string Talk()
+    public string DoTalk()
     {
         if (!Talked && !string.IsNullOrEmpty(this.TalkDescription))
         {
@@ -69,37 +65,5 @@ public sealed class Character : AHereticObject
             Genders.Male => BaseDescriptions.YOU_SEE_MALE,
             _ => BaseDescriptions.YOU_SEE
         };
-    }
-
-    public void OnAfterTalk(ContainerObjectEventArgs eventArgs)
-    {
-        EventHandler<ContainerObjectEventArgs> localEventHandler = this.AfterTalk;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public void OnAsk(ConversationEventArgs eventArgs)
-    {
-        EventHandler<ConversationEventArgs> localEventHandler = this.Ask;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            throw new AskException(eventArgs.Item.Name);
-        }
-    }
-
-    public void OnSay(ConversationEventArgs eventArgs)
-    {
-        EventHandler<ConversationEventArgs> localEventHandler = this.Say;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            throw new SayException(BaseDescriptions.NO_ANSWER_EXCEPTION);
-        }
     }
 }

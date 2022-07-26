@@ -805,11 +805,23 @@ internal sealed class VerbHandler
                 return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
 
-            var result = printingSubsystem.Talk(character);
+            try
+            {
+                var containerObjectEventArgs = new ContainerObjectEventArgs();
+                
+                character.OnBeforeTalk(containerObjectEventArgs);
 
-            character.OnAfterTalk(new ContainerObjectEventArgs());
+                var result = printingSubsystem.Talk(character);
+                character.OnTalk(containerObjectEventArgs);
 
-            return result;
+                character.OnAfterTalk(containerObjectEventArgs);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return printingSubsystem.Resource(ex.Message);
+            }
         }
 
         return false;
@@ -1038,7 +1050,7 @@ internal sealed class VerbHandler
             {
                 character.OnAsk(new ConversationEventArgs() { Item = item });
             }
-            catch (Exception ex)
+            catch (AskException ex)
             {
                 printingSubsystem.NoAnswerToQuestion(ex.Message);
 
@@ -1071,7 +1083,7 @@ internal sealed class VerbHandler
             {
                 character.OnSay(new ConversationEventArgs { Phrase = key });
             }
-            catch (Exception ex)
+            catch (SayException ex)
             {
                 printingSubsystem.Resource(ex.Message);
             }

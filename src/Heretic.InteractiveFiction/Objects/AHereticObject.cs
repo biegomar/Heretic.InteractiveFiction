@@ -5,7 +5,7 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public partial class AHereticObject
+public abstract partial class AHereticObject
 {
     protected string name;
 

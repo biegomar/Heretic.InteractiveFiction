@@ -746,7 +746,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (character != default)
         {
-            var talk = character.Talk();
+            var talk = character.DoTalk();
             if (!string.IsNullOrEmpty(talk))
             {
                 Console.WriteLine(WordWrap(talk, this.ConsoleWidth));
