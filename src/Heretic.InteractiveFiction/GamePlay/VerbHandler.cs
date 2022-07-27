@@ -42,7 +42,7 @@ internal sealed class VerbHandler
         {
             try
             {
-                var eventArgs = new ContainerObjectEventArgs();
+                var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                 
                 this.universe.ActiveLocation.OnBeforeLook(eventArgs);
                 
@@ -72,8 +72,8 @@ internal sealed class VerbHandler
                 {
                     this.objectHandler.StoreAsActiveObject(item);
                     
-                    var eventArgs = new ContainerObjectEventArgs();
-                    var eventArgsForActiveLocation = new ContainerObjectEventArgs() { ExternalItemKey = item.Key };
+                    var eventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    var eventArgsForActiveLocation = new ContainerObjectEventArgs() { ExternalItemKey = item.Key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
 
                     item.OnBeforeLook(eventArgs);
                     this.universe.ActiveLocation.OnBeforeLook(eventArgsForActiveLocation);
@@ -126,7 +126,7 @@ internal sealed class VerbHandler
                     {
                         this.objectHandler.StoreAsActiveObject(item);
                         
-                        var readItemEventArgs = new ReadItemEventArgs();
+                        var readItemEventArgs = new ReadItemEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                         
                         item.OnBeforeRead(readItemEventArgs);
 
@@ -629,7 +629,7 @@ internal sealed class VerbHandler
                     {
                         try
                         {
-                            var eventArgs = new ContainerObjectEventArgs();
+                            var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                             item.OnBeforeClimb(eventArgs);
 
                             this.universe.ActivePlayer.HasClimbed = true;
@@ -694,15 +694,15 @@ internal sealed class VerbHandler
 
                     try
                     {
-                        var eventArgs = new ContainerObjectEventArgs();
+                        var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
                         item.OnBeforeClose(eventArgs);
 
                         item.IsClosed = true;
                         this.objectHandler.HideItemsOnClose(item);
-                        item.OnClose(new ContainerObjectEventArgs());
+                        item.OnClose(eventArgs);
 
-                        item.OnAfterClose(new ContainerObjectEventArgs());
+                        item.OnAfterClose(eventArgs);
 
                         return printingSubsystem.ItemClosed(item);
                     }
@@ -746,16 +746,18 @@ internal sealed class VerbHandler
 
                     try
                     {
-                        item.OnBeforeOpen(new ContainerObjectEventArgs());
+                        var containerObjectEventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                        
+                        item.OnBeforeOpen(containerObjectEventArgs);
                     
                         item.IsClosed = false;
                         this.universe.UnveilFirstLevelObjects(item);
                         
-                        item.OnOpen(new ContainerObjectEventArgs());
+                        item.OnOpen(containerObjectEventArgs);
                         
                         var result = printingSubsystem.ItemOpen(item);
 
-                        item.OnAfterOpen(new ContainerObjectEventArgs());
+                        item.OnAfterOpen(containerObjectEventArgs);
 
                         return result;
                     }
@@ -789,7 +791,7 @@ internal sealed class VerbHandler
 
             try
             {
-                var containerObjectEventArgs = new ContainerObjectEventArgs();
+                var containerObjectEventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                 
                 character.OnBeforeTalk(containerObjectEventArgs);
 
@@ -827,8 +829,8 @@ internal sealed class VerbHandler
 
                 try
                 {
-                    var sitDownEventArgs = new SitDownEventArgs {ItemToSitOn = onlySeat};
-                    var downEventArgs = new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer};
+                    var sitDownEventArgs = new SitDownEventArgs {ItemToSitOn = onlySeat, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    var downEventArgs = new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                     
                     this.universe.ActivePlayer.OnBeforeSitDown(sitDownEventArgs);
                     onlySeat.OnBeforeSitDown(downEventArgs);
@@ -867,12 +869,7 @@ internal sealed class VerbHandler
             }
             
             var key = this.objectHandler.GetItemKeyByName(subject);
-            var item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
-
-            if (item == default)
-            {
-                item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
-            }
+            var item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key) ?? this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
 
             if (item != default)
             {
@@ -881,8 +878,8 @@ internal sealed class VerbHandler
                 {
                     try
                     {
-                        var sitDownEventArgs = new SitDownEventArgs {ItemToSitOn = item};
-                        var downEventArgs = new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer};
+                        var sitDownEventArgs = new SitDownEventArgs {ItemToSitOn = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                        var downEventArgs = new SitDownEventArgs {ItemToSitOn = this.universe.ActivePlayer, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                         
                         this.universe.ActivePlayer.OnBeforeSitDown(sitDownEventArgs);
                         item.OnBeforeSitDown(downEventArgs);
@@ -940,7 +937,7 @@ internal sealed class VerbHandler
                 {
                     this.objectHandler.StoreAsActiveObject(item);
                 
-                    var eventArgs = new ContainerObjectEventArgs();
+                    var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                 
                     this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
                     item.OnBeforeStandUp(eventArgs);
@@ -974,7 +971,7 @@ internal sealed class VerbHandler
                 var item = this.universe.ActivePlayer.ClimbedObject;
                 try
                 {
-                    var eventArgs = new ContainerObjectEventArgs();
+                    var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                 
                     this.universe.ActivePlayer.OnBeforeDescend(eventArgs);
                     item.OnBeforeDescend(eventArgs);
@@ -1030,7 +1027,9 @@ internal sealed class VerbHandler
 
             try
             {
-                character.OnAsk(new ConversationEventArgs() { Item = item });
+                var conversationEventArgs = new ConversationEventArgs() { Item = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                
+                character.OnAsk(conversationEventArgs);
             }
             catch (AskException ex)
             {
@@ -1063,7 +1062,9 @@ internal sealed class VerbHandler
 
             try
             {
-                character.OnSay(new ConversationEventArgs { Phrase = key });
+                var conversationEventArgs = new ConversationEventArgs { Phrase = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                
+                character.OnSay(conversationEventArgs);
             }
             catch (SayException ex)
             {
@@ -1098,7 +1099,8 @@ internal sealed class VerbHandler
 
             try
             {
-                var eventArgs = new ContainerObjectEventArgs();
+                var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                
                 this.universe.ActivePlayer.OnBeforeGive(eventArgs);
                 character.OnBeforeGive(eventArgs);
                 item.OnBeforeGive(eventArgs);
@@ -1142,7 +1144,7 @@ internal sealed class VerbHandler
                     {
                         try
                         {
-                            var eventArgs = new BreakItemEventArgs();
+                            var eventArgs = new BreakItemEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                             item.OnBeforeBreak(eventArgs);
 
                             item.IsBroken = true;
@@ -1188,7 +1190,7 @@ internal sealed class VerbHandler
                         {
                             try
                             {
-                                var eventArgs = new BreakItemEventArgs() { ItemToUse = toolItem };
+                                var eventArgs = new BreakItemEventArgs() { ItemToUse = toolItem, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
                                 item.OnBeforeBreak(eventArgs);
 
                                 item.IsBroken = true;
@@ -1304,7 +1306,7 @@ internal sealed class VerbHandler
                     {
                         this.objectHandler.StoreAsActiveObject(item);
 
-                        var eventArgs = new ContainerObjectEventArgs();
+                        var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                         item.OnBeforeTake(eventArgs);
                         result = result && universe.PickObject(item);
                         item.OnTake(eventArgs);
@@ -1346,7 +1348,7 @@ internal sealed class VerbHandler
                 {
                     try
                     {
-                        var eventArgs = new ContainerObjectEventArgs();
+                        var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                         
                         item.OnBeforeTake(eventArgs);
                         result = result && universe.PickObject(item);
@@ -1404,7 +1406,7 @@ internal sealed class VerbHandler
                     {
                         try
                         {
-                            var dropItemEventArgs = new DropItemEventArgs();
+                            var dropItemEventArgs = new DropItemEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                             
                             item.OnBeforeDrop(dropItemEventArgs);
 
@@ -1434,7 +1436,6 @@ internal sealed class VerbHandler
                     else
                     {
                         printingSubsystem.ImpossibleDrop(item);
-                        result = result && true;
                     }
                 }
                 else
@@ -1494,7 +1495,7 @@ internal sealed class VerbHandler
                             {
                                 try
                                 {
-                                    var dropItemEventArgs = new DropItemEventArgs() {ItemContainer = itemContainer};
+                                    var dropItemEventArgs = new DropItemEventArgs() {ItemContainer = itemContainer, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
                                     
                                     itemToDrop.OnBeforeDrop(dropItemEventArgs);
 
@@ -1557,7 +1558,8 @@ internal sealed class VerbHandler
 
         return false;
     }
-    internal void ChangeLocation(Directions direction)
+
+    private void ChangeLocation(string verb, Directions direction)
     {
         if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
         {
@@ -1579,20 +1581,23 @@ internal sealed class VerbHandler
             {
                 try
                 {
-                    this.universe.ActiveLocation.OnBeforeChangeLocation(new ChangeLocationEventArgs(newLocationMap));
+                    var changeLocationEventArgs = new ChangeLocationEventArgs(newLocationMap) {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    this.universe.ActiveLocation.OnBeforeChangeLocation(changeLocationEventArgs);
                     if (!newLocationMap.Location.IsLocked)
                     {
                         if (!newLocationMap.Location.IsClosed)
                         {
                             this.universe.ActiveLocation = newLocationMap.Location;
                             this.objectHandler.ClearActiveObjectIfNotInInventory();
+                            this.universe.ActiveLocation.OnChangeLocation(changeLocationEventArgs);
 
                             printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
                         }
                     }
 
                     //TODO - maybe OnUnsuccessfulLocationChange... 
-                    var status = this.universe.ActiveLocation.OnAfterChangeLocation(new ChangeLocationEventArgs(newLocationMap));
+                    var status = this.universe.ActiveLocation.OnAfterChangeLocation(changeLocationEventArgs);
 
                     if (status == ChangeLocationStatus.IsLocked)
                     {
@@ -1663,43 +1668,43 @@ internal sealed class VerbHandler
 
         if (this.IsVerb(VerbKeys.E, verb))
         {
-            this.ChangeLocation(Objects.Directions.E);
+            this.ChangeLocation(verb, Objects.Directions.E);
         }
         else if (this.IsVerb(VerbKeys.W, verb))
         {
-            this.ChangeLocation(Objects.Directions.W);
+            this.ChangeLocation(verb,Objects.Directions.W);
         }
         else if (this.IsVerb(VerbKeys.N, verb))
         {
-            this.ChangeLocation(Objects.Directions.N);
+            this.ChangeLocation(verb,Objects.Directions.N);
         }
         else if (this.IsVerb(VerbKeys.S, verb))
         {
-            this.ChangeLocation(Objects.Directions.S);
+            this.ChangeLocation(verb,Objects.Directions.S);
         }
         else if (this.IsVerb(VerbKeys.SE, verb))
         {
-            this.ChangeLocation(Objects.Directions.SE);
+            this.ChangeLocation(verb,Objects.Directions.SE);
         }
         else if (this.IsVerb(VerbKeys.SW, verb))
         {
-            this.ChangeLocation(Objects.Directions.SW);
+            this.ChangeLocation(verb,Objects.Directions.SW);
         }
         else if (this.IsVerb(VerbKeys.NE, verb))
         {
-            this.ChangeLocation(Objects.Directions.NE);
+            this.ChangeLocation(verb,Objects.Directions.NE);
         }
         else if (this.IsVerb(VerbKeys.NW, verb))
         {
-            this.ChangeLocation(Objects.Directions.NW);
+            this.ChangeLocation(verb,Objects.Directions.NW);
         }
         else if (this.IsVerb(VerbKeys.UP, verb))
         {
-            this.ChangeLocation(Objects.Directions.UP);
+            this.ChangeLocation(verb,Objects.Directions.UP);
         }
         else if (this.IsVerb(VerbKeys.DOWN, verb))
         {
-            this.ChangeLocation(Objects.Directions.DOWN);
+            this.ChangeLocation(verb,Objects.Directions.DOWN);
         }
         else
         {

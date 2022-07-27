@@ -6,10 +6,6 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public abstract partial class AHereticObject
 {
-    public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
-    public event EventHandler<ChangeLocationEventArgs> ChangeLocation;
-    public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
-
     public event EventHandler<BreakItemEventArgs> BeforeBreak;
     public event EventHandler<BreakItemEventArgs> Break;
     public event EventHandler<BreakItemEventArgs> AfterBreak;
@@ -346,37 +342,6 @@ public abstract partial class AHereticObject
     {
         var localEventHandler = this.AfterTake;
         localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnBeforeChangeLocation(ChangeLocationEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeChangeLocation;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual ChangeLocationStatus OnAfterChangeLocation(ChangeLocationEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterChangeLocation;
-        if (localEventHandler != null)
-        {
-            localEventHandler(this, eventArgs);
-        }
-        else
-        {
-            if (!eventArgs.NewDestinationNode.Location.IsLocked)
-            {
-                if (eventArgs.NewDestinationNode.Location.IsClosed)
-                {
-                    return ChangeLocationStatus.IsClosed;
-                }
-            }
-            else
-            {
-                return ChangeLocationStatus.IsLocked;
-            }
-        }
-
-        return ChangeLocationStatus.Ok;
     }
 
     public virtual void OnBeforeClose(ContainerObjectEventArgs eventArgs)

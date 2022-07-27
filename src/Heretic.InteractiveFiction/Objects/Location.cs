@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public sealed class Location : AHereticObject
+public sealed partial class Location : AHereticObject
 {
     public IDictionary<string, IList<Verb>> OptionalVerbs { get; set; }
 
