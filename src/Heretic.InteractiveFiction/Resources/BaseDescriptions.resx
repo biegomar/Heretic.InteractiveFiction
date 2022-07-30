@@ -598,4 +598,7 @@
   <data name="INAPPROPRIATE_TOOL" xml:space="preserve">
     <value>Damit kannst Du {0} nichts anhaben.</value>
   </data>
+  <data name="IMPOSSIBLE_OPEN_ITEM" xml:space="preserve">
+    <value>Scheinbar lässt sich {0} nicht öffnen.</value>
+  </data>
 </root>

@@ -769,7 +769,7 @@ internal sealed class VerbHandler
                     }
                 }
 
-                return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_OPEN);
+                return printingSubsystem.FormattedResource(BaseDescriptions.IMPOSSIBLE_OPEN_ITEM, item.AccusativeArticleName.LowerFirstChar());
             }
             
             return printingSubsystem.ItemNotVisible();
