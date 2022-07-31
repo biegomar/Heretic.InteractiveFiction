@@ -601,4 +601,10 @@
   <data name="IMPOSSIBLE_OPEN_ITEM" xml:space="preserve">
     <value>Scheinbar lässt sich {0} nicht öffnen.</value>
   </data>
+  <data name="TIME_GOES_BY" xml:space="preserve">
+    <value>Die Zeit vergeht.</value>
+  </data>
+  <data name="WAIT" xml:space="preserve">
+    <value>Warte einen Augenblick und tue ansonsten nichts</value>
+  </data>
 </root>

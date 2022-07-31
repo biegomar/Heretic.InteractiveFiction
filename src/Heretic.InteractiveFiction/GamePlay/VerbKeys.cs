@@ -47,6 +47,7 @@ public static class VerbKeys
     public static string UP => nameof(UP);
     public static string USE => nameof(USE);
     public static string W => nameof(W);
+    public static string WAIT => nameof(WAIT);
     public static string WAYS => nameof(WAYS);
     public static string WRITE => nameof(WRITE);
 }

@@ -61,6 +61,7 @@ public abstract partial class AHereticObject
     public event EventHandler<TurnItemEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
     public event EventHandler<UseItemEventArgs> Use;
+    public event EventHandler<ContainerObjectEventArgs> Wait;
     public event EventHandler<WriteEventArgs> Write;
 
     public virtual void OnUse(UseItemEventArgs eventArgs)
@@ -94,6 +95,23 @@ public abstract partial class AHereticObject
                 throw new JumpException(eventArgs.OptionalErrorMessage);
             }
             throw new JumpException(BaseDescriptions.DOES_NOT_WORK);
+        }
+    }
+    
+    public virtual void OnWait(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Wait;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new WaitException(eventArgs.OptionalErrorMessage);
+            }
+            throw new WaitException(BaseDescriptions.TIME_GOES_BY);
         }
     }
 

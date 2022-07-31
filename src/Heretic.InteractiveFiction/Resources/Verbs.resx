@@ -258,4 +258,7 @@
   <data name="READ" xml:space="preserve">
     <value>Lies|Lese</value>
   </data>
+  <data name="WAIT" xml:space="preserve">
+    <value>Warte</value>
+  </data>
 </root>

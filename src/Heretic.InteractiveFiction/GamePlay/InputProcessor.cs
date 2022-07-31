@@ -92,6 +92,7 @@ public sealed class InputProcessor
         result = result || verbHandler.StandUp(processingInput);
         result = result || verbHandler.Descend(processingInput);
         result = result || verbHandler.Remark(processingInput);
+        result = result || verbHandler.Wait(processingInput);
         result = result || verbHandler.History(processingInput, this.historyAdministrator.All);
 
         if (!result)

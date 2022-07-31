@@ -1304,6 +1304,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Die Zeit vergeht..
+        /// </summary>
+        public static string TIME_GOES_BY {
+            get {
+                return ResourceManager.GetString("TIME_GOES_BY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Der Gegenstand ist zu schwer, um ihn noch zu tragen! Vielleicht benötigst Du eine größere Transportmöglichkeit, oder Du wirfst einige Sachen weg..
         /// </summary>
         public static string TO_HEAVY {
@@ -1363,6 +1372,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string W {
             get {
                 return ResourceManager.GetString("W", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warte einen Augenblick und tue ansonsten nichts.
+        /// </summary>
+        public static string WAIT {
+            get {
+                return ResourceManager.GetString("WAIT", resourceCulture);
             }
         }
         

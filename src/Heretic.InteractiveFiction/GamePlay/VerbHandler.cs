@@ -615,7 +615,29 @@ internal sealed class VerbHandler
 
         return false;
     }
-    
+
+    internal bool Wait(string verb)
+    {
+        if (this.IsVerb(VerbKeys.WAIT, verb))
+        {
+            try
+            {
+                var containerObjectEventArgs = new ContainerObjectEventArgs()
+                    { OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+
+                this.universe.ActiveLocation.OnWait(containerObjectEventArgs);
+
+                return true;
+            }
+            catch (WaitException ex)
+            {
+                return printingSubsystem.Resource(ex.Message);
+            }
+        }
+
+        return false;
+    }
+
     internal bool Climb(string verb, string subject)
     {
         if (this.IsVerb(VerbKeys.CLIMB, verb))

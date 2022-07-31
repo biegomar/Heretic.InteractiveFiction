@@ -284,6 +284,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.JUMP),
             nameof(Verbs.CLIMB),
             nameof(Verbs.DESCEND),
+            nameof(Verbs.WAIT),
             nameof(Verbs.WRITE),
         };
 

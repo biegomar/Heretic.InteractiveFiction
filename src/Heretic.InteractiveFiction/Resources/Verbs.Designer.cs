@@ -466,6 +466,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Warte.
+        /// </summary>
+        internal static string WAIT {
+            get {
+                return ResourceManager.GetString("WAIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang.
         /// </summary>
         internal static string WAYS {
