@@ -442,7 +442,14 @@ internal sealed class VerbHandler
                 this.objectHandler.StoreAsActiveObject(item);
                 try
                 {
-                    var useItemEventArgs = new UseItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    string optionalErrorMessage = string.Empty;
+                    var errorMessage = this.universe.GetVerb(verb).ErrorMessage;
+                    if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                       optionalErrorMessage = string.Format(errorMessage, item.DativeArticleName.LowerFirstChar()); 
+                    }
+                        
+                    var useItemEventArgs = new UseItemEventArgs() {OptionalErrorMessage = optionalErrorMessage};
                     
                     item.OnUse(useItemEventArgs);
                     

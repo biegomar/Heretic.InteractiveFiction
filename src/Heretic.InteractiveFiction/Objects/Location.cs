@@ -19,11 +19,6 @@ public sealed partial class Location : AHereticObject
             throw new ArgumentNullException(nameof(originalVerbKey));
         }
         
-        if (this.OptionalVerbs.ContainsKey(originalVerbKey))
-        {
-            throw new ArgumentException(nameof(originalVerbKey));
-        }
-
         var names = newVerbName.Split('|').ToList();
         
         var optionalVerb = new Verb
@@ -36,7 +31,11 @@ public sealed partial class Location : AHereticObject
         
         if (!this.OptionalVerbs.ContainsKey(originalVerbKey))
         {
-            this.OptionalVerbs.Add(optionalVerb.Key, new List<Verb> {optionalVerb});
+            this.OptionalVerbs.Add(originalVerbKey, new List<Verb> {optionalVerb});
+        }
+        else
+        {
+            this.OptionalVerbs[originalVerbKey].Add(optionalVerb);
         }
     }
 
