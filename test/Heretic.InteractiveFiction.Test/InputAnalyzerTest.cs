@@ -10,16 +10,30 @@ namespace Heretic.InteractiveFiction.Test;
 public class InputAnalyzerTest
 {
     private IPrintingSubsystem printingSubsystem => Mock.Of<IPrintingSubsystem>();
-    private Player player => Fixture.GetPlayer();
-    private IGamePrerequisitesAssembler gamePrerequisitesAssembler => Mock.Of<IGamePrerequisitesAssembler>();
+    private Player player;
+    private Universe universe;
+    private IGamePrerequisitesAssembler smallWorld;
 
+    public InputAnalyzerTest()
+    {
+        this.smallWorld = new SmallWorldAssembler();
+        this.universe = new Universe(printingSubsystem, new ResourceProviderMock());
+        
+        var gamePrerequisites = this.smallWorld.AssembleGame();
+        this.universe.LocationMap = gamePrerequisites.LocationMap;
+        this.universe.ActiveLocation = gamePrerequisites.ActiveLocation;
+        this.universe.ActivePlayer = gamePrerequisites.ActivePlayer;
+        this.universe.Quests = gamePrerequisites.Quests;
+        this.universe.SetPeriodicEvent(gamePrerequisites.PeriodicEvent);
+        this.player = gamePrerequisites.ActivePlayer;
+    }
+    
     [Theory]
     [InlineData("l", new[] { "l" })]
     [InlineData("look", new[] { "look" })]
     public void SingleWordsTest(string input, string[] expected)
     {
-        var universe = new Universe(printingSubsystem, new ResourceProviderMock());
-        var sut = new InputAnalyzer(universe);
+        var sut = new InputAnalyzer(this.universe);
 
         var actual = sut.Analyze(input);
 
@@ -38,8 +52,6 @@ public class InputAnalyzerTest
     [InlineData("lege sie hin", new[] { "lege", "sie" })]
     public void TwoWordsTest(string input, string[] expected)
     {
-        var universe = new Universe(printingSubsystem, new ResourceProviderMock());
-        universe.ActivePlayer = player;
         var sut = new InputAnalyzer(universe);
 
         var actual = sut.Analyze(input);
@@ -62,8 +74,6 @@ public class InputAnalyzerTest
     [InlineData("nimm dir sie", new[] { "nimm", "dir", "sie" })]
     public void ThreeWordsTest(string input, string[] expected)
     {
-        var universe = new Universe(printingSubsystem, new ResourceProviderMock());
-        universe.ActivePlayer = player;
         var sut = new InputAnalyzer(universe);
 
         var actual = sut.Analyze(input);
