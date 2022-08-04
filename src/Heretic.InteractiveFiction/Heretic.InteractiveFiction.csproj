@@ -22,7 +22,11 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageVersion>$(VersionPrefix)</PackageVersion>
         <PackageProjectUrl>https://github.com/biegomar/Heretic.InteractiveFiction</PackageProjectUrl>
-        <PackageReleaseNotes>Verb overloading.</PackageReleaseNotes>
+        <PackageReleaseNotes>
+            * verb handlers normalized
+            * new verb WAIT
+            * adjust verb overloading
+        </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

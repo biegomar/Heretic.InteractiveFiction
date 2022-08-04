@@ -877,7 +877,7 @@ internal sealed class VerbHandler
                 }
                 catch (SitDownException ex)
                 {
-                    this.universe.ActivePlayer.StandUp();
+                    this.universe.ActivePlayer.StandUpFromSeat();
                     return printingSubsystem.Resource(ex.Message);
                 }
             }
@@ -926,7 +926,7 @@ internal sealed class VerbHandler
                     }
                     catch (SitDownException ex)
                     {
-                        this.universe.ActivePlayer.StandUp();
+                        this.universe.ActivePlayer.StandUpFromSeat();
                         return printingSubsystem.Resource(ex.Message);
                     }
                 }    
@@ -971,7 +971,7 @@ internal sealed class VerbHandler
                     this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
                     item.OnBeforeStandUp(eventArgs);
                 
-                    this.universe.ActivePlayer.StandUp();
+                    this.universe.ActivePlayer.StandUpFromSeat();
                     item.OnStandUp(eventArgs);
                     var result = printingSubsystem.Resource(BaseDescriptions.STANDING_UP);
                 
@@ -1005,7 +1005,7 @@ internal sealed class VerbHandler
                     this.universe.ActivePlayer.OnBeforeDescend(eventArgs);
                     item.OnBeforeDescend(eventArgs);
                     
-                    this.universe.ActivePlayer.Descend();
+                    this.universe.ActivePlayer.DescendFromObject();
                     this.universe.ActivePlayer.OnDescend(eventArgs);
                     item.OnDescend(eventArgs);
                     

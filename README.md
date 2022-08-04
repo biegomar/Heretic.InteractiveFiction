@@ -21,7 +21,7 @@ A documentation based on a manageable, but constantly growing text adventure, wh
 * Help and hint system included.
 
 # Games developed with Heretic.InteractiveFiction
-* Fenrir 13 (first published on 1st of April 2022 at the german [_Interactive Fiction Grand Prix 2022_](https://ifwizz.de/grand-prix-2022.html) )
+* [Fenrir 13](https://github.com/biegomar/Fenrir13) (first published on 1st of April 2022 at the german [_Interactive Fiction Grand Prix 2022_](https://ifwizz.de/grand-prix-2022.html) )
 
 # Roadmap
 ## v1.0

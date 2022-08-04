@@ -275,7 +275,7 @@ public sealed class Player : AHereticObject
         return false;
     }
     
-    public bool StandUp()
+    public bool StandUpFromSeat()
     {
         if (this.IsSitting)
         {
@@ -287,7 +287,7 @@ public sealed class Player : AHereticObject
         return false;
     }
 
-    public bool Descend()
+    public bool DescendFromObject()
     {
         if (this.HasClimbed)
         {
