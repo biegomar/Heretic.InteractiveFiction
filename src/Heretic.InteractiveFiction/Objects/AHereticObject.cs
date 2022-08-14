@@ -132,6 +132,16 @@ public abstract partial class AHereticObject
     /// If the object is a surrounding, then it will not be listed in the room description.
     /// </summary>
     public bool IsSurrounding { get; set; }
+
+    /// <summary>
+    /// Is the object a light source?
+    /// </summary>
+    public bool IsLighter { get; set; }
+
+    /// <summary>
+    /// Is the light source switched on?
+    /// </summary>
+    public bool IsLighterSwitchedOn { get; set; }
     
     /// <summary>
     /// The weight of the object.
@@ -159,10 +169,19 @@ public abstract partial class AHereticObject
 
     protected AHereticObject()
     {
+        this.name = string.Empty;
         this.Grammar = new Grammars();
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.LinkedTo = new List<Item>();
+        
+        InitializeStates();
+
+        InitialzeDescriptions();
+    }
+
+    private void InitializeStates()
+    {
         this.IsContainer = false;
         this.IsSurfaceContainer = false;
         this.IsSurrounding = false;
@@ -181,7 +200,12 @@ public abstract partial class AHereticObject
         this.IsSeatAble = false;
         this.IsClimbAble = false;
         this.IsReadable = false;
-        this.name = string.Empty;
+        this.IsLighter = false;
+        this.IsLighterSwitchedOn = false;
+    }
+
+    private void InitialzeDescriptions()
+    {
         this.Description = string.Empty;
         this.FirstLookDescription = string.Empty;
         this.OpenDescription = string.Empty;
