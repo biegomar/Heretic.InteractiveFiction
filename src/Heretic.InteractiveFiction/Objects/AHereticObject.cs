@@ -257,7 +257,8 @@ public abstract partial class AHereticObject
                     foreach (var item in unHiddenObjectsWithContainmentDescription)
                     {
                         unhiddenObjectDescription.Append(item.ContainmentDescription);
-                        unhiddenObjectDescription.AppendLine(GetLinkedObjectsDescription(item));
+                        var linkedObjectDescription = GetLinkedObjectsDescription(item);
+                        unhiddenObjectDescription.AppendLine(string.IsNullOrEmpty(linkedObjectDescription) ? "-" : linkedObjectDescription);
                     }
                 }
             }

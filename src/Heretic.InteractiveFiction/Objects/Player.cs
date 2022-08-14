@@ -115,14 +115,14 @@ public sealed class Player : AHereticObject
 
         if (this.IsSitting && this.Seat != default)
         {
-            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.LowerFirstChar(this.Seat.DativeArticleName)));
+            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.Seat.DativeArticleName.LowerFirstChar()));
         }
         
         if (this.HasClimbed && this.ClimbedObject != default)
         {
             if (string.IsNullOrEmpty(this.ClimbedObject.ClimbedDescription))
             {
-                result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, this.LowerFirstChar(this.ClimbedObject.AccusativeArticleName)));    
+                result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, this.ClimbedObject.AccusativeArticleName.LowerFirstChar()));    
             }
             else
             {
@@ -183,7 +183,7 @@ public sealed class Player : AHereticObject
                 {
                     result.Append(", ");    
                 }
-                result.Append(this.LowerFirstChar(cloth.AccusativeIndefiniteArticleName));
+                result.Append(cloth.AccusativeIndefiniteArticleName.LowerFirstChar());
                 itemIndex++;
             }
         }
