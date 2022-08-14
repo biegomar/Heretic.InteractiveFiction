@@ -219,6 +219,8 @@ public abstract partial class AHereticObject
         this.LinkedToDescription = string.Empty;
         this.ClimbedDescription = string.Empty;
         this.LetterContentDescription = string.Empty;
+        this.LighterSwitchedOffDescription = string.Empty;
+        this.LighterSwitchedOnDescription = string.Empty;
         this.Hint = string.Empty;
     }
 
@@ -752,6 +754,19 @@ public abstract partial class AHereticObject
         {
             description.AppendLine(this.FirstLookDescription);
             this.FirstLookDescription = string.Empty;
+        }
+
+        if (this.IsLighter)
+        {
+            if (this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOnDescription))
+            {
+                description.AppendLine(this.LighterSwitchedOnDescription);    
+            }
+
+            if (!this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOffDescription))
+            {
+                description.AppendLine(this.LighterSwitchedOffDescription);
+            }
         }
 
         if (this.IsLocked && !string.IsNullOrEmpty(this.LockDescription))
