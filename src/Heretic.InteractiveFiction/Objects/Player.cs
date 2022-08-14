@@ -32,6 +32,36 @@ public sealed class Player : AHereticObject
         return sentence[0].Trim();
     }
 
+    public bool OwnsItem(string itemKey)
+    {
+        return this.Items.SelectMany(GetAllItems).Union(this.Clothes.SelectMany(GetAllItems)).Any(i => i.Key == itemKey);
+    }
+
+    public bool OwnsItem(Item item)
+    {
+        return this.OwnsItem(item.Key);
+    }
+    
+    private IEnumerable<Item> GetAllItems( Item root )
+    {
+        if( root == null )
+        {
+            yield break;
+        }
+
+        yield return root;
+
+        if ( root.Items == default )
+        {
+            yield break;
+        }
+
+        foreach ( Item descendant in root.Items.SelectMany( GetAllItems ) )
+        {
+            yield return descendant;
+        }
+    }
+
     public override string ToString()
     {
         var result = new StringBuilder();
