@@ -241,7 +241,7 @@
     <value>Drücke|Drück|Schiebe|Schieb|Stecke|Steck</value>
   </data>
   <data name="CLIMB" xml:space="preserve">
-    <value>Klettere|Kletter|Steige|Steig|Stelle|Stell</value>
+    <value>Klettere|Kletter|Steige|Steig</value>
   </data>
   <data name="DESCEND" xml:space="preserve">
     <value>Absteigen|Herabsteigen</value>
