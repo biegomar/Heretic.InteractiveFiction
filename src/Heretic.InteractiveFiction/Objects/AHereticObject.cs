@@ -254,11 +254,20 @@ public abstract partial class AHereticObject
                 }
                 else
                 {
+                    var index = 1;
                     foreach (var item in unHiddenObjectsWithContainmentDescription)
                     {
                         unhiddenObjectDescription.Append(item.ContainmentDescription);
-                        var linkedObjectDescription = GetLinkedObjectsDescription(item);
-                        unhiddenObjectDescription.AppendLine(string.IsNullOrEmpty(linkedObjectDescription) ? "-" : linkedObjectDescription);
+                        if (index == unHiddenObjectsWithContainmentDescription.Count && !unHiddenObjectsWithoutContainmentDescription.Any())
+                        {
+                            unhiddenObjectDescription.Append(GetLinkedObjectsDescription(item));    
+                        }
+                        else
+                        {
+                            unhiddenObjectDescription.AppendLine(GetLinkedObjectsDescription(item));
+                        }
+
+                        index++;
                     }
                 }
             }
