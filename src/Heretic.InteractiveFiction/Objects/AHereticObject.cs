@@ -291,12 +291,12 @@ public abstract partial class AHereticObject
 
                     if (subItems)
                     {
-                        var lowerName = this.LowerFirstChar(item.NominativeIndefiniteArticleName);
+                        var lowerName = item.NominativeIndefiniteArticleName.LowerFirstChar();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
                     else
                     {
-                        var lowerName = this.LowerFirstChar(item.AccusativeIndefiniteArticleName);
+                        var lowerName = item.AccusativeIndefiniteArticleName.LowerFirstChar();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
 
@@ -337,12 +337,6 @@ public abstract partial class AHereticObject
         return unhiddenObjectDescription.ToString();
     }
     
-    protected string LowerFirstChar(string description)
-    {
-        var lowerDescription = description[..1].ToLower() + description[1..];
-        return lowerDescription.Trim();
-    }
-
     private string GetLinkedObjectsDescription(AHereticObject item, bool useBracket = true)
     {
         var linkedObjectDescription = new StringBuilder();
@@ -381,7 +375,7 @@ public abstract partial class AHereticObject
                     linkedObjectDescription.Append(", ");
                 }
                 
-                linkedObjectDescription.Append(this.LowerFirstChar(linkedItem.DativeIndefiniteArticleName));
+                linkedObjectDescription.Append(linkedItem.DativeIndefiniteArticleName.LowerFirstChar());
 
                 linkedItemIndex++;
             }
