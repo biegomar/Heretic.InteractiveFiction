@@ -303,12 +303,12 @@ public abstract partial class AHereticObject
 
                     if (subItems)
                     {
-                        var lowerName = item.NominativeIndefiniteArticleName.LowerFirstChar();
+                        var lowerName = item.NominativeIndefiniteArticleName.LowerFirstChar().Trim();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
                     else
                     {
-                        var lowerName = item.AccusativeIndefiniteArticleName.LowerFirstChar();
+                        var lowerName = item.AccusativeIndefiniteArticleName.LowerFirstChar().Trim();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
 
