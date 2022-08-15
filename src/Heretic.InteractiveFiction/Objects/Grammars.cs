@@ -4,51 +4,26 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class Grammars
 {
+    private const string NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
+    private const string ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
+    private const string DATIV_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
+    
     public Genders Gender { get; set; }
     public bool IsSingular { get; set; }
     public bool IsPlayer { get; set; }
-    public string Article { get; set; }
-    public string IndefiniteArticle { get; set; }
-    
-    public Grammars(Genders gender = Genders.Female, bool isSingular = true, bool isPlayer = false)
-    {
-        Initialize(gender, isSingular, isPlayer);
+    public bool IsAbstract { get; set; }
 
-        switch (gender)
-        {
-            case Genders.Female:
-            {
-                GenderFemale();
-                break;
-            }
-            case Genders.Male:
-            {
-                GenderMale();
-                break;
-            }
-            case Genders.Neutrum:
-            {
-                GenderNeutrum();
-                break;
-            }
-            case Genders.Unknown:
-            {
-                GenderNeutrum();
-                break;
-            }
-            default:
-            {
-                GenderNeutrum();
-                break;
-            }
-        }
+    public Grammars(Genders gender = Genders.Female, bool isSingular = true, bool isPlayer = false, bool isAbstract = false)
+    {
+        Initialize(gender, isSingular, isPlayer, isAbstract);
     }
 
-    private void Initialize(Genders gender, bool isSingular, bool isPlayer)
+    private void Initialize(Genders gender, bool isSingular, bool isPlayer, bool isAbstract)
     {
         this.IsSingular = isSingular;
         this.IsPlayer = isPlayer;
         this.Gender = gender;
+        this.IsAbstract = isAbstract;
     }
 
     public string GetArticle()
@@ -78,7 +53,7 @@ public sealed class Grammars
             {
                 Genders.Female => Grammar.NOMINATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
                 Genders.Male => Grammar.NOMINATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
-                Genders.Neutrum => Grammar.NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+                Genders.Neutrum => IsAbstract ? NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR : Grammar.NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
                 Genders.Unknown => Grammar.NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
                 _ => Grammar.NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR
             };
@@ -154,7 +129,7 @@ public sealed class Grammars
             {
                 Genders.Female => Grammar.DATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
                 Genders.Male => Grammar.DATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
-                Genders.Neutrum => Grammar.DATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+                Genders.Neutrum => IsAbstract ? DATIV_INDEFINITEARTICLE_NEUTRUM_SINGULAR : Grammar.DATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
                 Genders.Unknown => Grammar.DATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
                 _ => Grammar.DATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR
             };
@@ -187,7 +162,7 @@ public sealed class Grammars
             {
                 Genders.Female => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
                 Genders.Male => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
-                Genders.Neutrum => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+                Genders.Neutrum => IsAbstract ? ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR : Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
                 Genders.Unknown => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
                 _ => Resources.Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR
             };
@@ -226,23 +201,5 @@ public sealed class Grammars
         
             return result;
         }
-    }
-
-    private void GenderFemale()
-    {
-        this.Article = Grammar.ARTICLE_FEMALE_SINGULAR;
-        this.IndefiniteArticle = Grammar.ACCUSATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR;
-    }
-    
-    private void GenderMale()
-    {
-        this.Article = Grammar.ARTICLE_MALE_SINGULAR;
-        this.IndefiniteArticle = Grammar.ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR;
-    }
-    
-    private void GenderNeutrum()
-    {
-        this.Article = Grammar.ARTICLE_NEUTRUM_SINGULAR;
-        this.IndefiniteArticle = Grammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR;
     }
 }
