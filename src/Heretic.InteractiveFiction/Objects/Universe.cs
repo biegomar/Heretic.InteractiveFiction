@@ -233,15 +233,11 @@ public sealed class Universe
         }
     }
 
-    public DestinationNode GetLocationMapByEnumString(string key)
+    public DestinationNode GetDestinationNodeFromActiveLocationByDirection(Directions key)
     {
         if (this.LocationMap.ContainsKey(this.ActiveLocation))
         {
-            var result = Enum.TryParse<Directions>(key, true, out var direction);
-            if (result)
-            {
-                return this.LocationMap[this.ActiveLocation].FirstOrDefault(l => l.Direction == direction);
-            }
+            return this.LocationMap[this.ActiveLocation].FirstOrDefault(l => l.Direction == key);
         }
 
         return default;
