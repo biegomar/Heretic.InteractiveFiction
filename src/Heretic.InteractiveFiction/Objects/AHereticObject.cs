@@ -177,51 +177,7 @@ public abstract partial class AHereticObject
         
         InitializeStates();
 
-        InitialzeDescriptions();
-    }
-
-    private void InitializeStates()
-    {
-        this.IsContainer = false;
-        this.IsSurfaceContainer = false;
-        this.IsSurrounding = false;
-        this.IsBreakable = false;
-        this.IsBroken = false;
-        this.IsHidden = false;
-        this.HideOnContainerClose = true;
-        this.IsVirtual = false;
-        this.IsPickAble = true;
-        this.IsDropAble = true;
-        this.IsUnveilAble = true;
-        this.IsLockAble = false;
-        this.IsLocked = false;
-        this.IsClosed = false;
-        this.IsCloseAble = false;
-        this.IsSeatAble = false;
-        this.IsClimbAble = false;
-        this.IsReadable = false;
-        this.IsLighter = false;
-        this.IsLighterSwitchedOn = false;
-    }
-
-    private void InitialzeDescriptions()
-    {
-        this.Description = string.Empty;
-        this.FirstLookDescription = string.Empty;
-        this.OpenDescription = string.Empty;
-        this.CloseDescription = string.Empty;
-        this.UnPickAbleDescription = string.Empty;
-        this.UnDropAbleDescription = string.Empty;
-        this.LockDescription = string.Empty;
-        this.ContainmentDescription = string.Empty;
-        this.BrokenDescription = string.Empty;
-        this.UnbreakableDescription = string.Empty;
-        this.LinkedToDescription = string.Empty;
-        this.ClimbedDescription = string.Empty;
-        this.LetterContentDescription = string.Empty;
-        this.LighterSwitchedOffDescription = string.Empty;
-        this.LighterSwitchedOnDescription = string.Empty;
-        this.Hint = string.Empty;
+        InitializeDescriptions();
     }
 
     protected virtual string GetVariationOfYouSee(int itemCount)
@@ -238,7 +194,384 @@ public abstract partial class AHereticObject
     {
         return BaseDescriptions.HERE;
     }
+    
+    public bool OwnsItem(string itemKey)
+    {
+        var item = this.GetItem(itemKey);
+        return item != default;
+    }
 
+    public bool OwnsItem(Item item)
+    {
+        return this.OwnsItem(item.Key);
+    }
+    
+    public bool OwnsCharacter(string itemKey)
+    {
+        var character = this.GetCharacter(itemKey);
+        return character != default;
+    }
+    
+    public bool OwnsCharacter(Character character)
+    {
+        return this.OwnsCharacter(character.Key);
+    }
+
+    internal virtual AHereticObject GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
+    {
+        if (visitedItems.Contains(this))
+        {
+            return default;
+        }
+        
+        visitedItems.Add(this);
+        
+        if (this.Key == itemKey)
+        {
+            return this;
+        }
+
+        foreach (var item in this.Items)
+        {
+            var result = item.GetObject(itemKey, visitedItems);
+            if (result != default)
+            {
+                return result;
+            }
+        }
+        
+        foreach (var character in this.Characters)
+        {
+            var result = character.GetObject(itemKey, visitedItems);
+            if (result != default)
+            {
+                return result;
+            }
+        }
+
+        foreach (var item in this.LinkedTo)
+        {
+            var result = item.GetObject(itemKey, visitedItems);
+            if (result != default)
+            {
+                return result;
+            }
+        }
+
+        return default;
+    }
+    
+    public AHereticObject GetObject(string itemKey)
+    {
+        var result = this.GetObject(itemKey, new List<AHereticObject>());
+        return result ?? default;
+    }
+    
+    public AHereticObject GetObject(AHereticObject item)
+    {
+        return this.GetObject(item.Key);
+    }
+
+    public Item GetItem(string itemKey)
+    {
+        var result = this.GetObject(itemKey, new List<AHereticObject>());
+        return result as Item ?? default;
+    }
+    
+    public Item GetItem(AHereticObject item)
+    {
+        return this.GetItem(item.Key);
+    }
+    
+    public Item GetUnhiddenItem(string key)
+    {
+        var item = this.GetItem(key);
+
+        return item is { IsHidden: false } ? item : default;
+    }
+    
+    public Character GetCharacter(string itemKey)
+    {
+        var result = this.GetObject(itemKey, new List<AHereticObject>());
+        return result as Character ?? default;
+    }
+
+    public Character GetCharacter(Character character)
+    {
+        return this.GetCharacter(character.Key);
+    }
+    
+    public Character GetUnhiddenCharacter(string key)
+    {
+        var character = this.GetCharacter(key);
+
+        return character is { IsHidden: false } ? character : default;
+    }
+
+    protected virtual string PrintCharacters()
+    {
+        var unhiddenItems = this.Characters.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
+
+        return this.PrintUnhiddenObjects(unhiddenItems);
+    }
+
+    protected virtual string PrintItems(bool subItems = false)
+    {
+
+        var unhiddenNonSurroundingItems = this.Items.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
+
+        return this.PrintUnhiddenObjects(unhiddenNonSurroundingItems);
+    }
+
+    public Item GetVirtualItem(string key)
+    {
+        var item = this.GetItem(key);
+
+        return item is { IsVirtual: true } ? item : default;
+    }
+
+    /// <summary>
+    /// Tries to remove an item from the list of items or from the list of characters recursively.
+    /// </summary>
+    /// <param name="itemToRemove">The item to be removed.</param>
+    /// <returns>True if successful, false otherwise.</returns>
+    public virtual bool RemoveItem(Item itemToRemove)
+    {
+        foreach (var item in this.Items)
+        {
+            if (item.Key == itemToRemove.Key)
+            {
+                return this.Items.Remove(itemToRemove);
+            }
+            var result = item.RemoveItem(itemToRemove);
+
+            if (result)
+            {
+                return true;
+            }
+        }
+
+        foreach (var character in this.Characters)
+        {
+            foreach (var item in character.Items)
+            {
+                if (item.Key == itemToRemove.Key)
+                {
+                    return character.Items.Remove(itemToRemove);
+                }
+                var result = item.RemoveItem(itemToRemove);
+
+                if (result)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    public AHereticObject GetOwnerOfUnhiddenItemByKey(string key)
+    {
+        var unhiddenItems = this.Items.Where(i => !i.IsHidden).ToList();
+
+        if (unhiddenItems.Any())
+        {
+            foreach (var item in unhiddenItems)
+            {
+                if (item.Key == key)
+                {
+                    return this;
+                }
+                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        var unhiddenCharacters = this.Characters.Where(c => !c.IsHidden).ToList();
+        if (unhiddenCharacters.Any())
+        {
+            foreach (var item in unhiddenCharacters)
+            {
+                if (item.Key == key)
+                {
+                    return this;
+                }
+                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+        
+        var unhiddenLinkedObjects = this.LinkedTo.Where(c => !c.IsHidden).ToList();
+        if (unhiddenLinkedObjects.Any())
+        {
+            foreach (var item in unhiddenLinkedObjects)
+            {
+                if (item.Key == key)
+                {
+                    return this;
+                }
+                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+
+                if (result != default)
+                {
+                    return result;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public virtual int GetActualPayload()
+    {
+        var sum = this.Weight;
+        if (this.Items.Any())
+        {
+            foreach (var item in this.Items)
+            {
+                if (item.Items.Any())
+                {
+                    sum += item.GetActualPayload();
+                }
+                else
+                {
+                    sum += item.Weight;
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    public string AlterEgo()
+    {
+        var result = new StringBuilder();
+        result.AppendFormat(BaseDescriptions.ALTER_EGO_DESCRIPTION, this.Name);
+        result.AppendLine(this.GetResourceByKey());
+
+        return result.ToString();
+    }
+
+    protected virtual string GetObjectName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}").Trim();
+    }
+    
+    public override string ToString()
+    {
+        var description = new StringBuilder();
+        description.AppendLine(this.Name);
+        description.AppendLine(new string('-', this.Name.Length));
+        description.AppendLine(this.Description);
+
+        if (this.FirstLookDescription != string.Empty)
+        {
+            description.AppendLine(this.FirstLookDescription);
+            this.FirstLookDescription = string.Empty;
+        }
+
+        if (this.IsLighter)
+        {
+            if (this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOnDescription))
+            {
+                description.AppendLine(this.LighterSwitchedOnDescription);    
+            }
+
+            if (!this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOffDescription))
+            {
+                description.AppendLine(this.LighterSwitchedOffDescription);
+            }
+        }
+
+        if (this.IsLocked && !string.IsNullOrEmpty(this.LockDescription))
+        {
+            description.AppendLine(this.LockDescription);
+        }
+        else
+        {
+            if (this.IsCloseAble)
+            {
+                if (this.IsClosed && !string.IsNullOrEmpty(this.CloseDescription))
+                {
+                    description.AppendLine(this.CloseDescription);
+                }
+
+                if (!this.IsClosed && !string.IsNullOrEmpty(this.OpenDescription))
+                {
+                    description.AppendLine(this.OpenDescription);
+                }
+            }
+
+        }
+
+        if (!this.IsCloseAble || this.IsCloseAble && !this.IsClosed)
+        {
+            if (this.Items.Any(i => !i.IsHidden) || this.Characters.Any(c => !c.IsHidden))
+            {
+                description.AppendLine();
+            }
+
+            description.Append(this.PrintCharacters());
+            description.Append(this.PrintItems());
+        }
+        
+        description.Append(GetLinkedObjectsDescription(this, false));
+
+        return description.ToString();
+    }
+
+    private string GetResourceByKey()
+    {
+        var characterNames = this.name.Split('|');
+        return string.Join(", ", characterNames);
+    }
+    
+    private string GetNominativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        var nominative = this.Grammar.GetNominativeIndefiniteArticle();
+        if (string.IsNullOrEmpty(nominative))
+        {
+            return $" {sentence[0].Trim()}";    
+        }
+        
+        return $"{nominative} {sentence[0].Trim()}";
+    }
+    
+    private string GetDativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetDativeIndefiniteArticle()} {sentence[0].Trim()}");
+    }
+    
+    private string GetDativeArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetDativeArticle()} {sentence[0].Trim()}");
+    }
+    
+    private string GetAccusativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {sentence[0].Trim()}");
+    }
+    
+    private string GetAccusativeArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetAccusativeArticle()} {sentence[0].Trim()}");
+    }
+    
     private string PrintUnhiddenObjects(ICollection<AHereticObject> unhiddenObjects, bool subItems = false)
     {
         var unhiddenObjectDescription = new StringBuilder();
@@ -406,403 +739,47 @@ public abstract partial class AHereticObject
         return linkedObjectDescription.ToString();
     }
 
-    protected virtual string PrintCharacters()
+    private void InitializeStates()
     {
-        var unhiddenItems = this.Characters.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
-
-        return this.PrintUnhiddenObjects(unhiddenItems);
+        this.IsContainer = false;
+        this.IsSurfaceContainer = false;
+        this.IsSurrounding = false;
+        this.IsBreakable = false;
+        this.IsBroken = false;
+        this.IsHidden = false;
+        this.HideOnContainerClose = true;
+        this.IsVirtual = false;
+        this.IsPickAble = true;
+        this.IsDropAble = true;
+        this.IsUnveilAble = true;
+        this.IsLockAble = false;
+        this.IsLocked = false;
+        this.IsClosed = false;
+        this.IsCloseAble = false;
+        this.IsSeatAble = false;
+        this.IsClimbAble = false;
+        this.IsReadable = false;
+        this.IsLighter = false;
+        this.IsLighterSwitchedOn = false;
     }
 
-    protected virtual string PrintItems(bool subItems = false)
+    private void InitializeDescriptions()
     {
-
-        var unhiddenNonSurroundingItems = this.Items.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
-
-        return this.PrintUnhiddenObjects(unhiddenNonSurroundingItems);
-    }
-
-    public Item GetUnhiddenItemByKey(string key, IList<Item> items = null)
-    {
-        items = items ?? new List<Item>();
-        var unhiddenItems = this.FilterUnhiddenItems();
-
-        if (unhiddenItems.Any())
-        {
-            foreach (var item in unhiddenItems)
-            {
-                if (!items.Contains(item))
-                {
-                    if (item.Key == key)
-                    {
-                        return item;
-                    }
-                    items.Add(item);
-                    var result = item.GetUnhiddenItemByKey(key, items);
-
-                    if (result != default)
-                    {
-                        return result;
-                    }    
-                }
-            }
-        }
-
-        return default;
-    }
-    
-    protected virtual IList<Item> FilterUnhiddenItems()
-    {
-        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false)
-            .Union(this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.LinkedTo).Where(i => i.IsHidden == false));
-        
-        var unhiddenItems = this.Items.Where(i => i.IsHidden == false)
-            .Union(this.LinkedTo.Where(i => i.IsHidden == false))
-            .Union(itemsFromCharacter).ToList();
-
-        return unhiddenItems;
-    }
-
-    public Item GetVirtualItemByKey(string key)
-    {
-        var itemsFromCharacter = this.Characters.SelectMany(c => c.Items);
-        var items = this.Items.Union(itemsFromCharacter).ToList();
-
-        if (items.Any())
-        {
-            foreach (var item in items)
-            {
-                if (item.Key == key && item.IsVirtual)
-                {
-                    return item;
-                }
-                var result = item.GetVirtualItemByKey(key);
-
-                if (result != default)
-                {
-                    return result;
-                }
-            }
-        }
-
-        return default;
-    }
-
-    /// <summary>
-    /// Tries to get an item from the list of items or from the list of characters recursively.
-    /// </summary>
-    /// <param name="key">Key of the item.</param>
-    /// <returns>The item, otherwise default.</returns>
-    public Item GetItemByKey(string key)
-    {
-        foreach (var item in this.Items)
-        {
-            if (item.Key == key)
-            {
-                return item;
-            }
-            var result = item.GetItemByKey(key);
-
-            if (result != default)
-            {
-                return result;
-            }
-        }
-
-        foreach (var character in this.Characters)
-        {
-            foreach (var item in character.Items)
-            {
-                if (item.Key == key)
-                {
-                    return item;
-                }
-                var result = item.GetItemByKey(key);
-
-                if (result != default)
-                {
-                    return result;
-                }
-            }
-        }
-
-        return default;
-    }
-
-    /// <summary>
-    /// Tries to remove an item from the list of items or from the list of characters recursively.
-    /// </summary>
-    /// <param name="itemToRemove">The item to be removed.</param>
-    /// <returns>True if successful, false otherwise.</returns>
-    public virtual bool RemoveItem(Item itemToRemove)
-    {
-        foreach (var item in this.Items)
-        {
-            if (item.Key == itemToRemove.Key)
-            {
-                return this.Items.Remove(itemToRemove);
-            }
-            var result = item.RemoveItem(itemToRemove);
-
-            if (result)
-            {
-                return true;
-            }
-        }
-
-        foreach (var character in this.Characters)
-        {
-            foreach (var item in character.Items)
-            {
-                if (item.Key == itemToRemove.Key)
-                {
-                    return character.Items.Remove(itemToRemove);
-                }
-                var result = item.RemoveItem(itemToRemove);
-
-                if (result)
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public Character GetUnhiddenCharacterByKey(string key)
-    {
-        var unhiddenItems = this.Characters.Where(i => i.IsHidden == false).ToList();
-
-        if (unhiddenItems.Any())
-        {
-            foreach (var character in unhiddenItems)
-            {
-                if (character.Key == key)
-                {
-                    return character;
-                }
-                var result = character.GetUnhiddenCharacterByKey(key);
-
-                if (result != default)
-                {
-                    return result;
-                }
-            }
-        }
-
-        return default;
-    }
-
-    public Character GetCharacterByKey(string key)
-    {
-        foreach (var character in this.Characters)
-        {
-            if (character.Key == key)
-            {
-                return character;
-            }
-
-            var result = character.GetCharacterByKey(key);
-
-            if (result != default)
-            {
-                return result;
-            }
-        }
-            
-        foreach (var item in this.Items)
-        {
-            var result = item.GetCharacterByKey(key);
-
-            if (result != default)
-            {
-                return result;
-            }
-        }
-
-        return default;
-    }
-
-    public AHereticObject GetOwnerOfUnhiddenItemByKey(string key)
-    {
-        var unhiddenItems = this.Items.Where(i => !i.IsHidden).ToList();
-
-        if (unhiddenItems.Any())
-        {
-            foreach (var item in unhiddenItems)
-            {
-                if (item.Key == key)
-                {
-                    return this;
-                }
-                var result = item.GetOwnerOfUnhiddenItemByKey(key);
-
-                if (result != default)
-                {
-                    return result;
-                }
-            }
-        }
-
-        var unhiddenCharacters = this.Characters.Where(c => !c.IsHidden).ToList();
-        if (unhiddenCharacters.Any())
-        {
-            foreach (var item in unhiddenCharacters)
-            {
-                if (item.Key == key)
-                {
-                    return this;
-                }
-                var result = item.GetOwnerOfUnhiddenItemByKey(key);
-
-                if (result != default)
-                {
-                    return result;
-                }
-            }
-        }
-
-        return default;
-    }
-
-    public virtual int GetActualPayload()
-    {
-        var sum = this.Weight;
-        if (this.Items.Any())
-        {
-            foreach (var item in this.Items)
-            {
-                if (item.Items.Any())
-                {
-                    sum += item.GetActualPayload();
-                }
-                else
-                {
-                    sum += item.Weight;
-                }
-            }
-        }
-
-        return sum;
-    }
-
-    public string AlterEgo()
-    {
-        var result = new StringBuilder();
-        result.AppendFormat(BaseDescriptions.ALTER_EGO_DESCRIPTION, this.Name);
-        result.AppendLine(this.GetResourceByKey());
-
-        return result.ToString();
-    }
-
-    private string GetResourceByKey()
-    {
-        var characterNames = this.name.Split('|');
-        return string.Join(", ", characterNames);
-    }
-
-    protected virtual string GetObjectName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}").Trim();
-    }
-
-    private string GetNominativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        var nominative = this.Grammar.GetNominativeIndefiniteArticle();
-        if (string.IsNullOrEmpty(nominative))
-        {
-            return $" {sentence[0].Trim()}";    
-        }
-        
-        return $"{nominative} {sentence[0].Trim()}";
-    }
-    
-    private string GetDativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetDativeIndefiniteArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetDativeArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetDativeArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetAccusativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetAccusativeArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetAccusativeArticle()} {sentence[0].Trim()}");
-    }
-    
-    public override string ToString()
-    {
-        var description = new StringBuilder();
-        description.AppendLine(this.Name);
-        description.AppendLine(new string('-', this.Name.Length));
-        description.AppendLine(this.Description);
-
-        if (this.FirstLookDescription != string.Empty)
-        {
-            description.AppendLine(this.FirstLookDescription);
-            this.FirstLookDescription = string.Empty;
-        }
-
-        if (this.IsLighter)
-        {
-            if (this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOnDescription))
-            {
-                description.AppendLine(this.LighterSwitchedOnDescription);    
-            }
-
-            if (!this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOffDescription))
-            {
-                description.AppendLine(this.LighterSwitchedOffDescription);
-            }
-        }
-
-        if (this.IsLocked && !string.IsNullOrEmpty(this.LockDescription))
-        {
-            description.AppendLine(this.LockDescription);
-        }
-        else
-        {
-            if (this.IsCloseAble)
-            {
-                if (this.IsClosed && !string.IsNullOrEmpty(this.CloseDescription))
-                {
-                    description.AppendLine(this.CloseDescription);
-                }
-
-                if (!this.IsClosed && !string.IsNullOrEmpty(this.OpenDescription))
-                {
-                    description.AppendLine(this.OpenDescription);
-                }
-            }
-
-        }
-
-        if (!this.IsCloseAble || this.IsCloseAble && !this.IsClosed)
-        {
-            if (this.Items.Any(i => !i.IsHidden) || this.Characters.Any(c => !c.IsHidden))
-            {
-                description.AppendLine();
-            }
-
-            description.Append(this.PrintCharacters());
-            description.Append(this.PrintItems());
-        }
-        
-        description.Append(GetLinkedObjectsDescription(this, false));
-
-        return description.ToString();
+        this.Description = string.Empty;
+        this.FirstLookDescription = string.Empty;
+        this.OpenDescription = string.Empty;
+        this.CloseDescription = string.Empty;
+        this.UnPickAbleDescription = string.Empty;
+        this.UnDropAbleDescription = string.Empty;
+        this.LockDescription = string.Empty;
+        this.ContainmentDescription = string.Empty;
+        this.BrokenDescription = string.Empty;
+        this.UnbreakableDescription = string.Empty;
+        this.LinkedToDescription = string.Empty;
+        this.ClimbedDescription = string.Empty;
+        this.LetterContentDescription = string.Empty;
+        this.LighterSwitchedOffDescription = string.Empty;
+        this.LighterSwitchedOnDescription = string.Empty;
+        this.Hint = string.Empty;
     }
 }

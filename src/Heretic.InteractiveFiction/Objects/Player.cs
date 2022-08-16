@@ -31,35 +31,26 @@ public sealed class Player : AHereticObject
         var sentence = this.name.Split('|');
         return sentence[0].Trim();
     }
-
-    public bool OwnsItem(string itemKey)
-    {
-        return this.Items.SelectMany(GetAllItems).Union(this.Clothes.SelectMany(GetAllItems)).Any(i => i.Key == itemKey);
-    }
-
-    public bool OwnsItem(Item item)
-    {
-        return this.OwnsItem(item.Key);
-    }
     
-    private IEnumerable<Item> GetAllItems( Item root )
+    internal override AHereticObject GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
     {
-        if( root == null )
+        var result = base.GetObject(itemKey, visitedItems);
+
+        if (result == default)
         {
-            yield break;
+            foreach (var cloth in this.Clothes)
+            {
+                var clothResult = cloth.GetObject(itemKey, visitedItems);
+                if (clothResult != default)
+                {
+                    return clothResult;
+                }
+            }
+
+            return default;
         }
 
-        yield return root;
-
-        if ( root.Items == default )
-        {
-            yield break;
-        }
-
-        foreach ( Item descendant in root.Items.SelectMany( GetAllItems ) )
-        {
-            yield return descendant;
-        }
+        return result;
     }
 
     public override string ToString()
@@ -157,19 +148,6 @@ public sealed class Player : AHereticObject
         return baseResult;
     }
 
-    protected override IList<Item> FilterUnhiddenItems()
-    {
-        var itemsFromCharacter = this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.Items).Where(i => i.IsHidden == false)
-            .Union(this.Characters.Where(c => c.IsHidden == false).SelectMany(c => c.LinkedTo).Where(i => i.IsHidden == false));
-        
-        var unhiddenItems = this.Items.Where(i => i.IsHidden == false)
-            .Union(this.LinkedTo.Where(i => i.IsHidden == false))
-            .Union(this.Clothes.Where(i => i.IsHidden == false))
-            .Union(itemsFromCharacter).ToList();
-
-        return unhiddenItems;
-    }
-    
     private string PrintClothes()
     {
         var result = new StringBuilder();

@@ -9,7 +9,7 @@ public class AHereticObjectTest
     public void GetItemTest()
     {
         var sut = new HereticObjectMock();
-        var actual = sut.GetItemByKey("COOKTOP");
+        var actual = sut.GetItem("COOKTOP");
         var expected = "COOKTOP";
 
         Assert.Equal(expected, actual.Key);
@@ -19,7 +19,7 @@ public class AHereticObjectTest
     public void GetItemFromCharacterTest()
     {
         var sut = new HereticObjectMock();
-        var actual = sut.GetItemByKey("KNIFE");
+        var actual = sut.GetItem("KNIFE");
         var expected = "KNIFE";
 
         Assert.Equal(expected, actual.Key);
@@ -30,7 +30,7 @@ public class AHereticObjectTest
     {
         //A child on the arm of an adult.
         var sut = new HereticObjectMock();
-        var actual = sut.GetCharacterByKey("CHILD");
+        var actual = sut.GetCharacter("CHILD");
         var expected = "CHILD";
 
         Assert.Equal(expected, actual.Key);
@@ -41,7 +41,7 @@ public class AHereticObjectTest
     {
         //A baby in a baby sling, carried by one person.
         var sut = new HereticObjectMock();
-        var actual = sut.GetCharacterByKey("BABY");
+        var actual = sut.GetCharacter("BABY");
         var expected = "BABY";
 
         Assert.Equal(expected, actual.Key);
@@ -51,7 +51,7 @@ public class AHereticObjectTest
     public void RemoveItemTest()
     {
         var sut = new HereticObjectMock();
-        var item = sut.GetItemByKey("COOKTOP");
+        var item = sut.GetItem("COOKTOP");
 
         var actual = sut.RemoveItem(item);
         
@@ -62,7 +62,7 @@ public class AHereticObjectTest
     public void RemoveItemFromCharacterTest()
     {
         var sut = new HereticObjectMock();
-        var item = sut.GetItemByKey("KNIFE");
+        var item = sut.GetItem("KNIFE");
 
         var actual = sut.RemoveItem(item);
         

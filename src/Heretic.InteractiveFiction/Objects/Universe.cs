@@ -248,35 +248,18 @@ public sealed class Universe
         return this.LocationMap.Keys.SingleOrDefault(l => l.Key == key);
     }
     
-    public AHereticObject GetObjectFromWorldByKey(string key)
+    public AHereticObject GetObjectFromWorld(string key)
     {
         foreach (var location in this.LocationMap.Keys)
         {
-            var result = findObject(key, location);
+            var result = location.GetObject(key);
             if (result != default && result.Key == key)
             {
                 return result;
             }
         }
 
-        return findObject(key, this.ActivePlayer) ?? default;
-    }
-
-    private AHereticObject findObject(string key, AHereticObject containerObject)
-    {
-        if (containerObject.Key == key)
-        {
-            return containerObject;
-        }
-
-        AHereticObject result = containerObject.GetItemByKey(key);
-        if (result != default)
-        {
-            return result;
-        }
-
-        result = containerObject.GetCharacterByKey(key);
-        return result ?? default;
+        return this.ActivePlayer.GetObject(key);
     }
 
     private int GetMaxScore()

@@ -41,7 +41,7 @@ internal sealed class ObjectHandler
     
     private Character GetUnhiddenCharacterByKey(string key)
     {
-        if (this.universe.GetObjectFromWorldByKey(key) is Character { IsHidden: false } character)
+        if (this.universe.GetObjectFromWorld(key) is Character { IsHidden: false } character)
         {
             return character;
         }
@@ -58,7 +58,6 @@ internal sealed class ObjectHandler
     {
         return this.GetVirtualItemByKey(this.GetItemKeyByName(itemName));
     }
-
     
     internal string GetItemKeyByName(string itemName)
     {
@@ -74,20 +73,10 @@ internal sealed class ObjectHandler
     {
         return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
     }
-    
-    internal Item GetUnhiddenItemByNameFromActiveLocation(string itemName)
-    {
-        return this.GetUnhiddenItemByKeyFromActiveLocation(this.GetItemKeyByName(itemName));
-    }
-    
-    internal Item GetUnhiddenItemByNameFromActivePlayer(string itemName)
-    {
-        return this.GetUnhiddenItemByKeyFromActivePlayer(this.GetItemKeyByName(itemName));
-    }
-    
+
     internal AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
     {
-        var item = this.universe.GetObjectFromWorldByKey(this.GetItemKeyByName(itemName));
+        var item = this.universe.GetObjectFromWorld(this.GetItemKeyByName(itemName));
 
         if (item == default || item.IsHidden)
         {
@@ -154,8 +143,7 @@ internal sealed class ObjectHandler
         var universeActiveObject = this.universe.ActiveObject;
         if (universeActiveObject != default)
         {
-            var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(universeActiveObject.Key);
-            if (item == default)
+            if (!this.universe.ActivePlayer.OwnsItem(universeActiveObject.Key))
             {
                 this.ClearActiveObject();
             }
@@ -172,10 +160,10 @@ internal sealed class ObjectHandler
 
     private Item GetUnhiddenItemByKeyActive(string key)
     {
-        var result = this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
+        var result = this.universe.ActiveLocation.GetUnhiddenItem(key);
         if (result == default)
         {
-            result = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
+            result = this.universe.ActivePlayer.GetUnhiddenItem(key);
         }
 
         return result;
@@ -183,25 +171,15 @@ internal sealed class ObjectHandler
     
     private Character GetUnhiddenCharacterByKeyFromActiveLocation(string key)
     {
-        return this.universe.ActiveLocation.GetUnhiddenCharacterByKey(key);
-    }
-    
-    private Item GetUnhiddenItemByKeyFromActiveLocation(string key)
-    {
-        return this.universe.ActiveLocation.GetUnhiddenItemByKey(key);
-    }
-    
-    private Item GetUnhiddenItemByKeyFromActivePlayer(string key)
-    {
-        return this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
+        return this.universe.ActiveLocation.GetUnhiddenCharacter(key);
     }
     
     private Item GetVirtualItemByKey(string key)
     {
-        var result = this.universe.ActiveLocation.GetVirtualItemByKey(key);
+        var result = this.universe.ActiveLocation.GetVirtualItem(key);
         if (result == default)
         {
-            result = this.universe.ActivePlayer.GetVirtualItemByKey(key);
+            result = this.universe.ActivePlayer.GetVirtualItem(key);
         }
 
         return result;

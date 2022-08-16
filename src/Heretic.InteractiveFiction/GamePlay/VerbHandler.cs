@@ -514,13 +514,12 @@ internal sealed class VerbHandler
             }
 
             var key = this.objectHandler.GetItemKeyByName(subject);
-            var item = this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
-            if (item != default)
+            if (this.universe.ActivePlayer.GetUnhiddenItem(key) != default)
             {
                 return printingSubsystem.ItemAlreadyOwned();
             }
 
-            item = this.universe.ActiveLocation.GetItemByKey(key);
+            var item = this.universe.ActiveLocation.GetItem(key);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -898,7 +897,7 @@ internal sealed class VerbHandler
             }
             
             var key = this.objectHandler.GetItemKeyByName(subject);
-            var item = this.universe.ActiveLocation.GetUnhiddenItemByKey(key) ?? this.universe.ActivePlayer.GetUnhiddenItemByKey(key);
+            var item = this.universe.ActiveLocation.GetUnhiddenItem(key) ?? this.universe.ActivePlayer.GetUnhiddenItem(key);
 
             if (item != default)
             {
@@ -1116,9 +1115,9 @@ internal sealed class VerbHandler
             {
                 return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
-
+            
             //...and I can give only items that i own.
-            var item = this.objectHandler.GetUnhiddenItemByNameFromActivePlayer(itemName);
+            var item = this.universe.ActivePlayer.GetUnhiddenItem(this.objectHandler.GetItemKeyByName(itemName));
             if (item == default)
             {
                 return printingSubsystem.ItemNotOwned();
@@ -1486,14 +1485,9 @@ internal sealed class VerbHandler
         {
             var subjectKey = this.objectHandler.GetItemKeyByName(subjectName);
 
-            var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == subjectKey);
-            var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == subjectKey);
-            
-            if (isPlayerItem || isPlayerCloths)
+            if (this.universe.ActivePlayer.OwnsItem(subjectKey))
             {
-                var itemToDrop = isPlayerItem ? 
-                    this.universe.ActivePlayer.Items.Single(i => i.Key == subjectKey): 
-                    this.universe.ActivePlayer.Clothes.Single(x => x.Key == subjectKey);
+                var itemToDrop = (Item)this.universe.GetObjectFromWorld(subjectKey);
 
                 this.objectHandler.StoreAsActiveObject(itemToDrop);
                 
@@ -1501,23 +1495,13 @@ internal sealed class VerbHandler
                 {
                     var objectKey = this.objectHandler.GetItemKeyByName(objectName);
 
-                    isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == objectKey);
-                    isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == objectKey);
-                    var isPlayerLinkedToObject = this.universe.ActivePlayer.LinkedTo.Any(x => x.Key == objectKey);
-                    var isItemInLocation = this.universe.ActiveLocation.Items.Any(x => x.Key == objectKey);
+                    var isPlayerOwnerOfItem = this.universe.ActivePlayer.OwnsItem(objectKey);
+                    var isActiveLocationOwnerOfItem = this.universe.ActiveLocation.OwnsItem(objectKey);
 
-                    if (isPlayerItem || isPlayerLinkedToObject || isPlayerCloths || isItemInLocation)
+                    if (isPlayerOwnerOfItem || isActiveLocationOwnerOfItem)
                     {
-                        var itemContainer = isPlayerItem
-                            ?
-                            this.universe.ActivePlayer.Items.Single(i => i.Key == objectKey)
-                            : isPlayerCloths
-                                ? this.universe.ActivePlayer.Clothes.Single(x => x.Key == objectKey)
-                                : isPlayerLinkedToObject
-                                    ? this.universe.ActivePlayer.LinkedTo.Single(x => x.Key == objectKey)
-                                    :
-                                    this.universe.ActiveLocation.Items.Single(x => x.Key == objectKey);
-
+                        var itemContainer = this.universe.GetObjectFromWorld(objectKey);
+                        
                         if (itemContainer.IsContainer)
                         {
                             if (!itemContainer.IsCloseAble || itemContainer.IsCloseAble && !itemContainer.IsClosed)
