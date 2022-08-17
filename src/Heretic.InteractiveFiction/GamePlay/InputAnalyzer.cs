@@ -205,13 +205,19 @@ internal sealed class InputAnalyzer
         {
             var concatWord = sentence[index];
             var concatWordList = new List<string>() { concatWord };
-            result.Add(concatWord, concatWordList.ToList());
+            if (!result.ContainsKey(concatWord))
+            {
+                result.Add(concatWord, concatWordList.ToList());    
+            }
             
             for (var position = index + 1; position < sentence.Count(); position++)
             {
                 concatWord += sentence[position];
                 concatWordList.Add(sentence[position]);
-                result.Add(concatWord, concatWordList.ToList());
+                if (!result.ContainsKey(concatWord))
+                {
+                    result.Add(concatWord, concatWordList.ToList());    
+                }
             }
         }
 
