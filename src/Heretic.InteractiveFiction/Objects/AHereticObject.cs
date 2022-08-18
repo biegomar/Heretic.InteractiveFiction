@@ -142,6 +142,11 @@ public abstract partial class AHereticObject
     /// Is the light source switched on?
     /// </summary>
     public bool IsLighterSwitchedOn { get; set; }
+
+    /// <summary>
+    /// Indicates whether the object should be listed in the corresponding object list of a container or not.
+    /// </summary>
+    public bool IsShownInObjectList { get; set; }
     
     /// <summary>
     /// The weight of the object.
@@ -310,7 +315,7 @@ public abstract partial class AHereticObject
 
     protected virtual string PrintCharacters()
     {
-        var unhiddenItems = this.Characters.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
+        var unhiddenItems = this.Characters.Where(i => !i.IsHidden && !i.IsSurrounding && i.IsShownInObjectList).ToList<AHereticObject>();
 
         return this.PrintUnhiddenObjects(unhiddenItems);
     }
@@ -318,7 +323,7 @@ public abstract partial class AHereticObject
     protected virtual string PrintItems(bool subItems = false)
     {
 
-        var unhiddenNonSurroundingItems = this.Items.Where(i => !i.IsHidden && !i.IsSurrounding).ToList<AHereticObject>();
+        var unhiddenNonSurroundingItems = this.Items.Where(i => !i.IsHidden && !i.IsSurrounding && i.IsShownInObjectList).ToList<AHereticObject>();
 
         return this.PrintUnhiddenObjects(unhiddenNonSurroundingItems);
     }
@@ -761,6 +766,7 @@ public abstract partial class AHereticObject
         this.IsReadable = false;
         this.IsLighter = false;
         this.IsLighterSwitchedOn = false;
+        this.IsShownInObjectList = true;
     }
 
     private void InitializeDescriptions()
