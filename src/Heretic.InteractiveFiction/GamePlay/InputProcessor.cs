@@ -68,10 +68,21 @@ public sealed class InputProcessor
     private void FirePeriodicEvent()
     {
         var eventArgs = new PeriodicEventArgs();
-        this.universe.RaisePeriodicEvents(eventArgs);
-        if (!string.IsNullOrEmpty(eventArgs.Message))
+        try
         {
-            PrintingSubsystem.Resource(eventArgs.Message);
+            this.universe.RaisePeriodicEvents(eventArgs);
+            if (!string.IsNullOrEmpty(eventArgs.Message))
+            {
+                PrintingSubsystem.ForegroundColor = TextColor.Magenta;
+                PrintingSubsystem.Resource(eventArgs.Message);
+                PrintingSubsystem.ResetColors();
+            }
+        }
+        catch (PeriodicException ex)
+        {
+            PrintingSubsystem.ForegroundColor = TextColor.Magenta;
+            PrintingSubsystem.Resource(ex.Message);
+            PrintingSubsystem.ResetColors();
         }
     }
 

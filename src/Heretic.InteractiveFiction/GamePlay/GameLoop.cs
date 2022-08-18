@@ -1,4 +1,3 @@
-using System.Threading;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;

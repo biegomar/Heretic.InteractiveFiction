@@ -19,13 +19,4 @@ public class GamePrerequisites
     public Player ActivePlayer { get; }
     public PeriodicEvent PeriodicEvent { get; }
     public ICollection<string> Quests { get; }
-
-    public void Deconstruct(out LocationMap LocationMap, out Location ActiveLocation, out Player ActivePlayer, out PeriodicEvent PeriodicEvent , out ICollection<string> Quests)
-    {
-        LocationMap = this.LocationMap;
-        ActiveLocation = this.ActiveLocation;
-        ActivePlayer = this.ActivePlayer;
-        PeriodicEvent = this.PeriodicEvent;
-        Quests = this.Quests;
-    }
 }
