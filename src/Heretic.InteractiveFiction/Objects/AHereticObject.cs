@@ -471,6 +471,11 @@ public abstract partial class AHereticObject
         var sentence = this.name.Split('|');
         return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}").Trim();
     }
+
+    internal virtual ICollection<string> GetNames()
+    {
+        return this.name.Split('|').ToList();
+    }
     
     public override string ToString()
     {

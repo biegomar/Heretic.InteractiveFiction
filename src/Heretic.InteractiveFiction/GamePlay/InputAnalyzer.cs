@@ -47,6 +47,7 @@ internal sealed class InputAnalyzer
         
             var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
             var sentence = normalizedInput.Split(' ');
+            sentence = this.SubstitutePronoun(sentence).ToArray();
             sentence = sentence.Where(x => !this.universe.PackingWordsResources.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ToArray();
 
             sentence = this.OrderSentence(sentence).ToArray();
@@ -81,13 +82,13 @@ internal sealed class InputAnalyzer
         if (parts.Any())
         {
             var normList = this.NormalizeSentence(parts);
-            itemObject = this.GetCharacter(normList.Keys.ToList());
+            itemObject = this.GetItem(normList.Keys.ToList());
             if (itemObject == string.Empty)
-            {
-                itemObject = this.GetItem(normList.Keys.ToList());
+            {  
+                itemObject = this.GetLocation(normList.Keys.ToList());
                 if (itemObject == string.Empty)
                 {
-                    itemObject = this.GetLocation(normList.Keys.ToList());
+                    itemObject = this.GetCharacter(normList.Keys.ToList());
                     if (itemObject == string.Empty)
                     {
                         itemObject = parts[0];
@@ -223,5 +224,28 @@ internal sealed class InputAnalyzer
 
         return result;
     }
-    
+
+    private IList<string> SubstitutePronoun(IList<string> sentence)
+    {
+        var result = new List<string>();
+        foreach (var word in sentence)
+        {
+            var item = this.objectHandler.GetActiveObjectViaPronoun(word);
+            if (item != default)
+            {
+                result.Add(GetFirstObjectNameWithoutWhitespace(item));
+            }
+            else
+            {
+                result.Add(word);
+            }
+        }
+
+        return result;
+    }
+
+    private string GetFirstObjectNameWithoutWhitespace(AHereticObject item)
+    {
+        return item.GetNames().FirstOrDefault(i => !i.Contains(" "));
+    }
 }
