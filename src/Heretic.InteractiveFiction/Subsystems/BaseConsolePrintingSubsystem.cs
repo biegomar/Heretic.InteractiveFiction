@@ -731,7 +731,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (!string.IsNullOrEmpty(resource) && !string.IsNullOrEmpty(text))
         {
-            Console.Write(WordWrap(resource, this.ConsoleWidth), lowerFirstLetter ? text.LowerFirstChar(): text);
+            var formattedString = string.Format(resource, lowerFirstLetter ? text.LowerFirstChar() : text);
+            Console.Write(WordWrap(formattedString, this.ConsoleWidth));
             Console.WriteLine();
         }
         return true;
