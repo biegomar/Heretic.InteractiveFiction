@@ -40,7 +40,7 @@ public sealed partial class Character
         }
         else
         {
-            throw new AskException(eventArgs.Item.Name);
+            throw new AskException(eventArgs.Item.DativeArticleName);
         }
     }
 

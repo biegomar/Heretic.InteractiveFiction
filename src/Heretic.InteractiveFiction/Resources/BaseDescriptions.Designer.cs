@@ -618,7 +618,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to trägt {0} bei sich..
+        ///   Looks up a localized string similar to Bei sich trägt {0} .
         /// </summary>
         public static string INVENTORY_TEMPLATE {
             get {
@@ -934,7 +934,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Du fragst &quot;{0}&quot;? Keine Reaktion!.
+        ///   Looks up a localized string similar to Du fragst: &quot;Was ist mit {0}?&quot; Keine Reaktion!.
         /// </summary>
         public static string NO_ANSWER_TO_QUESTION {
             get {

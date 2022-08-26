@@ -82,13 +82,13 @@ internal sealed class InputAnalyzer
         if (parts.Any())
         {
             var normList = this.NormalizeSentence(parts);
-            itemObject = this.GetItem(normList.Keys.ToList());
+            itemObject = this.GetCharacter(normList.Keys.ToList());
             if (itemObject == string.Empty)
             {  
-                itemObject = this.GetLocation(normList.Keys.ToList());
+                itemObject = this.GetItem(normList.Keys.ToList());
                 if (itemObject == string.Empty)
                 {
-                    itemObject = this.GetCharacter(normList.Keys.ToList());
+                    itemObject = this.GetLocation(normList.Keys.ToList());
                     if (itemObject == string.Empty)
                     {
                         itemObject = parts[0];

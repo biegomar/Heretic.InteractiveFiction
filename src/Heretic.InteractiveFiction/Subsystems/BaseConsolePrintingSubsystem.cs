@@ -709,7 +709,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool NoAnswerToQuestion(string phrase)
     {
-        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.NO_ANSWER_TO_QUESTION, this.ConsoleWidth), phrase)}");
+        Console.WriteLine($@"{string.Format(WordWrap(BaseDescriptions.NO_ANSWER_TO_QUESTION, this.ConsoleWidth), phrase.LowerFirstChar())}");
         return true;
     }
 

@@ -202,7 +202,7 @@
     <value>Die Tür scheint verschlossen zu sein.</value>
   </data>
   <data name="INVENTORY_TEMPLATE" xml:space="preserve">
-    <value>trägt {0} bei sich.</value>
+    <value>Bei sich trägt {0} </value>
   </data>
   <data name="ITEM_ALREADY_OWNED" xml:space="preserve">
     <value>Hm? Kannst es sein, dass Du den Gegenstand schon besitzt?</value>
@@ -370,7 +370,7 @@
     <value>Du sagst "{0}". Keine Reaktion!</value>
   </data>
   <data name="NO_ANSWER_TO_QUESTION" xml:space="preserve">
-    <value>Du fragst "{0}"? Keine Reaktion!</value>
+    <value>Du fragst: "Was ist mit {0}?" Keine Reaktion!</value>
   </data>
   <data name="WRONG_KEY" xml:space="preserve">
     <value>Du kannst {0} damit nicht aufschließen. Vielleicht probierst Du besser einen anderen Schlüssel?</value>
