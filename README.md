@@ -1,3 +1,4 @@
+![build](https://github.com/biegomar/Heretic.InteractiveFiction/actions/workflows/dotnet.yml/badge.svg)
 # Heretic.InteractiveFiction
 ![GitHub](https://img.shields.io/github/license/biegomar/heretic.interactivefiction)
 [![NuGet version (Heretic.InteractiveFiction)](https://img.shields.io/nuget/v/Heretic.InteractiveFiction)](https://www.nuget.org/packages/Heretic.InteractiveFiction/)
