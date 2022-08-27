@@ -69,6 +69,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Antworte|Antwort.
+        /// </summary>
+        internal static string ANSWER {
+            get {
+                return ResourceManager.GetString("ANSWER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frag|Frage.
         /// </summary>
         internal static string ASK {
@@ -123,6 +132,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schneide|Schneid|Zerschneide|Zerschneid.
+        /// </summary>
+        internal static string CUT {
+            get {
+                return ResourceManager.GetString("CUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Absteigen|Herabsteigen.
         /// </summary>
         internal static string DESCEND {
@@ -141,6 +159,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trink|Trinke.
+        /// </summary>
+        internal static string DRINK {
+            get {
+                return ResourceManager.GetString("DRINK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leg|Lege|verliere|Drop.
         /// </summary>
         internal static string DROP {
@@ -155,6 +182,15 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string E {
             get {
                 return ResourceManager.GetString("E", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iss|Ess|Esse.
+        /// </summary>
+        internal static string EAT {
+            get {
+                return ResourceManager.GetString("EAT", resourceCulture);
             }
         }
         
@@ -204,6 +240,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Einfügen.
+        /// </summary>
+        internal static string INSERT {
+            get {
+                return ResourceManager.GetString("INSERT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventar|inv|i.
         /// </summary>
         internal static string INV {
@@ -222,6 +267,24 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verbrenn|Verbrenne|Zünde|Zünd|Zuende|Zuend|Entzünde|Entzünd|Entzuende|Entzuend.
+        /// </summary>
+        internal static string KINDLE {
+            get {
+                return ResourceManager.GetString("KINDLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lausche.
+        /// </summary>
+        internal static string LISTEN {
+            get {
+                return ResourceManager.GetString("LISTEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock.
         /// </summary>
         internal static string LOCK {
@@ -231,7 +294,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X.
+        ///   Looks up a localized string similar to Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X.
         /// </summary>
         internal static string LOOK {
             get {
@@ -299,6 +362,15 @@ namespace Heretic.InteractiveFiction.Resources {
         internal static string PUSH {
             get {
                 return ResourceManager.GetString("PUSH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drauflegen.
+        /// </summary>
+        internal static string PUTON {
+            get {
+                return ResourceManager.GetString("PUTON", resourceCulture);
             }
         }
         
@@ -375,11 +447,38 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zeig|Zeige.
+        /// </summary>
+        internal static string SHOW {
+            get {
+                return ResourceManager.GetString("SHOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Setze|Setzen|Setz|Hinsetzen|Sitze.
         /// </summary>
         internal static string SIT {
             get {
                 return ResourceManager.GetString("SIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schlaf|Schlafe.
+        /// </summary>
+        internal static string SLEEP {
+            get {
+                return ResourceManager.GetString("SLEEP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Riech|Rieche.
+        /// </summary>
+        internal static string SMELL {
+            get {
+                return ResourceManager.GetString("SMELL", resourceCulture);
             }
         }
         
@@ -402,6 +501,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schalte|Schalt.
+        /// </summary>
+        internal static string SWITCH {
+            get {
+                return ResourceManager.GetString("SWITCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nimm|Nehme|Take.
         /// </summary>
         internal static string TAKE {
@@ -411,11 +519,47 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ausziehen.
+        /// </summary>
+        internal static string TAKEOFF {
+            get {
+                return ResourceManager.GetString("TAKEOFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rede|Sprich.
         /// </summary>
         internal static string TALK {
             get {
                 return ResourceManager.GetString("TALK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schmecke|Schmeck.
+        /// </summary>
+        internal static string TASTE {
+            get {
+                return ResourceManager.GetString("TASTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erzähl|Erzähle|Berichte.
+        /// </summary>
+        internal static string TELL {
+            get {
+                return ResourceManager.GetString("TELL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wirf|Werf|Werfe.
+        /// </summary>
+        internal static string THROW {
+            get {
+                return ResourceManager.GetString("THROW", resourceCulture);
             }
         }
         
@@ -474,11 +618,29 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aufwachen.
+        /// </summary>
+        internal static string WAKEUP {
+            get {
+                return ResourceManager.GetString("WAKEUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang.
         /// </summary>
         internal static string WAYS {
             get {
                 return ResourceManager.GetString("WAYS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anziehen.
+        /// </summary>
+        internal static string WEAR {
+            get {
+                return ResourceManager.GetString("WEAR", resourceCulture);
             }
         }
         

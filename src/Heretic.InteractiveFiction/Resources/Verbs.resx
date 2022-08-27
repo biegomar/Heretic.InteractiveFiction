@@ -151,7 +151,7 @@
     <value>Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock</value>
   </data>
   <data name="LOOK" xml:space="preserve">
-    <value>Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Zeige|Zeig|Look|L|Show|examine|X</value>
+    <value>Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X</value>
   </data>
   <data name="N" xml:space="preserve">
     <value>Norden|Nord|N</value>
@@ -260,5 +260,59 @@
   </data>
   <data name="WAIT" xml:space="preserve">
     <value>Warte</value>
+  </data>
+  <data name="ANSWER" xml:space="preserve">
+    <value>Antworte|Antwort</value>
+  </data>
+  <data name="KINDLE" xml:space="preserve">
+    <value>Verbrenn|Verbrenne|Zünde|Zünd|Zuende|Zuend|Entzünde|Entzünd|Entzuende|Entzuend</value>
+  </data>
+  <data name="CUT" xml:space="preserve">
+    <value>Schneide|Schneid|Zerschneide|Zerschneid</value>
+  </data>
+  <data name="DRINK" xml:space="preserve">
+    <value>Trink|Trinke</value>
+  </data>
+  <data name="EAT" xml:space="preserve">
+    <value>Iss|Ess|Esse</value>
+  </data>
+  <data name="INSERT" xml:space="preserve">
+    <value>Einfügen</value>
+  </data>
+  <data name="LISTEN" xml:space="preserve">
+    <value>Lausche</value>
+  </data>
+  <data name="PUTON" xml:space="preserve">
+    <value>Drauflegen</value>
+  </data>
+  <data name="SHOW" xml:space="preserve">
+    <value>Zeig|Zeige</value>
+  </data>
+  <data name="SLEEP" xml:space="preserve">
+    <value>Schlaf|Schlafe</value>
+  </data>
+  <data name="SMELL" xml:space="preserve">
+    <value>Riech|Rieche</value>
+  </data>
+  <data name="SWITCH" xml:space="preserve">
+    <value>Schalte|Schalt</value>
+  </data>
+  <data name="TAKEOFF" xml:space="preserve">
+    <value>Ausziehen</value>
+  </data>
+  <data name="TASTE" xml:space="preserve">
+    <value>Schmecke|Schmeck</value>
+  </data>
+  <data name="TELL" xml:space="preserve">
+    <value>Erzähl|Erzähle|Berichte</value>
+  </data>
+  <data name="THROW" xml:space="preserve">
+    <value>Wirf|Werf|Werfe</value>
+  </data>
+  <data name="WAKEUP" xml:space="preserve">
+    <value>Aufwachen</value>
+  </data>
+  <data name="WEAR" xml:space="preserve">
+    <value>Anziehen</value>
   </data>
 </root>
