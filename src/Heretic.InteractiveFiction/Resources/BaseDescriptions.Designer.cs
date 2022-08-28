@@ -1015,6 +1015,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du kannst {0} nicht essen..
+        /// </summary>
+        public static string NOTHING_TO_EAT {
+            get {
+                return ResourceManager.GetString("NOTHING_TO_EAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Da gibt es nichts zu lesen..
         /// </summary>
         public static string NOTHING_TO_READ {

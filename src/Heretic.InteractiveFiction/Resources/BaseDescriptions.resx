@@ -610,4 +610,7 @@
   <data name="ITEM_NOT_OWNED_FORMATTED" xml:space="preserve">
     <value>Du hast {0} offensichtlich gar nicht bei Dir.</value>
   </data>
+  <data name="NOTHING_TO_EAT" xml:space="preserve">
+    <value>Du kannst {0} nicht essen.</value>
+  </data>
 </root>

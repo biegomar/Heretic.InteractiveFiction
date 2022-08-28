@@ -117,6 +117,10 @@ public abstract partial class AHereticObject
     /// </summary>
     public bool IsClosed { get; set; }
     /// <summary>
+    /// Can this object be eaten?
+    /// </summary>
+    public bool IsEatable { get; set; }
+    /// <summary>
     /// Is there anything to read on the object?
     /// </summary>
     public bool IsReadable { get; set; }
@@ -768,6 +772,7 @@ public abstract partial class AHereticObject
         this.IsCloseAble = false;
         this.IsSeatAble = false;
         this.IsClimbAble = false;
+        this.IsEatable = false;
         this.IsReadable = false;
         this.IsLighter = false;
         this.IsLighterSwitchedOn = false;

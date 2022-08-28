@@ -140,6 +140,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Unlock(processingVerb, processingSubject);
         result = result || verbHandler.Break(processingVerb, processingSubject);
         result = result || verbHandler.SitDown(processingVerb, processingSubject);
+        result = result || verbHandler.Eat(processingVerb, processingSubject);
         result = result || verbHandler.Read(processingVerb, processingSubject);
         result = result || verbHandler.Write(processingVerb, processingSubject);
         result = result || verbHandler.Hint(processingVerb, processingSubject);

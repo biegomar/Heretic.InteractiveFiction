@@ -155,6 +155,54 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Eat(string verb, string subject)
+    {
+        if (this.IsVerb(VerbKeys.EAT, verb))
+        {
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            if (item != default)
+            {
+                if (item.IsEatable)
+                {
+                    try
+                    {
+                        var itemEventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                        
+                        item.OnBeforeEat(itemEventArgs);
+                        
+                        
+                        if (this.universe.ActivePlayer.Items.Contains(item))
+                        {
+                            this.universe.ActivePlayer.RemoveItem((Item)item);
+                        }
+                        else
+                        {
+                            this.universe.ActiveLocation.RemoveItem((Item)item);
+                        }
+                        this.objectHandler.RemoveAsActiveObject(item);
+                        item.OnEat(itemEventArgs);
+                    
+                        item.OnAfterEat(itemEventArgs);
+
+                        return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_EATEN, item.AccusativeArticleName, true);
+                    }
+                    catch (EatException ex)
+                    {
+                        return printingSubsystem.Resource(ex.Message);
+                    }
+                }
+
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_EAT, item.AccusativeArticleName, true);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
     internal bool Hint(string verb, string subject)
     {
         if (this.IsVerb(VerbKeys.HINT, verb))

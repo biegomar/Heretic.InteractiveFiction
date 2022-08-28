@@ -21,6 +21,10 @@ public abstract partial class AHereticObject
     public event EventHandler<DropItemEventArgs> BeforeDrop;
     public event EventHandler<DropItemEventArgs> Drop;
     public event EventHandler<DropItemEventArgs> AfterDrop;
+    
+    public event EventHandler<ContainerObjectEventArgs> BeforeEat;
+    public event EventHandler<ContainerObjectEventArgs> Eat;
+    public event EventHandler<ContainerObjectEventArgs> AfterEat;
 
     public event EventHandler<ContainerObjectEventArgs> BeforeGive;
     public event EventHandler<ContainerObjectEventArgs> Give;
@@ -252,6 +256,24 @@ public abstract partial class AHereticObject
     public virtual void OnAfterBreak(BreakItemEventArgs eventArgs)
     {
         var localEventHandler = this.AfterBreak;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeEat(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeEat;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnEat(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Eat;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterEat(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterEat;
         localEventHandler?.Invoke(this, eventArgs);
     }
 

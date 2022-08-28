@@ -138,6 +138,14 @@ internal sealed class ObjectHandler
         this.universe.ActiveObject = default;
     }
 
+    internal void RemoveAsActiveObject(AHereticObject hereticObject)
+    {
+        if (hereticObject != default && this.universe.ActiveObject == hereticObject)
+        {
+            this.ClearActiveObject();
+        }
+    }
+
     internal void ClearActiveObjectIfNotInInventory()
     {
         var universeActiveObject = this.universe.ActiveObject;
