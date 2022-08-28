@@ -161,7 +161,7 @@ public sealed class Universe
 
             if (owner == default)
             {
-                return !item.IsPickAble && printingSubsystem.ImpossiblePickup(item);
+                return !item.IsPickable && printingSubsystem.ImpossiblePickup(item);
             }
             
             if (owner.Key == this.ActivePlayer.Key)
@@ -169,7 +169,7 @@ public sealed class Universe
                 return printingSubsystem.ItemAlreadyOwned();
             }
 
-            if (item.IsPickAble)
+            if (item.IsPickable)
             {
                 var result = this.ActivePlayer.PickItem(item);
                 if (result)
@@ -200,7 +200,7 @@ public sealed class Universe
             return;
         }
 
-        var unveilAbleLinkedItems = container.LinkedTo.Where(i => i.IsUnveilAble).ToList();
+        var unveilAbleLinkedItems = container.LinkedTo.Where(i => i.IsUnveilable).ToList();
         if (unveilAbleLinkedItems.Any())
         {
             foreach (var linkedItem in unveilAbleLinkedItems)
@@ -209,12 +209,12 @@ public sealed class Universe
             }
         }
         
-        if (container.IsCloseAble && container.IsClosed)
+        if (container.IsCloseable && container.IsClosed)
         {
             return;
         }
 
-        var unveilAbleItems = container.Items.Where(i => i.IsUnveilAble).ToList();
+        var unveilAbleItems = container.Items.Where(i => i.IsUnveilable).ToList();
         if (unveilAbleItems.Any())
         {
             foreach (var item in unveilAbleItems)
@@ -223,7 +223,7 @@ public sealed class Universe
             }
         }
 
-        var unveilAbleCharacters = container.Characters.Where(c => c.IsUnveilAble).ToList();
+        var unveilAbleCharacters = container.Characters.Where(c => c.IsUnveilable).ToList();
         if (unveilAbleCharacters.Any())
         {
             foreach (var character in unveilAbleCharacters)

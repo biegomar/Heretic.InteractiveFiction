@@ -9,7 +9,7 @@ public sealed partial class Location : AHereticObject
     public Location()
     {
         this.OptionalVerbs = new Dictionary<string, IList<Verb>>();
-        this.IsPickAble = false;
+        this.IsPickable = false;
     }
 
     public void AddOptionalVerb(string originalVerbKey, string newVerbName, Description newErrorMessage)
@@ -51,8 +51,8 @@ public sealed partial class Location : AHereticObject
 
     public ICollection<Item> GetAllPickableAndUnHiddenItems()
     {
-        var firstLevel = this.Items.Where(i => !i.IsHidden && i.IsPickAble);
-        var secondLevel = this.Items.Where(i => !i.IsHidden && !i.IsPickAble);
+        var firstLevel = this.Items.Where(i => !i.IsHidden && i.IsPickable);
+        var secondLevel = this.Items.Where(i => !i.IsHidden && !i.IsPickable);
 
         foreach (var item in secondLevel)
         {
@@ -64,8 +64,8 @@ public sealed partial class Location : AHereticObject
 
     private IEnumerable<Item> GetDeeperLevelOfPickableAndUnHiddenItems(Item itemToAnalyse)
     {
-        var firstLevel = itemToAnalyse.Items.Where(i => !i.IsHidden && i.IsPickAble);
-        var secondLevel = itemToAnalyse.Items.Where(i => !i.IsHidden && !i.IsPickAble);
+        var firstLevel = itemToAnalyse.Items.Where(i => !i.IsHidden && i.IsPickable);
+        var secondLevel = itemToAnalyse.Items.Where(i => !i.IsHidden && !i.IsPickable);
 
         foreach (var item in secondLevel)
         {

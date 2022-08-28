@@ -71,7 +71,7 @@ internal class SmallWorldAssembler: IGamePrerequisitesAssembler
             Key = "TABLE",
             Name = "TABLE",
             Description = "TABLE",
-            IsPickAble = false,
+            IsPickable = false,
             IsContainer = true,
             IsSurfaceContainer = true,
             Grammar = new Grammars(Genders.Male)

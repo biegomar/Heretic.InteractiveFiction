@@ -13,7 +13,7 @@ public sealed partial class Character : AHereticObject
 
     public Character()
     {
-        this.IsPickAble = false;
+        this.IsPickable = false;
         this.TalkDescription = string.Empty;
     }
 

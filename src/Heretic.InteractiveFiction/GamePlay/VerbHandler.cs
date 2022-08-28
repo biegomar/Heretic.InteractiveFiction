@@ -699,7 +699,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
-                if (item.IsClimbAble)
+                if (item.IsClimbable)
                 {
                     if (!this.universe.ActivePlayer.HasClimbed)
                     {
@@ -761,7 +761,7 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
-                if (item.IsCloseAble)
+                if (item.IsCloseable)
                 {
                     if (item.IsClosed)
                     {
@@ -808,7 +808,7 @@ internal sealed class VerbHandler
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
-                if (item.IsCloseAble)
+                if (item.IsCloseable)
                 {
                     if (item.IsLocked)
                     {
@@ -891,7 +891,7 @@ internal sealed class VerbHandler
     {
         if (this.IsVerb(VerbKeys.SIT, verb))
         {
-            var seatCount = this.universe.ActiveLocation.Items.Count(x => x.IsSeatAble);
+            var seatCount = this.universe.ActiveLocation.Items.Count(x => x.IsSeatable);
 
             if (seatCount == 0)
             {
@@ -900,7 +900,7 @@ internal sealed class VerbHandler
             
             if (seatCount == 1)
             {
-                var onlySeat = this.universe.ActiveLocation.Items.Single(x => x.IsSeatAble);
+                var onlySeat = this.universe.ActiveLocation.Items.Single(x => x.IsSeatable);
                 this.objectHandler.StoreAsActiveObject(onlySeat);
 
                 try
@@ -950,7 +950,7 @@ internal sealed class VerbHandler
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
-                if (item.IsSeatAble)
+                if (item.IsSeatable)
                 {
                     try
                     {
@@ -1321,11 +1321,11 @@ internal sealed class VerbHandler
                 this.objectHandler.StoreAsActiveObject(item);
                 if (key != default)
                 {
-                    if (item.IsLockAble)
+                    if (item.IsLockable)
                     {
                         if (item.IsLocked)
                         {
-                            if (!item.IsCloseAble || item.IsCloseAble && item.IsClosed)
+                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
                             {
                                 try
                                 {
@@ -1478,7 +1478,7 @@ internal sealed class VerbHandler
                         this.universe.ActivePlayer.Items.Single(i => i.Key == key): 
                         this.universe.ActivePlayer.Clothes.Single(x => x.Key == key);
 
-                    if (item.IsDropAble)
+                    if (item.IsDropable)
                     {
                         try
                         {
@@ -1539,7 +1539,7 @@ internal sealed class VerbHandler
 
                 this.objectHandler.StoreAsActiveObject(itemToDrop);
                 
-                if (itemToDrop.IsDropAble)
+                if (itemToDrop.IsDropable)
                 {
                     var objectKey = this.objectHandler.GetItemKeyByName(objectName);
 
@@ -1552,7 +1552,7 @@ internal sealed class VerbHandler
                         
                         if (itemContainer.IsContainer)
                         {
-                            if (!itemContainer.IsCloseAble || itemContainer.IsCloseAble && !itemContainer.IsClosed)
+                            if (!itemContainer.IsCloseable || itemContainer.IsCloseable && !itemContainer.IsClosed)
                             {
                                 try
                                 {

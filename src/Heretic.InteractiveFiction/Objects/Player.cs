@@ -273,7 +273,7 @@ public sealed class Player : AHereticObject
 
     public bool SitDownOnSeat(AHereticObject seat)
     {
-        if (seat.IsSeatAble && !this.IsSitting)
+        if (seat.IsSeatable && !this.IsSitting)
         {
             this.IsSitting = true;
             this.Seat = seat;

@@ -21,7 +21,7 @@ public class HereticObjectMock: AHereticObject
             Key = "COOKTOP",
             Name = "COOKTOP",
             Description = "COOKTOP",
-            IsPickAble = false,
+            IsPickable = false,
             Grammar = new Grammars(Genders.Neutrum)
         };
 

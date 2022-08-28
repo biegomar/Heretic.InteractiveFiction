@@ -81,29 +81,29 @@ public abstract partial class AHereticObject
     /// <summary>
     /// Can the object picked up?
     /// </summary>
-    public bool IsPickAble { get; set; }
+    public bool IsPickable { get; set; }
 
     /// <summary>
     /// Can the object be dropped? 
     /// </summary>
-    public bool IsDropAble { get; set; }
+    public bool IsDropable { get; set; }
 
     /// <summary>
     /// Can the player sit on this object?
     /// </summary>
-    public bool IsSeatAble { get; set; }
+    public bool IsSeatable { get; set; }
     /// <summary>
     /// Can th player climb on this object?
     /// </summary>
-    public bool IsClimbAble { get; set; }
+    public bool IsClimbable { get; set; }
     /// <summary>
     /// Determines whether simply looking at the surroundings will make this object visible.
     /// </summary>
-    public bool IsUnveilAble { get; set; }
+    public bool IsUnveilable { get; set; }
     /// <summary>
     /// Determines whether an object is lockable.
     /// </summary>
-    public bool IsLockAble { get; set; }
+    public bool IsLockable { get; set; }
     /// <summary>
     /// Is the object locked?
     /// </summary>
@@ -111,7 +111,7 @@ public abstract partial class AHereticObject
     /// <summary>
     /// Can this object be closed?
     /// </summary>
-    public bool IsCloseAble { get; set; }
+    public bool IsCloseable { get; set; }
     /// <summary>
     /// Is this object closed?
     /// </summary>
@@ -513,7 +513,7 @@ public abstract partial class AHereticObject
         }
         else
         {
-            if (this.IsCloseAble)
+            if (this.IsCloseable)
             {
                 if (this.IsClosed && !string.IsNullOrEmpty(this.CloseDescription))
                 {
@@ -528,7 +528,7 @@ public abstract partial class AHereticObject
 
         }
 
-        if (!this.IsCloseAble || this.IsCloseAble && !this.IsClosed)
+        if (!this.IsCloseable || this.IsCloseable && !this.IsClosed)
         {
             if (this.Items.Any(i => !i.IsHidden) || this.Characters.Any(c => !c.IsHidden))
             {
@@ -659,7 +659,7 @@ public abstract partial class AHereticObject
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
 
-                    if (!item.IsCloseAble || item.IsCloseAble && !item.IsClosed)
+                    if (!item.IsCloseable || item.IsCloseable && !item.IsClosed)
                     {
                         if (item.Items.Any(i => i.IsHidden == false))
                         {
@@ -763,15 +763,15 @@ public abstract partial class AHereticObject
         this.IsHidden = false;
         this.HideOnContainerClose = true;
         this.IsVirtual = false;
-        this.IsPickAble = true;
-        this.IsDropAble = true;
-        this.IsUnveilAble = true;
-        this.IsLockAble = false;
+        this.IsPickable = true;
+        this.IsDropable = true;
+        this.IsUnveilable = true;
+        this.IsLockable = false;
         this.IsLocked = false;
         this.IsClosed = false;
-        this.IsCloseAble = false;
-        this.IsSeatAble = false;
-        this.IsClimbAble = false;
+        this.IsCloseable = false;
+        this.IsSeatable = false;
+        this.IsClimbable = false;
         this.IsEatable = false;
         this.IsReadable = false;
         this.IsLighter = false;
