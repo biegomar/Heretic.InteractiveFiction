@@ -121,6 +121,10 @@ public abstract partial class AHereticObject
     /// </summary>
     public bool IsEatable { get; set; }
     /// <summary>
+    /// Can this object be drunk?
+    /// </summary>
+    public bool IsDrinkable { get; set; }
+    /// <summary>
     /// Is there anything to read on the object?
     /// </summary>
     public bool IsReadable { get; set; }
@@ -773,6 +777,7 @@ public abstract partial class AHereticObject
         this.IsSeatable = false;
         this.IsClimbable = false;
         this.IsEatable = false;
+        this.IsDrinkable = false;
         this.IsReadable = false;
         this.IsLighter = false;
         this.IsLighterSwitchedOn = false;

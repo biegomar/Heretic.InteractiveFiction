@@ -672,6 +672,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du hast {0} getrunken..
+        /// </summary>
+        public static string ITEM_DRUNK {
+            get {
+                return ResourceManager.GetString("ITEM_DRUNK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du hast {0} gegessen..
         /// </summary>
         public static string ITEM_EATEN {
@@ -1011,6 +1020,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string NOTHING_HAPPENS {
             get {
                 return ResourceManager.GetString("NOTHING_HAPPENS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du kannst {0} nicht trinken..
+        /// </summary>
+        public static string NOTHING_TO_DRINK {
+            get {
+                return ResourceManager.GetString("NOTHING_TO_DRINK", resourceCulture);
             }
         }
         

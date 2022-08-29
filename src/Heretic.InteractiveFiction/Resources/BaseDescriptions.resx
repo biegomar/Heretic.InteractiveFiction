@@ -613,4 +613,10 @@
   <data name="NOTHING_TO_EAT" xml:space="preserve">
     <value>Du kannst {0} nicht essen.</value>
   </data>
+  <data name="ITEM_DRUNK" xml:space="preserve">
+    <value>Du hast {0} getrunken.</value>
+  </data>
+  <data name="NOTHING_TO_DRINK" xml:space="preserve">
+    <value>Du kannst {0} nicht trinken.</value>
+  </data>
 </root>
