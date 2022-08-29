@@ -135,6 +135,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Push(processingVerb, processingSubject);
         result = result || verbHandler.Turn(processingVerb, processingSubject);
         result = result || verbHandler.Jump(processingVerb, processingSubject);
+        result = result || verbHandler.Cut(processingVerb, processingSubject);
         result = result || verbHandler.Climb(processingVerb, processingSubject);
         result = result || verbHandler.AlterEgo(processingVerb, processingSubject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject);

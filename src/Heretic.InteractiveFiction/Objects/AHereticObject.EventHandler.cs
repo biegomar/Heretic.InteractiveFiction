@@ -63,6 +63,7 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
 
     public event EventHandler<ContainerObjectEventArgs> Buy;
+    public event EventHandler<CutItemEventArgs> Cut;
     public event EventHandler<ContainerObjectEventArgs> Jump;
     public event EventHandler<PullItemEventArgs> Pull;
     public event EventHandler<PushItemEventArgs> Push;
@@ -86,6 +87,23 @@ public abstract partial class AHereticObject
                 throw new UseException(eventArgs.OptionalErrorMessage);    
             }
             throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+    
+    public virtual void OnCut(CutItemEventArgs eventArgs)
+    {
+        var localEventHandler = this.Cut;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new CutException(eventArgs.OptionalErrorMessage);
+            }
+            throw new CutException(BaseDescriptions.DOES_NOT_WORK);
         }
     }
     
