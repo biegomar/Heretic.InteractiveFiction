@@ -103,7 +103,13 @@ public abstract partial class AHereticObject
             {
                 throw new CutException(eventArgs.OptionalErrorMessage);
             }
+            else if (eventArgs.ItemToUse != default)
+            {
+                throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT, this.AccusativeArticleName.LowerFirstChar(), eventArgs.ItemToUse.DativeArticleName.LowerFirstChar()));    
+            }
+            
             throw new CutException(BaseDescriptions.DOES_NOT_WORK);
+            
         }
     }
     
@@ -486,10 +492,12 @@ public abstract partial class AHereticObject
             localEventHandler.Invoke(this, eventArgs);
         }
         else
-        {if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
             {
-                throw new UnlockException(eventArgs.OptionalErrorMessage);    
+                throw new UnlockException(eventArgs.OptionalErrorMessage);
             }
+
             throw new UnlockException(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, this.Name, eventArgs.Key.Name));
         }
     }

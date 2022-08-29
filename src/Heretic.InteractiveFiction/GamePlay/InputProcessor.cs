@@ -169,6 +169,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Say(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Give(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Cut(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Use(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Pull(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Push(processingVerb, processingSubject, processingObject);

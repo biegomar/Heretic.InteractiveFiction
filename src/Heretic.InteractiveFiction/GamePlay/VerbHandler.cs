@@ -739,6 +739,43 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Cut(string verb, string subjectName, string objectName)
+    {
+        if (this.IsVerb(VerbKeys.CUT, verb))
+        {
+            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
+
+            if (subject == default)
+            {
+                return printingSubsystem.CanNotUseObject(subjectName);
+            }
+
+            this.objectHandler.StoreAsActiveObject(subject);
+            
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
+            
+            if (item != default)
+            {
+                try
+                {
+                    var cutItemEventArgs = new CutItemEventArgs() {ItemToUse = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    subject.OnCut(cutItemEventArgs);
+
+                    return true;
+                }
+                catch (CutException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotOwned();
+        }
+
+        return false;
+    }
 
     internal bool Wait(string verb)
     {

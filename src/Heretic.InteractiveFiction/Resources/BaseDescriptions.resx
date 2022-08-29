@@ -619,4 +619,7 @@
   <data name="NOTHING_TO_DRINK" xml:space="preserve">
     <value>Du kannst {0} nicht trinken.</value>
   </data>
+  <data name="IMPOSSIBLE_CUT" xml:space="preserve">
+    <value>Du kannst {0} nicht mit {1} zerschneiden.</value>
+  </data>
 </root>

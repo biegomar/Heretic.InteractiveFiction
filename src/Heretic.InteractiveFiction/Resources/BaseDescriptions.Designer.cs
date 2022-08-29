@@ -519,6 +519,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du kannst {0} nicht mit {1} zerschneiden..
+        /// </summary>
+        public static string IMPOSSIBLE_CUT {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_CUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du kannst {0} nicht fallen lassen. Ist es noch mit einem anderen Gegenstand verbunden?.
         /// </summary>
         public static string IMPOSSIBLE_DROP {
