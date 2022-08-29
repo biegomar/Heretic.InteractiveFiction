@@ -137,6 +137,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Jump(processingVerb, processingSubject);
         result = result || verbHandler.Cut(processingVerb, processingSubject);
         result = result || verbHandler.Climb(processingVerb, processingSubject);
+        result = result || verbHandler.Kindle(processingVerb, processingSubject);
         result = result || verbHandler.AlterEgo(processingVerb, processingSubject);
         result = result || verbHandler.Unlock(processingVerb, processingSubject);
         result = result || verbHandler.Break(processingVerb, processingSubject);
@@ -176,6 +177,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Break(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.SitDown(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Climb(processingVerb, processingSubject, processingObject);
+        result = result || verbHandler.Kindle(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Drop(processingVerb, processingSubject, processingObject);
         result = result || verbHandler.Buy(processingVerb, processingSubject, processingObject);
 

@@ -711,6 +711,72 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Kindle(string verb, string subject)
+    {
+        if (this.IsVerb(VerbKeys.KINDLE, verb))
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                try
+                {
+                    var containerObjectEventArgs = new KindleItemEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    item.OnKindle(containerObjectEventArgs);
+                    
+                    return true;
+                }
+                catch (KindleException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
+    internal bool Kindle(string verb, string subjectName, string objectName)
+    {
+        if (this.IsVerb(VerbKeys.KINDLE, verb))
+        {
+            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
+
+            if (subject == default)
+            {
+                return printingSubsystem.CanNotUseObject(subjectName);
+            }
+
+            this.objectHandler.StoreAsActiveObject(subject);
+            
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
+            
+            if (item != default)
+            {
+                try
+                {
+                    var cutItemEventArgs = new KindleItemEventArgs {ItemToUse = item, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    subject.OnKindle(cutItemEventArgs);
+
+                    return true;
+                }
+                catch (KindleException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotOwned();
+        }
+
+        return false;
+    }
+
     internal bool Cut(string verb, string subject)
     {
         if (this.IsVerb(VerbKeys.CUT, verb))

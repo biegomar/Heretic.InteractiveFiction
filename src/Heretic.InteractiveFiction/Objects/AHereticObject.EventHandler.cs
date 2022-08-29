@@ -65,6 +65,7 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<CutItemEventArgs> Cut;
     public event EventHandler<ContainerObjectEventArgs> Jump;
+    public event EventHandler<KindleItemEventArgs> Kindle;
     public event EventHandler<PullItemEventArgs> Pull;
     public event EventHandler<PushItemEventArgs> Push;
     public event EventHandler<TurnItemEventArgs> Turn;
@@ -127,6 +128,23 @@ public abstract partial class AHereticObject
                 throw new JumpException(eventArgs.OptionalErrorMessage);
             }
             throw new JumpException(BaseDescriptions.DOES_NOT_WORK);
+        }
+    }
+    
+    public virtual void OnKindle(KindleItemEventArgs eventArgs)
+    {
+        var localEventHandler = this.Kindle;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new KindleException(eventArgs.OptionalErrorMessage);
+            }
+            throw new KindleException(BaseDescriptions.DOES_NOT_WORK);
         }
     }
     
