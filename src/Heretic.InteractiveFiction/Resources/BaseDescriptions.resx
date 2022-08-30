@@ -628,4 +628,10 @@
   <data name="NOTHING_TO_SMELL" xml:space="preserve">
     <value>Du nimmst keinen außergewöhnlichen Geruch wahr.</value>
   </data>
+  <data name="NOTHING_TO_TASTE" xml:space="preserve">
+    <value>Du nimmst keinen außergewöhnlichen Geschmack wahr.</value>
+  </data>
+  <data name="WHAT_TO_TASTE" xml:space="preserve">
+    <value>Was genau möchtest Du schmecken?</value>
+  </data>
 </root>

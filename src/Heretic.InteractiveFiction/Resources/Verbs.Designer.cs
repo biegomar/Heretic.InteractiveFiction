@@ -537,7 +537,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schmecke|Schmeck.
+        ///   Looks up a localized string similar to Schmecke|Schmeck|Probier|Probiere|Koste.
         /// </summary>
         internal static string TASTE {
             get {

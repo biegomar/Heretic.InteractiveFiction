@@ -106,6 +106,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Wait(processingInput);
         result = result || verbHandler.Sleep(processingInput);
         result = result || verbHandler.Smell(processingInput);
+        result = result || verbHandler.Taste(processingInput);
         result = result || verbHandler.History(processingInput, this.historyAdministrator.All);
 
         if (!result)
@@ -139,6 +140,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Jump(processingVerb, processingSubject);
         result = result || verbHandler.Sleep(processingVerb, processingSubject);
         result = result || verbHandler.Smell(processingVerb, processingSubject);
+        result = result || verbHandler.Taste(processingVerb, processingSubject);
         result = result || verbHandler.Cut(processingVerb, processingSubject);
         result = result || verbHandler.Climb(processingVerb, processingSubject);
         result = result || verbHandler.Kindle(processingVerb, processingSubject);

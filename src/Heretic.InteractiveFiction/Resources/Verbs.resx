@@ -301,7 +301,7 @@
     <value>Ausziehen</value>
   </data>
   <data name="TASTE" xml:space="preserve">
-    <value>Schmecke|Schmeck</value>
+    <value>Schmecke|Schmeck|Probier|Probiere|Koste</value>
   </data>
   <data name="TELL" xml:space="preserve">
     <value>Erzähl|Erzähle|Berichte</value>

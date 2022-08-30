@@ -968,6 +968,62 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Taste(string verb)
+    {
+        if (this.IsVerb(VerbKeys.TASTE, verb))
+        {
+            try
+            {
+                var containerObjectEventArgs = new ContainerObjectEventArgs {OptionalErrorMessage = BaseDescriptions.WHAT_TO_TASTE};
+                
+                if (!string.IsNullOrEmpty(this.universe.GetVerb(verb).ErrorMessage))
+                {
+                    containerObjectEventArgs.OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage;
+                }
+
+                this.universe.ActiveLocation.OnTaste(containerObjectEventArgs);
+
+                return true;
+            }
+            catch (TasteException ex)
+            {
+                return printingSubsystem.Resource(ex.Message);
+            }
+        }
+
+        return false;
+    }
+    
+    internal bool Taste(string verb, string subject)
+    {
+        if (this.IsVerb(VerbKeys.TASTE, verb))
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    item.OnTaste(containerObjectEventArgs);
+                    
+                    return true;
+                }
+                catch (TasteException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
 
     internal bool Climb(string verb, string subject)
     {

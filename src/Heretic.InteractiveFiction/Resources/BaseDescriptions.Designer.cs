@@ -1087,6 +1087,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du nimmst keinen außergewöhnlichen Geschmack wahr..
+        /// </summary>
+        public static string NOTHING_TO_TASTE {
+            get {
+                return ResourceManager.GetString("NOTHING_TO_TASTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist nun geschlossen..
         /// </summary>
         public static string NOW_CLOSED {
@@ -1497,6 +1506,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string WHAT {
             get {
                 return ResourceManager.GetString("WHAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Was genau möchtest Du schmecken?.
+        /// </summary>
+        public static string WHAT_TO_TASTE {
+            get {
+                return ResourceManager.GetString("WHAT_TO_TASTE", resourceCulture);
             }
         }
         
