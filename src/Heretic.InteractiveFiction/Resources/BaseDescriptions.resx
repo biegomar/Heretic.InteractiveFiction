@@ -625,4 +625,7 @@
   <data name="NOT_TIRED" xml:space="preserve">
     <value>Du fühlst Dich nicht müde.</value>
   </data>
+  <data name="NOTHING_TO_SMELL" xml:space="preserve">
+    <value>Du nimmst keinen außergewöhnlichen Geruch wahr.</value>
+  </data>
 </root>

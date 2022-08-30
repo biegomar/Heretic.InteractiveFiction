@@ -865,6 +865,58 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Smell(string verb)
+    {
+        if (this.IsVerb(VerbKeys.SMELL, verb))
+        {
+            try
+            {
+                var containerObjectEventArgs = new ContainerObjectEventArgs()
+                    { OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+
+                this.universe.ActiveLocation.OnSmell(containerObjectEventArgs);
+
+                return true;
+            }
+            catch (SmellException ex)
+            {
+                return printingSubsystem.Resource(ex.Message);
+            }
+        }
+
+        return false;
+    }
+    
+    internal bool Smell(string verb, string subject)
+    {
+        if (this.IsVerb(VerbKeys.SMELL, verb))
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    item.OnSmell(containerObjectEventArgs);
+                    
+                    return true;
+                }
+                catch (SmellException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
     internal bool Sleep(string verb)
     {
         if (this.IsVerb(VerbKeys.SLEEP, verb))

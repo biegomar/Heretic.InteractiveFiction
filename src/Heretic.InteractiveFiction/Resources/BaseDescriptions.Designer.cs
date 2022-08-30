@@ -1069,6 +1069,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du nimmst keinen außergewöhnlichen Geruch wahr..
+        /// </summary>
+        public static string NOTHING_TO_SMELL {
+            get {
+                return ResourceManager.GetString("NOTHING_TO_SMELL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Es gibt hier keine Gegenstände die Du mitnehmen kannst..
         /// </summary>
         public static string NOTHING_TO_TAKE {

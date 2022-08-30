@@ -69,6 +69,7 @@ public abstract partial class AHereticObject
     public event EventHandler<PullItemEventArgs> Pull;
     public event EventHandler<PushItemEventArgs> Push;
     public event EventHandler<ContainerObjectEventArgs> Sleep;
+    public event EventHandler<ContainerObjectEventArgs> Smell;
     public event EventHandler<TurnItemEventArgs> Turn;
     public event EventHandler<UnlockContainerEventArgs> Unlock;
     public event EventHandler<UseItemEventArgs> Use;
@@ -359,6 +360,23 @@ public abstract partial class AHereticObject
         }
     }
     
+    public virtual void OnSmell(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Smell;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new SmellException(eventArgs.OptionalErrorMessage);    
+            }
+            throw new SmellException(BaseDescriptions.NOTHING_TO_SMELL);
+        }
+    }
+
     public virtual void OnTurn(TurnItemEventArgs eventArgs)
     {
         var localEventHandler = this.Turn;
