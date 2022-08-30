@@ -864,6 +864,58 @@ internal sealed class VerbHandler
 
         return false;
     }
+    
+    internal bool Sleep(string verb)
+    {
+        if (this.IsVerb(VerbKeys.SLEEP, verb))
+        {
+            try
+            {
+                var containerObjectEventArgs = new ContainerObjectEventArgs()
+                    { OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+
+                this.universe.ActiveLocation.OnSleep(containerObjectEventArgs);
+
+                return true;
+            }
+            catch (SleepException ex)
+            {
+                return printingSubsystem.Resource(ex.Message);
+            }
+        }
+
+        return false;
+    }
+    
+    internal bool Sleep(string verb, string subject)
+    {
+        if (this.IsVerb(VerbKeys.SLEEP, verb))
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    
+                    item.OnSleep(containerObjectEventArgs);
+                    
+                    return true;
+                }
+                catch (SleepException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
 
     internal bool Climb(string verb, string subject)
     {

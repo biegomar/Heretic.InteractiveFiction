@@ -622,4 +622,7 @@
   <data name="IMPOSSIBLE_CUT" xml:space="preserve">
     <value>Du kannst {0} nicht mit {1} zerschneiden.</value>
   </data>
+  <data name="NOT_TIRED" xml:space="preserve">
+    <value>Du fühlst Dich nicht müde.</value>
+  </data>
 </root>

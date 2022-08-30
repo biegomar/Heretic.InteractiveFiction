@@ -1015,6 +1015,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du fühlst Dich nicht müde..
+        /// </summary>
+        public static string NOT_TIRED {
+            get {
+                return ResourceManager.GetString("NOT_TIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du hast aktuell keine Gegenstände bei Dir..
         /// </summary>
         public static string NOTHING {
