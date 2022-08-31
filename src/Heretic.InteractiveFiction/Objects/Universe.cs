@@ -78,15 +78,11 @@ public sealed class Universe
     {
         var verbOverrides = this.ActiveLocation.OptionalVerbs;
         var optionalVerbNames = verbOverrides.Values.SelectMany(x => x).SelectMany(verb => verb.Names).ToList();
-        
-        if (optionalVerbNames.Count > 0)
-        {
-            return this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
-                   || optionalVerbNames.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);    
-        }
 
-        return this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
-
+        return optionalVerbNames.Count > 0
+            ? this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
+              || optionalVerbNames.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
+            : this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
     }
     
     public Verb GetVerb(string verbToCheck)
