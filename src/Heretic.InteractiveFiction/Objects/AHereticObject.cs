@@ -109,6 +109,10 @@ public abstract partial class AHereticObject
     /// </summary>
     public bool IsLocked { get; set; }
     /// <summary>
+    /// This is the id <see cref="AHereticObject.Key"/> of the object, that can unlock/lock this item.
+    /// </summary>
+    public string UnlockWithKey { get; set; }
+    /// <summary>
     /// Can this object be closed?
     /// </summary>
     public bool IsCloseable { get; set; }

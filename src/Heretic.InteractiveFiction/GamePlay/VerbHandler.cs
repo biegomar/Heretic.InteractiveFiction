@@ -1636,12 +1636,46 @@ internal sealed class VerbHandler
 
     internal bool Unlock(string verb, string unlockObject)
     {
-        //TODO noch nicht fertig!
         if (this.IsVerb(VerbKeys.UNLOCK, verb))
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(unlockObject);
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
+                if (!string.IsNullOrEmpty(item.UnlockWithKey) && this.universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
+                {
+                    var key = this.universe.ActivePlayer.GetItem(item.UnlockWithKey);
+                    if (item.IsLockable)
+                    {
+                        if (item.IsLocked)
+                        {
+                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                            {
+                                try
+                                {
+                                    var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                                    
+                                    item.OnBeforeUnlock(unlockContainerEventArgs);
+
+                                    item.IsLocked = false;
+                                    item.OnUnlock(unlockContainerEventArgs);
+                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, key.AccusativeArticleName.LowerFirstChar(), item.Name));
+                                    
+                                    item.OnAfterUnlock(unlockContainerEventArgs);
+                                    
+                                    return true;
+                                }
+                                catch (UnlockException e)
+                                {
+                                    return printingSubsystem.Resource(e.Message);
+                                }
+                            }
+                        }
+                        return printingSubsystem.ItemAlreadyUnlocked(item);
+                    }
+                    return printingSubsystem.ItemNotLockAble(item);
+                }
+
                 return printingSubsystem.ImpossibleUnlock(item);
             }
         }
@@ -1667,19 +1701,36 @@ internal sealed class VerbHandler
                         {
                             if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
                             {
-                                try
+                                if (this.universe.ActivePlayer.OwnsItem(key))
                                 {
-                                    var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                                    try
+                                    {
+                                        var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
                                     
-                                    item.OnUnlock(unlockContainerEventArgs);
+                                        item.OnBeforeUnlock(unlockContainerEventArgs);
+
+                                        if (!string.IsNullOrEmpty(item.UnlockWithKey) && item.UnlockWithKey == key.Key)
+                                        {
+                                            item.IsLocked = false;
+                                            item.OnUnlock(unlockContainerEventArgs);
+                                            printingSubsystem.ItemUnlocked(item);
+                                        }
+                                        else
+                                        {
+                                            item.OnUnlock(unlockContainerEventArgs);
+                                            printingSubsystem.Resource(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, item.Name, key.Name));
+                                        }
                                     
-                                    return true;
+                                        item.OnAfterUnlock(unlockContainerEventArgs);
+                                    
+                                        return true;
+                                    }
+                                    catch (UnlockException e)
+                                    {
+                                        return printingSubsystem.Resource(e.Message);
+                                    }
                                 }
-                                catch (UnlockException e)
-                                {
-                                    return printingSubsystem.Resource(e.Message);
-                                }
-                                
+                                printingSubsystem.ItemNotOwned(key);
                             }
                         }
                         return printingSubsystem.ItemAlreadyUnlocked(item);

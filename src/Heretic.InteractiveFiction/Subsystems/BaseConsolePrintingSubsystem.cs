@@ -651,6 +651,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         return Resource(BaseDescriptions.ITEM_NOT_OWNED);
     }
+    
+    public virtual bool ItemNotOwned(AHereticObject item)
+    {
+        return FormattedResource(BaseDescriptions.ITEM_NOT_OWNED_FORMATTED, item.AccusativeArticleName, true);
+    }
 
     public virtual bool ItemAlreadyOwned()
     {

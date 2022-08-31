@@ -61,6 +61,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> BeforeDescend;
     public event EventHandler<ContainerObjectEventArgs> Descend;
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
+    
+    public event EventHandler<UnlockContainerEventArgs> BeforeUnlock;
+    public event EventHandler<UnlockContainerEventArgs> Unlock;
+    public event EventHandler<UnlockContainerEventArgs> AfterUnlock;
 
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<CutItemEventArgs> Cut;
@@ -72,7 +76,6 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> Smell;
     public event EventHandler<ContainerObjectEventArgs> Taste;
     public event EventHandler<TurnItemEventArgs> Turn;
-    public event EventHandler<UnlockContainerEventArgs> Unlock;
     public event EventHandler<UseItemEventArgs> Use;
     public event EventHandler<ContainerObjectEventArgs> Wait;
     public event EventHandler<WriteEventArgs> Write;
@@ -556,21 +559,21 @@ public abstract partial class AHereticObject
         localEventHandler?.Invoke(this, eventArgs);
     }
 
+    public virtual void OnBeforeUnlock(UnlockContainerEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeUnlock;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
     public virtual void OnUnlock(UnlockContainerEventArgs eventArgs)
     {
         var localEventHandler = this.Unlock;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
-            {
-                throw new UnlockException(eventArgs.OptionalErrorMessage);
-            }
-
-            throw new UnlockException(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, this.Name, eventArgs.Key.Name));
-        }
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterUnlock(UnlockContainerEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterUnlock;
+        localEventHandler?.Invoke(this, eventArgs);
     }
 }

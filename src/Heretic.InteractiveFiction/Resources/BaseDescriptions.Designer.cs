@@ -825,6 +825,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du kramst ein wenig in Deinen Sachen und findest {0}. Das könnte funktionieren! Du probierst es einfach aus und es klappt! {1} wurde aufgeschlossen..
+        /// </summary>
+        public static string ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY {
+            get {
+                return ResourceManager.GetString("ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Springe hoch oder auf ein Objekt.
         /// </summary>
         public static string JUMP {

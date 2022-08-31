@@ -634,4 +634,7 @@
   <data name="WHAT_TO_TASTE" xml:space="preserve">
     <value>Was genau möchtest Du schmecken?</value>
   </data>
+  <data name="ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY" xml:space="preserve">
+    <value>Du kramst ein wenig in Deinen Sachen und findest {0}. Das könnte funktionieren! Du probierst es einfach aus und es klappt! {1} wurde aufgeschlossen.</value>
+  </data>
 </root>
