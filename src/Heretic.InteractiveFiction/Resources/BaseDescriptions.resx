@@ -547,7 +547,7 @@
     <value>Nein, ich werde dort nicht herauf klettern.</value>
   </data>
   <data name="IMPOSSIBLE_CLOSE" xml:space="preserve">
-    <value>Das funktioniert nicht wie erwartet.</value>
+    <value>{0} ist nicht zum Öffnen oder Schließen geeignet.</value>
   </data>
   <data name="YOU_SEE_SINGULAR" xml:space="preserve">
     <value>darin befindet sich:</value>

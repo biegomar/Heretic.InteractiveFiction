@@ -429,7 +429,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Score|Punkte|Fortschritt.
+        ///   Looks up a localized string similar to Score|Punkte.
         /// </summary>
         internal static string SCORE {
             get {
@@ -573,7 +573,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entriegel|Entriegeln|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock.
+        ///   Looks up a localized string similar to Entriegel|Entriegeln|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock|Schließe|Schließ|Schliesse|Schliess|[PREFIX:auf].
         /// </summary>
         internal static string UNLOCK {
             get {

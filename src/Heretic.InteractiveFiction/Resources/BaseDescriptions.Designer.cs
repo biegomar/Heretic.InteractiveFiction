@@ -510,7 +510,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Das funktioniert nicht wie erwartet..
+        ///   Looks up a localized string similar to {0} ist nicht zum Öffnen oder Schließen geeignet..
         /// </summary>
         public static string IMPOSSIBLE_CLOSE {
             get {

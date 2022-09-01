@@ -23,12 +23,17 @@ internal sealed class VerbHandler
 
     internal bool Quit(string verb)
     {
-        return this.IsVerb(VerbKeys.QUIT, verb);
+        if (VerbKeys.QUIT == verb)
+        {
+            throw new QuitGameException(BaseDescriptions.QUIT_GAME);
+        }
+
+        return false;
     }
 
     internal bool Credits(string verb)
     {
-        if (this.IsVerb(VerbKeys.CREDITS, verb))
+        if (VerbKeys.CREDITS == verb)
         {
             return printingSubsystem.Credits();
         }
@@ -38,7 +43,7 @@ internal sealed class VerbHandler
     
     internal bool Look(string verb)
     {
-        if (this.IsVerb(VerbKeys.LOOK, verb))
+        if (VerbKeys.LOOK == verb)
         {
             try
             {
@@ -63,7 +68,7 @@ internal sealed class VerbHandler
 
     internal bool Look(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.LOOK, verb))
+        if (VerbKeys.LOOK == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
@@ -102,7 +107,7 @@ internal sealed class VerbHandler
     
     internal bool Look(string verb, string processingSubject, string processingObject)
     {
-        if (this.IsVerb(VerbKeys.LOOK, verb))
+        if (VerbKeys.LOOK == verb)
         {
             if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
@@ -115,7 +120,7 @@ internal sealed class VerbHandler
     
     internal bool Read(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.READ, verb))
+        if (VerbKeys.READ == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
@@ -157,7 +162,7 @@ internal sealed class VerbHandler
     
     internal bool Eat(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.EAT, verb))
+        if (VerbKeys.EAT == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
@@ -205,7 +210,7 @@ internal sealed class VerbHandler
     
     internal bool Drink(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.DRINK, verb))
+        if (VerbKeys.DRINK == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
@@ -253,7 +258,7 @@ internal sealed class VerbHandler
     
     internal bool Hint(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.HINT, verb))
+        if (VerbKeys.HINT == verb)
         {
             if (String.Equals(subject, BaseDescriptions.ON, StringComparison.CurrentCultureIgnoreCase))
             {
@@ -271,19 +276,9 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Remark(string verb)
-    {
-        if (this.IsVerb(VerbKeys.REM, verb))
-        {
-            return true;
-        }
-
-        return false;
-    }
-    
     internal bool Pull(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.PULL, verb))
+        if (VerbKeys.PULL == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
@@ -311,7 +306,7 @@ internal sealed class VerbHandler
     
     internal bool Pull(string verb, string subjectName, string objectName)
     {
-        if (this.IsVerb(VerbKeys.PULL, verb))
+        if (VerbKeys.PULL == verb)
         {
             var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
@@ -348,7 +343,7 @@ internal sealed class VerbHandler
     
     internal bool Push(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.PUSH, verb))
+        if (VerbKeys.PUSH == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
@@ -377,7 +372,7 @@ internal sealed class VerbHandler
     
     internal bool Push(string verb, string subjectName, string objectName)
     {
-        if (this.IsVerb(VerbKeys.PUSH, verb))
+        if (VerbKeys.PUSH == verb)
         {
             var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
@@ -415,7 +410,7 @@ internal sealed class VerbHandler
 
     internal bool AlterEgo(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.ALTER_EGO, verb))
+        if (VerbKeys.ALTER_EGO == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             if (item != default)
@@ -433,7 +428,7 @@ internal sealed class VerbHandler
     
     internal bool Write(string verb, string text)
     {
-        if (this.IsVerb(VerbKeys.WRITE, verb))
+        if (VerbKeys.WRITE == verb)
         {
             try
             {
@@ -454,7 +449,7 @@ internal sealed class VerbHandler
 
     internal bool Help(string verb)
     {
-        if (this.IsVerb(VerbKeys.HELP, verb))
+        if (VerbKeys.HELP == verb)
         {
             return printingSubsystem.Help(this.universe.Verbs);
         }
@@ -464,7 +459,7 @@ internal sealed class VerbHandler
 
     internal bool History(string verb, ICollection<string> historyCollection)
     {
-        if (this.IsVerb(VerbKeys.HISTORY, verb))
+        if (VerbKeys.HISTORY == verb)
         {
             return printingSubsystem.History(historyCollection);
         }
@@ -476,7 +471,7 @@ internal sealed class VerbHandler
     {
         try
         {
-            if (this.IsVerb(VerbKeys.SAVE, verb))
+            if (VerbKeys.SAVE == verb)
             {
                 var history = new StringBuilder(historyCollection.Count);
                 history.AppendJoin(Environment.NewLine, historyCollection);
@@ -503,7 +498,7 @@ internal sealed class VerbHandler
 
     internal bool Score(string verb)
     {
-        if (this.IsVerb(VerbKeys.SCORE, verb))
+        if (VerbKeys.SCORE == verb)
         {
             return printingSubsystem.Score(universe.Score, universe.MaxScore);
         }
@@ -513,7 +508,7 @@ internal sealed class VerbHandler
 
     internal bool Ways(string verb)
     {
-        if (this.IsVerb(VerbKeys.WAYS, verb))
+        if (VerbKeys.WAYS == verb)
         {
             if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation) 
                 && this.universe.LocationMap[this.universe.ActiveLocation].Any(l => !l.IsHidden))
@@ -529,7 +524,7 @@ internal sealed class VerbHandler
 
     internal bool Use(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.USE, verb))
+        if (VerbKeys.USE == verb)
         {
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
             
@@ -565,7 +560,7 @@ internal sealed class VerbHandler
 
     internal bool Use(string verb, string subjectName, string objectName)
     {
-        if (this.IsVerb(VerbKeys.USE, verb))
+        if (VerbKeys.USE == verb)
         {
             var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
@@ -602,7 +597,7 @@ internal sealed class VerbHandler
 
     internal bool Buy(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.BUY, verb))
+        if (VerbKeys.BUY == verb)
         {
             if (!this.universe.ActivePlayer.HasPaymentMethod)
             {
@@ -641,7 +636,7 @@ internal sealed class VerbHandler
     
     internal bool Buy(string verb, string processingSubject, string processingObject)
     {
-        if (this.IsVerb(VerbKeys.BUY, verb))
+        if (VerbKeys.BUY == verb)
         {
             if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
@@ -654,7 +649,7 @@ internal sealed class VerbHandler
 
     internal bool Turn(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.TURN, verb))
+        if (VerbKeys.TURN == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -683,7 +678,7 @@ internal sealed class VerbHandler
     
     internal bool Jump(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.JUMP, verb))
+        if (VerbKeys.JUMP == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -713,7 +708,7 @@ internal sealed class VerbHandler
     
     internal bool Kindle(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.KINDLE, verb))
+        if (VerbKeys.KINDLE == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -742,7 +737,7 @@ internal sealed class VerbHandler
     
     internal bool Kindle(string verb, string subjectName, string objectName)
     {
-        if (this.IsVerb(VerbKeys.KINDLE, verb))
+        if (VerbKeys.KINDLE == verb)
         {
             var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
@@ -779,7 +774,7 @@ internal sealed class VerbHandler
 
     internal bool Cut(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.CUT, verb))
+        if (VerbKeys.CUT == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -808,7 +803,7 @@ internal sealed class VerbHandler
     
     internal bool Cut(string verb, string subjectName, string objectName)
     {
-        if (this.IsVerb(VerbKeys.CUT, verb))
+        if (VerbKeys.CUT == verb)
         {
             var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
 
@@ -845,7 +840,7 @@ internal sealed class VerbHandler
 
     internal bool Wait(string verb)
     {
-        if (this.IsVerb(VerbKeys.WAIT, verb))
+        if (VerbKeys.WAIT == verb)
         {
             try
             {
@@ -867,7 +862,7 @@ internal sealed class VerbHandler
     
     internal bool Smell(string verb)
     {
-        if (this.IsVerb(VerbKeys.SMELL, verb))
+        if (VerbKeys.SMELL == verb)
         {
             try
             {
@@ -889,7 +884,7 @@ internal sealed class VerbHandler
     
     internal bool Smell(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.SMELL, verb))
+        if (VerbKeys.SMELL == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -919,7 +914,7 @@ internal sealed class VerbHandler
     
     internal bool Sleep(string verb)
     {
-        if (this.IsVerb(VerbKeys.SLEEP, verb))
+        if (VerbKeys.SLEEP == verb)
         {
             try
             {
@@ -941,7 +936,7 @@ internal sealed class VerbHandler
     
     internal bool Sleep(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.SLEEP, verb))
+        if (VerbKeys.SLEEP == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -971,7 +966,7 @@ internal sealed class VerbHandler
     
     internal bool Taste(string verb)
     {
-        if (this.IsVerb(VerbKeys.TASTE, verb))
+        if (VerbKeys.TASTE == verb)
         {
             try
             {
@@ -997,7 +992,7 @@ internal sealed class VerbHandler
     
     internal bool Taste(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.TASTE, verb))
+        if (VerbKeys.TASTE == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -1027,7 +1022,7 @@ internal sealed class VerbHandler
 
     internal bool Climb(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.CLIMB, verb))
+        if (VerbKeys.CLIMB == verb)
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
             {
@@ -1078,7 +1073,7 @@ internal sealed class VerbHandler
 
     internal bool Climb(string verb, string processingSubject, string processingObject)
     {
-        if (this.IsVerb(VerbKeys.CLIMB, verb))
+        if (VerbKeys.CLIMB == verb)
         {
             
             if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
@@ -1094,7 +1089,7 @@ internal sealed class VerbHandler
     
     internal bool Close(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.CLOSE, verb))
+        if (VerbKeys.CLOSE == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
             this.objectHandler.StoreAsActiveObject(item);
@@ -1130,7 +1125,7 @@ internal sealed class VerbHandler
                     }
                 }
 
-                return false;
+                return printingSubsystem.FormattedResource(BaseDescriptions.IMPOSSIBLE_CLOSE, item.Name);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -1141,7 +1136,7 @@ internal sealed class VerbHandler
 
     internal bool Open(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.OPEN, verb))
+        if (VerbKeys.OPEN == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
 
@@ -1196,7 +1191,7 @@ internal sealed class VerbHandler
 
     internal bool Talk(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.TALK, verb))
+        if (VerbKeys.TALK == verb)
         {
             var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(subject);
 
@@ -1229,7 +1224,7 @@ internal sealed class VerbHandler
 
     internal bool SitDown(string verb)
     {
-        if (this.IsVerb(VerbKeys.SIT, verb))
+        if (VerbKeys.SIT == verb)
         {
             var seatCount = this.universe.ActiveLocation.Items.Count(x => x.IsSeatable);
 
@@ -1277,7 +1272,7 @@ internal sealed class VerbHandler
     
     internal bool SitDown(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.SIT, verb))
+        if (VerbKeys.SIT == verb)
         {
             if (this.objectHandler.GetUnhiddenObjectByNameActive(subject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
@@ -1327,7 +1322,7 @@ internal sealed class VerbHandler
 
     internal bool SitDown(string verb, string processingSubject, string processingObject)
     {
-        if (this.IsVerb(VerbKeys.SIT, verb))
+        if (VerbKeys.SIT == verb)
         {
             
             if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
@@ -1344,7 +1339,7 @@ internal sealed class VerbHandler
     
     internal bool StandUp(string verb)
     {
-        if (this.IsVerb(VerbKeys.STANDUP, verb))
+        if (VerbKeys.STANDUP == verb)
         {
             if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != default)
             {
@@ -1380,7 +1375,7 @@ internal sealed class VerbHandler
     
     internal bool Descend(string verb)
     {
-        if (this.IsVerb(VerbKeys.DESCEND, verb))
+        if (VerbKeys.DESCEND == verb)
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != default)
             {
@@ -1416,7 +1411,7 @@ internal sealed class VerbHandler
     
     internal bool Ask(string verb, string characterName, string subjectName)
     {
-        if (this.IsVerb(VerbKeys.ASK, verb))
+        if (VerbKeys.ASK == verb)
         {
             //I can only speak to visible people in the active location
             var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
@@ -1461,7 +1456,7 @@ internal sealed class VerbHandler
 
     internal bool Say(string verb, string characterName, string phrase)
     {
-        if (this.IsVerb(VerbKeys.SAY, verb))
+        if (VerbKeys.SAY == verb)
         {
             //I can only speak to visible people
             var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
@@ -1495,7 +1490,7 @@ internal sealed class VerbHandler
 
     internal bool Give(string verb, string characterName, string itemName)
     {
-        if (this.IsVerb(VerbKeys.GIVE, verb))
+        if (VerbKeys.GIVE == verb)
         {
             //I can only give things to visible people.
             var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
@@ -1547,7 +1542,7 @@ internal sealed class VerbHandler
 
     internal bool Break(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.BREAK, verb))
+        if (VerbKeys.BREAK == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
             
@@ -1590,7 +1585,7 @@ internal sealed class VerbHandler
     
     internal bool Break(string verb, string subject, string tool)
     {
-        if (this.IsVerb(VerbKeys.BREAK, verb))
+        if (VerbKeys.BREAK == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
             var toolItem = this.objectHandler.GetUnhiddenItemByNameActive(tool);
@@ -1636,7 +1631,7 @@ internal sealed class VerbHandler
 
     internal bool Unlock(string verb, string unlockObject)
     {
-        if (this.IsVerb(VerbKeys.UNLOCK, verb))
+        if (VerbKeys.UNLOCK == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(unlockObject);
             if (item != default)
@@ -1685,7 +1680,7 @@ internal sealed class VerbHandler
 
     internal bool Unlock(string verb, string unlockObject, string unlockKey)
     {
-        if (this.IsVerb(VerbKeys.UNLOCK, verb))
+        if (VerbKeys.UNLOCK == verb)
         {
             var item = this.objectHandler.GetUnhiddenItemByNameActive(unlockObject);
             var key = this.objectHandler.GetUnhiddenItemByNameActive(unlockKey);
@@ -1748,10 +1743,9 @@ internal sealed class VerbHandler
 
     internal bool Take(string verb, IEnumerable<string> subjects)
     {
-        var result = false;
-        if (this.IsVerb(VerbKeys.TAKE, verb))
+        if (VerbKeys.TAKE == verb)
         {
-            result = true;
+            var result = true;
             foreach (var subject in subjects)
             {
                 var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
@@ -1785,14 +1779,16 @@ internal sealed class VerbHandler
                     }
                 }
             }
+
+            return result;
         }
 
-        return result;
+        return false;
     }
     
     internal bool Take(string verb, string processingSubject, IEnumerable<string> processingObjects)
     {
-        if (this.IsVerb(VerbKeys.TAKE, verb))
+        if (VerbKeys.TAKE == verb)
         {
             if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
@@ -1805,7 +1801,7 @@ internal sealed class VerbHandler
 
     internal bool Take(string verb)
     {
-        if (this.IsVerb(VerbKeys.TAKE, verb))
+        if (VerbKeys.TAKE == verb)
         {
             var subjects = this.universe.ActiveLocation.GetAllPickableAndUnHiddenItems();
             if (subjects.Any())
@@ -1839,7 +1835,7 @@ internal sealed class VerbHandler
 
     internal bool Go(string verb, string location)
     {
-        if (this.IsVerb(VerbKeys.GO, verb))
+        if (VerbKeys.GO == verb)
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
             {
@@ -1854,7 +1850,7 @@ internal sealed class VerbHandler
 
     internal bool Drop(string verb, IEnumerable<string> subjects)
     {
-        if (this.IsVerb(VerbKeys.DROP, verb))
+        if (VerbKeys.DROP == verb)
         {
             var result = true;
             foreach (var subject in subjects)
@@ -1920,7 +1916,7 @@ internal sealed class VerbHandler
 
     internal bool Drop(string verb, string subjectName, string objectName)
     {
-        if (this.IsVerb(VerbKeys.DROP, verb))
+        if (VerbKeys.DROP == verb)
         {
             var subjectKey = this.objectHandler.GetItemKeyByName(subjectName);
 
@@ -1988,7 +1984,7 @@ internal sealed class VerbHandler
 
     internal bool Name(string verb, string subject)
     {
-        if (this.IsVerb(VerbKeys.NAME, verb))
+        if (VerbKeys.NAME == verb)
         {
             this.universe.ActivePlayer.Name = subject;
             this.universe.ActivePlayer.IsStranger = false;
@@ -2002,7 +1998,7 @@ internal sealed class VerbHandler
 
     internal bool Inventory(string verb)
     {
-        if (this.IsVerb(VerbKeys.INV, verb))
+        if (VerbKeys.INV == verb)
         {
             printingSubsystem.ActivePlayer(this.universe.ActivePlayer);
             return true;
@@ -2118,43 +2114,43 @@ internal sealed class VerbHandler
     {
         var result = true;
 
-        if (this.IsVerb(VerbKeys.E, verb))
+        if (VerbKeys.E == verb)
         {
             this.ChangeLocation(verb, Objects.Directions.E);
         }
-        else if (this.IsVerb(VerbKeys.W, verb))
+        else if (VerbKeys.W == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.W);
         }
-        else if (this.IsVerb(VerbKeys.N, verb))
+        else if (VerbKeys.N == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.N);
         }
-        else if (this.IsVerb(VerbKeys.S, verb))
+        else if (VerbKeys.S == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.S);
         }
-        else if (this.IsVerb(VerbKeys.SE, verb))
+        else if (VerbKeys.SE == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.SE);
         }
-        else if (this.IsVerb(VerbKeys.SW, verb))
+        else if (VerbKeys.SW == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.SW);
         }
-        else if (this.IsVerb(VerbKeys.NE, verb))
+        else if (VerbKeys.NE == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.NE);
         }
-        else if (this.IsVerb(VerbKeys.NW, verb))
+        else if (VerbKeys.NW == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.NW);
         }
-        else if (this.IsVerb(VerbKeys.UP, verb))
+        else if (VerbKeys.UP == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.UP);
         }
-        else if (this.IsVerb(VerbKeys.DOWN, verb))
+        else if (VerbKeys.DOWN == verb)
         {
             this.ChangeLocation(verb,Objects.Directions.DOWN);
         }
@@ -2164,10 +2160,5 @@ internal sealed class VerbHandler
         }
 
         return result;
-    }
-
-    private bool IsVerb(string verbKey, string verbToCheck)
-    {
-        return this.universe.IsVerb(verbKey, verbToCheck);
     }
 }

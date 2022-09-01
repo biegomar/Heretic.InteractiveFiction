@@ -131,20 +131,7 @@ public class VerbHandlerTest
         
         Assert.Equal(expected, actual);
     }
-    
-    [Theory]
-    [InlineData("Kommentar", true)]
-    [InlineData("Comment", true)]
-    [InlineData("Remark", true)]
-    [InlineData("REM", true)]
-    [InlineData("FALSCH", false)]
-    public void RemarkTest(string verb, bool expected)
-    {
-        var actual = _sut.Remark(verb);
-        
-        Assert.Equal(expected, actual);
-    }
-    
+
     [Theory]
     [InlineData("Score", true)]
     [InlineData("Punkte", true)]

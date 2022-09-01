@@ -26,21 +26,16 @@ public sealed class InputProcessor
 
     internal bool Process(string input)
     {
-        if (verbHandler.Quit(input))
-        {
-            throw new QuitGameException(BaseDescriptions.QUIT_GAME);
-        }
-        
-        if (verbHandler.Save(input, this.historyAdministrator.All))
-        {
-            return true;
-        }
-
         var sentence = this.inputAnalyzer.Analyze(input);
 
         this.historyAdministrator.Add(input);
 
-        if (this.universe.IsVerb(VerbKeys.REM, sentence[0]))
+        if (verbHandler.Save(sentence[0], this.historyAdministrator.All))
+        {
+            return true;
+        }
+        
+        if (VerbKeys.REM == sentence[0])
         {
             return true;
         }
@@ -86,28 +81,26 @@ public sealed class InputProcessor
         }
     }
 
-    private bool ProcessSingleVerb(string input)
+    private bool ProcessSingleVerb(string verb)
     {
-        var processingInput = input.ToLower();
-
-        var result = verbHandler.Directions(processingInput);
-        result = result || verbHandler.ChangeLocationByName(processingInput);
-        result = result || verbHandler.Look(processingInput);
-        result = result || verbHandler.Take(processingInput);
-        result = result || verbHandler.Inventory(processingInput);
-        result = result || verbHandler.Ways(processingInput);
-        result = result || verbHandler.Score(processingInput);
-        result = result || verbHandler.Help(processingInput);
-        result = result || verbHandler.Credits(processingInput);
-        result = result || verbHandler.SitDown(processingInput);
-        result = result || verbHandler.StandUp(processingInput);
-        result = result || verbHandler.Descend(processingInput);
-        result = result || verbHandler.Remark(processingInput);
-        result = result || verbHandler.Wait(processingInput);
-        result = result || verbHandler.Sleep(processingInput);
-        result = result || verbHandler.Smell(processingInput);
-        result = result || verbHandler.Taste(processingInput);
-        result = result || verbHandler.History(processingInput, this.historyAdministrator.All);
+        var result = verbHandler.Quit(verb);
+        result = result || verbHandler.Directions(verb);
+        result = result || verbHandler.ChangeLocationByName(verb);
+        result = result || verbHandler.Look(verb);
+        result = result || verbHandler.Take(verb);
+        result = result || verbHandler.Inventory(verb);
+        result = result || verbHandler.Ways(verb);
+        result = result || verbHandler.Score(verb);
+        result = result || verbHandler.Help(verb);
+        result = result || verbHandler.Credits(verb);
+        result = result || verbHandler.SitDown(verb);
+        result = result || verbHandler.StandUp(verb);
+        result = result || verbHandler.Descend(verb);
+        result = result || verbHandler.Wait(verb);
+        result = result || verbHandler.Sleep(verb);
+        result = result || verbHandler.Smell(verb);
+        result = result || verbHandler.Taste(verb);
+        result = result || verbHandler.History(verb, this.historyAdministrator.All);
 
         if (!result)
         {
@@ -119,40 +112,39 @@ public sealed class InputProcessor
 
     private bool ProcessTwoWords(string verb, string subject)
     {
-        var processingVerb = verb.ToLower();
         var processingSubject = subject.ToLower();
 
         var commaSeparatedList = processingSubject.Split(",");
 
-        var result = verbHandler.Look(processingVerb, processingSubject);
-        result = result || verbHandler.Go(processingVerb, subject);
-        result = result || verbHandler.Name(processingVerb, subject);
-        result = result || verbHandler.Take(processingVerb, commaSeparatedList);
-        result = result || verbHandler.Talk(processingVerb, processingSubject);
-        result = result || verbHandler.Use(processingVerb, processingSubject);
-        result = result || verbHandler.Buy(processingVerb, processingSubject);
-        result = result || verbHandler.Open(processingVerb, processingSubject);
-        result = result || verbHandler.Close(processingVerb, processingSubject);
-        result = result || verbHandler.Drop(processingVerb, commaSeparatedList);
-        result = result || verbHandler.Pull(processingVerb, processingSubject);
-        result = result || verbHandler.Push(processingVerb, processingSubject);
-        result = result || verbHandler.Turn(processingVerb, processingSubject);
-        result = result || verbHandler.Jump(processingVerb, processingSubject);
-        result = result || verbHandler.Sleep(processingVerb, processingSubject);
-        result = result || verbHandler.Smell(processingVerb, processingSubject);
-        result = result || verbHandler.Taste(processingVerb, processingSubject);
-        result = result || verbHandler.Cut(processingVerb, processingSubject);
-        result = result || verbHandler.Climb(processingVerb, processingSubject);
-        result = result || verbHandler.Kindle(processingVerb, processingSubject);
-        result = result || verbHandler.AlterEgo(processingVerb, processingSubject);
-        result = result || verbHandler.Unlock(processingVerb, processingSubject);
-        result = result || verbHandler.Break(processingVerb, processingSubject);
-        result = result || verbHandler.SitDown(processingVerb, processingSubject);
-        result = result || verbHandler.Eat(processingVerb, processingSubject);
-        result = result || verbHandler.Drink(processingVerb, processingSubject);
-        result = result || verbHandler.Read(processingVerb, processingSubject);
-        result = result || verbHandler.Write(processingVerb, processingSubject);
-        result = result || verbHandler.Hint(processingVerb, processingSubject);
+        var result = verbHandler.Look(verb, processingSubject);
+        result = result || verbHandler.Go(verb, subject);
+        result = result || verbHandler.Name(verb, subject);
+        result = result || verbHandler.Take(verb, commaSeparatedList);
+        result = result || verbHandler.Talk(verb, processingSubject);
+        result = result || verbHandler.Use(verb, processingSubject);
+        result = result || verbHandler.Buy(verb, processingSubject);
+        result = result || verbHandler.Open(verb, processingSubject);
+        result = result || verbHandler.Close(verb, processingSubject);
+        result = result || verbHandler.Drop(verb, commaSeparatedList);
+        result = result || verbHandler.Pull(verb, processingSubject);
+        result = result || verbHandler.Push(verb, processingSubject);
+        result = result || verbHandler.Turn(verb, processingSubject);
+        result = result || verbHandler.Jump(verb, processingSubject);
+        result = result || verbHandler.Sleep(verb, processingSubject);
+        result = result || verbHandler.Smell(verb, processingSubject);
+        result = result || verbHandler.Taste(verb, processingSubject);
+        result = result || verbHandler.Cut(verb, processingSubject);
+        result = result || verbHandler.Climb(verb, processingSubject);
+        result = result || verbHandler.Kindle(verb, processingSubject);
+        result = result || verbHandler.AlterEgo(verb, processingSubject);
+        result = result || verbHandler.Unlock(verb, processingSubject);
+        result = result || verbHandler.Break(verb, processingSubject);
+        result = result || verbHandler.SitDown(verb, processingSubject);
+        result = result || verbHandler.Eat(verb, processingSubject);
+        result = result || verbHandler.Drink(verb, processingSubject);
+        result = result || verbHandler.Read(verb, processingSubject);
+        result = result || verbHandler.Write(verb, processingSubject);
+        result = result || verbHandler.Hint(verb, processingSubject);
 
         if (!result)
         {
@@ -164,28 +156,27 @@ public sealed class InputProcessor
 
     private bool ProcessThreeWords(string verb, string subject, string objectName)
     {
-        var processingVerb = verb.ToLower();
         var processingSubject = subject.ToLower();
         var processingObject = objectName.ToLower();
         
         var commaSeparatedList = processingObject.Split(",");
 
-        var result = verbHandler.Ask(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Look(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Take(processingVerb, processingSubject, commaSeparatedList);
-        result = result || verbHandler.Say(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Give(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Unlock(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Cut(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Use(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Pull(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Push(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Break(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.SitDown(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Climb(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Kindle(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Drop(processingVerb, processingSubject, processingObject);
-        result = result || verbHandler.Buy(processingVerb, processingSubject, processingObject);
+        var result = verbHandler.Ask(verb, processingSubject, processingObject);
+        result = result || verbHandler.Look(verb, processingSubject, processingObject);
+        result = result || verbHandler.Take(verb, processingSubject, commaSeparatedList);
+        result = result || verbHandler.Say(verb, processingSubject, processingObject);
+        result = result || verbHandler.Give(verb, processingSubject, processingObject);
+        result = result || verbHandler.Unlock(verb, processingSubject, processingObject);
+        result = result || verbHandler.Cut(verb, processingSubject, processingObject);
+        result = result || verbHandler.Use(verb, processingSubject, processingObject);
+        result = result || verbHandler.Pull(verb, processingSubject, processingObject);
+        result = result || verbHandler.Push(verb, processingSubject, processingObject);
+        result = result || verbHandler.Break(verb, processingSubject, processingObject);
+        result = result || verbHandler.SitDown(verb, processingSubject, processingObject);
+        result = result || verbHandler.Climb(verb, processingSubject, processingObject);
+        result = result || verbHandler.Kindle(verb, processingSubject, processingObject);
+        result = result || verbHandler.Drop(verb, processingSubject, processingObject);
+        result = result || verbHandler.Buy(verb, processingSubject, processingObject);
 
         if (!result)
         {

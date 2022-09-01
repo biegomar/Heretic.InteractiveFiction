@@ -48,6 +48,7 @@ internal sealed class InputAnalyzer
             var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
             var sentence = normalizedInput.Split(' ');
             sentence = this.SubstitutePronoun(sentence).ToArray();
+            sentence = this.universe.NormalizeVerbInSentence(sentence);
             sentence = sentence.Where(x => !this.universe.PackingWordsResources.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ToArray();
 
             sentence = this.OrderSentence(sentence).ToArray();
@@ -76,7 +77,6 @@ internal sealed class InputAnalyzer
 
         var parts = sentence.ToList();
         var verb = this.GetVerb(parts);
-        parts.Remove(verb);
         orderedSentence.Add(verb);
 
         if (parts.Any())
@@ -138,6 +138,7 @@ internal sealed class InputAnalyzer
         {
             if (this.universe.IsVerb(word))
             {
+                sentence.Remove(word);
                 return word;
             }
         }

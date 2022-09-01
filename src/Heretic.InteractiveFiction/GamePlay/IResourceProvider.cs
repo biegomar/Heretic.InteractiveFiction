@@ -17,12 +17,15 @@ public interface IResourceProvider
          {
              foreach (DictionaryEntry entry in resourceSet)
              {
-                 var inputList = entry.Value?.ToString()?.Split('|').ToList();
+                 var wordList = entry.Value?.ToString()?.Split('|').ToList();
+                 var preFix = wordList?.SingleOrDefault(w => w.Contains("[PREFIX:"))?.Replace("[PREFIX:", "").Replace("]", "");
+                 var inputList = wordList?.Where(w => !w.Contains("["));
                  
                  var verb = new Verb
                  {
                      Key = entry.Key.ToString()!,
                      PrimaryName = inputList?.First(),
+                     Prefix = preFix ?? string.Empty,
                      Names = inputList
                  };
 

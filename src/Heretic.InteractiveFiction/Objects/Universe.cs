@@ -73,28 +73,101 @@ public sealed class Universe
         
         return mergedVerbs.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
     }
-    
+
     public bool IsVerb(string verbToCheck)
     {
-        var verbOverrides = this.ActiveLocation.OptionalVerbs;
-        var optionalVerbNames = verbOverrides.Values.SelectMany(x => x).SelectMany(verb => verb.Names).ToList();
-
-        return optionalVerbNames.Count > 0
-            ? this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
-              || optionalVerbNames.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
-            : this.Verbs.SelectMany(v => v.Names).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
+        var verbOverrides = this.ActiveLocation.OptionalVerbs.Values.SelectMany(x => x);
+        
+        return verbOverrides.Any()
+            ? this.Verbs.Select(v => v.Key).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
+              || verbOverrides.Select(v => v.Key).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
+            : this.Verbs.Select(v => v.Key).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
     }
     
     public Verb GetVerb(string verbToCheck)
     {
-        var result = this.Verbs.SingleOrDefault(v => v.Names.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase));
+        var result = this.Verbs.FirstOrDefault(v => v.Key.Equals(verbToCheck, StringComparison.InvariantCultureIgnoreCase));
         if (result != default)
         {
             return result;
         }
         
         var verbOverrides = this.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
-        return verbOverrides.SingleOrDefault(v => v.Names.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase));
+        return verbOverrides.SingleOrDefault(v => v.Key.Equals(verbToCheck, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    public string[] NormalizeVerbInSentence(IList<string> sentence)
+    {
+        bool ReplaceVerb(string verbToReplace, ICollection<Verb> verbs, IList<string> resultingSentence)
+        {
+            Verb verb = default;
+            if (verbs.Count == 1)
+            {
+                verb = verbs.First();
+                var index = resultingSentence.IndexOf(verbToReplace);
+                resultingSentence[index] = verb.Key;
+
+                return true;
+            }
+            else
+            {
+                foreach (var possibleVerb in verbs)
+                {
+                    if (sentence.Contains(possibleVerb.Prefix))
+                    {
+                        verb = possibleVerb;
+                        var index = resultingSentence.IndexOf(verbToReplace);
+                        resultingSentence[index] = verb.Key;
+                        resultingSentence.Remove(verb.Prefix);
+                        return true;
+                    }
+                }
+
+                if (verb == default)
+                {
+                    //only one verb without prefix is possible
+                    var verbWithoutPrefix = verbs.SingleOrDefault(v => v.Prefix == string.Empty);
+                    if (verbWithoutPrefix != default)
+                    {
+                        verb = verbWithoutPrefix;
+                        var index = resultingSentence.IndexOf(verbToReplace);
+                        resultingSentence[index] = verb.Key;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        var result = sentence.ToList();
+        var isVerbReplaced = false;
+        
+        foreach (var word in sentence)
+        {
+            var possibleVerbs =this.Verbs.Where(v => v.Names.Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
+            if (possibleVerbs.Any())
+            {
+                isVerbReplaced = ReplaceVerb(word, possibleVerbs, result);
+            }
+            else
+            {
+                var verbOverrides = this.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
+                var optionalVerbs = verbOverrides.Where(v => v.Names.Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                if (optionalVerbs.Any())
+                {
+                    isVerbReplaced = ReplaceVerb(word, optionalVerbs, result);
+                }
+            }
+
+            if (isVerbReplaced)
+            {
+                break;
+            }
+        }
+        
+
+        return result.ToArray();
     }
 
     public void SetPeriodicEvent(PeriodicEvent periodicEvent)
