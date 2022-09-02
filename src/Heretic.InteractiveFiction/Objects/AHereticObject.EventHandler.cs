@@ -42,6 +42,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ReadItemEventArgs> Read;
     public event EventHandler<ReadItemEventArgs> AfterRead;
 
+    public event EventHandler<LockContainerEventArgs> BeforeLock;
+    public event EventHandler<LockContainerEventArgs> Lock;
+    public event EventHandler<LockContainerEventArgs> AfterLock;
+    
     public event EventHandler<ContainerObjectEventArgs> BeforeLook;
     public event EventHandler<ContainerObjectEventArgs> Look;
     public event EventHandler<ContainerObjectEventArgs> AfterLook;
@@ -62,9 +66,9 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> Descend;
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
     
-    public event EventHandler<UnlockContainerEventArgs> BeforeUnlock;
-    public event EventHandler<UnlockContainerEventArgs> Unlock;
-    public event EventHandler<UnlockContainerEventArgs> AfterUnlock;
+    public event EventHandler<LockContainerEventArgs> BeforeUnlock;
+    public event EventHandler<LockContainerEventArgs> Unlock;
+    public event EventHandler<LockContainerEventArgs> AfterUnlock;
 
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<CutItemEventArgs> Cut;
@@ -559,19 +563,37 @@ public abstract partial class AHereticObject
         localEventHandler?.Invoke(this, eventArgs);
     }
 
-    public virtual void OnBeforeUnlock(UnlockContainerEventArgs eventArgs)
+    public virtual void OnBeforeLock(LockContainerEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeLock;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnLock(LockContainerEventArgs eventArgs)
+    {
+        var localEventHandler = this.Lock;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterLock(LockContainerEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterLock;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeUnlock(LockContainerEventArgs eventArgs)
     {
         var localEventHandler = this.BeforeUnlock;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
-    public virtual void OnUnlock(UnlockContainerEventArgs eventArgs)
+    public virtual void OnUnlock(LockContainerEventArgs eventArgs)
     {
         var localEventHandler = this.Unlock;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
-    public virtual void OnAfterUnlock(UnlockContainerEventArgs eventArgs)
+    public virtual void OnAfterUnlock(LockContainerEventArgs eventArgs)
     {
         var localEventHandler = this.AfterUnlock;
         localEventHandler?.Invoke(this, eventArgs);

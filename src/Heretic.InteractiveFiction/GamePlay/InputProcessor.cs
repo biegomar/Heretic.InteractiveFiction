@@ -137,6 +137,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Climb(verb, processingSubject);
         result = result || verbHandler.Kindle(verb, processingSubject);
         result = result || verbHandler.AlterEgo(verb, processingSubject);
+        result = result || verbHandler.Lock(verb, processingSubject);
         result = result || verbHandler.Unlock(verb, processingSubject);
         result = result || verbHandler.Break(verb, processingSubject);
         result = result || verbHandler.SitDown(verb, processingSubject);
@@ -166,6 +167,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Take(verb, processingSubject, commaSeparatedList);
         result = result || verbHandler.Say(verb, processingSubject, processingObject);
         result = result || verbHandler.Give(verb, processingSubject, processingObject);
+        result = result || verbHandler.Lock(verb, processingSubject, processingObject);
         result = result || verbHandler.Unlock(verb, processingSubject, processingObject);
         result = result || verbHandler.Cut(verb, processingSubject, processingObject);
         result = result || verbHandler.Use(verb, processingSubject, processingObject);

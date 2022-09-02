@@ -637,4 +637,16 @@
   <data name="ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY" xml:space="preserve">
     <value>Du kramst ein wenig in Deinen Sachen und findest {0}. Das könnte funktionieren! Du probierst es einfach aus und es klappt! {1} wurde aufgeschlossen.</value>
   </data>
+  <data name="ALREADY_LOCKED" xml:space="preserve">
+    <value>{0} ist bereits abgeschlossen.</value>
+  </data>
+  <data name="IMPOSSIBLE_LOCK" xml:space="preserve">
+    <value>Womit möchtest Du denn {0} abschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?</value>
+  </data>
+  <data name="ITEM_LOCKED_WITH_KEY_FROM_INVENTORY" xml:space="preserve">
+    <value>Du kramst ein wenig in Deinen Sachen und findest {0}. Das könnte funktionieren! Du probierst es einfach aus und es klappt! {1} wurde abgeschlossen.</value>
+  </data>
+  <data name="ITEM_LOCKED" xml:space="preserve">
+    <value>{0} wurde abgeschlossen.</value>
+  </data>
 </root>

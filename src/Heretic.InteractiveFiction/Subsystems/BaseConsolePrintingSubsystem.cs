@@ -553,6 +553,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public virtual bool ItemAlreadyLocked(AHereticObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_LOCKED, this.ConsoleWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+    
     public virtual bool ItemAlreadyUnlocked(AHereticObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.ALREADY_UNLOCKED, this.ConsoleWidth), item.Name);
@@ -599,6 +606,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public virtual bool ItemLocked(AHereticObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.ITEM_LOCKED, this.ConsoleWidth), item.Name);
+        Console.WriteLine();
+        return true;
+    }
+    
     public virtual bool ItemUnlocked(AHereticObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.ITEM_UNLOCKED, this.ConsoleWidth), item.Name);
@@ -821,6 +835,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.WAY_IS_CLOSED);
     }
 
+    public virtual bool ImpossibleLock(AHereticObject item)
+    {
+        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_LOCK, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
+        Console.WriteLine();
+        return true;
+    }
+    
     public virtual bool ImpossibleUnlock(AHereticObject item)
     {
         Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());

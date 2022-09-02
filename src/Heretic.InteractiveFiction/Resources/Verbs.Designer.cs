@@ -285,7 +285,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock.
+        ///   Looks up a localized string similar to Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock|abschließen|abschliessen|Schließe|Schließ|Schliesse|Schliess|[PREFIX:ab].
         /// </summary>
         internal static string LOCK {
             get {

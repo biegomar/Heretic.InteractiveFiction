@@ -19,7 +19,7 @@ public interface IResourceProvider
              {
                  var wordList = entry.Value?.ToString()?.Split('|').ToList();
                  var preFix = wordList?.SingleOrDefault(w => w.Contains("[PREFIX:"))?.Replace("[PREFIX:", "").Replace("]", "");
-                 var inputList = wordList?.Where(w => !w.Contains("["));
+                 var inputList = wordList?.Where(w => !w.Contains("[PREFIX:"));
                  
                  var verb = new Verb
                  {

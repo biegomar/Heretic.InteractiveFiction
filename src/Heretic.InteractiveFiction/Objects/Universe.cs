@@ -62,18 +62,6 @@ public sealed class Universe
         this.ActiveObject = null;
     }
 
-    public bool IsVerb(string verbKey, string verbToCheck)
-    {
-        var verbOverrides = this.ActiveLocation.GetOptionalVerbs(verbKey);
-        var optionalVerbNames = verbOverrides.SelectMany(verb => verb.Names).ToList();
-
-        var mergedVerbs = verbOverrides.Count > 0
-            ? this.Verbs.Single(verb => verb.Key == verbKey).Names.Union(optionalVerbNames)
-            : this.Verbs.Single(verb => verb.Key == verbKey).Names;
-        
-        return mergedVerbs.Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
-    }
-
     public bool IsVerb(string verbToCheck)
     {
         var verbOverrides = this.ActiveLocation.OptionalVerbs.Values.SelectMany(x => x);

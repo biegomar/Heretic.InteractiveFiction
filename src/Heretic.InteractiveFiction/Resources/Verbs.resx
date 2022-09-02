@@ -148,7 +148,7 @@
     <value>Spring|Springe</value>
   </data>
   <data name="LOCK" xml:space="preserve">
-    <value>Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock</value>
+    <value>Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock|abschließen|abschliessen|Schließe|Schließ|Schliesse|Schliess|[PREFIX:ab]</value>
   </data>
   <data name="LOOK" xml:space="preserve">
     <value>Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X</value>

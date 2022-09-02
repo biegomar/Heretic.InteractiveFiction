@@ -96,6 +96,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} ist bereits abgeschlossen..
+        /// </summary>
+        public static string ALREADY_LOCKED {
+            get {
+                return ResourceManager.GetString("ALREADY_LOCKED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist bereits geöffnet..
         /// </summary>
         public static string ALREADY_OPEN {
@@ -537,6 +546,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Womit möchtest Du denn {0} abschliessen? Hast Du vielleicht irgendeinen passenden Schlüssel?.
+        /// </summary>
+        public static string IMPOSSIBLE_LOCK {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_LOCK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scheinbar lässt sich das nicht öffnen..
         /// </summary>
         public static string IMPOSSIBLE_OPEN {
@@ -695,6 +713,24 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string ITEM_EATEN {
             get {
                 return ResourceManager.GetString("ITEM_EATEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} wurde abgeschlossen..
+        /// </summary>
+        public static string ITEM_LOCKED {
+            get {
+                return ResourceManager.GetString("ITEM_LOCKED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du kramst ein wenig in Deinen Sachen und findest {0}. Das könnte funktionieren! Du probierst es einfach aus und es klappt! {1} wurde abgeschlossen..
+        /// </summary>
+        public static string ITEM_LOCKED_WITH_KEY_FROM_INVENTORY {
+            get {
+                return ResourceManager.GetString("ITEM_LOCKED_WITH_KEY_FROM_INVENTORY", resourceCulture);
             }
         }
         

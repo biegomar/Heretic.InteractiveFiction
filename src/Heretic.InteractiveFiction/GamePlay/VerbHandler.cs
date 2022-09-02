@@ -1648,7 +1648,7 @@ internal sealed class VerbHandler
                             {
                                 try
                                 {
-                                    var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                                    var unlockContainerEventArgs = new LockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
                                     
                                     item.OnBeforeUnlock(unlockContainerEventArgs);
 
@@ -1700,7 +1700,7 @@ internal sealed class VerbHandler
                                 {
                                     try
                                     {
-                                        var unlockContainerEventArgs = new UnlockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                                        var unlockContainerEventArgs = new LockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
                                     
                                         item.OnBeforeUnlock(unlockContainerEventArgs);
 
@@ -1729,6 +1729,118 @@ internal sealed class VerbHandler
                             }
                         }
                         return printingSubsystem.ItemAlreadyUnlocked(item);
+                    }
+                    return printingSubsystem.ItemNotLockAble(item);
+                }
+                return printingSubsystem.KeyNotVisible();
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
+    internal bool Lock(string verb, string lockObject)
+    {
+        if (VerbKeys.LOCK == verb)
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(lockObject);
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                if (!string.IsNullOrEmpty(item.UnlockWithKey) && this.universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
+                {
+                    var key = this.universe.ActivePlayer.GetItem(item.UnlockWithKey);
+                    if (item.IsLockable)
+                    {
+                        if (!item.IsLocked)
+                        {
+                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                            {
+                                try
+                                {
+                                    var lockContainerEventArgs = new LockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                                    
+                                    item.OnBeforeLock(lockContainerEventArgs);
+
+                                    item.IsLocked = true;
+                                    item.OnLock(lockContainerEventArgs);
+                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_LOCKED_WITH_KEY_FROM_INVENTORY, key.AccusativeArticleName.LowerFirstChar(), item.Name));
+                                    
+                                    item.OnAfterLock(lockContainerEventArgs);
+                                    
+                                    return true;
+                                }
+                                catch (LockException e)
+                                {
+                                    return printingSubsystem.Resource(e.Message);
+                                }
+                            }
+                        }
+                        return printingSubsystem.ItemAlreadyLocked(item);
+                    }
+                    return printingSubsystem.ItemNotLockAble(item);
+                }
+
+                return printingSubsystem.ImpossibleLock(item);
+            }
+        }
+
+        return false;
+    }
+
+    internal bool Lock(string verb, string lockObject, string lockKey)
+    {
+        if (VerbKeys.LOCK == verb)
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(lockObject);
+            var key = this.objectHandler.GetUnhiddenItemByNameActive(lockKey);
+
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                if (key != default)
+                {
+                    if (item.IsLockable)
+                    {
+                        if (!item.IsLocked)
+                        {
+                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                            {
+                                if (this.universe.ActivePlayer.OwnsItem(key))
+                                {
+                                    try
+                                    {
+                                        var lockContainerEventArgs = new LockContainerEventArgs { Key = key, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+                                    
+                                        item.OnBeforeLock(lockContainerEventArgs);
+
+                                        if (!string.IsNullOrEmpty(item.UnlockWithKey) && item.UnlockWithKey == key.Key)
+                                        {
+                                            item.IsLocked = true;
+                                            item.OnLock(lockContainerEventArgs);
+                                            printingSubsystem.ItemLocked(item);
+                                        }
+                                        else
+                                        {
+                                            item.OnLock(lockContainerEventArgs);
+                                            printingSubsystem.Resource(string.Format(BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, item.Name, key.Name));
+                                        }
+                                    
+                                        item.OnAfterLock(lockContainerEventArgs);
+                                    
+                                        return true;
+                                    }
+                                    catch (LockException e)
+                                    {
+                                        return printingSubsystem.Resource(e.Message);
+                                    }
+                                }
+                                printingSubsystem.ItemNotOwned(key);
+                            }
+                        }
+                        return printingSubsystem.ItemAlreadyLocked(item);
                     }
                     return printingSubsystem.ItemNotLockAble(item);
                 }
