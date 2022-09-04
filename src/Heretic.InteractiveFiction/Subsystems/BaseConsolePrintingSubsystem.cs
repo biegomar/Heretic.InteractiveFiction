@@ -184,7 +184,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     private static Dictionary<string, IEnumerable<string>> FilterVerbs(IList<Verb> verbs, Collection<string> verbKeys)
     {
         var result = verbs.Where(x => verbKeys.Contains(x.Key)).OrderBy(x => x.Key)
-            .ToDictionary(x => x.Key, x => x.Names);
+            .ToDictionary(x => x.Key, x => x.Variants.Select(v => v.Name));
         return result;
     }
 

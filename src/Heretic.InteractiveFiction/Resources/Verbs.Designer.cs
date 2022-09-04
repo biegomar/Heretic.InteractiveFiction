@@ -105,7 +105,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Klettere|Kletter|Steige|Steig.
+        ///   Looks up a localized string similar to Klettere:auf|Kletter:auf|Steige:auf|Steig:auf.
         /// </summary>
         internal static string CLIMB {
             get {
@@ -141,7 +141,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Absteigen|Herabsteigen.
+        ///   Looks up a localized string similar to Absteigen|Herabsteigen|Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab.
         /// </summary>
         internal static string DESCEND {
             get {
@@ -285,7 +285,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock|abschließen|abschliessen|Schließe|Schließ|Schliesse|Schliess|[PREFIX:ab].
+        ///   Looks up a localized string similar to Verriegel|Verriegeln|Sperre:zu|Verschließe|Verschließ|Lock|abschließen|abschliessen|zuschließen|zuschliessen|Schließe:ab|Schließ:ab|Schliesse:ab|Schliess:ab|Schließe:zu|Schließ:zu|Schliesse:zu|Schliess:zu.
         /// </summary>
         internal static string LOCK {
             get {
@@ -573,7 +573,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entriegel|Entriegeln|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock|Schließe|Schließ|Schliesse|Schliess|[PREFIX:auf].
+        ///   Looks up a localized string similar to Entriegel|Entriegeln|Sperre:auf|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock|Schließe:auf|Schließ:auf|Schliesse:auf|Schliess:auf.
         /// </summary>
         internal static string UNLOCK {
             get {

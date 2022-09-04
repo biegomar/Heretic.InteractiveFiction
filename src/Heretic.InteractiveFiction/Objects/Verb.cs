@@ -3,8 +3,6 @@
 public sealed class Verb
 {
     public string Key { get; set; }
-    public string PrimaryName { get; set; }
-    public string Prefix { get; set; }
-    public IEnumerable<string> Names { get; set; }
+    public IEnumerable<VerbVariant> Variants { get; set; }
     public Description ErrorMessage { get; set; }
 }

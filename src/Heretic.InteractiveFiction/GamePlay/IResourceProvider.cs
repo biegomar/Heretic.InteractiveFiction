@@ -17,19 +17,30 @@ public interface IResourceProvider
          {
              foreach (DictionaryEntry entry in resourceSet)
              {
+                 var variantList = new List<VerbVariant>();
                  var wordList = entry.Value?.ToString()?.Split('|').ToList();
-                 var preFix = wordList?.SingleOrDefault(w => w.Contains("[PREFIX:"))?.Replace("[PREFIX:", "").Replace("]", "");
-                 var inputList = wordList?.Where(w => !w.Contains("[PREFIX:"));
-                 
-                 var verb = new Verb
-                 {
-                     Key = entry.Key.ToString()!,
-                     PrimaryName = inputList?.First(),
-                     Prefix = preFix ?? string.Empty,
-                     Names = inputList
-                 };
 
-                 result.Add(verb);
+                 if (wordList != null)
+                 {
+                     var verb = new Verb
+                     {
+                         Key = entry.Key.ToString()
+                     };
+
+                     foreach (var word in wordList)
+                     {
+                         var verbAndPrefix = word.Split(':').ToList();
+                         var variant = new VerbVariant
+                         {
+                             Name = verbAndPrefix[0],
+                             Prefix = verbAndPrefix.Count > 1 ? verbAndPrefix[1] : string.Empty
+                         };
+                         variantList.Add(variant);
+                     }
+
+                     verb.Variants = variantList;
+                     result.Add(verb);
+                 }
              }
          }
 

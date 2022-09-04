@@ -19,15 +19,26 @@ public sealed partial class Location : AHereticObject
             throw new ArgumentNullException(nameof(originalVerbKey));
         }
         
-        var names = newVerbName.Split('|').ToList();
+        var variantList = new List<VerbVariant>();
+        var wordList = newVerbName.Split('|').ToList();
         
         var optionalVerb = new Verb
         {
             Key = originalVerbKey,
-            PrimaryName = names.FirstOrDefault(),
-            Names = names,
             ErrorMessage = newErrorMessage
         };
+        
+        foreach (var word in wordList)
+        {
+            var verbAndPrefix = word.Split(':').ToList();
+            var variant = new VerbVariant
+            {
+                Name = verbAndPrefix[0],
+                Prefix = verbAndPrefix.Count > 1 ? verbAndPrefix[1] : string.Empty
+            };
+            variantList.Add(variant);
+        }
+        optionalVerb.Variants = variantList;
         
         if (!this.OptionalVerbs.ContainsKey(originalVerbKey))
         {
@@ -37,16 +48,6 @@ public sealed partial class Location : AHereticObject
         {
             this.OptionalVerbs[originalVerbKey].Add(optionalVerb);
         }
-    }
-
-    public ReadOnlyCollection<Verb> GetOptionalVerbs(string verbKey)
-    {
-        if (this.OptionalVerbs.ContainsKey(verbKey))
-        {
-            return new ReadOnlyCollection<Verb>(this.OptionalVerbs[verbKey]);    
-        }
-
-        return new ReadOnlyCollection<Verb>(new List<Verb>());
     }
 
     public ICollection<Item> GetAllPickableAndUnHiddenItems()

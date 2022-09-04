@@ -148,7 +148,7 @@
     <value>Spring|Springe</value>
   </data>
   <data name="LOCK" xml:space="preserve">
-    <value>Verriegel|Verriegeln|Sperren|Sperre|Verschließe|Verschließ|Lock|abschließen|abschliessen|Schließe|Schließ|Schliesse|Schliess|[PREFIX:ab]</value>
+    <value>Verriegel|Verriegeln|Sperre:zu|Verschließe|Verschließ|Lock|abschließen|abschliessen|zuschließen|zuschliessen|Schließe:ab|Schließ:ab|Schliesse:ab|Schliess:ab|Schließe:zu|Schließ:zu|Schliesse:zu|Schliess:zu</value>
   </data>
   <data name="LOOK" xml:space="preserve">
     <value>Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X</value>
@@ -196,7 +196,7 @@
     <value>Drehe|Dreh</value>
   </data>
   <data name="UNLOCK" xml:space="preserve">
-    <value>Entriegel|Entriegeln|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock|Schließe|Schließ|Schliesse|Schliess|[PREFIX:auf]</value>
+    <value>Entriegel|Entriegeln|Sperre:auf|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock|Schließe:auf|Schließ:auf|Schliesse:auf|Schliess:auf</value>
   </data>
   <data name="UP" xml:space="preserve">
     <value>Hoch|Rauf|Hinauf|H|Herauf</value>
@@ -241,10 +241,10 @@
     <value>Drücke|Drück|Schiebe|Schieb|Stecke|Steck</value>
   </data>
   <data name="CLIMB" xml:space="preserve">
-    <value>Klettere|Kletter|Steige|Steig</value>
+    <value>Klettere:auf|Kletter:auf|Steige:auf|Steig:auf</value>
   </data>
   <data name="DESCEND" xml:space="preserve">
-    <value>Absteigen|Herabsteigen</value>
+    <value>Absteigen|Herabsteigen|Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab</value>
   </data>
   <data name="SAVE" xml:space="preserve">
     <value>Save|speichern</value>

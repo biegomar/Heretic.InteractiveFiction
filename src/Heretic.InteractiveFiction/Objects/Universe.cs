@@ -97,32 +97,30 @@ public sealed class Universe
 
                 return true;
             }
-            else
-            {
-                foreach (var possibleVerb in verbs)
-                {
-                    if (sentence.Contains(possibleVerb.Prefix))
-                    {
-                        verb = possibleVerb;
-                        var index = resultingSentence.IndexOf(verbToReplace);
-                        resultingSentence[index] = verb.Key;
-                        resultingSentence.Remove(verb.Prefix);
-                        return true;
-                    }
-                }
 
-                if (verb == default)
+            foreach (var possibleVerb in verbs)
+            {
+                var allPrefixes = possibleVerb.Variants.Where(v => v.Name.Equals(verbToReplace, StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(v.Prefix)).Select(v => v.Prefix).Distinct();
+                var intersect = sentence.Intersect(allPrefixes);
+                var onlyPossiblePrefix = intersect.FirstOrDefault();
+                if (sentence.Contains(onlyPossiblePrefix))
                 {
-                    //only one verb without prefix is possible
-                    var verbWithoutPrefix = verbs.SingleOrDefault(v => v.Prefix == string.Empty);
-                    if (verbWithoutPrefix != default)
-                    {
-                        verb = verbWithoutPrefix;
-                        var index = resultingSentence.IndexOf(verbToReplace);
-                        resultingSentence[index] = verb.Key;
-                        return true;
-                    }
+                    verb = possibleVerb;
+                    var index = resultingSentence.IndexOf(verbToReplace);
+                    resultingSentence[index] = verb.Key;
+                    resultingSentence.Remove(onlyPossiblePrefix);
+                    return true;
                 }
+            }
+            
+            //only one verb without prefix is possible!
+            var verbWithoutPrefix = verbs.SingleOrDefault(v => Equals(v.Variants, from i in v.Variants where i.Prefix == string.Empty select i));
+            if (verbWithoutPrefix != default)
+            {
+                verb = verbWithoutPrefix;
+                var index = resultingSentence.IndexOf(verbToReplace);
+                resultingSentence[index] = verb.Key;
+                return true;
             }
 
             return false;
@@ -133,7 +131,7 @@ public sealed class Universe
         
         foreach (var word in sentence)
         {
-            var possibleVerbs =this.Verbs.Where(v => v.Names.Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
+            var possibleVerbs =this.Verbs.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
             if (possibleVerbs.Any())
             {
                 isVerbReplaced = ReplaceVerb(word, possibleVerbs, result);
@@ -141,7 +139,7 @@ public sealed class Universe
             else
             {
                 var verbOverrides = this.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
-                var optionalVerbs = verbOverrides.Where(v => v.Names.Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                var optionalVerbs = verbOverrides.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
                 if (optionalVerbs.Any())
                 {
                     isVerbReplaced = ReplaceVerb(word, optionalVerbs, result);
