@@ -544,7 +544,7 @@
     <value>Fügt dem internen Protokoll einen Kommentar hinzu.</value>
   </data>
   <data name="IMPOSSIBLE_CLIMB" xml:space="preserve">
-    <value>Nein, ich werde dort nicht herauf klettern.</value>
+    <value>Nein, ich werde dort nicht heraufklettern.</value>
   </data>
   <data name="IMPOSSIBLE_CLOSE" xml:space="preserve">
     <value>{0} ist nicht zum Öffnen oder Schließen geeignet.</value>
@@ -648,5 +648,11 @@
   </data>
   <data name="ITEM_LOCKED" xml:space="preserve">
     <value>{0} wurde abgeschlossen.</value>
+  </data>
+  <data name="NOT_CLIMBED" xml:space="preserve">
+    <value>Du bist aktuell nirgendwo heraufgeklettert.</value>
+  </data>
+  <data name="NOT_CLIMBED_ON_ITEM" xml:space="preserve">
+    <value>Du bist aber gar nicht auf {0}.</value>
   </data>
 </root>

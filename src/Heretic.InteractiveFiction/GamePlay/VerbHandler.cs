@@ -1403,7 +1403,50 @@ internal sealed class VerbHandler
                     return printingSubsystem.Resource(ex.Message);
                 }
             }
-            return printingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
+            return printingSubsystem.Resource(BaseDescriptions.NOT_CLIMBED);
+        }
+
+        return false;
+    }
+    
+    internal bool Descend(string verb, string subject)
+    {
+        if (VerbKeys.DESCEND == verb)
+        {
+            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != default)
+            {
+                var compareItem = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+                var item = this.universe.ActivePlayer.ClimbedObject;
+                if (item.Key == compareItem.Key)
+                {
+                    try
+                    {
+                        var eventArgs = new ContainerObjectEventArgs() { OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage };
+
+                        this.universe.ActivePlayer.OnBeforeDescend(eventArgs);
+                        item.OnBeforeDescend(eventArgs);
+
+                        this.universe.ActivePlayer.DescendFromObject();
+                        this.universe.ActivePlayer.OnDescend(eventArgs);
+                        item.OnDescend(eventArgs);
+
+                        var result = printingSubsystem.Resource(BaseDescriptions.DESCENDING);
+
+                        item.OnAfterDescend(eventArgs);
+                        this.universe.ActivePlayer.OnAfterDescend(eventArgs);
+
+                        return result;
+                    }
+                    catch (DescendException ex)
+                    {
+                        return printingSubsystem.Resource(ex.Message);
+                    }
+                }
+
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOT_CLIMBED_ON_ITEM, compareItem.DativeArticleName.LowerFirstChar());
+            }
+            
+            return printingSubsystem.Resource(BaseDescriptions.NOT_CLIMBED);
         }
 
         return false;

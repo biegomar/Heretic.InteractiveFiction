@@ -510,7 +510,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nein, ich werde dort nicht herauf klettern..
+        ///   Looks up a localized string similar to Nein, ich werde dort nicht heraufklettern..
         /// </summary>
         public static string IMPOSSIBLE_CLIMB {
             get {
@@ -1047,6 +1047,24 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string NO_WAYS {
             get {
                 return ResourceManager.GetString("NO_WAYS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du bist aktuell nirgendwo heraufgeklettert..
+        /// </summary>
+        public static string NOT_CLIMBED {
+            get {
+                return ResourceManager.GetString("NOT_CLIMBED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du bist aber gar nicht auf {0}..
+        /// </summary>
+        public static string NOT_CLIMBED_ON_ITEM {
+            get {
+                return ResourceManager.GetString("NOT_CLIMBED_ON_ITEM", resourceCulture);
             }
         }
         
