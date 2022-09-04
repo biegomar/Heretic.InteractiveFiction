@@ -483,7 +483,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aufstehen|Hinstellen.
+        ///   Looks up a localized string similar to Aufstehen|stehe:auf|steh:auf.
         /// </summary>
         internal static string STANDUP {
             get {

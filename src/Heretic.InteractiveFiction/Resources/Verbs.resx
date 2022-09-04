@@ -226,7 +226,7 @@
     <value>Setze|Setzen|Setz|Hinsetzen|Sitze</value>
   </data>
   <data name="STANDUP" xml:space="preserve">
-    <value>Aufstehen|Hinstellen</value>
+    <value>Aufstehen|stehe:auf|steh:auf</value>
   </data>
   <data name="WRITE" xml:space="preserve">
     <value>Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe|Tipp</value>
