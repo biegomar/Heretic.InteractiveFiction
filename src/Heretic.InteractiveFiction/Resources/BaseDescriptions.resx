@@ -658,4 +658,13 @@
   <data name="ALREADY_CLIMBED_ITEM" xml:space="preserve">
     <value>Du bist doch schon auf {0} gestiegen.</value>
   </data>
+  <data name="ALREADY_WEARING" xml:space="preserve">
+        <value>Du scheinst {0} schon zu tragen.</value>
+    </data>
+  <data name="PULLON_WEARABLE" xml:space="preserve">
+        <value>Du hast {0} angezogen.</value>
+    </data>
+  <data name="NOTHING_TO_WEAR" xml:space="preserve">
+    <value>Du kannst {0} nicht anziehen.</value>
+  </data>
 </root>

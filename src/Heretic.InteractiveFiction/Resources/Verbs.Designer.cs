@@ -636,7 +636,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anziehen.
+        ///   Looks up a localized string similar to Ziehe:an|Zieh:an.
         /// </summary>
         internal static string WEAR {
             get {

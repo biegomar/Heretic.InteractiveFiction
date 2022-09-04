@@ -141,6 +141,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du scheinst {0} schon zu tragen..
+        /// </summary>
+        public static string ALREADY_WEARING {
+            get {
+                return ResourceManager.GetString("ALREADY_WEARING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alternative Bezeichnungen für Personen und Gegenstände.
         /// </summary>
         public static string ALTER_EGO {
@@ -1168,6 +1177,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du kannst {0} nicht anziehen..
+        /// </summary>
+        public static string NOTHING_TO_WEAR {
+            get {
+                return ResourceManager.GetString("NOTHING_TO_WEAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist nun geschlossen..
         /// </summary>
         public static string NOW_CLOSED {
@@ -1245,6 +1263,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string PULL {
             get {
                 return ResourceManager.GetString("PULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du hast {0} angezogen..
+        /// </summary>
+        public static string PULLON_WEARABLE {
+            get {
+                return ResourceManager.GetString("PULLON_WEARABLE", resourceCulture);
             }
         }
         

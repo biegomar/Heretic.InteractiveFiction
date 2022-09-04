@@ -103,7 +103,7 @@ public sealed class Universe
                 var allPrefixes = possibleVerb.Variants.Where(v => v.Name.Equals(verbToReplace, StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(v.Prefix)).Select(v => v.Prefix).Distinct();
                 var intersect = sentence.Intersect(allPrefixes);
                 var onlyPossiblePrefix = intersect.FirstOrDefault();
-                if (sentence.Contains(onlyPossiblePrefix))
+                if (onlyPossiblePrefix != default && sentence.Contains(onlyPossiblePrefix))
                 {
                     verb = possibleVerb;
                     var index = resultingSentence.IndexOf(verbToReplace);

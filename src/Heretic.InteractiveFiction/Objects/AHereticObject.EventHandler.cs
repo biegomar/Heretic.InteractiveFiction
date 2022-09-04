@@ -69,6 +69,10 @@ public abstract partial class AHereticObject
     public event EventHandler<LockContainerEventArgs> BeforeUnlock;
     public event EventHandler<LockContainerEventArgs> Unlock;
     public event EventHandler<LockContainerEventArgs> AfterUnlock;
+    
+    public event EventHandler<ContainerObjectEventArgs> BeforeWear;
+    public event EventHandler<ContainerObjectEventArgs> Wear;
+    public event EventHandler<ContainerObjectEventArgs> AfterWear;
 
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<CutItemEventArgs> Cut;
@@ -596,6 +600,24 @@ public abstract partial class AHereticObject
     public virtual void OnAfterUnlock(LockContainerEventArgs eventArgs)
     {
         var localEventHandler = this.AfterUnlock;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeWear(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeWear;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnWear(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Wear;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterWear(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterWear;
         localEventHandler?.Invoke(this, eventArgs);
     }
 }

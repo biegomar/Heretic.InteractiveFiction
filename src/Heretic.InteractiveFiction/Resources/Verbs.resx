@@ -313,6 +313,6 @@
     <value>Aufwachen</value>
   </data>
   <data name="WEAR" xml:space="preserve">
-    <value>Anziehen</value>
+    <value>Ziehe:an|Zieh:an</value>
   </data>
 </root>

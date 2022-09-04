@@ -143,6 +143,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Break(verb, processingSubject);
         result = result || verbHandler.SitDown(verb, processingSubject);
         result = result || verbHandler.Eat(verb, processingSubject);
+        result = result || verbHandler.Wear(verb, processingSubject);
         result = result || verbHandler.Drink(verb, processingSubject);
         result = result || verbHandler.Read(verb, processingSubject);
         result = result || verbHandler.Write(verb, processingSubject);

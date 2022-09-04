@@ -208,6 +208,72 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Wear(string verb, string subject)
+    {
+        void SwapItem(Item item)
+        {
+            this.universe.ActivePlayer.Items.Remove(item);
+            this.universe.ActivePlayer.Clothes.Add(item);
+        }
+        
+        if (VerbKeys.WEAR == verb)
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                if (item.IsWearable)
+                {
+                    if (!this.universe.ActivePlayer.Clothes.Contains(item))
+                    {
+                        try
+                        {
+                            var itemEventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                        
+                            item.OnBeforeWear(itemEventArgs);
+                        
+                            if (this.universe.ActivePlayer.Items.Contains(item))
+                            {
+                                SwapItem(item);
+                            }
+                            else
+                            {
+                                this.universe.PickObject(item, true);
+                                if (this.universe.ActivePlayer.Items.Contains(item))
+                                {
+                                    SwapItem(item);    
+                                }
+                                else
+                                {
+                                    //TODO refactor PickUp!
+                                    return true;
+                                }
+                            }
+
+                            item.OnWear(itemEventArgs);
+                    
+                            item.OnAfterWear(itemEventArgs);
+
+                            return printingSubsystem.FormattedResource(BaseDescriptions.PULLON_WEARABLE, item.AccusativeArticleName, true);
+                        }
+                        catch (WearException ex)
+                        {
+                            return printingSubsystem.Resource(ex.Message);
+                        } 
+                    }
+                    printingSubsystem.Resource(BaseDescriptions.ALREADY_WEARING);
+                }
+
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_WEAR, item.AccusativeArticleName, true);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
     internal bool Drink(string verb, string subject)
     {
         if (VerbKeys.DRINK == verb)
