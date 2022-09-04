@@ -66,11 +66,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Look(string verb, string subject)
+    internal bool Look(string verb, string processingObject)
     {
         if (VerbKeys.LOOK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
                 try
@@ -118,11 +118,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Read(string verb, string subject)
+    internal bool Read(string verb, string processingObject)
     {
         if (VerbKeys.READ == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
                 if (item.IsReadable)
@@ -160,11 +160,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Eat(string verb, string subject)
+    internal bool Eat(string verb, string processingObject)
     {
         if (VerbKeys.EAT == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
                 if (item.IsEatable)
@@ -208,7 +208,7 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Wear(string verb, string subject)
+    internal bool Wear(string verb, string processingObject)
     {
         void SwapItem(Item item)
         {
@@ -218,7 +218,7 @@ internal sealed class VerbHandler
         
         if (VerbKeys.WEAR == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -274,11 +274,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Drink(string verb, string subject)
+    internal bool Drink(string verb, string processingObject)
     {
         if (VerbKeys.DRINK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
                 if (item.IsDrinkable)
@@ -322,17 +322,17 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Hint(string verb, string subject)
+    internal bool Hint(string verb, string processingObject)
     {
         if (VerbKeys.HINT == verb)
         {
-            if (String.Equals(subject, BaseDescriptions.ON, StringComparison.CurrentCultureIgnoreCase))
+            if (String.Equals(processingObject, BaseDescriptions.ON, StringComparison.CurrentCultureIgnoreCase))
             {
                 isHintActive = true;
                 return printingSubsystem.Resource(BaseDescriptions.HINT_ON);
             }
             
-            if (String.Equals(subject, BaseDescriptions.OFF, StringComparison.CurrentCultureIgnoreCase))
+            if (String.Equals(processingObject, BaseDescriptions.OFF, StringComparison.CurrentCultureIgnoreCase))
             {
                 isHintActive = false;
                 return printingSubsystem.Resource(BaseDescriptions.HINT_OFF);
@@ -342,11 +342,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Pull(string verb, string subject)
+    internal bool Pull(string verb, string processingObject)
     {
         if (VerbKeys.PULL == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -407,11 +407,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Push(string verb, string subject)
+    internal bool Push(string verb, string processingObject)
     {
         if (VerbKeys.PUSH == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -474,11 +474,11 @@ internal sealed class VerbHandler
     }
 
 
-    internal bool AlterEgo(string verb, string subject)
+    internal bool AlterEgo(string verb, string processingObject)
     {
         if (VerbKeys.ALTER_EGO == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
                 var result = printingSubsystem.AlterEgo(item);
@@ -588,11 +588,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Use(string verb, string subject)
+    internal bool Use(string verb, string processingObject)
     {
         if (VerbKeys.USE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             
             if (item != default)
             {
@@ -661,7 +661,7 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Buy(string verb, string subject)
+    internal bool Buy(string verb, string processingObject)
     {
         if (VerbKeys.BUY == verb)
         {
@@ -670,7 +670,7 @@ internal sealed class VerbHandler
                 return printingSubsystem.PayWithWhat();
             }
 
-            var key = this.objectHandler.GetItemKeyByName(subject);
+            var key = this.objectHandler.GetItemKeyByName(processingObject);
             if (this.universe.ActivePlayer.GetUnhiddenItem(key) != default)
             {
                 return printingSubsystem.ItemAlreadyOwned();
@@ -713,11 +713,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Turn(string verb, string subject)
+    internal bool Turn(string verb, string processingObject)
     {
         if (VerbKeys.TURN == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -742,11 +742,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Jump(string verb, string subject)
+    internal bool Jump(string verb, string processingObject)
     {
         if (VerbKeys.JUMP == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -772,11 +772,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Kindle(string verb, string subject)
+    internal bool Kindle(string verb, string processingObject)
     {
         if (VerbKeys.KINDLE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -838,11 +838,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Cut(string verb, string subject)
+    internal bool Cut(string verb, string processingObject)
     {
         if (VerbKeys.CUT == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -948,11 +948,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Smell(string verb, string subject)
+    internal bool Smell(string verb, string processingObject)
     {
         if (VerbKeys.SMELL == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -1000,11 +1000,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Sleep(string verb, string subject)
+    internal bool Sleep(string verb, string processingObject)
     {
         if (VerbKeys.SLEEP == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -1056,11 +1056,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Taste(string verb, string subject)
+    internal bool Taste(string verb, string processingObject)
     {
         if (VerbKeys.TASTE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -1086,11 +1086,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Climb(string verb, string subject)
+    internal bool Climb(string verb, string processingObject)
     {
         if (VerbKeys.CLIMB == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             this.objectHandler.StoreAsActiveObject(item);
 
             if (item != default)
@@ -1155,11 +1155,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Close(string verb, string subject)
+    internal bool Close(string verb, string processingObject)
     {
         if (VerbKeys.CLOSE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             this.objectHandler.StoreAsActiveObject(item);
 
             if (item != default)
@@ -1202,11 +1202,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Open(string verb, string subject)
+    internal bool Open(string verb, string processingObject)
     {
         if (VerbKeys.OPEN == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
 
             if (item != default)
             {
@@ -1257,11 +1257,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Talk(string verb, string subject)
+    internal bool Talk(string verb, string processingObject)
     {
         if (VerbKeys.TALK == verb)
         {
-            var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(subject);
+            var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(processingObject);
 
             if (character == default)
             {
@@ -1338,16 +1338,16 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool SitDown(string verb, string subject)
+    internal bool SitDown(string verb, string processingObject)
     {
         if (VerbKeys.SIT == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(subject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingObject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.SitDown(verb);
             }
             
-            var key = this.objectHandler.GetItemKeyByName(subject);
+            var key = this.objectHandler.GetItemKeyByName(processingObject);
             var item = this.universe.ActiveLocation.GetUnhiddenItem(key) ?? this.universe.ActivePlayer.GetUnhiddenItem(key);
 
             if (item != default)
@@ -1477,13 +1477,13 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Descend(string verb, string subject)
+    internal bool Descend(string verb, string processingObject)
     {
         if (VerbKeys.DESCEND == verb)
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != default)
             {
-                var compareItem = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+                var compareItem = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
                 var item = this.universe.ActivePlayer.ClimbedObject;
                 if (item.Key == compareItem.Key)
                 {
@@ -1651,11 +1651,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Break(string verb, string subject)
+    internal bool Break(string verb, string processingObject)
     {
         if (VerbKeys.BREAK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             
             if (item != default)
             {
@@ -1694,11 +1694,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Break(string verb, string subject, string tool)
+    internal bool Break(string verb, string processingObject, string tool)
     {
         if (VerbKeys.BREAK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             var toolItem = this.objectHandler.GetUnhiddenItemByNameActive(tool);
 
             if (item != default)
@@ -1740,11 +1740,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Unlock(string verb, string unlockObject)
+    internal bool Unlock(string verb, string processingObject)
     {
         if (VerbKeys.UNLOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(unlockObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -1789,11 +1789,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Unlock(string verb, string unlockObject, string unlockKey)
+    internal bool Unlock(string verb, string processingObject, string unlockKey)
     {
         if (VerbKeys.UNLOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(unlockObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             var key = this.objectHandler.GetUnhiddenItemByNameActive(unlockKey);
 
             if (item != default)
@@ -1852,11 +1852,11 @@ internal sealed class VerbHandler
         return false;
     }
     
-    internal bool Lock(string verb, string lockObject)
+    internal bool Lock(string verb, string processingObject)
     {
         if (VerbKeys.LOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(lockObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -1901,11 +1901,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Lock(string verb, string lockObject, string lockKey)
+    internal bool Lock(string verb, string processingObject, string lockKey)
     {
         if (VerbKeys.LOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(lockObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             var key = this.objectHandler.GetUnhiddenItemByNameActive(lockKey);
 
             if (item != default)
@@ -1964,17 +1964,17 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Take(string verb, IEnumerable<string> subjects)
+    internal bool Take(string verb, IEnumerable<string> processingObjects)
     {
         if (VerbKeys.TAKE == verb)
         {
             var result = true;
-            foreach (var subject in subjects)
+            foreach (var processingObject in processingObjects)
             {
-                var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
+                var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
                 if (item == default)
                 {
-                    var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(subject);
+                    var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(processingObject);
                     if (character != default)
                     {
                         result = result && printingSubsystem.ImpossiblePickup(character);
@@ -2071,14 +2071,14 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Drop(string verb, IEnumerable<string> subjects)
+    internal bool Drop(string verb, IEnumerable<string> processingObjects)
     {
         if (VerbKeys.DROP == verb)
         {
             var result = true;
-            foreach (var subject in subjects)
+            foreach (var processingObject in processingObjects)
             {
-                var key = this.objectHandler.GetItemKeyByName(subject);
+                var key = this.objectHandler.GetItemKeyByName(processingObject);
 
                 var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == key);
                 var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == key);
@@ -2205,11 +2205,11 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Name(string verb, string subject)
+    internal bool Name(string verb, string subjectName)
     {
         if (VerbKeys.NAME == verb)
         {
-            this.universe.ActivePlayer.Name = subject;
+            this.universe.ActivePlayer.Name = subjectName;
             this.universe.ActivePlayer.IsStranger = false;
             printingSubsystem.ActivePlayer(this.universe.ActivePlayer);
 
