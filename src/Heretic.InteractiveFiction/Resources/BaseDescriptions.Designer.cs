@@ -87,6 +87,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du bist doch schon auf {0} gestiegen..
+        /// </summary>
+        public static string ALREADY_CLIMBED_ITEM {
+            get {
+                return ResourceManager.GetString("ALREADY_CLIMBED_ITEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ist bereits geschlossen..
         /// </summary>
         public static string ALREADY_CLOSED {

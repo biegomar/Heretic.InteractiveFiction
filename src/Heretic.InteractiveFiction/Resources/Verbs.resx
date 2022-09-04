@@ -241,10 +241,10 @@
     <value>Drücke|Drück|Schiebe|Schieb|Stecke|Steck</value>
   </data>
   <data name="CLIMB" xml:space="preserve">
-    <value>Klettere:auf|Kletter:auf|Steige:auf|Steig:auf</value>
+    <value>Klettere|Kletter|Steige|Steig|Klettere:auf|Kletter:auf|Steige:auf|Steig:auf</value>
   </data>
   <data name="DESCEND" xml:space="preserve">
-    <value>Absteigen|Herabsteigen|Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab</value>
+    <value>Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab|Klettere:von|Kletter:von|Steige:von|Steig:von</value>
   </data>
   <data name="SAVE" xml:space="preserve">
     <value>Save|speichern</value>

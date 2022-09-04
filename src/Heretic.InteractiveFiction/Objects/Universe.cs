@@ -114,7 +114,7 @@ public sealed class Universe
             }
             
             //only one verb without prefix is possible!
-            var verbWithoutPrefix = verbs.SingleOrDefault(v => Equals(v.Variants, from i in v.Variants where i.Prefix == string.Empty select i));
+            var verbWithoutPrefix = verbs.SingleOrDefault(v => v.Variants.Count(x => x.Prefix == string.Empty) > 0);
             if (verbWithoutPrefix != default)
             {
                 verb = verbWithoutPrefix;

@@ -105,7 +105,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Klettere:auf|Kletter:auf|Steige:auf|Steig:auf.
+        ///   Looks up a localized string similar to Klettere|Kletter|Steige|Steig|Klettere:auf|Kletter:auf|Steige:auf|Steig:auf.
         /// </summary>
         internal static string CLIMB {
             get {
@@ -141,7 +141,7 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Absteigen|Herabsteigen|Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab.
+        ///   Looks up a localized string similar to Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab|Klettere:von|Kletter:von|Steige:von|Steig:von.
         /// </summary>
         internal static string DESCEND {
             get {

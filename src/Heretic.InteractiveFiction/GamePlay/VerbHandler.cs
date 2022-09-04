@@ -1024,11 +1024,6 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.CLIMB == verb)
         {
-            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
-            {
-                return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
-            }
-            
             var item = this.objectHandler.GetUnhiddenItemByNameActive(subject);
             this.objectHandler.StoreAsActiveObject(item);
 
@@ -1058,11 +1053,18 @@ internal sealed class VerbHandler
                             return printingSubsystem.Resource(ex.Message);
                         }    
                     }
-                    
-                    return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+
+                    return this.universe.ActivePlayer.ClimbedObject == item ? 
+                        printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_CLIMBED_ITEM, item.AccusativeArticleName.LowerFirstChar()) : 
+                        printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
                 }
 
                 return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_CLIMB);
+            }
+            
+            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
+            {
+                return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
             }
 
             return printingSubsystem.ItemNotVisible();

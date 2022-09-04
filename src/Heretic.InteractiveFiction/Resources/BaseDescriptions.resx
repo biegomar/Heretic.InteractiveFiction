@@ -655,4 +655,7 @@
   <data name="NOT_CLIMBED_ON_ITEM" xml:space="preserve">
     <value>Du bist aber gar nicht auf {0}.</value>
   </data>
+  <data name="ALREADY_CLIMBED_ITEM" xml:space="preserve">
+    <value>Du bist doch schon auf {0} gestiegen.</value>
+  </data>
 </root>
