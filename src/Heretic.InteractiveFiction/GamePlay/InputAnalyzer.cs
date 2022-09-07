@@ -16,35 +16,10 @@ internal sealed class InputAnalyzer
 
     internal string[] Analyze(string input)
     {
-        const string block = "##TEXT##";
-        var stringToAnalyze = string.Empty;
-        var quotedText = string.Empty;
-
+        var stringToAnalyze = input;
+        
         try
         {
-            var quotedTextArray = input.Split('"');
-            if (quotedTextArray.Length > 1)
-            {
-                for (int i = 0; i < quotedTextArray.Length; i++)
-                {
-                    if (i == 1)
-                    {
-                        quotedText = quotedTextArray[1].Trim();
-                        stringToAnalyze += block;
-                        stringToAnalyze += " ";
-                    }
-                    else
-                    {
-                        stringToAnalyze += quotedTextArray[i].Trim();
-                        stringToAnalyze += " ";
-                    }
-                }
-            }
-            else
-            {
-                stringToAnalyze = input;
-            }
-        
             var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
             var sentence = normalizedInput.Split(' ');
             sentence = this.SubstitutePronoun(sentence).ToArray();
@@ -53,15 +28,6 @@ internal sealed class InputAnalyzer
 
             sentence = this.OrderSentence(sentence).ToArray();
 
-            if (!string.IsNullOrEmpty(quotedText))
-            {
-                var index = Array.IndexOf(sentence, block);
-                if (index > -1)
-                {
-                    sentence[index] = quotedText;
-                }
-            }
-            
             return sentence;
         }
         catch (Exception)
@@ -179,15 +145,27 @@ internal sealed class InputAnalyzer
         
         foreach (var word in sentence)
         {
-            var possibleVerbs =this.universe.Verbs.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
-            if (possibleVerbs.Any())
+            var possibleVerbsAndVariants =this.universe.Verbs.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).Select(v => new Verb()
             {
-                isVerbReplaced = ReplaceVerb(word, possibleVerbs, result);
+                Key = v.Key,
+                ErrorMessage = v.ErrorMessage,
+                Variants = v.Variants.Where(vi => vi.Name.Equals(word, StringComparison.InvariantCultureIgnoreCase)).ToList()
+            }).ToList();
+            
+            if (possibleVerbsAndVariants.Any())
+            {
+                isVerbReplaced = ReplaceVerb(word, possibleVerbsAndVariants, result);
             }
             else
             {
                 var verbOverrides = this.universe.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
-                var optionalVerbs = verbOverrides.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                var optionalVerbs = verbOverrides.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).Select(v => new Verb()
+                {
+                    Key = v.Key,
+                    ErrorMessage = v.ErrorMessage,
+                    Variants = v.Variants.Where(vi => vi.Name.Equals(word, StringComparison.InvariantCultureIgnoreCase)).ToList()
+                }).ToList();
+                
                 if (optionalVerbs.Any())
                 {
                     isVerbReplaced = ReplaceVerb(word, optionalVerbs, result);
