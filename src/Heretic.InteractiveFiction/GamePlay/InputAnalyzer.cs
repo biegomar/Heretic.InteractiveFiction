@@ -48,7 +48,7 @@ internal sealed class InputAnalyzer
             var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
             var sentence = normalizedInput.Split(' ');
             sentence = this.SubstitutePronoun(sentence).ToArray();
-            sentence = this.universe.NormalizeVerbInSentence(sentence);
+            sentence = this.NormalizeVerbInSentence(sentence);
             sentence = sentence.Where(x => !this.universe.PackingWordsResources.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ToArray();
 
             sentence = this.OrderSentence(sentence).ToArray();
@@ -131,6 +131,79 @@ internal sealed class InputAnalyzer
             parts.Remove(item);
         }
     }
+    
+    public string[] NormalizeVerbInSentence(IList<string> sentence)
+    {
+        bool ReplaceVerb(string verbToReplace, ICollection<Verb> verbs, IList<string> resultingSentence)
+        {
+            Verb verb = default;
+            if (verbs.Count == 1)
+            {
+                verb = verbs.First();
+                var index = resultingSentence.IndexOf(verbToReplace);
+                resultingSentence[index] = verb.Key;
+
+                return true;
+            }
+
+            foreach (var possibleVerb in verbs)
+            {
+                var allPrefixes = possibleVerb.Variants.Where(v => v.Name.Equals(verbToReplace, StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(v.Prefix)).Select(v => v.Prefix).Distinct();
+                var intersect = sentence.Intersect(allPrefixes);
+                var onlyPossiblePrefix = intersect.FirstOrDefault();
+                if (onlyPossiblePrefix != default && sentence.Contains(onlyPossiblePrefix))
+                {
+                    verb = possibleVerb;
+                    var index = resultingSentence.IndexOf(verbToReplace);
+                    resultingSentence[index] = verb.Key;
+                    resultingSentence.Remove(onlyPossiblePrefix);
+                    return true;
+                }
+            }
+            
+            //only one verb without prefix is possible!
+            var verbWithoutPrefix = verbs.SingleOrDefault(v => v.Variants.Count(x => x.Prefix == string.Empty) > 0);
+            if (verbWithoutPrefix != default)
+            {
+                verb = verbWithoutPrefix;
+                var index = resultingSentence.IndexOf(verbToReplace);
+                resultingSentence[index] = verb.Key;
+                return true;
+            }
+
+            return false;
+        }
+
+        var result = sentence.ToList();
+        var isVerbReplaced = false;
+        
+        foreach (var word in sentence)
+        {
+            var possibleVerbs =this.universe.Verbs.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
+            if (possibleVerbs.Any())
+            {
+                isVerbReplaced = ReplaceVerb(word, possibleVerbs, result);
+            }
+            else
+            {
+                var verbOverrides = this.universe.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
+                var optionalVerbs = verbOverrides.Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                if (optionalVerbs.Any())
+                {
+                    isVerbReplaced = ReplaceVerb(word, optionalVerbs, result);
+                }
+            }
+
+            if (isVerbReplaced)
+            {
+                break;
+            }
+        }
+        
+
+        return result.ToArray();
+    }
+
 
     private string GetVerb(IList<string> sentence)
     {
