@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Heretic.InteractiveFiction.Exceptions;
-using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
-using Heretic.InteractiveFiction.Resources;
+﻿using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 

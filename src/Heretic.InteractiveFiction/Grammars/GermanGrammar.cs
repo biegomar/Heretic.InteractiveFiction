@@ -1,6 +1,6 @@
 ﻿namespace Heretic.InteractiveFiction.Grammars;
 
-public class GermanGrammar
+public class GermanGrammar: IGrammar
 {
     
 }

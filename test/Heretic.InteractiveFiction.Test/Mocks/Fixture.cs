@@ -11,7 +11,7 @@ internal static class Fixture
             Key = "PLAYER",
             Name = "Player",
             Description = "A player",
-            Grammar = new Grammars(isPlayer:true)
+            Grammar = new Objects.Grammars(isPlayer:true)
         };
     }
 }
