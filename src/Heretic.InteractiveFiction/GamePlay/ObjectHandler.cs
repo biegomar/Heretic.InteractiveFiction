@@ -41,7 +41,7 @@ public sealed class ObjectHandler
     
     private Character GetUnhiddenCharacterByKey(string key)
     {
-        if (this.GetObjectFromWorld(key) is Character { IsHidden: false } character)
+        if (this.GetObjectFromWorldByKey(key) is Character { IsHidden: false } character)
         {
             return character;
         }
@@ -69,7 +69,7 @@ public sealed class ObjectHandler
         return this.GetKeyByName(itemName, this.universe.ItemResources);
     }
     
-    public AHereticObject GetObjectFromWorld(string key)
+    public AHereticObject GetObjectFromWorldByKey(string key)
     {
         foreach (var location in this.universe.LocationMap.Keys)
         {
@@ -90,7 +90,7 @@ public sealed class ObjectHandler
 
     public AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
     {
-        var item = this.GetObjectFromWorld(this.GetItemKeyByName(itemName));
+        var item = this.GetObjectFromWorldByKey(this.GetItemKeyByName(itemName));
 
         if (item == default || item.IsHidden)
         {
