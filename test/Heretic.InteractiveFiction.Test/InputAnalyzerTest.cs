@@ -1,4 +1,5 @@
 using Heretic.InteractiveFiction.GamePlay;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Subsystems;
 using Heretic.InteractiveFiction.Test.Mocks;
@@ -12,6 +13,7 @@ public class InputAnalyzerTest
     private IPrintingSubsystem printingSubsystem => Mock.Of<IPrintingSubsystem>();
     private Player player;
     private Universe universe;
+    private IGrammar grammar => new GermanGrammar();
     private IGamePrerequisitesAssembler smallWorld;
 
     public InputAnalyzerTest()
@@ -33,7 +35,7 @@ public class InputAnalyzerTest
     [InlineData("look", new[] { "look" })]
     public void SingleWordsTest(string input, string[] expected)
     {
-        var sut = new InputAnalyzer(this.universe);
+        var sut = new InputAnalyzer(this.universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
@@ -52,7 +54,7 @@ public class InputAnalyzerTest
     [InlineData("lege sie hin", new[] { "lege", "sie" })]
     public void TwoWordsTest(string input, string[] expected)
     {
-        var sut = new InputAnalyzer(universe);
+        var sut = new InputAnalyzer(universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
@@ -74,7 +76,7 @@ public class InputAnalyzerTest
     [InlineData("nimm dir sie", new[] { "nimm", "dir", "sie" })]
     public void ThreeWordsTest(string input, string[] expected)
     {
-        var sut = new InputAnalyzer(universe);
+        var sut = new InputAnalyzer(universe, this.grammar);
 
         var actual = sut.Analyze(input);
 

@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
@@ -15,12 +16,12 @@ public sealed class InputProcessor
     private readonly InputAnalyzer inputAnalyzer;
     private readonly IPrintingSubsystem PrintingSubsystem;
 
-    public InputProcessor(IPrintingSubsystem printingSubsystem, Universe universe)
+    public InputProcessor(IPrintingSubsystem printingSubsystem, Universe universe, IGrammar grammar)
     {
         this.PrintingSubsystem = printingSubsystem;
         this.universe = universe;
         this.verbHandler = new VerbHandler(this.universe, printingSubsystem);
-        this.inputAnalyzer = new InputAnalyzer(this.universe);
+        this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
         this.historyAdministrator = new HistoryAdministrator(this.inputAnalyzer);
     }
 

@@ -166,20 +166,6 @@ internal sealed class ObjectHandler
         }
     }
 
-    internal AHereticObject GetActiveObjectViaPronoun(string pronoun)
-    {
-        var upperItemName = pronoun.ToUpperInvariant();
-        var universeActiveObject = this.universe.ActiveObject;
-        if (universeActiveObject != null && (upperItemName == universeActiveObject.Grammar.GetAccusativePronoun().ToUpperInvariant() 
-                                             || upperItemName == universeActiveObject.Grammar.GetDativePronoun().ToUpperInvariant()  
-                                             || upperItemName == universeActiveObject.Grammar.GetNominativePronoun().ToUpperInvariant()))
-        {
-            return this.universe.ActiveObject;
-        }
-
-        return default;
-    }
-
     private Item GetUnhiddenItemByKeyActive(string key)
     {
         var result = this.universe.ActiveLocation.GetUnhiddenItem(key);

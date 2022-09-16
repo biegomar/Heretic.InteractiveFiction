@@ -1,4 +1,5 @@
 using Heretic.InteractiveFiction.Exceptions;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -7,11 +8,13 @@ internal sealed class InputAnalyzer
 {
     private readonly Universe universe;
     private readonly ObjectHandler objectHandler;
+    private readonly IGrammar grammar;
 
-    internal InputAnalyzer(Universe universe)
+    internal InputAnalyzer(Universe universe, IGrammar grammar)
     {
         this.universe = universe;
         this.objectHandler = new ObjectHandler(universe);
+        this.grammar = grammar;
     }
 
     internal string[] Analyze(string input)
@@ -24,8 +27,6 @@ internal sealed class InputAnalyzer
             var sentence = normalizedInput.Split(' ');
             sentence = this.SubstitutePronoun(sentence).ToArray();
             sentence = this.NormalizeVerbInSentence(sentence);
-            sentence = sentence.Where(x => !this.universe.PackingWordsResources.Contains(x, StringComparer.InvariantCultureIgnoreCase)).ToArray();
-
             sentence = this.OrderSentence(sentence).ToArray();
 
             return sentence;
@@ -38,52 +39,73 @@ internal sealed class InputAnalyzer
 
     private IList<string> OrderSentence(IReadOnlyList<string> sentence)
     {
+        var objectTwo = string.Empty;
         var orderedSentence = new List<string>();
-        string itemObject;
-
         var parts = sentence.ToList();
-        var verb = this.GetVerb(parts);
-        orderedSentence.Add(verb);
 
         if (parts.Any())
         {
             var normList = this.NormalizeSentence(parts);
-            itemObject = this.GetCharacter(normList.Keys.ToList());
-            if (itemObject == string.Empty)
+            var objectOne = this.GetCharacter(normList.Keys.ToList());
+            if (string.IsNullOrEmpty(objectOne))
             {  
-                itemObject = this.GetItem(normList.Keys.ToList());
-                if (itemObject == string.Empty)
+                objectOne = this.GetItem(normList.Keys.ToList());
+                if (string.IsNullOrEmpty(objectOne))
                 {
-                    itemObject = this.GetLocation(normList.Keys.ToList());
-                    if (itemObject == string.Empty)
-                    {
-                        itemObject = parts[0];
-                    }
+                    objectOne = this.GetLocation(normList.Keys.ToList());
                 }
             }
+            if (!string.IsNullOrEmpty(objectOne))
+            {
+                RemoveNormlistItemsFromParts(normList[objectOne], parts);
+            }
 
-            RemoveNormlistItemsFromParts(normList[itemObject], parts);
-
-            orderedSentence.Add(itemObject);
 
             if (parts.Any())
             {
                 normList = this.NormalizeSentence(parts);
-                var subject = this.GetItem(normList.Keys.ToList());
-                if (subject == string.Empty)
+                objectTwo = this.GetItem(normList.Keys.ToList());
+                if (string.IsNullOrEmpty(objectTwo))
                 {
-                    subject = this.GetCharacter(normList.Keys.ToList());
-                    if (subject == string.Empty)
+                    objectTwo = this.GetCharacter(normList.Keys.ToList());
+                    if (string.IsNullOrEmpty(objectTwo))
                     {
-                        subject = this.GetConversationAnswer(normList.Keys.ToList());
-                        if (subject == string.Empty)
-                        {
-                            subject = parts[0];
-                        }
+                        objectTwo = this.GetConversationAnswer(normList.Keys.ToList());
                     }
                 }
 
-                orderedSentence.Add(subject);
+                if (!string.IsNullOrEmpty(objectTwo))
+                {
+                    RemoveNormlistItemsFromParts(normList[objectTwo], parts);
+                }
+
+                if (parts.Any())
+                {
+                    var predicate = this.GetVerb(parts);
+                    orderedSentence.Add(predicate);
+                    
+                    if (!string.IsNullOrEmpty(objectOne))
+                    {
+                        orderedSentence.Add(objectOne);    
+                    }
+            
+                    if (!string.IsNullOrEmpty(objectTwo))
+                    {
+                        orderedSentence.Add(objectTwo);    
+                    }
+                    
+                    if (parts.Any() && string.IsNullOrEmpty(objectOne) && string.IsNullOrEmpty(objectOne))
+                    {
+                        foreach (var part in parts)
+                        {
+                            orderedSentence.Add(part);
+                        }
+                    }
+                }
+                else
+                {
+                    throw new NoVerbException();
+                }
             }
         }
         
@@ -215,9 +237,12 @@ internal sealed class InputAnalyzer
     {
         foreach (var word in sentence)
         {
-            if (this.universe.LocationResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            if (!this.universe.IsVerb(word))
             {
-                return word;
+                if (this.universe.LocationResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    return word;
+                }   
             }
         }
 
@@ -228,9 +253,12 @@ internal sealed class InputAnalyzer
     {
         foreach (var word in sentence)
         {
-            if (this.universe.ItemResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            if (!this.universe.IsVerb(word))
             {
-                return word;
+                if (this.universe.ItemResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    return word;
+                }    
             }
         }
 
@@ -282,10 +310,9 @@ internal sealed class InputAnalyzer
         var result = new List<string>();
         foreach (var word in sentence)
         {
-            var item = this.objectHandler.GetActiveObjectViaPronoun(word);
-            if (item != default)
+            if (this.grammar.IsPronounActiveObject(this.universe.ActiveObject, word))
             {
-                result.Add(GetFirstObjectNameWithoutWhitespace(item));
+                result.Add(GetFirstObjectNameWithoutWhitespace(this.universe.ActiveObject));
             }
             else
             {

@@ -1,4 +1,5 @@
 using Heretic.InteractiveFiction.Exceptions;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
@@ -13,14 +14,14 @@ public sealed class GameLoop
     private readonly IPrintingSubsystem printingSubsystem;
     private const string SAVE = "SAVE";
 
-    public GameLoop(IPrintingSubsystem printingSubsystem, Universe universe, IGamePrerequisitesAssembler gamePrerequisitesAssembler, int consoleWidth = 0)
+    public GameLoop(IPrintingSubsystem printingSubsystem, Universe universe, IGamePrerequisitesAssembler gamePrerequisitesAssembler, IGrammar grammar, int consoleWidth = 0)
     {
         this.printingSubsystem = printingSubsystem;
         this.printingSubsystem.ConsoleWidth = consoleWidth;
 
         this.universe = universe;
         
-        this.processor = new InputProcessor(printingSubsystem, this.universe);
+        this.processor = new InputProcessor(printingSubsystem, this.universe, grammar);
         this.commands = new Queue<string>();
         
         AssemblyGame(gamePrerequisitesAssembler);
