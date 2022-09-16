@@ -2145,7 +2145,7 @@ internal sealed class VerbHandler
 
             if (this.universe.ActivePlayer.OwnsItem(subjectKey))
             {
-                var itemToDrop = (Item)this.universe.GetObjectFromWorld(subjectKey);
+                var itemToDrop = (Item)this.objectHandler.GetObjectFromWorld(subjectKey);
 
                 this.objectHandler.StoreAsActiveObject(itemToDrop);
                 
@@ -2158,7 +2158,7 @@ internal sealed class VerbHandler
 
                     if (isPlayerOwnerOfItem || isActiveLocationOwnerOfItem)
                     {
-                        var itemContainer = this.universe.GetObjectFromWorld(objectKey);
+                        var itemContainer = this.objectHandler.GetObjectFromWorld(objectKey);
                         
                         if (itemContainer.IsContainer)
                         {

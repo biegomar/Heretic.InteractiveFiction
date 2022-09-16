@@ -2,16 +2,16 @@ using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.GamePlay;
 
-internal sealed class ObjectHandler
+public sealed class ObjectHandler
 {
     private readonly Universe universe;
 
-    internal ObjectHandler(Universe universe)
+    public ObjectHandler(Universe universe)
     {
         this.universe = universe;
     }
     
-    internal string GetCharacterKeyByName(string itemName)
+    public string GetCharacterKeyByName(string itemName)
     {
         var key = this.GetKeyByName(itemName, this.universe.CharacterResources);
 
@@ -29,19 +29,19 @@ internal sealed class ObjectHandler
         return key;
     }
     
-    internal Character GetUnhiddenCharacterByName(string itemName)
+    public Character GetUnhiddenCharacterByName(string itemName)
     {
         return this.GetUnhiddenCharacterByKey(this.GetCharacterKeyByName(itemName));
     }
     
-    internal Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
+    public Character GetUnhiddenCharacterByNameFromActiveLocation(string itemName)
     {
         return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.GetCharacterKeyByName(itemName));
     }
     
     private Character GetUnhiddenCharacterByKey(string key)
     {
-        if (this.universe.GetObjectFromWorld(key) is Character { IsHidden: false } character)
+        if (this.GetObjectFromWorld(key) is Character { IsHidden: false } character)
         {
             return character;
         }
@@ -49,17 +49,17 @@ internal sealed class ObjectHandler
         return default;
     }
     
-    internal string GetLocationKeyByName(string locationName)
+    public string GetLocationKeyByName(string locationName)
     {
         return this.GetKeyByName(locationName, this.universe.LocationResources);
     }
     
-    internal Item GetVirtualItemByName(string itemName)
+    public Item GetVirtualItemByName(string itemName)
     {
         return this.GetVirtualItemByKey(this.GetItemKeyByName(itemName));
     }
     
-    internal string GetItemKeyByName(string itemName)
+    public string GetItemKeyByName(string itemName)
     {
         if (GetPrioritizedItemKeys(itemName) is { } itemKey && !string.IsNullOrEmpty(itemKey))
         {
@@ -69,14 +69,28 @@ internal sealed class ObjectHandler
         return this.GetKeyByName(itemName, this.universe.ItemResources);
     }
     
-    internal Item GetUnhiddenItemByNameActive(string itemName)
+    public AHereticObject GetObjectFromWorld(string key)
+    {
+        foreach (var location in this.universe.LocationMap.Keys)
+        {
+            var result = location.GetObject(key);
+            if (result != default && result.Key == key)
+            {
+                return result;
+            }
+        }
+
+        return this.universe.ActivePlayer.GetObject(key);
+    }
+    
+    public Item GetUnhiddenItemByNameActive(string itemName)
     {
         return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
     }
 
-    internal AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
+    public AHereticObject GetUnhiddenObjectFromWorldByName(string itemName)
     {
-        var item = this.universe.GetObjectFromWorld(this.GetItemKeyByName(itemName));
+        var item = this.GetObjectFromWorld(this.GetItemKeyByName(itemName));
 
         if (item == default || item.IsHidden)
         {
@@ -86,7 +100,7 @@ internal sealed class ObjectHandler
         return item;
     }
     
-    internal AHereticObject GetUnhiddenObjectByNameActive(string objectName)
+    public AHereticObject GetUnhiddenObjectByNameActive(string objectName)
     {
         AHereticObject containerObject = this.GetUnhiddenItemByNameActive(objectName);
         if (containerObject == default)
@@ -106,12 +120,12 @@ internal sealed class ObjectHandler
         return containerObject;
     }
 
-    internal string GetConversationAnswerKeyByName(string phrase)
+    public string GetConversationAnswerKeyByName(string phrase)
     {
         return this.GetKeyByName(phrase, this.universe.ConversationAnswersResources);
     }
 
-    internal void HideItemsOnClose(AHereticObject item)
+    public void HideItemsOnClose(AHereticObject item)
     {
         if (item.IsClosed)
         {
@@ -122,7 +136,7 @@ internal sealed class ObjectHandler
         }
     }
     
-    internal void UnhideItemsOnOpen(AHereticObject item)
+    public void UnhideItemsOnOpen(AHereticObject item)
     {
         if (!item.IsClosed)
         {
@@ -133,12 +147,12 @@ internal sealed class ObjectHandler
         }
     }
     
-    internal void ClearActiveObject()
+    public void ClearActiveObject()
     {
         this.universe.ActiveObject = default;
     }
 
-    internal void RemoveAsActiveObject(AHereticObject hereticObject)
+    public void RemoveAsActiveObject(AHereticObject hereticObject)
     {
         if (hereticObject != default && this.universe.ActiveObject == hereticObject)
         {
@@ -146,7 +160,7 @@ internal sealed class ObjectHandler
         }
     }
 
-    internal void ClearActiveObjectIfNotInInventory()
+    public void ClearActiveObjectIfNotInInventory()
     {
         var universeActiveObject = this.universe.ActiveObject;
         if (universeActiveObject != default)
@@ -158,7 +172,7 @@ internal sealed class ObjectHandler
         }
     }
     
-    internal void StoreAsActiveObject(AHereticObject hereticObject)
+    public void StoreAsActiveObject(AHereticObject hereticObject)
     {
         if (hereticObject != default)
         {

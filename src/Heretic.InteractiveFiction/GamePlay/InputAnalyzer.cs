@@ -37,7 +37,7 @@ internal sealed class InputAnalyzer
         }
     }
 
-    private IList<string> OrderSentence(IReadOnlyList<string> sentence)
+    private IEnumerable<string> OrderSentence(IReadOnlyList<string> sentence)
     {
         var objectTwo = string.Empty;
         var orderedSentence = new List<string>();
@@ -59,7 +59,7 @@ internal sealed class InputAnalyzer
             {
                 RemoveNormlistItemsFromParts(normList[objectOne], parts);
             }
-
+            
 
             if (parts.Any())
             {
