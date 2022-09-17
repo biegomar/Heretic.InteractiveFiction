@@ -223,7 +223,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             nameof(Verbs.SCORE),
             nameof(Verbs.ALTER_EGO),
             nameof(Verbs.HISTORY),
-            nameof(Verbs.NAME),
             nameof(Verbs.HELP),
             nameof(Verbs.HINT),
             nameof(Verbs.REM),

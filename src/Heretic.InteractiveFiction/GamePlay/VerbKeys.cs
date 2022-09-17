@@ -30,7 +30,6 @@ public static class VerbKeys
     public static string LOCK => nameof(LOCK);
     public static string LOOK => nameof(LOOK);
     public static string N => nameof(N);
-    public static string NAME => nameof(NAME);
     public static string NE => nameof(NE);
     public static string NW => nameof(NW);
     public static string OPEN => nameof(OPEN);
@@ -58,6 +57,7 @@ public static class VerbKeys
     public static string TASTE => nameof(TASTE);
     public static string TELL => nameof(TELL);
     public static string THROW => nameof(THROW);
+    public static string TOBE => nameof(TOBE);
     public static string TURN => nameof(TURN);
     public static string UNLOCK => nameof(UNLOCK);
     public static string UP => nameof(UP);

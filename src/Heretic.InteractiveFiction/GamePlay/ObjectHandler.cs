@@ -83,6 +83,12 @@ public sealed class ObjectHandler
         return this.universe.ActivePlayer.GetObject(key);
     }
     
+    public AHereticObject GetObjectFromWorldByName(string key)
+    {
+        var objectKey = this.GetKeyByNameFromAllResources(key);
+        return !string.IsNullOrEmpty(objectKey) ? this.GetObjectFromWorldByKey(objectKey) : default;
+    }
+    
     public Item GetUnhiddenItemByNameActive(string itemName)
     {
         return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByName(itemName));
@@ -205,6 +211,27 @@ public sealed class ObjectHandler
         }
 
         return result;
+    }
+
+    private string GetKeyByNameFromAllResources(string name)
+    {
+        var key = this.GetKeyByName(name, this.universe.CharacterResources);
+        if (string.IsNullOrEmpty(key))
+        {
+            key = this.GetKeyByName(name, this.universe.ItemResources);
+            
+            if (string.IsNullOrEmpty(key))
+            {
+                key = this.GetKeyByName(name, this.universe.LocationResources);
+                
+                if (string.IsNullOrEmpty(key))
+                {
+                    key = this.GetKeyByName(name, this.universe.ConversationAnswersResources);
+                }
+            }
+        }
+
+        return key;
     }
     
     private string GetKeyByName(string name, IDictionary<string, IEnumerable<string>> resource)

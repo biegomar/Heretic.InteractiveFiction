@@ -83,6 +83,7 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> Sleep;
     public event EventHandler<ContainerObjectEventArgs> Smell;
     public event EventHandler<ContainerObjectEventArgs> Taste;
+    public event EventHandler<ContainerObjectEventArgs> ToBe;
     public event EventHandler<TurnItemEventArgs> Turn;
     public event EventHandler<UseItemEventArgs> Use;
     public event EventHandler<ContainerObjectEventArgs> Wait;
@@ -102,6 +103,23 @@ public abstract partial class AHereticObject
                 throw new UseException(eventArgs.OptionalErrorMessage);    
             }
             throw new UseException(BaseDescriptions.NOTHING_HAPPENS);
+        }
+    }
+    
+    public virtual void OnToBe(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.ToBe;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new ToBeException(eventArgs.OptionalErrorMessage);    
+            }
+            throw new ToBeException(BaseDescriptions.NOTHING_HAPPENS);
         }
     }
     

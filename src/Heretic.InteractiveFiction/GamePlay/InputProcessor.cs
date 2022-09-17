@@ -119,7 +119,6 @@ public sealed class InputProcessor
 
         var result = verbHandler.Look(verb, processingSubject);
         result = result || verbHandler.Go(verb, subject);
-        result = result || verbHandler.Name(verb, subject);
         result = result || verbHandler.Take(verb, commaSeparatedList);
         result = result || verbHandler.Talk(verb, processingSubject);
         result = result || verbHandler.Use(verb, processingSubject);
@@ -182,6 +181,8 @@ public sealed class InputProcessor
         result = result || verbHandler.Kindle(verb, processingSubject, processingObject);
         result = result || verbHandler.Drop(verb, processingSubject, processingObject);
         result = result || verbHandler.Buy(verb, processingSubject, processingObject);
+        result = result || verbHandler.Wear(verb, processingSubject, processingObject);
+        result = result || verbHandler.ToBe(verb, processingSubject, objectName);
 
         if (!result)
         {

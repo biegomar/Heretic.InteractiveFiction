@@ -208,6 +208,19 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool Wear(string verb, string processingSubject, string processingObjects)
+    {
+        if (VerbKeys.WEAR == verb)
+        {
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.Wear(verb, processingObjects);
+            }
+        }
+
+        return false;
+    }
+    
     internal bool Wear(string verb, string processingObject)
     {
         void SwapItem(Item item)
@@ -2205,15 +2218,30 @@ internal sealed class VerbHandler
         return false;
     }
 
-    internal bool Name(string verb, string subjectName)
+    internal bool ToBe(string verb, string subjectName, string processingObject)
     {
-        if (VerbKeys.NAME == verb)
+        if (VerbKeys.TOBE == verb)
         {
-            this.universe.ActivePlayer.Name = subjectName;
-            this.universe.ActivePlayer.IsStranger = false;
-            printingSubsystem.ActivePlayer(this.universe.ActivePlayer);
+            var subject = this.objectHandler.GetObjectFromWorldByName(subjectName);
 
-            return true;
+            if (subject != default)
+            {
+                this.objectHandler.StoreAsActiveObject(subject);
+                
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {ExternalItemKey = processingObject, OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                    subject.OnToBe(containerObjectEventArgs);
+                    
+                    return true;
+                }
+                catch (ToBeException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
