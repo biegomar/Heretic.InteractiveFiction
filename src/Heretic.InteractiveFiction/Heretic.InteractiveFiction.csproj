@@ -48,6 +48,10 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>BaseGrammar.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Prepositions.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Prepositions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -92,6 +96,11 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Grammar.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Prepositions.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Prepositions.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

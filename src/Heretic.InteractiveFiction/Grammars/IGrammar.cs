@@ -4,7 +4,8 @@ namespace Heretic.InteractiveFiction.Grammars;
 
 public interface IGrammar
 {
-    bool IsPronounActiveObject(AHereticObject activeObject, string pronoun);
+    public IDictionary<string, IEnumerable<string>> Prepositions { get; }
+    public bool IsPronounActiveObject(AHereticObject activeObject, string pronoun);
     public string GetArticleForObject(AHereticObject processingObject);
     public string GetNominativeIndefiniteArticleForObject(AHereticObject processingObject);
     public string GetDativeIndefiniteArticleForObject(AHereticObject processingObject);

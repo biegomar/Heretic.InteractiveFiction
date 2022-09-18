@@ -1,4 +1,7 @@
-﻿using Heretic.InteractiveFiction.Objects;
+﻿using System.Globalization;
+using System.Resources;
+using Heretic.InteractiveFiction.GamePlay;
+using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Grammars;
@@ -8,6 +11,13 @@ public class GermanGrammar: IGrammar
     private const string NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
     private const string ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
     private const string DATIV_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
+
+    public IDictionary<string, IEnumerable<string>> Prepositions { get; private set; }
+    
+    public GermanGrammar(IResourceProvider resourceProvider)
+    {
+        this.Prepositions = resourceProvider.GetPrepositionsFromResources();
+    }
     
     public bool IsPronounActiveObject(AHereticObject activeObject, string pronoun)
     {

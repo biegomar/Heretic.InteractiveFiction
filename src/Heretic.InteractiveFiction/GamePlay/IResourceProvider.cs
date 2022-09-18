@@ -84,4 +84,22 @@ public interface IResourceProvider
     {
         return new Dictionary<string, IEnumerable<string>>();
     }
+    
+    public IDictionary<string, IEnumerable<string>> GetPrepositionsFromResources()
+    {
+        var result = new Dictionary<string, IEnumerable<string>>();
+
+        ResourceSet resourceSet =
+            Prepositions.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+        if (resourceSet != null)
+        {
+            foreach (DictionaryEntry entry in resourceSet)
+            {
+                var inputList = entry.Value?.ToString()?.Split('|').ToList();
+                result.Add(entry.Key.ToString()!, inputList);
+            }
+        }
+
+        return result;
+    }
 }
