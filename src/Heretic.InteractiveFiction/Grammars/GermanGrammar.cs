@@ -92,16 +92,32 @@ public class GermanGrammar: IGrammar
 
     public string GetDativeArticleForObject(AHereticObject processingObject)
     {
-        var result = processingObject.Grammar.Gender switch
+        if (processingObject.Grammar.IsSingular)
         {
-            Genders.Female => Resources.BaseGrammar.DATIVE_ARTICLE_FEMALE_SINGULAR,
-            Genders.Male => Resources.BaseGrammar.DATIVE_ARTICLE_MALE_SINGULAR,
-            Genders.Neutrum => Resources.BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
-            Genders.Unknown => Resources.BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
-            _ => Resources.BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR
-        };
+            var result = processingObject.Grammar.Gender switch
+            {
+                Genders.Female => BaseGrammar.DATIVE_ARTICLE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.DATIVE_ARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR
+            };
         
-        return result;
+            return result;
+        }
+        else
+        {
+            var result = processingObject.Grammar.Gender switch
+            {
+                Genders.Female => BaseGrammar.DATIVE_ARTICLE_FEMALE_PLURAL,
+                Genders.Male => BaseGrammar.DATIVE_ARTICLE_MALE_PLURAL,
+                Genders.Neutrum => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL,
+                Genders.Unknown => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL,
+                _ => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL
+            };
+        
+            return result;
+        }
     }
 
     public string GetAccusativeIndefiniteArticleForObject(AHereticObject processingObject)
@@ -119,7 +135,7 @@ public class GermanGrammar: IGrammar
 
             return result;
         }
-        
+
         return string.Empty;
     }
 

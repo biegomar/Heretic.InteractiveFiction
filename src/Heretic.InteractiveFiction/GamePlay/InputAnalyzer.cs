@@ -27,7 +27,6 @@ internal sealed class InputAnalyzer
             var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
             var sentence = normalizedInput.Split(' ');
             sentence = this.SubstitutePronoun(sentence).ToArray();
-            //sentence = this.NormalizeVerbInSentence(sentence);
             sentence = this.OrderSentence(sentence).ToArray();
 
             return sentence;
@@ -82,7 +81,7 @@ internal sealed class InputAnalyzer
                 if (parts.Any())
                 {
                     parts = this.NormalizeVerbInParts(sentence, parts, objectOne, objectTwo);
-                    var predicate = this.GetVerb(sentence, parts, objectOne, objectTwo);
+                    var predicate = this.GetVerb(sentence, parts);
                     orderedSentence.Add(predicate);
                     
                     if (!string.IsNullOrEmpty(objectOne))
@@ -95,6 +94,11 @@ internal sealed class InputAnalyzer
                     {
                         orderedSentence.Add(objectTwo);  
                         RemoveObjectArticlesFromParts(objectTwo, parts);
+                    }
+
+                    if (parts.Any())
+                    {
+                        RemovePrepositionsFromParts(parts);
                     }
                     
                     if (parts.Any() && (string.IsNullOrEmpty(objectOne) || string.IsNullOrEmpty(objectTwo)))
@@ -143,8 +147,17 @@ internal sealed class InputAnalyzer
             parts.Remove(partToRemove);
         }
     }
+
+    private void RemovePrepositionsFromParts(ICollection<string> parts)
+    {
+        var allPrepositions = this.grammar.Prepositions.Values.SelectMany(x => x);
+        foreach (var preposition in allPrepositions)
+        {
+            parts.Remove(preposition);
+        }
+    }
     
-    public List<string> NormalizeVerbInParts(IReadOnlyList<string> sentence, IList<string> parts, string objectOne, string objectTwo)
+    public List<string> NormalizeVerbInParts(IReadOnlyList<string> sentence, ICollection<string> parts, string objectOne, string objectTwo)
     {
         Verb verb = default;
 
@@ -161,16 +174,42 @@ internal sealed class InputAnalyzer
 
             foreach (var possibleVerb in verbs)
             {
+                var isThisTheRightVerb = true;
                 var allPrefixes = possibleVerb.Variants.Where(v => v.Name.Equals(verbToReplace, StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(v.Prefix)).Select(v => v.Prefix).Distinct();
                 var intersect = parts.Intersect(allPrefixes);
                 var onlyPossiblePrefix = intersect.FirstOrDefault();
+                
                 if (onlyPossiblePrefix != default && parts.Contains(onlyPossiblePrefix))
                 {
-                    verb = possibleVerb;
-                    var index = resultingSentence.IndexOf(verbToReplace);
-                    resultingSentence[index] = verb.Key;
+                    var preposition = this.grammar.Prepositions.Where(p =>
+                        p.Value.Contains(onlyPossiblePrefix, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Key).SingleOrDefault();
+
+                    if (!string.IsNullOrEmpty(preposition))
+                    {
+                        if (preposition.Equals("DATIVE", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            var itemOne = this.objectHandler.GetObjectFromWorldByName(objectOne);
+                            if (itemOne != default)
+                            {
+                                var article = this.grammar.GetDativeArticleForObject(itemOne);
+                                if (!string.IsNullOrEmpty(article) && parts.Contains(article, StringComparer.InvariantCultureIgnoreCase))
+                                {
+                                    isThisTheRightVerb = false;
+                                }
+                            }
+                        }
+                    }
+
+                    if (isThisTheRightVerb)
+                    {
+                        verb = possibleVerb;
+                        var index = resultingSentence.IndexOf(verbToReplace);
+                        resultingSentence[index] = verb.Key;
+                        resultingSentence.Remove(onlyPossiblePrefix);
+                        return true;
+                    }
+                    
                     resultingSentence.Remove(onlyPossiblePrefix);
-                    return true;
                 }
             }
             
@@ -238,11 +277,8 @@ internal sealed class InputAnalyzer
     }
 
 
-    private string GetVerb(IReadOnlyList<string> sentence, IList<string> parts, string objectOne, string objectTwo)
+    private string GetVerb(IReadOnlyList<string> sentence, ICollection<string> parts)
     {
-        var itemOne = this.objectHandler.GetObjectFromWorldByName(objectOne);
-        var itemTwo = this.objectHandler.GetObjectFromWorldByName(objectTwo);
-        
         foreach (var word in parts)
         {
             if (this.universe.IsVerb(word))
@@ -294,7 +330,7 @@ internal sealed class InputAnalyzer
                 if (this.universe.ItemResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
                 {
                     return word;
-                }    
+                }
             }
         }
 

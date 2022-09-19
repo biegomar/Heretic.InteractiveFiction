@@ -210,7 +210,7 @@ public abstract partial class AHereticObject
             {
                 throw new PullException(eventArgs.OptionalErrorMessage);
             }
-            throw new PullException(BaseDescriptions.DOES_NOT_WORK);
+            throw new PullException(string.Format(BaseDescriptions.PULL_DOES_NOT_WORK, this.DativeArticleName.LowerFirstChar()));
         }
     }
 

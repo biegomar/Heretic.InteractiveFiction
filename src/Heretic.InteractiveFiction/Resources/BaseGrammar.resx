@@ -126,4 +126,13 @@
     <data name="ACCUSATIVE_PRONOUN_THEY" xml:space="preserve">
         <value>Sie</value>
     </data>
+    <data name="DATIVE_ARTICLE_FEMALE_PLURAL" xml:space="preserve">
+        <value>Den</value>
+    </data>
+    <data name="DATIVE_ARTICLE_MALE_PLURAL" xml:space="preserve">
+        <value>Den</value>
+    </data>
+    <data name="DATIVE_ARTICLE_NEUTRUM_PLURAL" xml:space="preserve">
+        <value>Den</value>
+    </data>
 </root>

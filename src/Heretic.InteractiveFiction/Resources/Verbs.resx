@@ -151,7 +151,7 @@
     <value>Verriegel|Verriegeln|Sperre:zu|Verschließe|Verschließ|Lock|abschließen|abschliessen|zuschließen|zuschliessen|Schließe:ab|Schließ:ab|Schliesse:ab|Schliess:ab|Schließe:zu|Schließ:zu|Schliesse:zu|Schliess:zu</value>
   </data>
   <data name="LOOK" xml:space="preserve">
-    <value>Schaue|Schau|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X</value>
+    <value>Schaue:an|Schau:an|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X</value>
   </data>
   <data name="N" xml:space="preserve">
     <value>Norden|Nord|N</value>

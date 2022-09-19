@@ -13,7 +13,7 @@ public class InputAnalyzerTest
     private IPrintingSubsystem printingSubsystem => Mock.Of<IPrintingSubsystem>();
     private Player player;
     private Universe universe;
-    private IGrammar grammar => new GermanGrammar();
+    private IGrammar grammar => new GermanGrammar(new ResourceProviderMock());
     private IGamePrerequisitesAssembler smallWorld;
 
     public InputAnalyzerTest()

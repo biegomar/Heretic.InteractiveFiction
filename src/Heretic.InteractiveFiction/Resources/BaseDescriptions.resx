@@ -553,7 +553,7 @@
     <value>darin befindet sich:</value>
   </data>
   <data name="CHANGE_NAME" xml:space="preserve">
-    <value>&lt;&lt; Benutze das Kommando 'name', um Dir im Spiel einen Namen zu geben. &gt;&gt;</value>
+    <value>&lt;&lt; Benutze das Kommando 'ich bin ...', um Dir im Spiel einen Namen zu geben. &gt;&gt;</value>
   </data>
   <data name="HERE" xml:space="preserve">
     <value>Du siehst </value>
@@ -666,5 +666,8 @@
     </data>
   <data name="NOTHING_TO_WEAR" xml:space="preserve">
     <value>Du kannst {0} nicht anziehen.</value>
+  </data>
+  <data name="PULL_DOES_NOT_WORK" xml:space="preserve">
+    <value>Du ziehst an {0}, aber es passiert nichts.</value>
   </data>
 </root>
