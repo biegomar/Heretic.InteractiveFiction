@@ -73,16 +73,6 @@ public abstract partial class AHereticObject
     /// This description can be used if the object is readable.
     /// </summary>
     public Description LetterContentDescription { get; set; }
-    
-    /// <summary>
-    /// This description can be used if the object is a lighter and is switched on.
-    /// </summary>
-    public Description LighterSwitchedOnDescription { get; set; }
-    
-    /// <summary>
-    /// This description can be used if the object is a lighter and is switched off.
-    /// </summary>
-    public Description LighterSwitchedOffDescription { get; set; }
-    
-    
+
+
 }

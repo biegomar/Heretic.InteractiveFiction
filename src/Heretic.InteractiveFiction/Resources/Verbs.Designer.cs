@@ -393,9 +393,9 @@ namespace Heretic.InteractiveFiction.Resources {
             }
         }
         
-        internal static string SWITCH {
+        internal static string SWITCHON {
             get {
-                return ResourceManager.GetString("SWITCH", resourceCulture);
+                return ResourceManager.GetString("SWITCHON", resourceCulture);
             }
         }
         

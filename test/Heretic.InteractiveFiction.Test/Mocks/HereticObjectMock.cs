@@ -1,3 +1,4 @@
+using System.Text;
 using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.Test.Mocks;
@@ -94,5 +95,10 @@ public class HereticObjectMock: AHereticObject
         };
 
         return child;
+    }
+
+    protected override StringBuilder ToStringExtension()
+    {
+        return new StringBuilder();
     }
 }

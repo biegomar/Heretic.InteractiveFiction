@@ -1148,5 +1148,17 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("PULL_DOES_NOT_WORK", resourceCulture);
             }
         }
+        
+        public static string NOTHING_TO_SWITCHON {
+            get {
+                return ResourceManager.GetString("NOTHING_TO_SWITCHON", resourceCulture);
+            }
+        }
+        
+        public static string ALREADY_SWITCHEDON {
+            get {
+                return ResourceManager.GetString("ALREADY_SWITCHEDON", resourceCulture);
+            }
+        }
     }
 }

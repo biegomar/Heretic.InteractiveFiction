@@ -9,6 +9,12 @@ public sealed partial class Location : AHereticObject
     public Location()
     {
         this.OptionalVerbs = new Dictionary<string, IList<Verb>>();
+        
+        this.InitializeStates();
+    }
+    
+    private void InitializeStates()
+    {
         this.IsPickable = false;
     }
 
@@ -74,5 +80,10 @@ public sealed partial class Location : AHereticObject
         }
 
         return firstLevel.ToList<Item>();
+    }
+
+    protected override StringBuilder ToStringExtension()
+    {
+        return new StringBuilder();
     }
 }

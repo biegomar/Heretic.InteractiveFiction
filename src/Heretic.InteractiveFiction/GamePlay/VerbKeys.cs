@@ -50,7 +50,8 @@ public static class VerbKeys
     public static string SMELL => nameof(SMELL);
     public static string STANDUP => nameof(STANDUP);
     public static string SW => nameof(SW);
-    public static string SWITCH => nameof(SWITCH);
+    public static string SWITCHON => nameof(SWITCHON);
+    public static string SWITCHOFF => nameof(SWITCHOFF);
     public static string TAKE => nameof(TAKE);
     public static string TAKEOFF => nameof(TAKEOFF);
     public static string TALK => nameof(TALK);

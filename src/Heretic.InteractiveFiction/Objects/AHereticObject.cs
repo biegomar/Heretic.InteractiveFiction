@@ -143,16 +143,6 @@ public abstract partial class AHereticObject
     public bool IsSurrounding { get; set; }
 
     /// <summary>
-    /// Is the object a light source?
-    /// </summary>
-    public bool IsLighter { get; set; }
-
-    /// <summary>
-    /// Is the light source switched on?
-    /// </summary>
-    public bool IsLighterSwitchedOn { get; set; }
-
-    /// <summary>
     /// Indicates whether the object should be listed in the corresponding object list of a container or not.
     /// </summary>
     public bool IsShownInObjectList { get; set; }
@@ -208,6 +198,9 @@ public abstract partial class AHereticObject
     {
         return BaseDescriptions.HERE;
     }
+    
+    protected abstract StringBuilder ToStringExtension(); 
+    
     
     public bool OwnsItem(string itemKey)
     {
@@ -499,17 +492,10 @@ public abstract partial class AHereticObject
             this.FirstLookDescription = string.Empty;
         }
 
-        if (this.IsLighter)
+        var extension = this.ToStringExtension();
+        if (extension != default)
         {
-            if (this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOnDescription))
-            {
-                description.AppendLine(this.LighterSwitchedOnDescription);    
-            }
-
-            if (!this.IsLighterSwitchedOn && !string.IsNullOrEmpty(this.LighterSwitchedOffDescription))
-            {
-                description.AppendLine(this.LighterSwitchedOffDescription);
-            }
+            description.Append(extension);
         }
 
         if (this.IsLocked && !string.IsNullOrEmpty(this.LockDescription))
@@ -780,8 +766,6 @@ public abstract partial class AHereticObject
         this.IsEatable = false;
         this.IsDrinkable = false;
         this.IsReadable = false;
-        this.IsLighter = false;
-        this.IsLighterSwitchedOn = false;
         this.IsShownInObjectList = true;
     }
 
@@ -800,8 +784,6 @@ public abstract partial class AHereticObject
         this.LinkedToDescription = string.Empty;
         this.ClimbedDescription = string.Empty;
         this.LetterContentDescription = string.Empty;
-        this.LighterSwitchedOffDescription = string.Empty;
-        this.LighterSwitchedOnDescription = string.Empty;
         this.Hint = string.Empty;
     }
 }

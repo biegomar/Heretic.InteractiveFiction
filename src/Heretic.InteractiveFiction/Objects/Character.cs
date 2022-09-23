@@ -57,6 +57,11 @@ public sealed partial class Character : AHereticObject
         return string.Format(BaseDescriptions.INVENTORY_TEMPLATE, this.GenderSpeech());
     }
 
+    protected override StringBuilder ToStringExtension()
+    {
+        return new StringBuilder();
+    }
+
     protected override string GetVariationOfYouSee(int itemCount)
     {
         return this.Grammar.Gender switch

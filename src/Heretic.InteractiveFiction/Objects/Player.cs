@@ -31,7 +31,12 @@ public sealed class Player : AHereticObject
         var sentence = this.name.Split('|');
         return sentence[0].Trim();
     }
-    
+
+    protected override StringBuilder ToStringExtension()
+    {
+        return new StringBuilder();
+    }
+
     internal override AHereticObject GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
     {
         var result = base.GetObject(itemKey, visitedItems);

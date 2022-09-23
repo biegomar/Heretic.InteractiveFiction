@@ -127,13 +127,13 @@
     <value>Runter|Hinunter|Herab|R|Hinab</value>
   </data>
   <data name="DROP" xml:space="preserve">
-    <value>Leg:hin|Lege:hin|verliere|Drop|fallen:lassen|fallen:lass</value>
+    <value>Leg:hin|Lege:hin|Leg:ab|Lege:ab|verliere|Drop|fallen:lassen|fallen:lass</value>
   </data>
   <data name="E" xml:space="preserve">
     <value>Osten|Ost|O|E</value>
   </data>
   <data name="GO" xml:space="preserve">
-    <value>Gehe|Geh|Go|G</value>
+    <value>Gehe:zu|Geh:zu|Go|G</value>
   </data>
   <data name="HELP" xml:space="preserve">
     <value>Hilfe|Help</value>
@@ -262,7 +262,7 @@
     <value>Antworte|Antwort</value>
   </data>
   <data name="KINDLE" xml:space="preserve">
-    <value>Verbrenn|Verbrenne|Zünde|Zünd|Zuende|Zuend|Entzünde|Entzünd|Entzuende|Entzuend</value>
+    <value>Verbrenn|Verbrenne|Zünde:an|Zünd:an|Zuende:an|Zuend:an|Entzünde|Entzünd|Entzuende|Entzuend</value>
   </data>
   <data name="CUT" xml:space="preserve">
     <value>Schneide|Schneid|Zerschneide|Zerschneid</value>
@@ -291,8 +291,8 @@
   <data name="SMELL" xml:space="preserve">
     <value>Riech|Rieche</value>
   </data>
-  <data name="SWITCH" xml:space="preserve">
-    <value>Schalte|Schalt</value>
+  <data name="SWITCHON" xml:space="preserve">
+    <value>Anschalten|Schalte:an|Schalt:an|Aufdrehen|Drehe:auf|Dreh:auf</value>
   </data>
   <data name="TAKEOFF" xml:space="preserve">
     <value>Ausziehen</value>

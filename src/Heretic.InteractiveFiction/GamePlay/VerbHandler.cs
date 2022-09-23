@@ -208,6 +208,63 @@ internal sealed class VerbHandler
         return false;
     }
     
+    internal bool SwitchOn(string verb, string processingSubject, string processingObjects)
+    {
+        if (VerbKeys.SWITCHON == verb)
+        {
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.SwitchOn(verb, processingObjects);
+            }
+        }
+
+        return false;
+    }
+    
+    internal bool SwitchOn(string verb, string processingObject)
+    {
+        if (VerbKeys.SWITCHON == verb)
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                if (item.IsSwitchable)
+                {
+                    if (!item.IsSwitchedOn)
+                    {
+                        try
+                        {
+                            var itemEventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                        
+                            item.OnBeforeSwitchOn(itemEventArgs);
+
+                            item.IsSwitchedOn = true;
+                            item.OnSwitchOn(itemEventArgs);
+                    
+                            item.OnAfterSwitchOn(itemEventArgs);
+
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_EATEN, item.AccusativeArticleName, true);
+                        }
+                        catch (SwitchOnException ex)
+                        {
+                            return printingSubsystem.Resource(ex.Message);
+                        }
+                    }
+                    
+                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDON, item.AccusativeArticleName, true);
+                }
+
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHON, item.AccusativeArticleName, true);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+    
     internal bool Wear(string verb, string processingSubject, string processingObjects)
     {
         if (VerbKeys.WEAR == verb)

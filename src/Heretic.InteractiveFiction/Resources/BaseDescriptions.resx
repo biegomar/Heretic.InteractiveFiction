@@ -670,4 +670,10 @@
   <data name="PULL_DOES_NOT_WORK" xml:space="preserve">
     <value>Du ziehst an {0}, aber es passiert nichts.</value>
   </data>
+  <data name="NOTHING_TO_SWITCHON" xml:space="preserve">
+    <value>Du kannst {0} nicht anschalten.</value>
+  </data>
+  <data name="ALREADY_SWITCHEDON" xml:space="preserve">
+    <value>{0} ist bereits angeschaltet.</value>
+  </data>
 </root>
