@@ -245,7 +245,7 @@ internal sealed class VerbHandler
                     
                             item.OnAfterSwitchOn(itemEventArgs);
 
-                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_EATEN, item.AccusativeArticleName, true);
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDON, item.AccusativeArticleName, true);
                         }
                         catch (SwitchOnException ex)
                         {
@@ -257,6 +257,63 @@ internal sealed class VerbHandler
                 }
 
                 return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHON, item.AccusativeArticleName, true);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return false;
+    }
+
+    internal bool SwitchOff(string verb, string processingSubject, string processingObjects)
+    {
+        if (VerbKeys.SWITCHOFF == verb)
+        {
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.SwitchOff(verb, processingObjects);
+            }
+        }
+
+        return false;
+    }
+    
+    internal bool SwitchOff(string verb, string processingObject)
+    {
+        if (VerbKeys.SWITCHOFF == verb)
+        {
+            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            if (item != default)
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                
+                if (item.IsSwitchable)
+                {
+                    if (item.IsSwitchedOn)
+                    {
+                        try
+                        {
+                            var itemEventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = this.universe.GetVerb(verb).ErrorMessage};
+                        
+                            item.OnBeforeSwitchOff(itemEventArgs);
+
+                            item.IsSwitchedOn = false;
+                            item.OnSwitchOff(itemEventArgs);
+                    
+                            item.OnAfterSwitchOff(itemEventArgs);
+
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDOFF, item.AccusativeArticleName, true);
+                        }
+                        catch (SwitchOffException ex)
+                        {
+                            return printingSubsystem.Resource(ex.Message);
+                        }
+                    }
+                    
+                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDOFF, item.AccusativeArticleName, true);
+                }
+
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHOFF, item.AccusativeArticleName, true);
             }
 
             return printingSubsystem.ItemNotVisible();

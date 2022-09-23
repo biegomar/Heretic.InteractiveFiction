@@ -292,7 +292,7 @@
     <value>Riech|Rieche</value>
   </data>
   <data name="SWITCHON" xml:space="preserve">
-    <value>Anschalten|Schalte:an|Schalt:an|Aufdrehen|Drehe:auf|Dreh:auf</value>
+    <value>Anschalten|Schalte:an|Schalt:an</value>
   </data>
   <data name="TAKEOFF" xml:space="preserve">
     <value>Ausziehen</value>
@@ -314,5 +314,8 @@
   </data>
   <data name="TOBE" xml:space="preserve">
     <value>Sein|Bin|Ist</value>
+  </data>
+  <data name="SWITCHOFF" xml:space="preserve">
+    <value>Ausschalten|Schalte:aus|Schalt:aus</value>
   </data>
 </root>

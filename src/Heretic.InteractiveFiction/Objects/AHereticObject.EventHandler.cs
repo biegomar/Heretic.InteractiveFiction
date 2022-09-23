@@ -62,10 +62,6 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> StandUp;
     public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeSwitchOn;
-    public event EventHandler<ContainerObjectEventArgs> SwitchOn;
-    public event EventHandler<ContainerObjectEventArgs> AfterSwitchOn;
-
     public event EventHandler<ContainerObjectEventArgs> BeforeDescend;
     public event EventHandler<ContainerObjectEventArgs> Descend;
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
@@ -553,24 +549,6 @@ public abstract partial class AHereticObject
         localEventHandler?.Invoke(this, eventArgs);
     }
     
-    public virtual void OnBeforeSwitchOn(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.BeforeSwitchOn;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnSwitchOn(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.SwitchOn;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
-    public virtual void OnAfterSwitchOn(ContainerObjectEventArgs eventArgs)
-    {
-        var localEventHandler = this.AfterSwitchOn;
-        localEventHandler?.Invoke(this, eventArgs);
-    }
-
     public virtual void OnBeforeOpen(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.BeforeOpen;

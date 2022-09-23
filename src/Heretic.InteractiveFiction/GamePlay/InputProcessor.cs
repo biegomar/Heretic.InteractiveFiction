@@ -147,6 +147,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Drink(verb, processingSubject);
         result = result || verbHandler.Read(verb, processingSubject);
         result = result || verbHandler.SwitchOn(verb, processingSubject);
+        result = result || verbHandler.SwitchOff(verb, processingSubject);
         result = result || verbHandler.Write(verb, processingSubject);
         result = result || verbHandler.Hint(verb, processingSubject);
 
@@ -183,6 +184,7 @@ public sealed class InputProcessor
         result = result || verbHandler.Drop(verb, processingSubject, processingObject);
         result = result || verbHandler.Buy(verb, processingSubject, processingObject);
         result = result || verbHandler.SwitchOn(verb, processingSubject, processingObject);
+        result = result || verbHandler.SwitchOff(verb, processingSubject, processingObject);
         result = result || verbHandler.Wear(verb, processingSubject, processingObject);
         result = result || verbHandler.ToBe(verb, processingSubject, objectName);
 

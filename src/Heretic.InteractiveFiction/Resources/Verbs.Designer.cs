@@ -440,5 +440,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("TOBE", resourceCulture);
             }
         }
+        
+        internal static string SWITCHOFF {
+            get {
+                return ResourceManager.GetString("SWITCHOFF", resourceCulture);
+            }
+        }
     }
 }

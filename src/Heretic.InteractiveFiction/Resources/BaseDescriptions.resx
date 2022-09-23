@@ -676,4 +676,16 @@
   <data name="ALREADY_SWITCHEDON" xml:space="preserve">
     <value>{0} ist bereits angeschaltet.</value>
   </data>
+  <data name="NOTHING_TO_SWITCHOFF" xml:space="preserve">
+    <value>Du kannst {0} nicht ausschalten.</value>
+  </data>
+  <data name="ALREADY_SWITCHEDOFF" xml:space="preserve">
+    <value>{0} ist bereits ausgeschaltet.</value>
+  </data>
+  <data name="ITEM_SWITCHEDON" xml:space="preserve">
+    <value>Du hast {0} angeschaltet.</value>
+  </data>
+  <data name="ITEM_SWITCHEDOFF" xml:space="preserve">
+    <value>Du hast {0} ausgeschaltet.</value>
+  </data>
 </root>
