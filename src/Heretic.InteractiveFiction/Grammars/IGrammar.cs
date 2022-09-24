@@ -16,4 +16,6 @@ public interface IGrammar
     public string GetNominativePronounForObject(AHereticObject processingObject);
     public string GetDativePronounForObject(AHereticObject processingObject);
     public string GetAccusativePronounForObject(AHereticObject processingObject);
+
+    public (string preposition, string article) GetPrepositionAndArticleFromCombinedWord(string word);
 }

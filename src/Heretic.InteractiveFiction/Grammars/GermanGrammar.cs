@@ -12,11 +12,14 @@ public class GermanGrammar: IGrammar
     private const string ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
     private const string DATIV_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
 
-    public IDictionary<string, IEnumerable<string>> Prepositions { get; private set; }
+    private IDictionary<string, (string, string)> CombinedPrepositionsAndArticles { get; }
+
+    public IDictionary<string, IEnumerable<string>> Prepositions { get; }
     
     public GermanGrammar(IResourceProvider resourceProvider)
     {
         this.Prepositions = resourceProvider.GetPrepositionsFromResources();
+        this.CombinedPrepositionsAndArticles = resourceProvider.PreparePrepositionsAndArticlesFromResource();
     }
     
     public bool IsPronounActiveObject(AHereticObject activeObject, string pronoun)
@@ -224,5 +227,10 @@ public class GermanGrammar: IGrammar
         }
         
         return BaseGrammar.ACCUSATIVE_PRONOUN_THEY;
+    }
+
+    public (string preposition, string article) GetPrepositionAndArticleFromCombinedWord(string word)
+    {
+        return this.CombinedPrepositionsAndArticles.ContainsKey(word) ? this.CombinedPrepositionsAndArticles[word] : default;
     }
 }

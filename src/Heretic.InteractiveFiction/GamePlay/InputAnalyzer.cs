@@ -27,6 +27,7 @@ internal sealed class InputAnalyzer
             var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
             var sentence = normalizedInput.Split(' ');
             sentence = this.SubstitutePronoun(sentence).ToArray();
+            sentence = this.SubstituteCombinedPrepositionsAndArticles(sentence).ToArray();
             sentence = this.OrderSentence(sentence).ToArray();
 
             return sentence;
@@ -161,6 +162,21 @@ internal sealed class InputAnalyzer
     {
         Verb verb = default;
 
+        bool IsThisTheRightVerb(string onlyPossiblePrefix, bool b)
+        {
+            var singleWords = sentence.ToList();
+            var positionOfPrefix = singleWords.IndexOf(onlyPossiblePrefix);
+            var positionOfNomen = singleWords.IndexOf(objectOne);
+
+            var maybePreposition = positionOfPrefix < positionOfNomen;
+            if (maybePreposition)
+            {
+                b = false;
+            }
+
+            return b;
+        }
+
         bool ReplaceVerb(string verbToReplace, ICollection<Verb> verbs, IList<string> resultingSentence)
         {
             if (verbs.Count == 1)
@@ -181,10 +197,10 @@ internal sealed class InputAnalyzer
                 
                 if (onlyPossiblePrefix != default && parts.Contains(onlyPossiblePrefix))
                 {
-                    var preposition = this.grammar.Prepositions.Where(p =>
-                        p.Value.Contains(onlyPossiblePrefix, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Key).SingleOrDefault();
+                    var prepositions = this.grammar.Prepositions.Where(p =>
+                        p.Value.Contains(onlyPossiblePrefix, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Key);
 
-                    if (!string.IsNullOrEmpty(preposition))
+                    foreach (var preposition in prepositions)
                     {
                         if (preposition.Equals("DATIVE", StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -192,11 +208,25 @@ internal sealed class InputAnalyzer
                             if (itemOne != default)
                             {
                                 var article = this.grammar.GetDativeArticleForObject(itemOne);
-                                if (!string.IsNullOrEmpty(article) && parts.Contains(article, StringComparer.InvariantCultureIgnoreCase))
+                                if (!string.IsNullOrEmpty(article) &&
+                                    parts.Contains(article, StringComparer.InvariantCultureIgnoreCase))
                                 {
-                                    isThisTheRightVerb = false;
+                                    isThisTheRightVerb = IsThisTheRightVerb(onlyPossiblePrefix, isThisTheRightVerb);
                                 }
                             }
+                        }
+                        else if (preposition.Equals("ACCUSATIVE", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            var itemOne = this.objectHandler.GetObjectFromWorldByName(objectOne);
+                            if (itemOne != default)
+                            {
+                                var article = this.grammar.GetAccusativeArticleForObject(itemOne);
+                                if (!string.IsNullOrEmpty(article) &&
+                                    parts.Contains(article, StringComparer.InvariantCultureIgnoreCase))
+                                {
+                                    isThisTheRightVerb = IsThisTheRightVerb(onlyPossiblePrefix, isThisTheRightVerb);
+                                }
+                            } 
                         }
                     }
 
@@ -389,6 +419,26 @@ internal sealed class InputAnalyzer
             else
             {
                 result.Add(word);
+            }
+        }
+
+        return result;
+    }
+    
+    private IList<string> SubstituteCombinedPrepositionsAndArticles(IList<string> sentence)
+    {
+        var result = new List<string>();
+        foreach (var word in sentence)
+        {
+            var (preposition, article) = this.grammar.GetPrepositionAndArticleFromCombinedWord(word);
+            if (string.IsNullOrEmpty(preposition) || string.IsNullOrEmpty(article))
+            {
+                result.Add(word);
+            }
+            else
+            {
+                result.Add(preposition);
+                result.Add(article);
             }
         }
 

@@ -56,5 +56,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("GENITIVE", resourceCulture);
             }
         }
+        
+        internal static string ACCUSATIVE {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE", resourceCulture);
+            }
+        }
     }
 }

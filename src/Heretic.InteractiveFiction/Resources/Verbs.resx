@@ -241,7 +241,7 @@
     <value>Klettere|Kletter|Steige|Steig|Klettere:auf|Kletter:auf|Steige:auf|Steig:auf</value>
   </data>
   <data name="DESCEND" xml:space="preserve">
-    <value>Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab|Klettere:von|Kletter:von|Steige:von|Steig:von</value>
+    <value>Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab</value>
   </data>
   <data name="SAVE" xml:space="preserve">
     <value>Save|speichern</value>

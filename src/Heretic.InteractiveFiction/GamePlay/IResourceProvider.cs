@@ -64,6 +64,22 @@ public interface IResourceProvider
 
         return result;
     }
+    
+    public IDictionary<string, (string, string)> PreparePrepositionsAndArticlesFromResource()
+    {
+        var result = new Dictionary<string, (string, string)>();
+        var splitResource = BaseGrammar.COMBINED_PREPOSITIONS_AND_ARTICLES.Split('|');
+        foreach (var resource in splitResource)
+        {
+            var combined = resource.Split(':');
+            var word = combined[0];
+            var prepositionAndArticle = combined[1].Split(' ');
+            result.Add(word, (prepositionAndArticle[0], prepositionAndArticle[1]));
+
+        }
+
+        return result;
+    }
 
     public IDictionary<string, IEnumerable<string>> GetConversationsAnswersFromResources()
     {

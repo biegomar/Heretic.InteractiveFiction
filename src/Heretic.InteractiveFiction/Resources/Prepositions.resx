@@ -19,9 +19,12 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="DATIVE" xml:space="preserve">
-        <value>an|auf|in|über|unter|hinter|neben|vor|zwischen|bei|zu|mit|nach|seit|von</value>
+        <value>an|auf|in|über|unter|hinter|neben|vor|zwischen|bei|zu|mit|nach|seit|von|aus</value>
     </data>
     <data name="GENITIVE" xml:space="preserve">
         <value>jenseits|abseits|entlang|oberhalb|unterhalb|außerhalb|innerhalb|längs|seitlich|links|rechts|nördlich|östlich|südlich|westlich</value>
+    </data>
+    <data name="ACCUSATIVE" xml:space="preserve">
+        <value>durch|für|bis|um|ohne|gegen|an|auf|in|über|unter|hinter|neben|vor|zwischen</value>
     </data>
 </root>

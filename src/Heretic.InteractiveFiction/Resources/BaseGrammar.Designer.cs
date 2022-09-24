@@ -278,5 +278,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("DATIVE_ARTICLE_NEUTRUM_PLURAL", resourceCulture);
             }
         }
+        
+        internal static string COMBINED_PREPOSITIONS_AND_ARTICLES {
+            get {
+                return ResourceManager.GetString("COMBINED_PREPOSITIONS_AND_ARTICLES", resourceCulture);
+            }
+        }
     }
 }

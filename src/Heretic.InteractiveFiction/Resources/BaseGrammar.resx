@@ -135,4 +135,7 @@
     <data name="DATIVE_ARTICLE_NEUTRUM_PLURAL" xml:space="preserve">
         <value>Den</value>
     </data>
+    <data name="COMBINED_PREPOSITIONS_AND_ARTICLES" xml:space="preserve">
+        <value>am:an dem|ans:an das|beim:bei dem|im:in dem|ins:in das|vom:von dem|zum:zu dem|zur:zu der</value>
+    </data>
 </root>
