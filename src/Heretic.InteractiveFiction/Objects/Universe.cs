@@ -24,14 +24,11 @@ public sealed class Universe
     }
 
     public int NumberOfSolvedQuests => this.SolvedQuests.Count;
-
-
-    public readonly IList<Verb> Verbs;
+    
     public readonly IDictionary<string, IEnumerable<string>> ItemResources;
     public readonly IDictionary<string, IEnumerable<string>> CharacterResources;
     public readonly IDictionary<string, IEnumerable<string>> LocationResources;
     public readonly IDictionary<string, IEnumerable<string>> ConversationAnswersResources;
-    public readonly IEnumerable<string> PackingWordsResources;
 
     public LocationMap LocationMap { get; set; }
     public Location ActiveLocation { get; set; }
@@ -52,38 +49,14 @@ public sealed class Universe
         this.printingSubsystem = printingSubsystem;
         this.SolvedQuests = new List<string>();
         this.Score = 0;
-        this.Verbs = resourceProvider.GetVerbsFromResources();
         this.ItemResources = resourceProvider.GetItemsFromResources();
         this.CharacterResources = resourceProvider.GetCharactersFromResources();
         this.LocationResources = resourceProvider.GetLocationsFromResources();
-        this.PackingWordsResources = resourceProvider.GetPackingWordsFromResources();
         this.ConversationAnswersResources = resourceProvider.GetConversationsAnswersFromResources();
         this.LocationMap = new LocationMap(new LocationComparer());
         this.ActiveObject = null;
     }
 
-    public bool IsVerb(string verbToCheck)
-    {
-        var verbOverrides = this.ActiveLocation.OptionalVerbs.Values.SelectMany(x => x);
-        
-        return verbOverrides.Any()
-            ? this.Verbs.Select(v => v.Key).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
-              || verbOverrides.Select(v => v.Key).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase)
-            : this.Verbs.Select(v => v.Key).Contains(verbToCheck, StringComparer.InvariantCultureIgnoreCase);
-    }
-    
-    public Verb GetVerb(string verbToCheck)
-    {
-        var result = this.Verbs.FirstOrDefault(v => v.Key.Equals(verbToCheck, StringComparison.InvariantCultureIgnoreCase));
-        if (result != default)
-        {
-            return result;
-        }
-        
-        var verbOverrides = this.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
-        return verbOverrides.SingleOrDefault(v => v.Key.Equals(verbToCheck, StringComparison.InvariantCultureIgnoreCase));
-    }
-    
     public void SetPeriodicEvent(PeriodicEvent periodicEvent)
     {
         if (periodicEvent != null)

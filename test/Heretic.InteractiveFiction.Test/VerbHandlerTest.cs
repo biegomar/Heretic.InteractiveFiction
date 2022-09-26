@@ -1,4 +1,5 @@
 using Heretic.InteractiveFiction.GamePlay;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Subsystems;
 using Heretic.InteractiveFiction.Test.Mocks;
@@ -11,6 +12,7 @@ public class VerbHandlerTest
 {
     private VerbHandler _sut;
     private Universe _universe;
+    private IGrammar _grammar;
 
     public VerbHandlerTest()
     {
@@ -18,7 +20,8 @@ public class VerbHandlerTest
         printingSubsystem.SetReturnsDefault(true);
         
         this._universe = GetUniverse(printingSubsystem);
-        this._sut = new VerbHandler(_universe, printingSubsystem.Object);
+        this._grammar = new GermanGrammar(new ResourceProviderMock());
+        this._sut = new VerbHandler(_universe, _grammar, printingSubsystem.Object);
     }
 
     private Universe GetUniverse(Mock<IPrintingSubsystem> printingSubsystem)

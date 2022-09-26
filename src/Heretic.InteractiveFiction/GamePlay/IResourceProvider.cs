@@ -17,6 +17,7 @@ public interface IResourceProvider
          {
              foreach (DictionaryEntry entry in resourceSet)
              {
+                 var prepositions = VerbsAndPrepositions.ResourceManager.GetString(entry.Key.ToString())?.Split('|').ToList();
                  var variantList = new List<VerbVariant>();
                  var wordList = entry.Value?.ToString()?.Split('|').ToList();
 
@@ -24,7 +25,8 @@ public interface IResourceProvider
                  {
                      var verb = new Verb
                      {
-                         Key = entry.Key.ToString()
+                         Key = entry.Key.ToString(),
+                         PossiblePrepositions = prepositions ?? new List<string>()
                      };
 
                      foreach (var word in wordList)

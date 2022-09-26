@@ -20,7 +20,7 @@ public sealed class InputProcessor
     {
         this.PrintingSubsystem = printingSubsystem;
         this.universe = universe;
-        this.verbHandler = new VerbHandler(this.universe, printingSubsystem);
+        this.verbHandler = new VerbHandler(this.universe, grammar, printingSubsystem);
         this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
         this.historyAdministrator = new HistoryAdministrator(this.inputAnalyzer);
     }
