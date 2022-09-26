@@ -19,12 +19,12 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="CLIMB" xml:space="preserve">
-        <value>auf</value>
+        <value>auf:ACCUSATIVE</value>
     </data>
     <data name="DESCEND" xml:space="preserve">
-        <value>von</value>
+        <value>von:DATIVE</value>
     </data>
     <data name="PULL" xml:space="preserve">
-        <value>an</value>
+        <value>an:DATIVE</value>
     </data>
 </root>

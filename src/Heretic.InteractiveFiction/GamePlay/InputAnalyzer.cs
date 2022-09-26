@@ -200,7 +200,7 @@ internal sealed class InputAnalyzer
                         
                         if (isPrepositionOnly)
                         {
-                            if (this.IsObjectInCorrectCaseForPreposition(onlyPossiblePreposition, objectOne, sentence) &&
+                            if (this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) &&
                                 this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence))
                             {
                                 verb = possibleVerb;
@@ -221,7 +221,7 @@ internal sealed class InputAnalyzer
                         }
                         else if (isPrefixAndPreposition)
                         {
-                            if (this.IsObjectInCorrectCaseForPreposition(onlyPossiblePreposition, objectOne, sentence) &&
+                            if (this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) &&
                                 this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence) &&
                                 this.IsPrefixTheLastWordInSentence(onlyPossiblePrefix, sentence))
                             {
@@ -253,10 +253,21 @@ internal sealed class InputAnalyzer
         return result;
     }
 
-    private bool IsObjectInCorrectCaseForPreposition(string preposition, string objectOne, IReadOnlyList<string> sentence)
+    private bool IsObjectInCorrectCaseForPreposition(Verb possibleVerb, string preposition, string objectOne, IReadOnlyList<string> sentence)
     {
-        var prepositionCases = this.grammar.Prepositions.Where(p =>
-            p.Value.Contains(preposition, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Key);
+        var prepositionCaseFromVerb = possibleVerb.Prepositions
+            .Where(c => c.Name.Equals(preposition, StringComparison.InvariantCultureIgnoreCase)).Select(p => p.Case).SingleOrDefault();
+
+        IEnumerable<string> prepositionCases;
+        if (!string.IsNullOrEmpty(prepositionCaseFromVerb))
+        {
+            prepositionCases = new List<string> { prepositionCaseFromVerb };
+        }
+        else
+        {
+            prepositionCases = this.grammar.Prepositions.Where(p =>
+                p.Value.Contains(preposition, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Key);    
+        }
 
         foreach (var prepositionCase in prepositionCases)
         {
@@ -317,7 +328,7 @@ internal sealed class InputAnalyzer
     
     private string GetOnlyPossiblePreposition(ICollection<string> parts, Verb possibleVerb)
     {
-        var onlyPossiblePreposition = parts.Intersect(possibleVerb.PossiblePrepositions).FirstOrDefault();
+        var onlyPossiblePreposition = parts.Intersect(possibleVerb.Prepositions.Select(p => p.Name)).FirstOrDefault();
         return onlyPossiblePreposition;
     }
 
@@ -479,7 +490,7 @@ internal sealed class InputAnalyzer
                 {
                     Key = v.Key,
                     ErrorMessage = v.ErrorMessage,
-                    PossiblePrepositions = v.PossiblePrepositions,
+                    Prepositions = v.Prepositions,
                     Variants = v.Variants.Where(vi => vi.Name.Equals(word, StringComparison.InvariantCultureIgnoreCase))
                         .ToList()
                 }).ToList();

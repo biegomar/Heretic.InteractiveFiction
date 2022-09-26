@@ -17,7 +17,17 @@ public interface IResourceProvider
          {
              foreach (DictionaryEntry entry in resourceSet)
              {
-                 var prepositions = VerbsAndPrepositions.ResourceManager.GetString(entry.Key.ToString())?.Split('|').ToList();
+                 var prepositionPairs = VerbsAndPrepositions.ResourceManager.GetString(entry.Key.ToString())?.Split('|').ToList();
+                 var prepositions = new List<PrepositionVariant>();
+                 if (prepositionPairs != null)
+                 {
+                     foreach (var prepositionPair in prepositionPairs)
+                     {
+                         var splitPair = prepositionPair.Split(':');
+                         prepositions.Add(new PrepositionVariant {Name = splitPair[0], Case = splitPair.Length > 1 ? splitPair[1] : string.Empty});
+                     }
+                 }
+                 
                  var variantList = new List<VerbVariant>();
                  var wordList = entry.Value?.ToString()?.Split('|').ToList();
 
@@ -26,7 +36,7 @@ public interface IResourceProvider
                      var verb = new Verb
                      {
                          Key = entry.Key.ToString(),
-                         PossiblePrepositions = prepositions ?? new List<string>()
+                         Prepositions = prepositions
                      };
 
                      foreach (var word in wordList)
