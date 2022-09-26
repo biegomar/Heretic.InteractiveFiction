@@ -200,7 +200,7 @@ internal sealed class InputAnalyzer
                         
                         if (isPrepositionOnly)
                         {
-                            if (this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) &&
+                            if ((this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) || !this.grammar.HasArticle(sentence)) &&
                                 this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence))
                             {
                                 verb = possibleVerb;

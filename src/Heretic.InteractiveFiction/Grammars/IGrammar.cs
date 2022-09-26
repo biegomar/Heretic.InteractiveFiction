@@ -21,6 +21,7 @@ public interface IGrammar
     public (string preposition, string article) GetPrepositionAndArticleFromCombinedWord(string word);
 
     public bool HasPrepositionOrPrefix(IEnumerable<string> sentence);
+    public bool HasArticle(IEnumerable<string> sentence);
 
     public bool IsVerb(string verbToCheck, Location location);
     public Verb GetVerb(string verbToCheck, Location location);

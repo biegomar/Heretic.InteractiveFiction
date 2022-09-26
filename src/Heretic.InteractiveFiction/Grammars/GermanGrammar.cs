@@ -24,7 +24,7 @@ public class GermanGrammar: IGrammar
         this.Prepositions = resourceProvider.GetPrepositionsFromResources();
         this.CombinedPrepositionsAndArticles = resourceProvider.PreparePrepositionsAndArticlesFromResource();
     }
-    
+
     public bool IsVerb(string verbToCheck, Location location)
     {
         var verbOverrides = location.OptionalVerbs.Values.SelectMany(x => x);
@@ -265,5 +265,39 @@ public class GermanGrammar: IGrammar
         var allPrepositions = this.Prepositions.Values.SelectMany(x => x);
         
         return sentence.Intersect(allPrefixes.Union(allPrepositions)).Any();
+    }
+    
+    public bool HasArticle(IEnumerable<string> sentence)
+    {
+        var allArticles = new List<string>
+        {
+            BaseGrammar.ACCUSATIVE_ARTICLE_MALE_PLURAL,
+            BaseGrammar.ACCUSATIVE_ARTICLE_MALE_SINGULAR,
+            BaseGrammar.ACCUSATIVE_ARTICLE_FEMALE_PLURAL,
+            BaseGrammar.ACCUSATIVE_ARTICLE_FEMALE_SINGULAR,
+            BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
+            BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR,
+            BaseGrammar.ACCUSATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
+            BaseGrammar.ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
+            BaseGrammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+            BaseGrammar.ARTICLE_MALE_SINGULAR,
+            BaseGrammar.ARTICLE_FEMALE_SINGULAR,
+            BaseGrammar.ARTICLE_NEUTRUM_SINGULAR,
+            BaseGrammar.DATIVE_ARTICLE_MALE_PLURAL,
+            BaseGrammar.DATIVE_ARTICLE_MALE_SINGULAR,
+            BaseGrammar.DATIVE_ARTICLE_FEMALE_PLURAL,
+            BaseGrammar.DATIVE_ARTICLE_FEMALE_SINGULAR,
+            BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL,
+            BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
+            BaseGrammar.DATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
+            BaseGrammar.DATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
+            BaseGrammar.DATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+            BaseGrammar.NOMINATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
+            BaseGrammar.NOMINATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
+            BaseGrammar.NOMINATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+        };
+
+        var distinctArticles = allArticles.Distinct();
+        return sentence.Any(s => distinctArticles.Contains(s,StringComparer.InvariantCultureIgnoreCase)); 
     }
 }
