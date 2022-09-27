@@ -2279,8 +2279,14 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.DROP == verb)
         {
+            if (this.objectHandler.GetUnhiddenObjectByNameActive(subjectName) is { } player &&
+                player.Key == this.universe.ActivePlayer.Key)
+            {
+                return this.Sleep(VerbKeys.SLEEP, objectName);
+            }
+            
             var subjectKey = this.objectHandler.GetItemKeyByName(subjectName);
-
+            
             if (this.universe.ActivePlayer.OwnsItem(subjectKey))
             {
                 var itemToDrop = (Item)this.objectHandler.GetObjectFromWorldByKey(subjectKey);
