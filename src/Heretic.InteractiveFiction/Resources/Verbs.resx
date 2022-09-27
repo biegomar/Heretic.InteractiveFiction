@@ -121,7 +121,7 @@
     <value>Frag|Frage</value>
   </data>
   <data name="CLOSE" xml:space="preserve">
-    <value>Schließe|Schließ|Schliesse|Schliess</value>
+    <value>Schließe|Schließ</value>
   </data>
   <data name="DOWN" xml:space="preserve">
     <value>Runter|Hinunter|Herab|R|Hinab</value>
@@ -148,7 +148,7 @@
     <value>Spring|Springe</value>
   </data>
   <data name="LOCK" xml:space="preserve">
-    <value>Verriegel|Verriegeln|Sperre:zu|Verschließe|Verschließ|Lock|abschließen|abschliessen|zuschließen|zuschliessen|Schließe:ab|Schließ:ab|Schliesse:ab|Schliess:ab|Schließe:zu|Schließ:zu|Schliesse:zu|Schliess:zu</value>
+    <value>Verriegel|Verriegeln|Sperre:zu|Verschließe|Verschließ|Lock|abschließen|zuschließen|Schließe:ab|Schließ:ab|Schließe:zu|Schließ:zu</value>
   </data>
   <data name="LOOK" xml:space="preserve">
     <value>Schaue:an|Schau:an|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X</value>
@@ -169,7 +169,7 @@
     <value>Quit|Ende|Q</value>
   </data>
   <data name="S" xml:space="preserve">
-    <value>Süden|Süd|Sued|Sueden|S</value>
+    <value>Süden|Süd|S</value>
   </data>
   <data name="SAY" xml:space="preserve">
     <value>Sag|Sage|Antworte</value>
@@ -178,10 +178,10 @@
     <value>Score|Punkte</value>
   </data>
   <data name="SE" xml:space="preserve">
-    <value>Süd-Osten|Sued-Osten|SO|SE</value>
+    <value>Süd-Osten|Süd-Ost|SO|SE</value>
   </data>
   <data name="SW" xml:space="preserve">
-    <value>Süd-Westen|Sued-Westen|SW</value>
+    <value>Süd-Westen|Süd-West|SW</value>
   </data>
   <data name="TAKE" xml:space="preserve">
     <value>Nimm|Nehme|Take|Hebe:auf|Heb:auf</value>
@@ -193,7 +193,7 @@
     <value>Drehe|Dreh</value>
   </data>
   <data name="UNLOCK" xml:space="preserve">
-    <value>Entriegel|Entriegeln|Sperre:auf|Entsperren|Entsperre|Entsperr|aufschließen|aufschliessen|Unlock|Schließe:auf|Schließ:auf|Schliesse:auf|Schliess:auf</value>
+    <value>Entriegel|Entriegeln|Sperre:auf|Entsperren|Entsperre|Entsperr|aufschließen|Unlock|Schließe:auf|Schließ:auf</value>
   </data>
   <data name="UP" xml:space="preserve">
     <value>Hoch|Rauf|Hinauf|H|Herauf</value>
@@ -262,7 +262,7 @@
     <value>Antworte|Antwort</value>
   </data>
   <data name="KINDLE" xml:space="preserve">
-    <value>Verbrenn|Verbrenne|Zünde:an|Zünd:an|Zuende:an|Zuend:an|Entzünde|Entzünd|Entzuende|Entzuend</value>
+    <value>Verbrenn|Verbrenne|Zünde:an|Zünd:an|Entzünde|Entzünd</value>
   </data>
   <data name="CUT" xml:space="preserve">
     <value>Schneide:auf|Schneid:auf|Zerschneide|Zerschneid</value>
@@ -277,7 +277,7 @@
     <value>Einfügen</value>
   </data>
   <data name="LISTEN" xml:space="preserve">
-    <value>Zuhören|Zuhoeren|Höre:zu|Hoere:zu|Lausche</value>
+    <value>Zuhören|Höre:zu|Lausche</value>
   </data>
   <data name="PUTON" xml:space="preserve">
     <value>Drauflegen</value>

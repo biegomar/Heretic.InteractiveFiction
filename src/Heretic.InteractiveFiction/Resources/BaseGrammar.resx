@@ -138,4 +138,7 @@
     <data name="COMBINED_PREPOSITIONS_AND_ARTICLES" xml:space="preserve">
         <value>am:an dem|ans:an das|beim:bei dem|im:in dem|ins:in das|vom:von dem|zum:zu dem|zur:zu der</value>
     </data>
+    <data name="UMLAUTS" xml:space="preserve">
+        <value>ä:ae|ö:oe|ü:ue|ß:ss</value>
+    </data>
 </root>

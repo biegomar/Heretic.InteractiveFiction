@@ -10,9 +10,9 @@ public interface IResourceProvider
     public IList<Verb> GetVerbsFromResources()
     {
         var result = new List<Verb>();
-         ResourceSet resourceSet =
-             Verbs.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-
+        var resourceSet = Verbs.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+        var umlauts = this.GetUmlauts();
+        
          if (resourceSet != null) 
          {
              foreach (DictionaryEntry entry in resourceSet)
@@ -48,6 +48,19 @@ public interface IResourceProvider
                              Prefix = verbAndPrefix.Count > 1 ? verbAndPrefix[1] : string.Empty
                          };
                          variantList.Add(variant);
+                         
+                         if (umlauts.Keys.Any(verbAndPrefix[0].Contains))
+                         {
+                             var normalizedVerbName = verbAndPrefix[0];
+                             normalizedVerbName = umlauts.Aggregate(normalizedVerbName, (current, umlaut) => current.Replace(umlaut.Key, umlaut.Value));
+                             
+                             var umlautVariant = new VerbVariant
+                             {
+                                 Name = normalizedVerbName,
+                                 Prefix = verbAndPrefix.Count > 1 ? verbAndPrefix[1] : string.Empty
+                             };
+                             variantList.Add(umlautVariant);
+                         }
                      }
 
                      verb.Variants = variantList;
@@ -59,24 +72,19 @@ public interface IResourceProvider
         return result;
     }
 
-    public IEnumerable<string> GetPackingWordsFromResources()
+    private IDictionary<string,string> GetUmlauts()
     {
-        var result = new List<string>();
-
-        ResourceSet resourceSet =
-            PackingWords.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-        if (resourceSet != null)
+        var result = new Dictionary<string, string>();
+        var umlauts = BaseGrammar.UMLAUTS.Split('|');
+        foreach (var umlaut in umlauts)
         {
-            foreach (DictionaryEntry entry in resourceSet)
-            {
-                var inputList = entry.Value?.ToString()?.Split('|').ToList();
-                result.AddRange(inputList!);
-            }
+            var tranlation = umlaut.Split(':');
+            result.Add(tranlation[0], tranlation[1]);
         }
 
         return result;
     }
-    
+
     public IDictionary<string, (string, string)> PreparePrepositionsAndArticlesFromResource()
     {
         var result = new Dictionary<string, (string, string)>();

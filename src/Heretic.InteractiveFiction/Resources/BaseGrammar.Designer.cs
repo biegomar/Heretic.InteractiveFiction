@@ -284,5 +284,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("COMBINED_PREPOSITIONS_AND_ARTICLES", resourceCulture);
             }
         }
+        
+        internal static string UMLAUTS {
+            get {
+                return ResourceManager.GetString("UMLAUTS", resourceCulture);
+            }
+        }
     }
 }
