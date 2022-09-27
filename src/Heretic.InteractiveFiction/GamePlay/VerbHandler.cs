@@ -2208,57 +2208,65 @@ internal sealed class VerbHandler
             var result = true;
             foreach (var processingObject in processingObjects)
             {
-                var key = this.objectHandler.GetItemKeyByName(processingObject);
-
-                var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == key);
-                var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == key);
-                if (isPlayerItem || isPlayerCloths)
+                if (this.objectHandler.GetUnhiddenObjectByNameActive(processingObject) is { } player &&
+                    player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var item = isPlayerItem ? 
-                        this.universe.ActivePlayer.Items.Single(i => i.Key == key): 
-                        this.universe.ActivePlayer.Clothes.Single(x => x.Key == key);
+                    result = result && this.Sleep(VerbKeys.SLEEP);
+                }
+                else
+                {
+                    var key = this.objectHandler.GetItemKeyByName(processingObject);
 
-                    if (item.IsDropable)
+                    var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == key);
+                    var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == key);
+                    if (isPlayerItem || isPlayerCloths)
                     {
-                        try
-                        {
-                            var dropItemEventArgs = new DropItemEventArgs(){OptionalErrorMessage = this.GetVerb(verb).ErrorMessage};
-                            
-                            item.OnBeforeDrop(dropItemEventArgs);
+                        var item = isPlayerItem
+                            ? this.universe.ActivePlayer.Items.Single(i => i.Key == key)
+                            : this.universe.ActivePlayer.Clothes.Single(x => x.Key == key);
 
-                            var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
-                            result = result && singleDropResult;
-                            
-                            if (singleDropResult)
+                        if (item.IsDropable)
+                        {
+                            try
                             {
-                                this.universe.ActiveLocation.Items.Add(item);
-                                
-                                item.OnDrop(dropItemEventArgs);
-                                printingSubsystem.ItemDropSuccess(item);
-                                
-                                item.OnAfterDrop(dropItemEventArgs);
+                                var dropItemEventArgs = new DropItemEventArgs()
+                                    { OptionalErrorMessage = this.GetVerb(verb).ErrorMessage };
+
+                                item.OnBeforeDrop(dropItemEventArgs);
+
+                                var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
+                                result = result && singleDropResult;
+
+                                if (singleDropResult)
+                                {
+                                    this.universe.ActiveLocation.Items.Add(item);
+
+                                    item.OnDrop(dropItemEventArgs);
+                                    printingSubsystem.ItemDropSuccess(item);
+
+                                    item.OnAfterDrop(dropItemEventArgs);
+                                }
+                                else
+                                {
+                                    printingSubsystem.ImpossibleDrop(item);
+                                }
                             }
-                            else
+                            catch (DropException e)
                             {
-                                printingSubsystem.ImpossibleDrop(item);
+                                this.universe.PickObject(item, true);
+                                printingSubsystem.Resource(e.Message);
                             }
                         }
-                        catch (DropException e)
+                        else
                         {
-                            this.universe.PickObject(item, true);
-                            printingSubsystem.Resource(e.Message);
+                            printingSubsystem.ImpossibleDrop(item);
                         }
                     }
                     else
                     {
-                        printingSubsystem.ImpossibleDrop(item);
+                        printingSubsystem.ItemNotOwned();
                     }
                 }
-                else
-                {
-                    printingSubsystem.ItemNotOwned();
-                }
-
             }
 
             return result;

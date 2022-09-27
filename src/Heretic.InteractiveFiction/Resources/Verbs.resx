@@ -184,7 +184,7 @@
     <value>Süd-Westen|Sued-Westen|SW</value>
   </data>
   <data name="TAKE" xml:space="preserve">
-    <value>Nimm|Nehme|Take</value>
+    <value>Nimm|Nehme|Take|Hebe:auf|Heb:auf</value>
   </data>
   <data name="TALK" xml:space="preserve">
     <value>Rede|Sprich</value>
@@ -265,7 +265,7 @@
     <value>Verbrenn|Verbrenne|Zünde:an|Zünd:an|Zuende:an|Zuend:an|Entzünde|Entzünd|Entzuende|Entzuend</value>
   </data>
   <data name="CUT" xml:space="preserve">
-    <value>Schneide|Schneid|Zerschneide|Zerschneid</value>
+    <value>Schneide:auf|Schneid:auf|Zerschneide|Zerschneid</value>
   </data>
   <data name="DRINK" xml:space="preserve">
     <value>Trink|Trinke</value>
@@ -277,7 +277,7 @@
     <value>Einfügen</value>
   </data>
   <data name="LISTEN" xml:space="preserve">
-    <value>Lausche</value>
+    <value>Zuhören|Zuhoeren|Höre:zu|Hoere:zu|Lausche</value>
   </data>
   <data name="PUTON" xml:space="preserve">
     <value>Drauflegen</value>
@@ -292,10 +292,10 @@
     <value>Riech|Rieche</value>
   </data>
   <data name="SWITCHON" xml:space="preserve">
-    <value>Anschalten|Schalte:an|Schalt:an</value>
+    <value>Anschalten|Schalte:an|Schalt:an|Schalte:ein|Schalt:ein</value>
   </data>
   <data name="TAKEOFF" xml:space="preserve">
-    <value>Ausziehen</value>
+    <value>Ausziehen|Ziehe:aus|Zieh:aus</value>
   </data>
   <data name="TASTE" xml:space="preserve">
     <value>Schmecke|Schmeck|Probier|Probiere|Koste</value>
