@@ -163,6 +163,13 @@ internal sealed class InputAnalyzer
         Verb verb = default;
         var result = parts.ToList();
         
+        void SetVerb(Verb possibleVerb, string word)
+        {
+            verb = possibleVerb;
+            var index = result.IndexOf(word);
+            result[index] = verb.Key;
+        }
+        
         var isPrepositionOrPrefixPresentInSentence = this.grammar.HasPrepositionOrPrefix(sentence);
 
         foreach (var word in parts)
@@ -182,9 +189,7 @@ internal sealed class InputAnalyzer
                     var onlyPossibleVerbWithoutPrefix = possibleVerbsAndVariants.SingleOrDefault(v => v.Variants.Count(x => x.Prefix == string.Empty) > 0);
                     if (onlyPossibleVerbWithoutPrefix != default)
                     {
-                        verb = onlyPossibleVerbWithoutPrefix;
-                        var index = result.IndexOf(word);
-                        result[index] = verb.Key;
+                        SetVerb(onlyPossibleVerbWithoutPrefix, word);
                     }
                 }
                 else
@@ -203,9 +208,7 @@ internal sealed class InputAnalyzer
                             if ((this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) || !this.grammar.HasArticle(sentence)) &&
                                 this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence))
                             {
-                                verb = possibleVerb;
-                                var index = result.IndexOf(word);
-                                result[index] = verb.Key;
+                                SetVerb(possibleVerb, word);
                                 break;
                             }
                         }
@@ -213,9 +216,7 @@ internal sealed class InputAnalyzer
                         {
                             if (this.IsPrefixTheLastWordInSentence(onlyPossiblePrefix, sentence))
                             {
-                                verb = possibleVerb;
-                                var index = result.IndexOf(word);
-                                result[index] = verb.Key;
+                                SetVerb(possibleVerb, word);
                                 break;
                             }
                         }
@@ -225,9 +226,7 @@ internal sealed class InputAnalyzer
                                 this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence) &&
                                 this.IsPrefixTheLastWordInSentence(onlyPossiblePrefix, sentence))
                             {
-                                verb = possibleVerb;
-                                var index = result.IndexOf(word);
-                                result[index] = verb.Key;
+                                SetVerb(possibleVerb, word);
                                 break;
                             }
                         }
