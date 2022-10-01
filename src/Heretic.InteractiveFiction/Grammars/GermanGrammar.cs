@@ -61,23 +61,23 @@ public class GermanGrammar: IGrammar
         return false;
     }
 
-    public string GetArticleForObject(AHereticObject processingObject)
+    public string GetNominativeArticleForObject(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)
         {
             var result = processingObject.Grammar.Gender switch
             {
-                Genders.Female => BaseGrammar.ARTICLE_FEMALE_SINGULAR,
-                Genders.Male => BaseGrammar.ARTICLE_MALE_SINGULAR,
-                Genders.Neutrum => BaseGrammar.ARTICLE_NEUTRUM_SINGULAR,
-                Genders.Unknown => BaseGrammar.ARTICLE_NEUTRUM_SINGULAR,
-                _ => BaseGrammar.ARTICLE_NEUTRUM_SINGULAR
+                Genders.Female => BaseGrammar.NOMINATIVE_ARTICLE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.NOMINATIVE_ARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR
             };
 
             return result;
         }
-        
-        return string.Empty;
+
+        return BaseGrammar.NOMINATIVE_ARTICLE_PLURAL;
     }
 
     public string GetNominativeIndefiniteArticleForObject(AHereticObject processingObject)
@@ -133,19 +133,8 @@ public class GermanGrammar: IGrammar
         
             return result;
         }
-        else
-        {
-            var result = processingObject.Grammar.Gender switch
-            {
-                Genders.Female => BaseGrammar.DATIVE_ARTICLE_FEMALE_PLURAL,
-                Genders.Male => BaseGrammar.DATIVE_ARTICLE_MALE_PLURAL,
-                Genders.Neutrum => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL,
-                Genders.Unknown => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL,
-                _ => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL
-            };
         
-            return result;
-        }
+        return BaseGrammar.DATIVE_ARTICLE_PLURAL;
     }
 
     public string GetAccusativeIndefiniteArticleForObject(AHereticObject processingObject)
@@ -182,19 +171,8 @@ public class GermanGrammar: IGrammar
         
             return result;
         }
-        else
-        {
-            var result = processingObject.Grammar.Gender switch
-            {
-                Genders.Female => BaseGrammar.ACCUSATIVE_ARTICLE_FEMALE_PLURAL,
-                Genders.Male => BaseGrammar.ACCUSATIVE_ARTICLE_MALE_PLURAL,
-                Genders.Neutrum => BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
-                Genders.Unknown => BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
-                _ => BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL
-            };
-        
-            return result;
-        }
+
+        return BaseGrammar.ACCUSATIVE_ARTICLE_PLURAL;
     }
 
     public string GetNominativePronounForObject(AHereticObject processingObject)
@@ -271,23 +249,19 @@ public class GermanGrammar: IGrammar
     {
         var allArticles = new List<string>
         {
-            BaseGrammar.ACCUSATIVE_ARTICLE_MALE_PLURAL,
             BaseGrammar.ACCUSATIVE_ARTICLE_MALE_SINGULAR,
-            BaseGrammar.ACCUSATIVE_ARTICLE_FEMALE_PLURAL,
             BaseGrammar.ACCUSATIVE_ARTICLE_FEMALE_SINGULAR,
-            BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
             BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_SINGULAR,
+            BaseGrammar.ACCUSATIVE_ARTICLE_PLURAL,
             BaseGrammar.ACCUSATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
             BaseGrammar.ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR,
             BaseGrammar.ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
-            BaseGrammar.ARTICLE_MALE_SINGULAR,
-            BaseGrammar.ARTICLE_FEMALE_SINGULAR,
-            BaseGrammar.ARTICLE_NEUTRUM_SINGULAR,
-            BaseGrammar.DATIVE_ARTICLE_MALE_PLURAL,
+            BaseGrammar.NOMINATIVE_ARTICLE_MALE_SINGULAR,
+            BaseGrammar.NOMINATIVE_ARTICLE_FEMALE_SINGULAR,
+            BaseGrammar.NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR,
+            BaseGrammar.DATIVE_ARTICLE_PLURAL,
             BaseGrammar.DATIVE_ARTICLE_MALE_SINGULAR,
-            BaseGrammar.DATIVE_ARTICLE_FEMALE_PLURAL,
             BaseGrammar.DATIVE_ARTICLE_FEMALE_SINGULAR,
-            BaseGrammar.DATIVE_ARTICLE_NEUTRUM_PLURAL,
             BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
             BaseGrammar.DATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
             BaseGrammar.DATIVE_INDEFINITEARTICLE_MALE_SINGULAR,

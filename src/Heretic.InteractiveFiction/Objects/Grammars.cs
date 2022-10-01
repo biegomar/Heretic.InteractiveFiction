@@ -26,23 +26,23 @@ public sealed class Grammars
         this.IsAbstract = isAbstract;
     }
 
-    public string GetArticle()
+    public string GetNominativeArticle()
     {
         if (IsSingular)
         {
             var result = this.Gender switch
             {
-                Genders.Female => BaseGrammar.ARTICLE_FEMALE_SINGULAR,
-                Genders.Male => BaseGrammar.ARTICLE_MALE_SINGULAR,
-                Genders.Neutrum => BaseGrammar.ARTICLE_NEUTRUM_SINGULAR,
-                Genders.Unknown => BaseGrammar.ARTICLE_NEUTRUM_SINGULAR,
-                _ => BaseGrammar.ARTICLE_NEUTRUM_SINGULAR
+                Genders.Female => BaseGrammar.NOMINATIVE_ARTICLE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.NOMINATIVE_ARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR
             };
 
             return result;
         }
-        
-        return string.Empty;
+
+        return BaseGrammar.NOMINATIVE_ARTICLE_PLURAL;
     }
     
     public string GetNominativeIndefiniteArticle()
@@ -62,6 +62,25 @@ public sealed class Grammars
         }
         
         return string.Empty;
+    }
+    
+    public string GetNominativeAdjectiveDeclination()
+    {
+        if (IsSingular)
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => BaseGrammar.ADJECTIVE_DECLINATION_NOMINATIVE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.ADJECTIVE_DECLINATION_NOMINATIVE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.ADJECTIVE_DECLINATION_NOMINATIVE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.ADJECTIVE_DECLINATION_NOMINATIVE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.ADJECTIVE_DECLINATION_NOMINATIVE_NEUTRUM_SINGULAR
+            };
+
+            return result;
+        }
+
+        return BaseGrammar.ADJECTIVE_DECLINATION_NOMINATIVE_PLURAL;
     }
     
     public string GetNominativePronoun()
@@ -142,16 +161,21 @@ public sealed class Grammars
     
     public string GetDativeArticle()
     {
-        var result = this.Gender switch
+        if (IsSingular)
         {
-            Genders.Female => Resources.BaseGrammar.DATIVE_ARTICLE_FEMALE_SINGULAR,
-            Genders.Male => Resources.BaseGrammar.DATIVE_ARTICLE_MALE_SINGULAR,
-            Genders.Neutrum => Resources.BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
-            Genders.Unknown => Resources.BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
-            _ => Resources.BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR
-        };
+            var result = this.Gender switch
+            {
+                Genders.Female => BaseGrammar.DATIVE_ARTICLE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.DATIVE_ARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.DATIVE_ARTICLE_NEUTRUM_SINGULAR
+            };
         
-        return result;
+            return result;
+        }
+
+        return BaseGrammar.DATIVE_ARTICLE_PLURAL;
     }
     
     public string GetAccusativeIndefiniteArticle()
@@ -188,18 +212,7 @@ public sealed class Grammars
         
             return result;
         }
-        else
-        {
-            var result = this.Gender switch
-            {
-                Genders.Female => BaseGrammar.ACCUSATIVE_ARTICLE_FEMALE_PLURAL,
-                Genders.Male => BaseGrammar.ACCUSATIVE_ARTICLE_MALE_PLURAL,
-                Genders.Neutrum => BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
-                Genders.Unknown => BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL,
-                _ => BaseGrammar.ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL
-            };
-        
-            return result;
-        }
+
+        return BaseGrammar.ACCUSATIVE_ARTICLE_PLURAL;
     }
 }

@@ -40,7 +40,6 @@ internal sealed class InputAnalyzer
 
     private IEnumerable<string> OrderSentence(IReadOnlyList<string> sentence)
     {
-        var objectTwo = string.Empty;
         var orderedSentence = new List<string>();
         var parts = sentence.ToList();
 
@@ -64,7 +63,7 @@ internal sealed class InputAnalyzer
             if (parts.Any())
             {
                 normList = this.NormalizeSentence(parts);
-                objectTwo = this.GetItem(normList.Keys.ToList());
+                var objectTwo = this.GetItem(normList.Keys.ToList());
                 if (string.IsNullOrEmpty(objectTwo))
                 {
                     objectTwo = this.GetCharacter(normList.Keys.ToList());
@@ -131,7 +130,7 @@ internal sealed class InputAnalyzer
         var item = this.objectHandler.GetObjectFromWorldByName(processingObject);
         if (item != default)
         {
-            var partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            var partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetNominativeArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
             
             partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetAccusativeArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));

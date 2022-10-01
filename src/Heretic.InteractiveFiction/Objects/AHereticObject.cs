@@ -5,7 +5,7 @@ namespace Heretic.InteractiveFiction.Objects;
 public abstract partial class AHereticObject
 {
     protected string name;
-
+    
     /// <summary>
     /// This is the name of the object. This name is used as headline during printout.
     /// </summary>
@@ -170,6 +170,11 @@ public abstract partial class AHereticObject
     /// </example>
     /// </summary>
     public ICollection<Character> Characters { get; set; }
+
+    /// <summary>
+    /// The list of additional adjectives for the object.
+    /// </summary>
+    public string Adjectives { get; set; }
 
     protected AHereticObject()
     {
@@ -470,13 +475,32 @@ public abstract partial class AHereticObject
 
     protected virtual string GetObjectName()
     {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}").Trim();
+        
+        var names = this.name.Split('|');
+        
+        if (!string.IsNullOrEmpty(this.Adjectives))
+        {
+            return string.Format($"{this.Grammar.GetNominativeArticle()} {this.GetAdjectivesForName()} {names[0].Trim()}").Trim();    
+        }
+        return string.Format($"{this.Grammar.GetNominativeArticle()} {names[0].Trim()}").Trim();
     }
 
     internal virtual ICollection<string> GetNames()
     {
         return this.name.Split('|').ToList();
+    }
+    
+    internal virtual string GetAdjectivesForName()
+    {
+        var adjectiveList = new List<string>();
+        var splitList = this.Adjectives.Split('|').ToList();
+
+        foreach (var item in splitList)
+        {
+            adjectiveList.Add(item + this.Grammar.GetNominativeAdjectiveDeclination());
+        }
+
+        return string.Join(", ", adjectiveList);
     }
     
     public override string ToString()
@@ -785,5 +809,6 @@ public abstract partial class AHereticObject
         this.ClimbedDescription = string.Empty;
         this.LetterContentDescription = string.Empty;
         this.Hint = string.Empty;
+        this.Adjectives = string.Empty;
     }
 }
