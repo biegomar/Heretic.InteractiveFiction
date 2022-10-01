@@ -688,4 +688,7 @@
   <data name="ITEM_SWITCHEDOFF" xml:space="preserve">
     <value>Du hast {0} ausgeschaltet.</value>
   </data>
+  <data name="DONT_SMELL_ON_PERSON" xml:space="preserve">
+    <value>Es ist vielleicht etwas unhöflich einfach so an einer Person zu riechen.</value>
+  </data>
 </root>

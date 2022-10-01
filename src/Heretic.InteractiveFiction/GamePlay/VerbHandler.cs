@@ -1082,17 +1082,21 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SMELL == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
-
-            if (item != default)
+            var activeObject = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            
+            if (activeObject != default)
             {
-                this.objectHandler.StoreAsActiveObject(item);
+                this.objectHandler.StoreAsActiveObject(activeObject);
                 
                 try
                 {
                     var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = this.GetVerb(verb).ErrorMessage};
+                    if (activeObject is Character && string.IsNullOrEmpty(containerObjectEventArgs.OptionalErrorMessage))
+                    {
+                        containerObjectEventArgs.OptionalErrorMessage = BaseDescriptions.DONT_SMELL_ON_PERSON;
+                    }
                     
-                    item.OnSmell(containerObjectEventArgs);
+                    activeObject.OnSmell(containerObjectEventArgs);
                     
                     return true;
                 }

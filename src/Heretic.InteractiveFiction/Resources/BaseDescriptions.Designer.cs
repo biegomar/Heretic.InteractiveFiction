@@ -1184,5 +1184,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("ITEM_SWITCHEDOFF", resourceCulture);
             }
         }
+        
+        public static string DONT_SMELL_ON_PERSON {
+            get {
+                return ResourceManager.GetString("DONT_SMELL_ON_PERSON", resourceCulture);
+            }
+        }
     }
 }
