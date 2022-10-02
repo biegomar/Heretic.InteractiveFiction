@@ -1,6 +1,7 @@
+using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 
-namespace Heretic.InteractiveFiction.Objects;
+namespace Heretic.InteractiveFiction.Grammars;
 
 public sealed class Grammars
 {

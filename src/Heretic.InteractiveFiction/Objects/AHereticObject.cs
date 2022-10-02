@@ -54,7 +54,7 @@ public abstract partial class AHereticObject
     /// <summary>
     /// Used to define some grammar rules.
     /// </summary>
-    public Grammars Grammar { get; set; }
+    public Grammars.Grammars Grammar { get; set; }
     
     /// <summary>
     /// Can this object be broken?
@@ -180,7 +180,7 @@ public abstract partial class AHereticObject
     protected AHereticObject()
     {
         this.name = string.Empty;
-        this.Grammar = new Grammars();
+        this.Grammar = new Grammars.Grammars();
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.LinkedTo = new List<Item>();
