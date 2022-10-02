@@ -130,24 +130,24 @@ internal sealed class InputAnalyzer
         var item = this.objectHandler.GetObjectFromWorldByName(processingObject);
         if (item != default)
         {
-            var partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Nominative), StringComparison.InvariantCultureIgnoreCase));
+            var partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Nominative), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Nominative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
-            parts.Remove(partToRemove);
-            
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Genitive), StringComparison.InvariantCultureIgnoreCase));
-            parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Genitive, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Nominative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
             
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Dative), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Genitive), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Dative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Genitive, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
             
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Accusative), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Dative), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Accusative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Dative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Accusative), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Accusative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
         }
     }
@@ -208,7 +208,7 @@ internal sealed class InputAnalyzer
                         
                         if (isPrepositionOnly)
                         {
-                            if ((this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) || !this.grammar.HasArticle(sentence)) &&
+                            if ((this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) || !ArticleHandler.HasArticle(sentence)) &&
                                 this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence))
                             {
                                 SetVerb(possibleVerb, word);
@@ -278,7 +278,7 @@ internal sealed class InputAnalyzer
             {
                 if (itemOne != default)
                 {
-                    var article = this.grammar.GetArticleForObject(itemOne, GrammarCase.Dative);
+                    var article = ArticleHandler.GetArticleForObject(itemOne, GrammarCase.Dative);
                     if (!string.IsNullOrEmpty(article) &&
                         sentence.Contains(article, StringComparer.InvariantCultureIgnoreCase))
                     {
@@ -290,7 +290,7 @@ internal sealed class InputAnalyzer
             {
                 if (itemOne != default)
                 {
-                    var article = this.grammar.GetArticleForObject(itemOne, GrammarCase.Accusative);
+                    var article = ArticleHandler.GetArticleForObject(itemOne, GrammarCase.Accusative);
                     if (!string.IsNullOrEmpty(article) &&
                         sentence.Contains(article, StringComparer.InvariantCultureIgnoreCase))
                     {
@@ -439,7 +439,7 @@ internal sealed class InputAnalyzer
         var result = new List<string>();
         foreach (var word in sentence)
         {
-            if (this.grammar.IsPronounActiveObject(this.universe.ActiveObject, word))
+            if (PronounHandler.IsPronounRepresentingActiveObject(this.universe.ActiveObject, word))
             {
                 result.Add(GetFirstObjectNameWithoutWhitespace(this.universe.ActiveObject));
             }

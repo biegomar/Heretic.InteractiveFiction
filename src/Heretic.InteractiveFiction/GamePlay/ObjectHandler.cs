@@ -1,3 +1,4 @@
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -18,9 +19,11 @@ public sealed class ObjectHandler
         if (string.IsNullOrEmpty(key))
         {
             var upperItemName = itemName.ToUpperInvariant();
-            if (upperItemName == this.universe.ActivePlayer.Grammar.GetAccusativePronoun().ToUpperInvariant() 
-                || upperItemName == this.universe.ActivePlayer.Grammar.GetDativePronoun().ToUpperInvariant()  
-                || upperItemName == this.universe.ActivePlayer.Grammar.GetAccusativePronoun().ToUpperInvariant())
+
+            if (upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative).ToUpperInvariant()
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Genitive).ToUpperInvariant()
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Dative).ToUpperInvariant()
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative).ToUpperInvariant())
             {
                 key = this.universe.ActivePlayer.Key;
             }
@@ -262,9 +265,10 @@ public sealed class ObjectHandler
     {
         var upperItemName = itemName.ToUpperInvariant();
         var universeActiveObject = this.universe.ActiveObject;
-        if (universeActiveObject != null && (upperItemName == universeActiveObject.Grammar.GetAccusativePronoun().ToUpperInvariant() 
-                                             || upperItemName == universeActiveObject.Grammar.GetDativePronoun().ToUpperInvariant()  
-                                             || upperItemName == universeActiveObject.Grammar.GetNominativePronoun().ToUpperInvariant()))
+        if (universeActiveObject != null && (upperItemName == PronounHandler.GetPronounForObject(universeActiveObject, GrammarCase.Nominative).ToUpperInvariant() 
+                                             || upperItemName == PronounHandler.GetPronounForObject(universeActiveObject, GrammarCase.Genitive).ToUpperInvariant()
+                                             || upperItemName == PronounHandler.GetPronounForObject(universeActiveObject, GrammarCase.Dative).ToUpperInvariant()
+                                             || upperItemName == PronounHandler.GetPronounForObject(universeActiveObject, GrammarCase.Accusative).ToUpperInvariant()))
         {
             return this.universe.ActiveObject.Key;
         }

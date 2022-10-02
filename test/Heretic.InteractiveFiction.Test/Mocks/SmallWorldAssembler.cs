@@ -41,7 +41,7 @@ internal class SmallWorldAssembler: IGamePrerequisitesAssembler
             Key = "PLAYER",
             Name = "Player",
             Description = "A player",
-            Grammar = new Grammars.Grammars(isPlayer:true)
+            Grammar = new Grammars.IndividualObjectGrammar(isPlayer:true)
         };
         
         player.Items.Add(GetKnife());
@@ -74,7 +74,7 @@ internal class SmallWorldAssembler: IGamePrerequisitesAssembler
             IsPickable = false,
             IsContainer = true,
             IsSurfaceContainer = true,
-            Grammar = new Grammars.Grammars(Genders.Male)
+            Grammar = new Grammars.IndividualObjectGrammar(Genders.Male)
         };
 
         table.Items.Add(GetCandle());
@@ -103,7 +103,7 @@ internal class SmallWorldAssembler: IGamePrerequisitesAssembler
             Name = "KNIFE",
             Description = "KNIFE",
             ContainmentDescription = "KNIFE_CONTAINMENT",
-            Grammar = new Grammars.Grammars(gender: Genders.Neutrum)
+            Grammar = new Grammars.IndividualObjectGrammar(gender: Genders.Neutrum)
         };
 
         return knife;

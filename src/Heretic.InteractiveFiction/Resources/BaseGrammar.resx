@@ -192,4 +192,55 @@
     <data name="ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR" xml:space="preserve">
         <value>en</value>
     </data>
+    <data name="NOMINATIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Ich</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Wir</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Ihr</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_HE" xml:space="preserve">
+        <value>Seiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_IT" xml:space="preserve">
+        <value>Seiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Meiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_SHE" xml:space="preserve">
+        <value>Ihrer</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_THEY" xml:space="preserve">
+        <value>Ihrer</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Unser</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_YOU" xml:space="preserve">
+        <value>Deiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Euer</value>
+    </data>
+    <data name="DATIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Mir</value>
+    </data>
+    <data name="DATIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Uns</value>
+    </data>
+    <data name="DATIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Euch</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Mich</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Uns</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Euch</value>
+    </data>
 </root>

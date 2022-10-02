@@ -23,7 +23,7 @@ public class HereticObjectMock: AHereticObject
             Name = "COOKTOP",
             Description = "COOKTOP",
             IsPickable = false,
-            Grammar = new Grammars.Grammars(Genders.Neutrum)
+            Grammar = new Grammars.IndividualObjectGrammar(Genders.Neutrum)
         };
 
         return cookTop;
@@ -52,7 +52,7 @@ public class HereticObjectMock: AHereticObject
             Key = "KNIFE",
             Name = "KNIFE",
             Description = "KNIFE",
-            Grammar = new Grammars.Grammars(gender: Genders.Neutrum)
+            Grammar = new Grammars.IndividualObjectGrammar(gender: Genders.Neutrum)
         };
 
         return knife;

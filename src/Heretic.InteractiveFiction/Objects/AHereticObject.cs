@@ -54,7 +54,7 @@ public abstract partial class AHereticObject
     /// <summary>
     /// Used to define some grammar rules.
     /// </summary>
-    public Grammars.Grammars Grammar { get; set; }
+    public IndividualObjectGrammar Grammar { get; set; }
     
     /// <summary>
     /// Can this object be broken?
@@ -180,7 +180,7 @@ public abstract partial class AHereticObject
     protected AHereticObject()
     {
         this.name = string.Empty;
-        this.Grammar = new Grammars.Grammars();
+        this.Grammar = new IndividualObjectGrammar();
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.LinkedTo = new List<Item>();
@@ -478,12 +478,13 @@ public abstract partial class AHereticObject
     {
         
         var names = this.name.Split('|');
+        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Nominative);
         
         if (!string.IsNullOrEmpty(this.Adjectives))
         {
-            return string.Format($"{this.Grammar.GetNominativeArticle()} {this.GetAdjectivesForName(GrammarCase.Nominative)} {names[0].Trim()}").Trim();    
+            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Nominative)} {names[0].Trim()}").Trim();    
         }
-        return string.Format($"{this.Grammar.GetNominativeArticle()} {names[0].Trim()}").Trim();
+        return string.Format($"{article} {names[0].Trim()}").Trim();
     }
 
     internal virtual ICollection<string> GetNames()
@@ -528,53 +529,62 @@ public abstract partial class AHereticObject
     
     private string GetNominativeIndefiniteArticleName()
     {
-        var sentence = this.name.Split('|');
-        var nominative = this.Grammar.GetNominativeIndefiniteArticle();
-        if (string.IsNullOrEmpty(nominative))
-        {
-            return $" {sentence[0].Trim()}";    
-        }
+        var names = this.name.Split('|');
+        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Nominative, ArticleState.Indefinite);
         
-        return $"{nominative} {sentence[0].Trim()}";
+        if (!string.IsNullOrEmpty(this.Adjectives))
+        {
+            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Nominative)} {names[0].Trim()}").Trim();    
+        }
+        return string.Format($"{article} {names[0].Trim()}").Trim();
     }
     
     private string GetDativeIndefiniteArticleName()
     {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetDativeIndefiniteArticle()} {sentence[0].Trim()}");
+        var names = this.name.Split('|');
+        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Dative, ArticleState.Indefinite);
+        
+        if (!string.IsNullOrEmpty(this.Adjectives))
+        {
+            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Dative)} {names[0].Trim()}").Trim();    
+        }
+        return string.Format($"{article} {names[0].Trim()}").Trim();
     }
     
     private string GetDativeArticleName()
     {
         var names = this.name.Split('|');
+        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Dative);
         
         if (!string.IsNullOrEmpty(this.Adjectives))
         {
-            return string.Format($"{this.Grammar.GetDativeArticle()} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
+            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Dative)} {names[0].Trim()}").Trim();    
         }
-        return string.Format($"{this.Grammar.GetDativeArticle()} {names[0].Trim()}").Trim();
+        return string.Format($"{article} {names[0].Trim()}").Trim();
     }
     
     private string GetAccusativeIndefiniteArticleName()
     {
         var names = this.name.Split('|');
+        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Accusative, ArticleState.Indefinite);
         
         if (!string.IsNullOrEmpty(this.Adjectives))
         {
-            return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
+            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
         }
-        return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {names[0].Trim()}").Trim();
+        return string.Format($"{article} {names[0].Trim()}").Trim();
     }
     
     private string GetAccusativeArticleName()
     {
         var names = this.name.Split('|');
+        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Accusative);
         
         if (!string.IsNullOrEmpty(this.Adjectives))
         {
-            return string.Format($"{this.Grammar.GetAccusativeArticle()} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
+            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
         }
-        return string.Format($"{this.Grammar.GetAccusativeArticle()} {names[0].Trim()}").Trim();
+        return string.Format($"{article} {names[0].Trim()}").Trim();
     }
     
     public override string ToString()

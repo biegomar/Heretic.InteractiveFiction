@@ -392,5 +392,107 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR", resourceCulture);
             }
         }
+        
+        internal static string NOMINATIVE_PRONOUN_ME {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_ME", resourceCulture);
+            }
+        }
+        
+        internal static string NOMINATIVE_PRONOUN_WE {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_WE", resourceCulture);
+            }
+        }
+        
+        internal static string NOMINATIVE_PRONOUN_YOU_P {
+            get {
+                return ResourceManager.GetString("NOMINATIVE_PRONOUN_YOU_P", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_HE {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_HE", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_IT {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_IT", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_ME {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_ME", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_SHE {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_SHE", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_THEY {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_THEY", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_WE {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_WE", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_YOU {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_YOU", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_PRONOUN_YOU_P {
+            get {
+                return ResourceManager.GetString("GENITIVE_PRONOUN_YOU_P", resourceCulture);
+            }
+        }
+        
+        internal static string DATIVE_PRONOUN_ME {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_ME", resourceCulture);
+            }
+        }
+        
+        internal static string DATIVE_PRONOUN_WE {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_WE", resourceCulture);
+            }
+        }
+        
+        internal static string DATIVE_PRONOUN_YOU_P {
+            get {
+                return ResourceManager.GetString("DATIVE_PRONOUN_YOU_P", resourceCulture);
+            }
+        }
+        
+        internal static string ACCUSATIVE_PRONOUN_ME {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_ME", resourceCulture);
+            }
+        }
+        
+        internal static string ACCUSATIVE_PRONOUN_WE {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_WE", resourceCulture);
+            }
+        }
+        
+        internal static string ACCUSATIVE_PRONOUN_YOU_P {
+            get {
+                return ResourceManager.GetString("ACCUSATIVE_PRONOUN_YOU_P", resourceCulture);
+            }
+        }
     }
 }
