@@ -1,4 +1,5 @@
-﻿using Heretic.InteractiveFiction.Resources;
+﻿using Heretic.InteractiveFiction.Grammars;
+using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
@@ -480,7 +481,7 @@ public abstract partial class AHereticObject
         
         if (!string.IsNullOrEmpty(this.Adjectives))
         {
-            return string.Format($"{this.Grammar.GetNominativeArticle()} {this.GetAdjectivesForName()} {names[0].Trim()}").Trim();    
+            return string.Format($"{this.Grammar.GetNominativeArticle()} {this.GetAdjectivesForName(GrammarCase.Nominative)} {names[0].Trim()}").Trim();    
         }
         return string.Format($"{this.Grammar.GetNominativeArticle()} {names[0].Trim()}").Trim();
     }
@@ -490,17 +491,90 @@ public abstract partial class AHereticObject
         return this.name.Split('|').ToList();
     }
     
-    internal virtual string GetAdjectivesForName()
+    protected virtual string GetAdjectivesForName(GrammarCase grammarCase)
     {
         var adjectiveList = new List<string>();
         var splitList = this.Adjectives.Split('|').ToList();
 
         foreach (var item in splitList)
         {
-            adjectiveList.Add(item + this.Grammar.GetNominativeAdjectiveDeclination());
+            switch (grammarCase)
+            {
+                case GrammarCase.Nominative:
+                {
+                    adjectiveList.Add(item + this.Grammar.GetNominativeAdjectiveDeclination());
+                    break;
+                }
+                case GrammarCase.Genitive:
+                {
+                    adjectiveList.Add(item + this.Grammar.GetGenitiveAdjectiveDeclination());
+                    break;
+                }
+                case GrammarCase.Dative:
+                {
+                    adjectiveList.Add(item + this.Grammar.GetDativeAdjectiveDeclination());
+                    break;
+                }
+                case GrammarCase.Accusative:
+                {
+                    adjectiveList.Add(item + this.Grammar.GetAccusativeAdjectiveDeclination());
+                    break;
+                }
+            }
         }
 
         return string.Join(", ", adjectiveList);
+    }
+    
+    private string GetNominativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        var nominative = this.Grammar.GetNominativeIndefiniteArticle();
+        if (string.IsNullOrEmpty(nominative))
+        {
+            return $" {sentence[0].Trim()}";    
+        }
+        
+        return $"{nominative} {sentence[0].Trim()}";
+    }
+    
+    private string GetDativeIndefiniteArticleName()
+    {
+        var sentence = this.name.Split('|');
+        return string.Format($"{this.Grammar.GetDativeIndefiniteArticle()} {sentence[0].Trim()}");
+    }
+    
+    private string GetDativeArticleName()
+    {
+        var names = this.name.Split('|');
+        
+        if (!string.IsNullOrEmpty(this.Adjectives))
+        {
+            return string.Format($"{this.Grammar.GetDativeArticle()} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
+        }
+        return string.Format($"{this.Grammar.GetDativeArticle()} {names[0].Trim()}").Trim();
+    }
+    
+    private string GetAccusativeIndefiniteArticleName()
+    {
+        var names = this.name.Split('|');
+        
+        if (!string.IsNullOrEmpty(this.Adjectives))
+        {
+            return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
+        }
+        return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {names[0].Trim()}").Trim();
+    }
+    
+    private string GetAccusativeArticleName()
+    {
+        var names = this.name.Split('|');
+        
+        if (!string.IsNullOrEmpty(this.Adjectives))
+        {
+            return string.Format($"{this.Grammar.GetAccusativeArticle()} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
+        }
+        return string.Format($"{this.Grammar.GetAccusativeArticle()} {names[0].Trim()}").Trim();
     }
     
     public override string ToString()
@@ -564,43 +638,7 @@ public abstract partial class AHereticObject
         var characterNames = this.name.Split('|');
         return string.Join(", ", characterNames);
     }
-    
-    private string GetNominativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        var nominative = this.Grammar.GetNominativeIndefiniteArticle();
-        if (string.IsNullOrEmpty(nominative))
-        {
-            return $" {sentence[0].Trim()}";    
-        }
-        
-        return $"{nominative} {sentence[0].Trim()}";
-    }
-    
-    private string GetDativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetDativeIndefiniteArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetDativeArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetDativeArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetAccusativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetAccusativeArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetAccusativeArticle()} {sentence[0].Trim()}");
-    }
-    
+
     private string PrintUnhiddenObjects(ICollection<AHereticObject> unhiddenObjects, bool subItems = false)
     {
         var unhiddenObjectDescription = new StringBuilder();

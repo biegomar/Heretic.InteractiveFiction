@@ -291,9 +291,105 @@ namespace Heretic.InteractiveFiction.Resources {
             }
         }
         
-        internal static string ADJECTIVE_DECLINATION_NOMINATIVE_PLURAL {
+        internal static string ADJECTIVE_DECLINATION_PLURAL {
             get {
-                return ResourceManager.GetString("ADJECTIVE_DECLINATION_NOMINATIVE_PLURAL", resourceCulture);
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_PLURAL", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_ARTICLE_FEMALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("GENITIVE_ARTICLE_FEMALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_ARTICLE_MALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("GENITIVE_ARTICLE_MALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_ARTICLE_NEUTRUM_SINGULAR {
+            get {
+                return ResourceManager.GetString("GENITIVE_ARTICLE_NEUTRUM_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_ARTICLE_PLURAL {
+            get {
+                return ResourceManager.GetString("GENITIVE_ARTICLE_PLURAL", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_INDEFINITEARTICLE_FEMALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("GENITIVE_INDEFINITEARTICLE_FEMALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_INDEFINITEARTICLE_MALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("GENITIVE_INDEFINITEARTICLE_MALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string GENITIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR {
+            get {
+                return ResourceManager.GetString("GENITIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_GENITIVE_FEMALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_GENITIVE_FEMALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_GENITIVE_MALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_GENITIVE_MALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_GENITIVE_NEUTRUM_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_GENITIVE_NEUTRUM_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_ACCUSATIVE_FEMALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_ACCUSATIVE_FEMALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_ACCUSATIVE_MALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_ACCUSATIVE_MALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_ACCUSATIVE_NEUTRUM_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_ACCUSATIVE_NEUTRUM_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_DATIVE_FEMALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_DATIVE_FEMALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_DATIVE_MALE_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_DATIVE_MALE_SINGULAR", resourceCulture);
+            }
+        }
+        
+        internal static string ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR {
+            get {
+                return ResourceManager.GetString("ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR", resourceCulture);
             }
         }
     }

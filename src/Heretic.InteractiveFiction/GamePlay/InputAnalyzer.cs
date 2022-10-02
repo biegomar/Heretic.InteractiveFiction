@@ -130,20 +130,24 @@ internal sealed class InputAnalyzer
         var item = this.objectHandler.GetObjectFromWorldByName(processingObject);
         if (item != default)
         {
-            var partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetNominativeArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            var partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Nominative), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Nominative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
             
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetAccusativeArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Genitive), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetAccusativeIndefiniteArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
-            parts.Remove(partToRemove);
-            
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetDativeArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
-            parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetDativeIndefiniteArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Genitive, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
             
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetNominativeIndefiniteArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Dative), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Dative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            
+            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Accusative), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item, GrammarCase.Accusative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
         }
     }
@@ -274,7 +278,7 @@ internal sealed class InputAnalyzer
             {
                 if (itemOne != default)
                 {
-                    var article = this.grammar.GetDativeArticleForObject(itemOne);
+                    var article = this.grammar.GetArticleForObject(itemOne, GrammarCase.Dative);
                     if (!string.IsNullOrEmpty(article) &&
                         sentence.Contains(article, StringComparer.InvariantCultureIgnoreCase))
                     {
@@ -286,7 +290,7 @@ internal sealed class InputAnalyzer
             {
                 if (itemOne != default)
                 {
-                    var article = this.grammar.GetAccusativeArticleForObject(itemOne);
+                    var article = this.grammar.GetArticleForObject(itemOne, GrammarCase.Accusative);
                     if (!string.IsNullOrEmpty(article) &&
                         sentence.Contains(article, StringComparer.InvariantCultureIgnoreCase))
                     {

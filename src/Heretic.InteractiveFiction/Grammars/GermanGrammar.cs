@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Resources;
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
@@ -61,7 +62,41 @@ public class GermanGrammar: IGrammar
         return false;
     }
 
-    public string GetNominativeArticleForObject(AHereticObject processingObject)
+    public string GetArticleForObject(AHereticObject processingObject, GrammarCase grammarCase, ArticleState articleState = ArticleState.Definite)
+    {
+        return articleState switch
+        {
+            ArticleState.Definite => GetDefiniteArticleForObject(processingObject, grammarCase),
+            ArticleState.Indefinite => GetIndefiniteArticleForObject(processingObject, grammarCase),
+            _ => throw new ArgumentOutOfRangeException(nameof(articleState), articleState, null)
+        };
+    }
+
+    private string GetDefiniteArticleForObject(AHereticObject processingObject, GrammarCase grammarCase)
+    {
+        return grammarCase switch
+        {
+            GrammarCase.Nominative => GetNominativeArticleForObject(processingObject),
+            GrammarCase.Genitive => GetGenitiveArticleForObject(processingObject),
+            GrammarCase.Dative => GetDativeArticleForObject(processingObject),
+            GrammarCase.Accusative => GetAccusativeArticleForObject(processingObject),
+            _ => throw new ArgumentOutOfRangeException(nameof(grammarCase), grammarCase, null)
+        };
+    }
+    
+    private string GetIndefiniteArticleForObject(AHereticObject processingObject, GrammarCase grammarCase)
+    {
+        return grammarCase switch
+        {
+            GrammarCase.Nominative => GetNominativeIndefiniteArticleForObject(processingObject),
+            GrammarCase.Genitive => GetGenitiveIndefiniteArticleForObject(processingObject),
+            GrammarCase.Dative => GetDativeIndefiniteArticleForObject(processingObject),
+            GrammarCase.Accusative => GetAccusativeIndefiniteArticleForObject(processingObject),
+            _ => throw new ArgumentOutOfRangeException(nameof(grammarCase), grammarCase, null)
+        };
+    }
+    
+    private string GetNominativeArticleForObject(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -80,7 +115,7 @@ public class GermanGrammar: IGrammar
         return BaseGrammar.NOMINATIVE_ARTICLE_PLURAL;
     }
 
-    public string GetNominativeIndefiniteArticleForObject(AHereticObject processingObject)
+    private string GetNominativeIndefiniteArticleForObject(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -98,8 +133,46 @@ public class GermanGrammar: IGrammar
         
         return string.Empty;
     }
+    
+    private string GetGenitiveArticleForObject(AHereticObject processingObject)
+    {
+        if (processingObject.Grammar.IsSingular)
+        {
+            var result = processingObject.Grammar.Gender switch
+            {
+                Genders.Female => BaseGrammar.GENITIVE_ARTICLE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.GENITIVE_ARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.GENITIVE_ARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.GENITIVE_ARTICLE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.GENITIVE_ARTICLE_NEUTRUM_SINGULAR
+            };
 
-    public string GetDativeIndefiniteArticleForObject(AHereticObject processingObject)
+            return result;
+        }
+
+        return BaseGrammar.GENITIVE_ARTICLE_PLURAL;
+    }
+    
+    private string GetGenitiveIndefiniteArticleForObject(AHereticObject processingObject)
+    {
+        if (processingObject.Grammar.IsSingular)
+        {
+            var result = processingObject.Grammar.Gender switch
+            {
+                Genders.Female => BaseGrammar.GENITIVE_INDEFINITEARTICLE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.GENITIVE_INDEFINITEARTICLE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.GENITIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.GENITIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.GENITIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR
+            };
+
+            return result;
+        }
+
+        return string.Empty;
+    }
+
+    private string GetDativeIndefiniteArticleForObject(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -118,7 +191,7 @@ public class GermanGrammar: IGrammar
         return string.Empty;
     }
 
-    public string GetDativeArticleForObject(AHereticObject processingObject)
+    private string GetDativeArticleForObject(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -137,7 +210,7 @@ public class GermanGrammar: IGrammar
         return BaseGrammar.DATIVE_ARTICLE_PLURAL;
     }
 
-    public string GetAccusativeIndefiniteArticleForObject(AHereticObject processingObject)
+    private string GetAccusativeIndefiniteArticleForObject(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -156,7 +229,7 @@ public class GermanGrammar: IGrammar
         return string.Empty;
     }
 
-    public string GetAccusativeArticleForObject(AHereticObject processingObject)
+    private string GetAccusativeArticleForObject(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)
         {

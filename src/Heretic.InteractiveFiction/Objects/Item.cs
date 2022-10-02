@@ -1,4 +1,5 @@
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+using Heretic.InteractiveFiction.Grammars;
 
 namespace Heretic.InteractiveFiction.Objects;
 

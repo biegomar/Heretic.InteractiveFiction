@@ -141,7 +141,55 @@
     <data name="ADJECTIVE_DECLINATION_NOMINATIVE_NEUTRUM_SINGULAR" xml:space="preserve">
         <value>e</value>
     </data>
-    <data name="ADJECTIVE_DECLINATION_NOMINATIVE_PLURAL" xml:space="preserve">
+    <data name="ADJECTIVE_DECLINATION_PLURAL" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>Der</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_MALE_SINGULAR" xml:space="preserve">
+        <value>Des</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>Des</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_PLURAL" xml:space="preserve">
+        <value>Der</value>
+    </data>
+    <data name="GENITIVE_INDEFINITEARTICLE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>Einer</value>
+    </data>
+    <data name="GENITIVE_INDEFINITEARTICLE_MALE_SINGULAR" xml:space="preserve">
+        <value>Eines</value>
+    </data>
+    <data name="GENITIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>Eines</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_GENITIVE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_GENITIVE_MALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_GENITIVE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_ACCUSATIVE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>e</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_ACCUSATIVE_MALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_ACCUSATIVE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>e</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_DATIVE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_DATIVE_MALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR" xml:space="preserve">
         <value>en</value>
     </data>
 </root>

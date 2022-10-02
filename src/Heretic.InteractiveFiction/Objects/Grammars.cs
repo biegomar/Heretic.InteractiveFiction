@@ -80,7 +80,64 @@ public sealed class Grammars
             return result;
         }
 
-        return BaseGrammar.ADJECTIVE_DECLINATION_NOMINATIVE_PLURAL;
+        return BaseGrammar.ADJECTIVE_DECLINATION_PLURAL;
+    }
+    
+    public string GetGenitiveAdjectiveDeclination()
+    {
+        if (IsSingular)
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => BaseGrammar.ADJECTIVE_DECLINATION_GENITIVE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.ADJECTIVE_DECLINATION_GENITIVE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.ADJECTIVE_DECLINATION_GENITIVE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.ADJECTIVE_DECLINATION_GENITIVE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.ADJECTIVE_DECLINATION_GENITIVE_NEUTRUM_SINGULAR
+            };
+
+            return result;
+        }
+
+        return BaseGrammar.ADJECTIVE_DECLINATION_PLURAL;
+    }
+    
+    public string GetDativeAdjectiveDeclination()
+    {
+        if (IsSingular)
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => BaseGrammar.ADJECTIVE_DECLINATION_DATIVE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.ADJECTIVE_DECLINATION_DATIVE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR
+            };
+
+            return result;
+        }
+
+        return BaseGrammar.ADJECTIVE_DECLINATION_PLURAL;
+    }
+    
+    public string GetAccusativeAdjectiveDeclination()
+    {
+        if (IsSingular)
+        {
+            var result = this.Gender switch
+            {
+                Genders.Female => BaseGrammar.ADJECTIVE_DECLINATION_ACCUSATIVE_FEMALE_SINGULAR,
+                Genders.Male => BaseGrammar.ADJECTIVE_DECLINATION_ACCUSATIVE_MALE_SINGULAR,
+                Genders.Neutrum => BaseGrammar.ADJECTIVE_DECLINATION_ACCUSATIVE_NEUTRUM_SINGULAR,
+                Genders.Unknown => BaseGrammar.ADJECTIVE_DECLINATION_ACCUSATIVE_NEUTRUM_SINGULAR,
+                _ => BaseGrammar.ADJECTIVE_DECLINATION_ACCUSATIVE_NEUTRUM_SINGULAR
+            };
+
+            return result;
+        }
+
+        return BaseGrammar.ADJECTIVE_DECLINATION_PLURAL;
     }
     
     public string GetNominativePronoun()

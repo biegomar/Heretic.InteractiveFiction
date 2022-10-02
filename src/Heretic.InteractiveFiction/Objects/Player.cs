@@ -1,3 +1,4 @@
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
