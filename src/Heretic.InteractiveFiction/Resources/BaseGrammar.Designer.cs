@@ -494,5 +494,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("ACCUSATIVE_PRONOUN_YOU_P", resourceCulture);
             }
         }
+        
+        internal static string PLAYER {
+            get {
+                return ResourceManager.GetString("PLAYER", resourceCulture);
+            }
+        }
     }
 }

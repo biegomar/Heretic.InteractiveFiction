@@ -20,10 +20,15 @@ public sealed class ObjectHandler
         {
             var upperItemName = itemName.ToUpperInvariant();
 
-            if (upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative).ToUpperInvariant()
+            if (upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative, PersonView.FirstPerson).ToUpperInvariant()
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative).ToUpperInvariant()
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Genitive,PersonView.FirstPerson).ToUpperInvariant()
                 || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Genitive).ToUpperInvariant()
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Dative,PersonView.FirstPerson).ToUpperInvariant()
                 || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Dative).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative).ToUpperInvariant())
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative,PersonView.FirstPerson).ToUpperInvariant()
+                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative).ToUpperInvariant()
+                || upperItemName == this.universe.ActivePlayer.Name.ToUpperInvariant())
             {
                 key = this.universe.ActivePlayer.Key;
             }
@@ -218,18 +223,18 @@ public sealed class ObjectHandler
 
     private string GetKeyByNameFromAllResources(string name)
     {
-        var key = this.GetKeyByName(name, this.universe.CharacterResources);
+        var key = this.GetCharacterKeyByName(name);
         if (string.IsNullOrEmpty(key))
         {
-            key = this.GetKeyByName(name, this.universe.ItemResources);
+            key = this.GetItemKeyByName(name);
             
             if (string.IsNullOrEmpty(key))
             {
-                key = this.GetKeyByName(name, this.universe.LocationResources);
+                key = this.GetLocationKeyByName(name);
                 
                 if (string.IsNullOrEmpty(key))
                 {
-                    key = this.GetKeyByName(name, this.universe.ConversationAnswersResources);
+                    key = this.GetConversationAnswerKeyByName(name);
                 }
             }
         }

@@ -604,6 +604,24 @@ internal sealed class VerbHandler
     }
 
 
+    internal bool AlterEgo(string verb)
+    {
+        if (VerbKeys.ALTER_EGO == verb)
+        {
+            var item = this.universe.ActiveObject ?? this.universe.ActivePlayer;
+            if (item != default)
+            {
+                var result = printingSubsystem.AlterEgo(item);
+                return result;
+            }
+
+            return printingSubsystem.ItemNotVisible();
+
+        }
+
+        return false;
+    }
+    
     internal bool AlterEgo(string verb, string processingObject)
     {
         if (VerbKeys.ALTER_EGO == verb)
@@ -611,6 +629,7 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
+                this.objectHandler.StoreAsActiveObject(item);
                 var result = printingSubsystem.AlterEgo(item);
                 return result;
             }

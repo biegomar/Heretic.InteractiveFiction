@@ -97,6 +97,7 @@ public sealed class InputProcessor
         result = result || verbHandler.SitDown(verb);
         result = result || verbHandler.StandUp(verb);
         result = result || verbHandler.Descend(verb);
+        result = result || verbHandler.AlterEgo(verb);
         result = result || verbHandler.Wait(verb);
         result = result || verbHandler.Sleep(verb);
         result = result || verbHandler.Smell(verb);

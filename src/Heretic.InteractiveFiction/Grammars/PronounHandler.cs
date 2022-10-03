@@ -9,10 +9,14 @@ public static class PronounHandler
     {
         var upperItemName = pronoun.ToUpperInvariant();
         
-        if (activeObject != null && (upperItemName == GetNominativePronounForObject(activeObject).ToUpperInvariant() 
-                                     || upperItemName == GetGenitivePronounForObject(activeObject).ToUpperInvariant() 
-                                     || upperItemName == GetDativePronounForObject(activeObject).ToUpperInvariant() 
-                                     || upperItemName == GetAccusativePronounForObject(activeObject).ToUpperInvariant()))
+        if (activeObject != null && (upperItemName == GetNominativePronounForObject(activeObject, PersonView.FirstPerson).ToUpperInvariant() 
+                                     || upperItemName == GetNominativePronounForObject(activeObject, PersonView.SecondPerson).ToUpperInvariant() 
+                                     || upperItemName == GetGenitivePronounForObject(activeObject, PersonView.FirstPerson).ToUpperInvariant()
+                                     || upperItemName == GetGenitivePronounForObject(activeObject, PersonView.SecondPerson).ToUpperInvariant()
+                                     || upperItemName == GetDativePronounForObject(activeObject, PersonView.FirstPerson).ToUpperInvariant()
+                                     || upperItemName == GetDativePronounForObject(activeObject, PersonView.SecondPerson).ToUpperInvariant()
+                                     || upperItemName == GetAccusativePronounForObject(activeObject, PersonView.FirstPerson).ToUpperInvariant()
+                                     || upperItemName == GetAccusativePronounForObject(activeObject, PersonView.SecondPerson).ToUpperInvariant()))
         {
             return true;
         }
@@ -20,19 +24,19 @@ public static class PronounHandler
         return false;
     }
     
-    public static string GetPronounForObject(AHereticObject processingObject, GrammarCase grammarCase)
+    public static string GetPronounForObject(AHereticObject processingObject, GrammarCase grammarCase, PersonView personView = PersonView.SecondPerson)
     {
         return grammarCase switch
         {
-            GrammarCase.Nominative => GetNominativePronounForObject(processingObject),
-            GrammarCase.Genitive => GetGenitivePronounForObject(processingObject),
-            GrammarCase.Dative => GetDativePronounForObject(processingObject),
-            GrammarCase.Accusative => GetAccusativePronounForObject(processingObject),
+            GrammarCase.Nominative => GetNominativePronounForObject(processingObject, personView),
+            GrammarCase.Genitive => GetGenitivePronounForObject(processingObject, personView),
+            GrammarCase.Dative => GetDativePronounForObject(processingObject, personView),
+            GrammarCase.Accusative => GetAccusativePronounForObject(processingObject, personView),
             _ => throw new ArgumentOutOfRangeException(nameof(grammarCase), grammarCase, null)
         };
     }
     
-    private static string GetNominativePronounForObject(AHereticObject processingObject)
+    private static string GetNominativePronounForObject(AHereticObject processingObject, PersonView personView)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -45,13 +49,18 @@ public static class PronounHandler
                 _ => BaseGrammar.NOMINATIVE_PRONOUN_SHE
             };
 
-            return processingObject is Player ? BaseGrammar.NOMINATIVE_PRONOUN_YOU : result;
+            var personViewPronoun = BaseGrammar.NOMINATIVE_PRONOUN_YOU;
+            if (personView == PersonView.FirstPerson)
+            {
+                personViewPronoun = BaseGrammar.NOMINATIVE_PRONOUN_ME;
+            }
+            return processingObject is Player ? personViewPronoun : result;
         }
         
         return BaseGrammar.NOMINATIVE_PRONOUN_THEY;
     }
 
-    private static string GetGenitivePronounForObject(AHereticObject processingObject)
+    private static string GetGenitivePronounForObject(AHereticObject processingObject, PersonView personView)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -64,13 +73,18 @@ public static class PronounHandler
                 _ => BaseGrammar.GENITIVE_PRONOUN_SHE
             };
 
-            return processingObject is Player ? BaseGrammar.GENITIVE_PRONOUN_YOU : result;
+            var personViewPronoun = BaseGrammar.GENITIVE_PRONOUN_YOU;
+            if (personView == PersonView.FirstPerson)
+            {
+                personViewPronoun = BaseGrammar.GENITIVE_PRONOUN_ME;
+            }
+            return processingObject is Player ? personViewPronoun : result;
         }
         
         return BaseGrammar.GENITIVE_PRONOUN_THEY;
     }
     
-    private static string GetDativePronounForObject(AHereticObject processingObject)
+    private static string GetDativePronounForObject(AHereticObject processingObject, PersonView personView)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -83,13 +97,18 @@ public static class PronounHandler
                 _ => BaseGrammar.DATIVE_PRONOUN_SHE
             };
 
-            return processingObject is Player ? BaseGrammar.DATIVE_PRONOUN_YOU : result;
+            var personViewPronoun = BaseGrammar.DATIVE_PRONOUN_YOU;
+            if (personView == PersonView.FirstPerson)
+            {
+                personViewPronoun = BaseGrammar.DATIVE_PRONOUN_ME;
+            }
+            return processingObject is Player ? personViewPronoun : result;
         }
         
         return BaseGrammar.DATIVE_PRONOUN_THEY;
     }
 
-    private static string GetAccusativePronounForObject(AHereticObject processingObject)
+    private static string GetAccusativePronounForObject(AHereticObject processingObject, PersonView personView)
     {
         if (processingObject.Grammar.IsSingular)
         {
@@ -102,7 +121,12 @@ public static class PronounHandler
                 _ => BaseGrammar.ACCUSATIVE_PRONOUN_SHE
             };
 
-            return processingObject is Player ? BaseGrammar.ACCUSATIVE_PRONOUN_YOU : result;
+            var personViewPronoun = BaseGrammar.ACCUSATIVE_PRONOUN_YOU;
+            if (personView == PersonView.FirstPerson)
+            {
+                personViewPronoun = BaseGrammar.ACCUSATIVE_PRONOUN_ME;
+            }
+            return processingObject is Player ? personViewPronoun : result;
         }
         
         return BaseGrammar.ACCUSATIVE_PRONOUN_THEY;

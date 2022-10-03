@@ -29,6 +29,11 @@ public sealed class Player : AHereticObject
 
     protected override string GetObjectName()
     {
+        if (this.IsStranger)
+        {
+            return "Fremder";
+        }
+        
         var sentence = this.name.Split('|');
         return sentence[0].Trim();
     }

@@ -439,7 +439,11 @@ internal sealed class InputAnalyzer
         var result = new List<string>();
         foreach (var word in sentence)
         {
-            if (PronounHandler.IsPronounRepresentingActiveObject(this.universe.ActiveObject, word))
+            if (PronounHandler.IsPronounRepresentingActiveObject(this.universe.ActivePlayer, word))
+            {
+                result.Add(word);
+            }
+            else if (PronounHandler.IsPronounRepresentingActiveObject(this.universe.ActiveObject, word))
             {
                 result.Add(GetFirstObjectNameWithoutWhitespace(this.universe.ActiveObject));
             }
