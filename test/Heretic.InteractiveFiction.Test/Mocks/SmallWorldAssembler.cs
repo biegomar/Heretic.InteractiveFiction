@@ -41,7 +41,7 @@ internal class SmallWorldAssembler: IGamePrerequisitesAssembler
             Key = "PLAYER",
             Name = "Player",
             Description = "A player",
-            Grammar = new Grammars.IndividualObjectGrammar(isPlayer:true)
+            Grammar = new Grammars.IndividualObjectGrammar()
         };
         
         player.Items.Add(GetKnife());

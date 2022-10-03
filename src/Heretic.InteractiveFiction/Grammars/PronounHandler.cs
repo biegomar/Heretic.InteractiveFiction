@@ -45,7 +45,7 @@ public static class PronounHandler
                 _ => BaseGrammar.NOMINATIVE_PRONOUN_SHE
             };
 
-            return processingObject.Grammar.IsPlayer ? BaseGrammar.NOMINATIVE_PRONOUN_YOU : result;
+            return processingObject is Player ? BaseGrammar.NOMINATIVE_PRONOUN_YOU : result;
         }
         
         return BaseGrammar.NOMINATIVE_PRONOUN_THEY;
@@ -64,7 +64,7 @@ public static class PronounHandler
                 _ => BaseGrammar.GENITIVE_PRONOUN_SHE
             };
 
-            return processingObject.Grammar.IsPlayer ? BaseGrammar.GENITIVE_PRONOUN_YOU : result;
+            return processingObject is Player ? BaseGrammar.GENITIVE_PRONOUN_YOU : result;
         }
         
         return BaseGrammar.GENITIVE_PRONOUN_THEY;
@@ -83,7 +83,7 @@ public static class PronounHandler
                 _ => BaseGrammar.DATIVE_PRONOUN_SHE
             };
 
-            return processingObject.Grammar.IsPlayer ? BaseGrammar.DATIVE_PRONOUN_YOU : result;
+            return processingObject is Player ? BaseGrammar.DATIVE_PRONOUN_YOU : result;
         }
         
         return BaseGrammar.DATIVE_PRONOUN_THEY;
@@ -102,7 +102,7 @@ public static class PronounHandler
                 _ => BaseGrammar.ACCUSATIVE_PRONOUN_SHE
             };
 
-            return processingObject.Grammar.IsPlayer ? BaseGrammar.ACCUSATIVE_PRONOUN_YOU : result;
+            return processingObject is Player ? BaseGrammar.ACCUSATIVE_PRONOUN_YOU : result;
         }
         
         return BaseGrammar.ACCUSATIVE_PRONOUN_THEY;

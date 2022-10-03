@@ -494,35 +494,9 @@ public abstract partial class AHereticObject
     
     protected virtual string GetAdjectivesForName(GrammarCase grammarCase)
     {
-        var adjectiveList = new List<string>();
         var splitList = this.Adjectives.Split('|').ToList();
 
-        foreach (var item in splitList)
-        {
-            switch (grammarCase)
-            {
-                case GrammarCase.Nominative:
-                {
-                    adjectiveList.Add(item + this.Grammar.GetNominativeAdjectiveDeclination());
-                    break;
-                }
-                case GrammarCase.Genitive:
-                {
-                    adjectiveList.Add(item + this.Grammar.GetGenitiveAdjectiveDeclination());
-                    break;
-                }
-                case GrammarCase.Dative:
-                {
-                    adjectiveList.Add(item + this.Grammar.GetDativeAdjectiveDeclination());
-                    break;
-                }
-                case GrammarCase.Accusative:
-                {
-                    adjectiveList.Add(item + this.Grammar.GetAccusativeAdjectiveDeclination());
-                    break;
-                }
-            }
-        }
+        var adjectiveList = splitList.Select(item => item + AdjectiveDeclinationHandler.GetAdjectiveDeclinationForObject(this, grammarCase)).ToList();
 
         return string.Join(", ", adjectiveList);
     }
