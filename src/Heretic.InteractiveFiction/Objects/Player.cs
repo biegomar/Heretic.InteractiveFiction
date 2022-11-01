@@ -117,7 +117,7 @@ public sealed class Player : AHereticObject
 
         if (this.IsSitting && this.Seat != default)
         {
-            var seatName = ArticleHandler.GetNameWithArticleForObject(this.Seat, GrammarCase.Dative).LowerFirstChar();
+            var seatName = ArticleHandler.GetNameWithArticleForObject(this.Seat, GrammarCase.Dative, lowerFirstCharacter: true);
             result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, seatName));
         }
         
@@ -125,8 +125,7 @@ public sealed class Player : AHereticObject
         {
             if (string.IsNullOrEmpty(this.ClimbedObject.ClimbedDescription))
             {
-                var climbedName = ArticleHandler.GetNameWithArticleForObject(this.ClimbedObject, GrammarCase.Accusative)
-                    .LowerFirstChar();
+                var climbedName = ArticleHandler.GetNameWithArticleForObject(this.ClimbedObject, GrammarCase.Accusative, lowerFirstCharacter: true);
                 result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, climbedName));    
             }
             else
@@ -176,9 +175,7 @@ public sealed class Player : AHereticObject
                     result.Append(", ");    
                 }
 
-                var clothName = ArticleHandler
-                    .GetNameWithArticleForObject(cloth, GrammarCase.Accusative, ArticleState.Indefinite)
-                    .LowerFirstChar();
+                var clothName = ArticleHandler.GetNameWithArticleForObject(cloth, GrammarCase.Accusative, ArticleState.Indefinite, lowerFirstCharacter: true);
                 result.Append(clothName);
                 itemIndex++;
             }

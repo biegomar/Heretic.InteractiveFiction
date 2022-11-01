@@ -598,13 +598,13 @@ public abstract partial class AHereticObject
                     if (subItems)
                     {
                         var lowerName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Nominative,
-                            ArticleState.Indefinite).LowerFirstChar().Trim();
+                            ArticleState.Indefinite, true).Trim();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
                     else
                     {
                         var lowerName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
-                            ArticleState.Indefinite).LowerFirstChar();
+                            ArticleState.Indefinite, true);
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
 
@@ -683,7 +683,7 @@ public abstract partial class AHereticObject
                     linkedObjectDescription.Append(", ");
                 }
 
-                var linkedObjectName = ArticleHandler.GetNameWithArticleForObject(linkedItem, GrammarCase.Dative, ArticleState.Indefinite).LowerFirstChar();
+                var linkedObjectName = ArticleHandler.GetNameWithArticleForObject(linkedItem, GrammarCase.Dative, ArticleState.Indefinite, lowerFirstCharacter: true);
                 linkedObjectDescription.Append(linkedObjectName);
 
                 linkedItemIndex++;

@@ -500,8 +500,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemPickupSuccess(AHereticObject item)
     {
-        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-            .LowerFirstChar();
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
@@ -511,8 +510,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (string.IsNullOrEmpty(item.UnDropAbleDescription))
         {
-            var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-                .LowerFirstChar();
+            var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
             Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), itemName);
             Console.WriteLine();
             
@@ -588,7 +586,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemSeated(AHereticObject item)
     {
-        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative).LowerFirstChar();
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
@@ -596,8 +594,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemNotSeatable(AHereticObject item)
     {
-        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-            .LowerFirstChar();
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
@@ -643,8 +640,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemDropSuccess(AHereticObject item)
     {
-        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-            .LowerFirstChar();
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
@@ -652,10 +648,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public bool ItemDropSuccess(AHereticObject itemToDrop, AHereticObject containerItem)
     {
-        var itemToDropName = ArticleHandler.GetNameWithArticleForObject(itemToDrop, GrammarCase.Accusative)
-            .LowerFirstChar();
-        var containerItemName = ArticleHandler.GetNameWithArticleForObject(containerItem, GrammarCase.Accusative)
-            .LowerFirstChar();
+        var itemToDropName = ArticleHandler.GetNameWithArticleForObject(itemToDrop, GrammarCase.Accusative, lowerFirstCharacter: true);
+        var containerItemName = ArticleHandler.GetNameWithArticleForObject(containerItem, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(
             containerItem.IsSurfaceContainer
                 ? WordWrap(BaseDescriptions.ITEM_DROP_ONTO, this.ConsoleWidth)
@@ -850,8 +844,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ImpossibleLock(AHereticObject item)
     {
-        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-            .LowerFirstChar();
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_LOCK, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
@@ -859,8 +852,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     
     public virtual bool ImpossibleUnlock(AHereticObject item)
     {
-        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-            .LowerFirstChar();
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;

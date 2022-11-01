@@ -139,8 +139,8 @@ public abstract partial class AHereticObject
             }
             else if (eventArgs.ItemToUse != default)
             {
-                var itemToUseName = ArticleHandler.GetNameWithArticleForObject(eventArgs.ItemToUse, GrammarCase.Dative).LowerFirstChar();
-                var itemName = ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Accusative).LowerFirstChar();
+                var itemToUseName = ArticleHandler.GetNameWithArticleForObject(eventArgs.ItemToUse, GrammarCase.Dative, lowerFirstCharacter: true);
+                var itemName = ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Accusative, lowerFirstCharacter: true);
                 throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT, itemName, itemToUseName));    
             }
             
@@ -213,7 +213,7 @@ public abstract partial class AHereticObject
             {
                 throw new PullException(eventArgs.OptionalErrorMessage);
             }
-            throw new PullException(string.Format(BaseDescriptions.PULL_DOES_NOT_WORK, ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Dative).LowerFirstChar()));
+            throw new PullException(string.Format(BaseDescriptions.PULL_DOES_NOT_WORK, ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Dative, lowerFirstCharacter: true)));
         }
     }
 

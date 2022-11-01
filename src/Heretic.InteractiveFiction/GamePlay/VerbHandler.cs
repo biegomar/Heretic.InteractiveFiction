@@ -170,8 +170,7 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
-                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-                    .LowerFirstChar();
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
                 
                 if (item.IsEatable)
                 {
@@ -234,9 +233,8 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
-                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-                    .LowerFirstChar();
-                
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+
                 this.objectHandler.StoreAsActiveObject(item);
                 
                 if (item.IsSwitchable)
@@ -294,9 +292,8 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
-                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-                    .LowerFirstChar();
-                
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+
                 this.objectHandler.StoreAsActiveObject(item);
                 
                 if (item.IsSwitchable)
@@ -360,8 +357,7 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
-                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-                    .LowerFirstChar();
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
                 
                 this.objectHandler.StoreAsActiveObject(item);
                 
@@ -423,9 +419,8 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
-                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-                    .LowerFirstChar();
-                
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+
                 if (item.IsDrinkable)
                 {
                     try
@@ -767,10 +762,10 @@ internal sealed class VerbHandler
                     var errorMessage = this.GetVerb(verb).ErrorMessage;
                     if (!string.IsNullOrEmpty(errorMessage))
                     {
-                        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative).LowerFirstChar();
-                       optionalErrorMessage = string.Format(errorMessage, itemName); 
+                        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true);
+                        optionalErrorMessage = string.Format(errorMessage, itemName);
                     }
-                        
+
                     var useItemEventArgs = new UseItemEventArgs() {OptionalErrorMessage = optionalErrorMessage};
                     
                     item.OnUse(useItemEventArgs);
@@ -1264,9 +1259,8 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
-                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
-                    .LowerFirstChar();
-                
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+
                 if (item.IsClimbable)
                 {
                     if (!this.universe.ActivePlayer.HasClimbed)
@@ -1282,7 +1276,7 @@ internal sealed class VerbHandler
 
                             item.OnAfterClimb(eventArgs);
                 
-                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, itemName, true);
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, itemName);
                         }
                         catch (ClimbException ex)
                         {
@@ -1293,7 +1287,7 @@ internal sealed class VerbHandler
                     }
 
                     return this.universe.ActivePlayer.ClimbedObject == item ? 
-                        printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_CLIMBED_ITEM, itemName.LowerFirstChar()) : 
+                        printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_CLIMBED_ITEM, itemName) : 
                         printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
                 }
 
@@ -1683,8 +1677,7 @@ internal sealed class VerbHandler
                     }
                 }
 
-                var itemName = ArticleHandler.GetNameWithArticleForObject(compareItem, GrammarCase.Dative)
-                    .LowerFirstChar();
+                var itemName = ArticleHandler.GetNameWithArticleForObject(compareItem, GrammarCase.Dative, lowerFirstCharacter: true);
                 return printingSubsystem.FormattedResource(BaseDescriptions.NOT_CLIMBED_ON_ITEM, itemName);
             }
             
@@ -1939,8 +1932,7 @@ internal sealed class VerbHandler
 
                                     item.IsLocked = false;
                                     item.OnUnlock(unlockContainerEventArgs);
-                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key, GrammarCase.Accusative)
-                                        .LowerFirstChar();
+                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key, GrammarCase.Accusative, lowerFirstCharacter: true);
                                     printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName, item.Name));
                                     
                                     item.OnAfterUnlock(unlockContainerEventArgs);
@@ -2053,8 +2045,7 @@ internal sealed class VerbHandler
 
                                     item.IsLocked = true;
                                     item.OnLock(lockContainerEventArgs);
-                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key, GrammarCase.Accusative)
-                                        .LowerFirstChar();
+                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key, GrammarCase.Accusative, lowerFirstCharacter: true);
                                     printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_LOCKED_WITH_KEY_FROM_INVENTORY, keyName, item.Name));
                                     
                                     item.OnAfterLock(lockContainerEventArgs);

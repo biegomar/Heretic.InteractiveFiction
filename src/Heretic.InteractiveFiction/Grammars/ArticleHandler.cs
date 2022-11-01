@@ -60,9 +60,13 @@ public static class ArticleHandler
         };
     }
     
-    public static string GetNameWithArticleForObject(AHereticObject processingObject, GrammarCase grammarCase, ArticleState articleState = ArticleState.Definite)
+    public static string GetNameWithArticleForObject(AHereticObject processingObject, GrammarCase grammarCase, ArticleState articleState = ArticleState.Definite, bool lowerFirstCharacter = false)
     {
         var article= GetArticleForObject(processingObject, grammarCase, articleState);
+        if (!string.IsNullOrWhiteSpace(article) && lowerFirstCharacter)
+        {
+            article = article.LowerFirstChar();
+        }
 
         var name = GetObjectName(processingObject);
         
