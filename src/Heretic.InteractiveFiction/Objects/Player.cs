@@ -117,14 +117,17 @@ public sealed class Player : AHereticObject
 
         if (this.IsSitting && this.Seat != default)
         {
-            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.Seat.DativeArticleName.LowerFirstChar()));
+            var seatName = ArticleHandler.GetNameWithArticleForObject(this.Seat, GrammarCase.Dative).LowerFirstChar();
+            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, seatName));
         }
         
         if (this.HasClimbed && this.ClimbedObject != default)
         {
             if (string.IsNullOrEmpty(this.ClimbedObject.ClimbedDescription))
             {
-                result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, this.ClimbedObject.AccusativeArticleName.LowerFirstChar()));    
+                var climbedName = ArticleHandler.GetNameWithArticleForObject(this.ClimbedObject, GrammarCase.Accusative)
+                    .LowerFirstChar();
+                result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, climbedName));    
             }
             else
             {
@@ -172,7 +175,11 @@ public sealed class Player : AHereticObject
                 {
                     result.Append(", ");    
                 }
-                result.Append(cloth.AccusativeIndefiniteArticleName.LowerFirstChar());
+
+                var clothName = ArticleHandler
+                    .GetNameWithArticleForObject(cloth, GrammarCase.Accusative, ArticleState.Indefinite)
+                    .LowerFirstChar();
+                result.Append(clothName);
                 itemIndex++;
             }
         }

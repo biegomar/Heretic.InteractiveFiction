@@ -60,6 +60,25 @@ public static class ArticleHandler
         };
     }
     
+    public static string GetNameWithArticleForObject(AHereticObject processingObject, GrammarCase grammarCase, ArticleState articleState = ArticleState.Definite)
+    {
+        var article= GetArticleForObject(processingObject, grammarCase, articleState);
+
+        var name = GetObjectName(processingObject);
+        
+        if (!string.IsNullOrEmpty(processingObject.Adjectives))
+        {
+            return string.Format($"{article} {AdjectiveDeclinationHandler.GetAdjectiveDeclinationForObject(processingObject, grammarCase)} {name}").Trim();    
+        }
+        return string.Format($"{article} {name}").Trim();
+    }
+
+    private static string GetObjectName(AHereticObject processingObject)
+    {
+        var names = processingObject.GetNames();
+        return names.Any() ? names.First().Trim() : string.Empty;
+    }
+
     private static string GetDefiniteArticleForObject(AHereticObject processingObject, GrammarCase grammarCase)
     {
         return grammarCase switch

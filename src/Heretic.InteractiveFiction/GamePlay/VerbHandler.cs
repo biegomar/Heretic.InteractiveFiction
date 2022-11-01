@@ -170,6 +170,9 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
+                    .LowerFirstChar();
+                
                 if (item.IsEatable)
                 {
                     try
@@ -191,8 +194,8 @@ internal sealed class VerbHandler
                         item.OnEat(itemEventArgs);
                     
                         item.OnAfterEat(itemEventArgs);
-
-                        return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_EATEN, item.AccusativeArticleName, true);
+                        
+                        return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_EATEN, itemName, true);
                     }
                     catch (EatException ex)
                     {
@@ -202,7 +205,7 @@ internal sealed class VerbHandler
 
                 this.objectHandler.StoreAsActiveObject(item);
                 
-                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_EAT, item.AccusativeArticleName, true);
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_EAT, itemName, true);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -231,6 +234,9 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
+                    .LowerFirstChar();
+                
                 this.objectHandler.StoreAsActiveObject(item);
                 
                 if (item.IsSwitchable)
@@ -248,7 +254,7 @@ internal sealed class VerbHandler
                     
                             item.OnAfterSwitchOn(itemEventArgs);
 
-                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDON, item.AccusativeArticleName, true);
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDON, itemName, true);
                         }
                         catch (SwitchOnException ex)
                         {
@@ -256,10 +262,10 @@ internal sealed class VerbHandler
                         }
                     }
                     
-                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDON, item.AccusativeArticleName, true);
+                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDON, itemName, true);
                 }
 
-                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHON, item.AccusativeArticleName, true);
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHON, itemName, true);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -288,6 +294,9 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
+                    .LowerFirstChar();
+                
                 this.objectHandler.StoreAsActiveObject(item);
                 
                 if (item.IsSwitchable)
@@ -305,7 +314,7 @@ internal sealed class VerbHandler
                     
                             item.OnAfterSwitchOff(itemEventArgs);
 
-                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDOFF, item.AccusativeArticleName, true);
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDOFF, itemName, true);
                         }
                         catch (SwitchOffException ex)
                         {
@@ -313,10 +322,10 @@ internal sealed class VerbHandler
                         }
                     }
                     
-                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDOFF, item.AccusativeArticleName, true);
+                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDOFF, itemName, true);
                 }
 
-                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHOFF, item.AccusativeArticleName, true);
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHOFF, itemName, true);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -351,6 +360,9 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
             if (item != default)
             {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
+                    .LowerFirstChar();
+                
                 this.objectHandler.StoreAsActiveObject(item);
                 
                 if (item.IsWearable)
@@ -385,7 +397,7 @@ internal sealed class VerbHandler
                     
                             item.OnAfterWear(itemEventArgs);
 
-                            return printingSubsystem.FormattedResource(BaseDescriptions.PULLON_WEARABLE, item.AccusativeArticleName, true);
+                            return printingSubsystem.FormattedResource(BaseDescriptions.PULLON_WEARABLE, itemName, true);
                         }
                         catch (WearException ex)
                         {
@@ -395,7 +407,7 @@ internal sealed class VerbHandler
                     printingSubsystem.Resource(BaseDescriptions.ALREADY_WEARING);
                 }
 
-                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_WEAR, item.AccusativeArticleName, true);
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_WEAR, itemName, true);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -411,6 +423,9 @@ internal sealed class VerbHandler
             var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
             if (item != default)
             {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
+                    .LowerFirstChar();
+                
                 if (item.IsDrinkable)
                 {
                     try
@@ -433,7 +448,7 @@ internal sealed class VerbHandler
                     
                         item.OnAfterDrink(itemEventArgs);
 
-                        return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_DRUNK, item.AccusativeArticleName, true);
+                        return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_DRUNK, itemName, true);
                     }
                     catch (DrinkException ex)
                     {
@@ -443,7 +458,7 @@ internal sealed class VerbHandler
 
                 this.objectHandler.StoreAsActiveObject(item);
                 
-                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_DRINK, item.AccusativeArticleName, true);
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_DRINK, itemName, true);
             }
 
             return printingSubsystem.ItemNotVisible();
@@ -752,7 +767,8 @@ internal sealed class VerbHandler
                     var errorMessage = this.GetVerb(verb).ErrorMessage;
                     if (!string.IsNullOrEmpty(errorMessage))
                     {
-                       optionalErrorMessage = string.Format(errorMessage, item.DativeArticleName.LowerFirstChar()); 
+                        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative).LowerFirstChar();
+                       optionalErrorMessage = string.Format(errorMessage, itemName); 
                     }
                         
                     var useItemEventArgs = new UseItemEventArgs() {OptionalErrorMessage = optionalErrorMessage};
@@ -1248,6 +1264,9 @@ internal sealed class VerbHandler
 
             if (item != default)
             {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative)
+                    .LowerFirstChar();
+                
                 if (item.IsClimbable)
                 {
                     if (!this.universe.ActivePlayer.HasClimbed)
@@ -1263,7 +1282,7 @@ internal sealed class VerbHandler
 
                             item.OnAfterClimb(eventArgs);
                 
-                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, item.AccusativeArticleName, true);
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, itemName, true);
                         }
                         catch (ClimbException ex)
                         {
@@ -1274,7 +1293,7 @@ internal sealed class VerbHandler
                     }
 
                     return this.universe.ActivePlayer.ClimbedObject == item ? 
-                        printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_CLIMBED_ITEM, item.AccusativeArticleName.LowerFirstChar()) : 
+                        printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_CLIMBED_ITEM, itemName.LowerFirstChar()) : 
                         printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
                 }
 
@@ -1471,7 +1490,7 @@ internal sealed class VerbHandler
                     this.universe.ActivePlayer.OnSitDown(sitDownEventArgs);
                     onlySeat.OnSitDown(downEventArgs);
                 
-                    var result = printingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, onlySeat.DativeArticleName, true);
+                    var result = printingSubsystem.FormattedResource(BaseDescriptions.ITEM_ONLY_SEAT, ArticleHandler.GetNameWithArticleForObject(onlySeat, GrammarCase.Dative), true);
                 
                     onlySeat.OnAfterSitDown(downEventArgs);
                     this.universe.ActivePlayer.OnAfterSitDown(sitDownEventArgs);
@@ -1664,7 +1683,9 @@ internal sealed class VerbHandler
                     }
                 }
 
-                return printingSubsystem.FormattedResource(BaseDescriptions.NOT_CLIMBED_ON_ITEM, compareItem.DativeArticleName.LowerFirstChar());
+                var itemName = ArticleHandler.GetNameWithArticleForObject(compareItem, GrammarCase.Dative)
+                    .LowerFirstChar();
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOT_CLIMBED_ON_ITEM, itemName);
             }
             
             return printingSubsystem.Resource(BaseDescriptions.NOT_CLIMBED);
@@ -1918,7 +1939,9 @@ internal sealed class VerbHandler
 
                                     item.IsLocked = false;
                                     item.OnUnlock(unlockContainerEventArgs);
-                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, key.AccusativeArticleName.LowerFirstChar(), item.Name));
+                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key, GrammarCase.Accusative)
+                                        .LowerFirstChar();
+                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName, item.Name));
                                     
                                     item.OnAfterUnlock(unlockContainerEventArgs);
                                     
@@ -2030,7 +2053,9 @@ internal sealed class VerbHandler
 
                                     item.IsLocked = true;
                                     item.OnLock(lockContainerEventArgs);
-                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_LOCKED_WITH_KEY_FROM_INVENTORY, key.AccusativeArticleName.LowerFirstChar(), item.Name));
+                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key, GrammarCase.Accusative)
+                                        .LowerFirstChar();
+                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_LOCKED_WITH_KEY_FROM_INVENTORY, keyName, item.Name));
                                     
                                     item.OnAfterLock(lockContainerEventArgs);
                                     

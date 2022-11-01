@@ -1,5 +1,6 @@
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
@@ -138,7 +139,9 @@ public abstract partial class AHereticObject
             }
             else if (eventArgs.ItemToUse != default)
             {
-                throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT, this.AccusativeArticleName.LowerFirstChar(), eventArgs.ItemToUse.DativeArticleName.LowerFirstChar()));    
+                var itemToUseName = ArticleHandler.GetNameWithArticleForObject(eventArgs.ItemToUse, GrammarCase.Dative).LowerFirstChar();
+                var itemName = ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Accusative).LowerFirstChar();
+                throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT, itemName, itemToUseName));    
             }
             
             throw new CutException(BaseDescriptions.DOES_NOT_WORK);
@@ -210,7 +213,7 @@ public abstract partial class AHereticObject
             {
                 throw new PullException(eventArgs.OptionalErrorMessage);
             }
-            throw new PullException(string.Format(BaseDescriptions.PULL_DOES_NOT_WORK, this.DativeArticleName.LowerFirstChar()));
+            throw new PullException(string.Format(BaseDescriptions.PULL_DOES_NOT_WORK, ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Dative).LowerFirstChar()));
         }
     }
 

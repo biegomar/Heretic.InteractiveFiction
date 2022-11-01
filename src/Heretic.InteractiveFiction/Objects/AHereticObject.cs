@@ -16,36 +16,6 @@ public abstract partial class AHereticObject
         set => name = value;
     }
     
-    public string AccusativeIndefiniteArticleName
-    {
-        get => this.GetAccusativeIndefiniteArticleName();
-        set => name = value;
-    }
-    
-    public string AccusativeArticleName
-    {
-        get => this.GetAccusativeArticleName();
-        set => name = value;
-    }
-    
-    public string NominativeIndefiniteArticleName
-    {
-        get => this.GetNominativeIndefiniteArticleName();
-        set => name = value;
-    }
-    
-    public string DativeIndefiniteArticleName
-    {
-        get => this.GetDativeIndefiniteArticleName();
-        set => name = value;
-    }
-    
-    public string DativeArticleName
-    {
-        get => this.GetDativeArticleName();
-        set => name = value;
-    }
-
     /// <summary>
     /// The unique key that is representing the object.
     /// </summary>
@@ -500,67 +470,7 @@ public abstract partial class AHereticObject
 
         return string.Join(", ", adjectiveList);
     }
-    
-    private string GetNominativeIndefiniteArticleName()
-    {
-        var names = this.name.Split('|');
-        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Nominative, ArticleState.Indefinite);
-        
-        if (!string.IsNullOrEmpty(this.Adjectives))
-        {
-            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Nominative)} {names[0].Trim()}").Trim();    
-        }
-        return string.Format($"{article} {names[0].Trim()}").Trim();
-    }
-    
-    private string GetDativeIndefiniteArticleName()
-    {
-        var names = this.name.Split('|');
-        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Dative, ArticleState.Indefinite);
-        
-        if (!string.IsNullOrEmpty(this.Adjectives))
-        {
-            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Dative)} {names[0].Trim()}").Trim();    
-        }
-        return string.Format($"{article} {names[0].Trim()}").Trim();
-    }
-    
-    private string GetDativeArticleName()
-    {
-        var names = this.name.Split('|');
-        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Dative);
-        
-        if (!string.IsNullOrEmpty(this.Adjectives))
-        {
-            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Dative)} {names[0].Trim()}").Trim();    
-        }
-        return string.Format($"{article} {names[0].Trim()}").Trim();
-    }
-    
-    private string GetAccusativeIndefiniteArticleName()
-    {
-        var names = this.name.Split('|');
-        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Accusative, ArticleState.Indefinite);
-        
-        if (!string.IsNullOrEmpty(this.Adjectives))
-        {
-            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
-        }
-        return string.Format($"{article} {names[0].Trim()}").Trim();
-    }
-    
-    private string GetAccusativeArticleName()
-    {
-        var names = this.name.Split('|');
-        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Accusative);
-        
-        if (!string.IsNullOrEmpty(this.Adjectives))
-        {
-            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Accusative)} {names[0].Trim()}").Trim();    
-        }
-        return string.Format($"{article} {names[0].Trim()}").Trim();
-    }
-    
+
     public override string ToString()
     {
         var description = new StringBuilder();
@@ -687,12 +597,14 @@ public abstract partial class AHereticObject
 
                     if (subItems)
                     {
-                        var lowerName = item.NominativeIndefiniteArticleName.LowerFirstChar().Trim();
+                        var lowerName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Nominative,
+                            ArticleState.Indefinite).LowerFirstChar().Trim();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
                     else
                     {
-                        var lowerName = item.AccusativeIndefiniteArticleName.LowerFirstChar().Trim();
+                        var lowerName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
+                            ArticleState.Indefinite).LowerFirstChar();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
 
@@ -770,8 +682,9 @@ public abstract partial class AHereticObject
                 {
                     linkedObjectDescription.Append(", ");
                 }
-                
-                linkedObjectDescription.Append(linkedItem.DativeIndefiniteArticleName.LowerFirstChar());
+
+                var linkedObjectName = ArticleHandler.GetNameWithArticleForObject(linkedItem, GrammarCase.Dative, ArticleState.Indefinite).LowerFirstChar();
+                linkedObjectDescription.Append(linkedObjectName);
 
                 linkedItemIndex++;
             }
