@@ -16,6 +16,17 @@ public static class AdjectiveDeclinationHandler
             _ => throw new ArgumentOutOfRangeException(nameof(grammarCase), grammarCase, null)
         };
     }
+
+    public static IEnumerable<string> GetAllDeclinedAdjectivesForObject(AHereticObject processingObject,
+        GrammarCase grammarCase)
+    {
+        var declination = GetAdjectiveDeclinationForObject(processingObject, grammarCase);
+        
+        var splitList = processingObject.Adjectives.Split('|').ToList();
+        var adjectiveList = splitList.Select(item => item + declination).ToList();
+
+        return adjectiveList;
+    }
     
     private static string GetNominativeAdjectiveDeclination(AHereticObject processingObject)
     {

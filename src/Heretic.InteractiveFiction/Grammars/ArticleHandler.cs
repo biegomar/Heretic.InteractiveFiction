@@ -72,9 +72,14 @@ public static class ArticleHandler
         
         if (!string.IsNullOrEmpty(processingObject.Adjectives))
         {
-            return string.Format($"{article} {AdjectiveDeclinationHandler.GetAdjectiveDeclinationForObject(processingObject, grammarCase)} {name}").Trim();    
+            return string.Format($"{article} {GetJoinedDeclinedAdjectivesForObject(processingObject, grammarCase)} {name}").Trim();    
         }
         return string.Format($"{article} {name}").Trim();
+    }
+
+    private static string GetJoinedDeclinedAdjectivesForObject(AHereticObject processingObject, GrammarCase grammarCase)
+    {
+        return string.Join(", ", AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForObject(processingObject, grammarCase));
     }
 
     private static string GetObjectName(AHereticObject processingObject)
