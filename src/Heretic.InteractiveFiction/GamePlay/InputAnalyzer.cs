@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;

@@ -1,4 +1,4 @@
-namespace Heretic.InteractiveFiction.Objects;
+namespace Heretic.InteractiveFiction.Grammars;
 
 public sealed class PrepositionVariant
 {

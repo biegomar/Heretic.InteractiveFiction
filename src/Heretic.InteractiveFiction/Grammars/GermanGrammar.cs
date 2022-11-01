@@ -1,9 +1,5 @@
-﻿using System.Globalization;
-using System.Resources;
-using Heretic.InteractiveFiction.Exceptions;
-using Heretic.InteractiveFiction.GamePlay;
+﻿using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.Objects;
-using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Grammars;
 

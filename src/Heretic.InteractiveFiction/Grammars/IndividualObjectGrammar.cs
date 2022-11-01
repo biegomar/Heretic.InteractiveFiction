@@ -1,7 +1,6 @@
-using Heretic.InteractiveFiction.Objects;
-using Heretic.InteractiveFiction.Resources;
-
 namespace Heretic.InteractiveFiction.Grammars;
+
+using Heretic.InteractiveFiction.Objects;
 
 public sealed class IndividualObjectGrammar
 {

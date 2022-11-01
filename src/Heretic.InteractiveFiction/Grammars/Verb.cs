@@ -1,4 +1,6 @@
-﻿namespace Heretic.InteractiveFiction.Objects;
+﻿using Heretic.InteractiveFiction.Objects;
+
+namespace Heretic.InteractiveFiction.Grammars;
 
 public sealed class Verb
 {
