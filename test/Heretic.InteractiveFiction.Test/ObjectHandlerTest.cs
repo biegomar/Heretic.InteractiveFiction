@@ -3,6 +3,7 @@ using System.Threading;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Subsystems;
+using Heretic.InteractiveFiction.Test.GamePlay;
 using Heretic.InteractiveFiction.Test.Mocks;
 using Moq;
 using Xunit;
@@ -25,7 +26,7 @@ public class ObjectHandlerTest
         var printingSubsystem = new Mock<IPrintingSubsystem>();
         printingSubsystem.SetReturnsDefault(true);
         
-        var universe = new Universe(printingSubsystem.Object, new ResourceProviderMock());
+        var universe = new Universe(printingSubsystem.Object, new ResourceProvider());
         var smallWorldAssembler = new SmallWorldAssembler();
         var gamePrerequisites = smallWorldAssembler.AssembleGame();
         universe.LocationMap = gamePrerequisites.LocationMap;

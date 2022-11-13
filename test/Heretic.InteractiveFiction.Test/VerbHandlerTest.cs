@@ -2,6 +2,7 @@ using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Subsystems;
+using Heretic.InteractiveFiction.Test.GamePlay;
 using Heretic.InteractiveFiction.Test.Mocks;
 using Moq;
 using Xunit;
@@ -20,13 +21,13 @@ public class VerbHandlerTest
         printingSubsystem.SetReturnsDefault(true);
         
         this._universe = GetUniverse(printingSubsystem);
-        this._grammar = new GermanGrammar(new ResourceProviderMock());
+        this._grammar = new GermanGrammar(new ResourceProvider());
         this._sut = new VerbHandler(_universe, _grammar, printingSubsystem.Object);
     }
 
     private Universe GetUniverse(Mock<IPrintingSubsystem> printingSubsystem)
     {
-        var universe = new Universe(printingSubsystem.Object, new ResourceProviderMock());
+        var universe = new Universe(printingSubsystem.Object, new ResourceProvider());
         var smallWorldAssembler = new SmallWorldAssembler();
         var gamePrerequisites = smallWorldAssembler.AssembleGame();
         universe.LocationMap = gamePrerequisites.LocationMap;

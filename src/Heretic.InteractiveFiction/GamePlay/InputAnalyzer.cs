@@ -115,6 +115,86 @@ internal sealed class InputAnalyzer
         
         return orderedSentence;
     }
+    
+    private Request OrderSentenceNew(IReadOnlyList<string> sentence)
+    {
+        Request result = new();
+        var orderedSentence = new List<string>();
+        var parts = sentence.ToList();
+
+        if (parts.Any())
+        {
+            var normList = this.NormalizeSentence(parts);
+            var objectOne = this.GetCharacter(normList.Keys.ToList());
+            if (string.IsNullOrEmpty(objectOne))
+            {  
+                objectOne = this.GetItem(normList.Keys.ToList());
+                if (string.IsNullOrEmpty(objectOne))
+                {
+                    objectOne = this.GetLocation(normList.Keys.ToList());
+                }
+            }
+            if (!string.IsNullOrEmpty(objectOne))
+            {
+                RemoveNormlistItemsFromParts(normList[objectOne], parts);
+            }
+
+            if (parts.Any())
+            {
+                normList = this.NormalizeSentence(parts);
+                var objectTwo = this.GetItem(normList.Keys.ToList());
+                if (string.IsNullOrEmpty(objectTwo))
+                {
+                    objectTwo = this.GetCharacter(normList.Keys.ToList());
+                    if (string.IsNullOrEmpty(objectTwo))
+                    {
+                        objectTwo = this.GetConversationAnswer(normList.Keys.ToList());
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(objectTwo))
+                {
+                    RemoveNormlistItemsFromParts(normList[objectTwo], parts);
+                }
+
+                if (parts.Any())
+                {
+                    parts = this.ReplaceVerbInParts(sentence, parts, objectOne, objectTwo);
+                    var predicate = this.GetVerb(sentence, parts);
+                    orderedSentence.Add(predicate);
+                    
+                    if (!string.IsNullOrEmpty(objectOne))
+                    {
+                        orderedSentence.Add(objectOne);  
+                        RemoveObjectArticlesFromParts(objectOne, parts);
+                    }
+            
+                    if (!string.IsNullOrEmpty(objectTwo))
+                    {
+                        orderedSentence.Add(objectTwo);  
+                        RemoveObjectArticlesFromParts(objectTwo, parts);
+                    }
+
+                    if (parts.Any())
+                    {
+                        RemovePrepositionsFromParts(parts);
+                    }
+                    
+                    if (parts.Any() && (string.IsNullOrEmpty(objectOne) || string.IsNullOrEmpty(objectTwo)))
+                    {
+                        var partString = string.Join('|', parts);
+                        orderedSentence.Add(partString);
+                    }
+                }
+                else
+                {
+                    throw new NoVerbException();
+                }
+            }
+        }
+        
+        return result;
+    }
 
     private static void RemoveNormlistItemsFromParts(IEnumerable<string> normList, ICollection<string> parts)
     {
@@ -391,6 +471,22 @@ internal sealed class InputAnalyzer
         }
 
         return string.Empty;
+    }
+
+    private AHereticObject GetItemForRequest(IList<string> sentence)
+    {
+        foreach (var word in sentence)
+        {
+            if (!this.grammar.IsVerb(word, this.universe.ActiveLocation))
+            {
+                if (this.universe.ItemResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    return default;
+                }
+            }
+        }
+
+        return default;
     }
     
     private string GetConversationAnswer(IList<string> sentence)

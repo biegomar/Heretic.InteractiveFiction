@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Subsystems;
+using Heretic.InteractiveFiction.Test.GamePlay;
 using Heretic.InteractiveFiction.Test.Mocks;
 using Moq;
 using Xunit;
@@ -13,13 +15,13 @@ public class InputAnalyzerTest
     private IPrintingSubsystem printingSubsystem => Mock.Of<IPrintingSubsystem>();
     private Player player;
     private Universe universe;
-    private IGrammar grammar => new GermanGrammar(new ResourceProviderMock());
+    private IGrammar grammar => new GermanGrammar(new ResourceProvider());
     private IGamePrerequisitesAssembler smallWorld;
 
     public InputAnalyzerTest()
     {
         this.smallWorld = new SmallWorldAssembler();
-        this.universe = new Universe(printingSubsystem, new ResourceProviderMock());
+        this.universe = new Universe(printingSubsystem, new ResourceProvider());
         
         var gamePrerequisites = this.smallWorld.AssembleGame();
         this.universe.LocationMap = gamePrerequisites.LocationMap;
@@ -31,33 +33,35 @@ public class InputAnalyzerTest
     }
     
     [Theory]
-    [InlineData("l", new[] { "l" })]
-    [InlineData("look", new[] { "look" })]
+    [InlineData("l", new[] { "LOOK" })]
+    [InlineData("look", new[] { "LOOK" })]
     public void SingleWordsTest(string input, string[] expected)
     {
         var sut = new InputAnalyzer(this.universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
+        Assert.Equal(expected.Length, actual.Length);
         Assert.Equal(expected[0], actual[0]);
     }
 
     [Theory]
-    [InlineData("l mann", new[] { "l", "mann" })]
-    [InlineData("look mann", new[] { "look", "mann" }) ]
-    [InlineData("mann look", new[] { "look", "mann" })]
-    [InlineData("schaue auf den Mann", new[] { "schaue", "Mann" })]
-    [InlineData("Mann schaue auf den ", new[] { "schaue", "Mann" })]
-    [InlineData("Rede mit dem Tankwart ", new[] { "Rede", "Tankwart" })]
-    [InlineData("schaue dich an", new[] { "schaue", "dich" })]
-    [InlineData("lege die kerze hin", new[] { "lege", "kerze" })]
-    [InlineData("lege sie hin", new[] { "lege", "sie" })]
+    [InlineData("l mann", new[] { "LOOK", "mann" })]
+    [InlineData("look mann", new[] { "LOOK", "mann" }) ]
+    [InlineData("mann look", new[] { "LOOK", "mann" })]
+    [InlineData("schaue auf den Mann", new[] { "LOOK", "Mann" })]
+    [InlineData("Mann schaue auf den ", new[] { "LOOK", "Mann" })]
+    [InlineData("Rede mit dem Tankwart ", new[] { "TALK", "Tankwart" })]
+    [InlineData("schaue dich an", new[] { "LOOK", "dich" })]
+    [InlineData("lege die kerze hin", new[] { "DROP", "kerze" })]
+    [InlineData("lege sie hin", new[] { "DROP", "sie" })]
     public void TwoWordsTest(string input, string[] expected)
     {
         var sut = new InputAnalyzer(universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
+        Assert.Equal(expected.Length, actual.Length);
         Assert.Equal(expected[0], actual[0]);
         Assert.Equal(expected[1], actual[1]);
     }
@@ -80,8 +84,22 @@ public class InputAnalyzerTest
 
         var actual = sut.Analyze(input);
 
+        Assert.Equal(expected.Length, actual.Length);
         Assert.Equal(expected[0], actual[0]);
         Assert.Equal(expected[1], actual[1]);
         Assert.Equal(expected[2], actual[2]);
     }
+
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void OderSentenceTest(List<string> sentence, Request request)
+    {
+        
+    }
+    
+    public static IEnumerable<object[]> Data =>
+        new List<object[]>
+        {
+            new object[] { new List<string>() {"a", "b"}, new Request() {Verb = new Verb()} },
+        };
 }

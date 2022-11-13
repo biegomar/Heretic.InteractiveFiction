@@ -19,4 +19,5 @@ using System.Runtime.InteropServices;
 // bereitgestellt wird.
 
 [assembly: InternalsVisibleTo("Heretic.InteractiveFiction.Test")]
+[assembly: InternalsVisibleTo("Heretic.InteractiveFiction.TestGame")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

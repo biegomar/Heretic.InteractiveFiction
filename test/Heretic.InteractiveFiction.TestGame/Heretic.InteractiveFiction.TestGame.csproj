@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+      <PackageReference Include="Moq" Version="4.18.2" />
+      <PackageReference Include="xunit" Version="2.4.2" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Heretic.InteractiveFiction\Heretic.InteractiveFiction.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Items.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Items.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Characters.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Characters.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Locations.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Locations.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Descriptions.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Descriptions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\OptionalVerbs.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>OptionalVerbs.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\MetaData.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>MetaData.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Adjectives.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Adjectives.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\Items.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Items.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Characters.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Characters.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Locations.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Locations.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Descriptions.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Descriptions.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\OptionalVerbs.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>OptionalVerbs.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\MetaData.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MetaData.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Adjectives.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Adjectives.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
