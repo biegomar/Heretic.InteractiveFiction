@@ -244,9 +244,59 @@ public abstract partial class AHereticObject
         return default;
     }
     
+    internal virtual T GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject
+    {
+        if (visitedItems.Contains(this))
+        {
+            return default;
+        }
+        
+        visitedItems.Add(this);
+        
+        if (this.Key == itemKey && this.GetType() == typeof(T))
+        {
+            return (T)this;
+        }
+
+        foreach (var item in this.Items)
+        {
+            var result = item.GetObject(itemKey, visitedItems);
+            if (result != default && result.GetType() == typeof(T))
+            {
+                return (T)result;
+            }
+        }
+        
+        foreach (var character in this.Characters)
+        {
+            var result = character.GetObject(itemKey, visitedItems);
+            if (result != default && result.GetType() == typeof(T))
+            {
+                return (T)result;
+            }
+        }
+
+        foreach (var item in this.LinkedTo)
+        {
+            var result = item.GetObject(itemKey, visitedItems);
+            if (result != default && result.GetType() == typeof(T))
+            {
+                return (T)result;
+            }
+        }
+
+        return default;
+    }
+    
     public AHereticObject GetObject(string itemKey)
     {
         var result = this.GetObject(itemKey, new List<AHereticObject>());
+        return result ?? default;
+    }
+    
+    public T GetObject<T>(string itemKey) where T: AHereticObject
+    {
+        var result = this.GetObject<T>(itemKey, new List<AHereticObject>());
         return result ?? default;
     }
     

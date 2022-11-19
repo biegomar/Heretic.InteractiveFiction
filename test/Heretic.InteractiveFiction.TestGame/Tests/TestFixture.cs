@@ -15,7 +15,9 @@ public sealed class TestFixture
     internal ObjectHandler ObjectHandler { get; }
     internal VerbHandler VerbHandler { get; }
 
-    public Item Table { get;}
+    public Item Table { get; }
+    public Item Lamp { get; }
+    
     public AHereticObject? ActiveObject => this.Universe.ActiveObject;
 
     public TestFixture()
@@ -25,7 +27,8 @@ public sealed class TestFixture
         this.Universe = this.GetUniverse();
         this.ObjectHandler = new ObjectHandler(this.Universe);
         this.VerbHandler = this.GetVerbHandler();
-        this.Table = (Item)this.ObjectHandler.GetObjectFromWorldByKey(Keys.TABLE);
+        this.Table = this.ObjectHandler.GetObjectFromWorldByKey<Item>(Keys.TABLE);
+        this.Lamp = this.ObjectHandler.GetObjectFromWorldByKey<Item>(Keys.PETROLEUM_LAMP);
     }
     
     public void SetActiveObject(string itemKey)

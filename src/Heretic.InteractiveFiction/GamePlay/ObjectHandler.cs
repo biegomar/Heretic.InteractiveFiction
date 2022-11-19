@@ -11,7 +11,30 @@ public sealed class ObjectHandler
     {
         this.universe = universe;
     }
-    
+
+    public string GetObjectKeyByName<T>(string objectName) where T : AHereticObject
+    {
+        var typeofT = typeof(T);
+        var typeOfCharacter = typeof(Character);
+        var typeOfItem = typeof(Item);
+        var typeOfLocation = typeof(Location);
+        var typeOfPlayer = typeof(Player);
+        
+        if (typeofT == typeOfCharacter || typeofT == typeOfPlayer)
+        {
+            return GetCharacterKeyByName(objectName);
+        }
+        else if (typeofT == typeOfItem)
+        {
+            return GetItemKeyByName(objectName);
+        }
+        else if (typeofT == typeOfLocation)
+        {
+            return GetLocationKeyByName(objectName);
+        }
+
+        return string.Empty;
+    }
     public string GetCharacterKeyByName(string itemName)
     {
         var key = this.GetKeyByName(itemName, this.universe.CharacterResources);
@@ -89,6 +112,25 @@ public sealed class ObjectHandler
         }
 
         return this.universe.ActivePlayer.GetObject(key);
+    }
+    
+    public T GetObjectFromWorldByKey<T>(string key) where T: AHereticObject
+    {
+        if (key == this.universe.ActivePlayer.Key)
+        {
+            return this.universe.ActivePlayer as T;
+        }
+        
+        foreach (var location in this.universe.LocationMap.Keys)
+        {
+            var result = location.GetObject<T>(key);
+            if (result != default && result.Key == key)
+            {
+                return result;
+            }
+        }
+
+        return (T)this.universe.ActivePlayer.GetObject(key);
     }
     
     public AHereticObject GetObjectFromWorldByName(string key)
@@ -291,9 +333,16 @@ public sealed class ObjectHandler
 
         foreach (var (key, value) in prioritizedItemResources)
         {
-            if (value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase))
+            var enumerable = value.ToList();
+            var keys = enumerable.Where(x => x.Equals(itemName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (keys.Any())
             {
-                return key;
+                if (keys.Count == 1)
+                {
+                    return key;
+                }
+
+                var item = this.GetObjectFromWorldByKey<Item>(key);
             }
         }
 

@@ -1,3 +1,5 @@
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
@@ -8,14 +10,14 @@ namespace Heretic.InteractiveFiction.TestGame.Tests;
 
 public class InputAnalyzerTest: IClassFixture<TestFixture>
 {
-    private Universe _universe;
-    private TestFixture _testFixture;
+    private Universe universe;
+    private TestFixture testFixture;
     private IGrammar grammar => new GermanGrammar(new ResourceProvider());
 
     public InputAnalyzerTest(TestFixture testFixture)
     {
-        this._testFixture = testFixture;
-        this._universe = this._testFixture.Universe;
+        this.testFixture = testFixture;
+        this.universe = this.testFixture.Universe;
     }
     
     [Theory]
@@ -23,7 +25,7 @@ public class InputAnalyzerTest: IClassFixture<TestFixture>
     [InlineData("look", new[] { "LOOK" })]
     public void SingleWordsTest(string input, string[] expected)
     {
-        var sut = new InputAnalyzer(this._universe, this.grammar);
+        var sut = new InputAnalyzer(this.universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
@@ -43,7 +45,7 @@ public class InputAnalyzerTest: IClassFixture<TestFixture>
     [InlineData("lege sie hin", new[] { "DROP", "sie" })]
     public void TwoWordsTest(string input, string[] expected)
     {
-        var sut = new InputAnalyzer(this._universe, this.grammar);
+        var sut = new InputAnalyzer(this.universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
@@ -58,8 +60,8 @@ public class InputAnalyzerTest: IClassFixture<TestFixture>
     [InlineData("CEILING", "lege sie hin", new[] { "DROP", "Decke" })]
     public void TwoWordsWithPronounTest(string itemKey, string input, string[] expected)
     {
-        this._testFixture.SetActiveObject(itemKey);
-        var sut = new InputAnalyzer(this._universe, this.grammar);
+        this.testFixture.SetActiveObject(itemKey);
+        var sut = new InputAnalyzer(this.universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
@@ -82,7 +84,7 @@ public class InputAnalyzerTest: IClassFixture<TestFixture>
     [InlineData("nimm dir sie", new[] { "TAKE", "dir", "sie" })]
     public void ThreeWordsTest(string input, string[] expected)
     {
-        var sut = new InputAnalyzer(this._universe, this.grammar);
+        var sut = new InputAnalyzer(this.universe, this.grammar);
 
         var actual = sut.Analyze(input);
 
@@ -94,14 +96,24 @@ public class InputAnalyzerTest: IClassFixture<TestFixture>
 
     [Theory]
     [MemberData(nameof(Data))]
-    public void OderSentenceTest(List<string> sentence, Request request)
+    public void AnalyzeSentenceTest(List<string> sentence, string verbKey, string objectOne, string objectTwo)
     {
-        
+        var sut = new InputAnalyzer(this.universe, this.grammar);
+
+        var actualRequest = sut.AnalyzeSentence(sentence);
+
+        using (new AssertionScope())
+        {
+            actualRequest.Predicate.Key.Should().Be(verbKey);
+            actualRequest.ObjectOne?.Key.Should().Be(objectOne);
+            actualRequest.ObjectTwo?.Key.Should().Be(objectTwo);
+        }
     }
     
     public static IEnumerable<object[]> Data =>
         new List<object[]>
         {
-            new object[] { new List<string>() {"a", "b"}, new Request() {Verb = new Verb()} },
+            new object[] { new List<string>() {"schaue", "dir", "die", "Lampe", "an"}, "LOOK", "PLAYER", "PETROLEUM_LAMP" },
+            new object[] { new List<string>() {"nimm", "den", "rostigen", "Schlüssel"}, "TAKE", "RUSTY_KEY", string.Empty },
         };
 }
