@@ -37,6 +37,7 @@ internal sealed class InputAnalyzer
         }
     }
 
+    [Obsolete]
     private IEnumerable<string> OrderSentence(IReadOnlyList<string> sentence)
     {
         var orderedSentence = new List<string>();
@@ -193,6 +194,7 @@ internal sealed class InputAnalyzer
         return result;
     }
 
+    [Obsolete]
     private static void RemoveNormlistItemsFromParts(IEnumerable<string> normList, ICollection<string> parts)
     {
         foreach (var item in normList)
@@ -203,7 +205,7 @@ internal sealed class InputAnalyzer
 
     private void RemoveObjectArticlesFromParts(string processingObject, ICollection<string> parts)
     {
-        var item = this.objectHandler.GetObjectFromWorldByName(processingObject);
+        var item = this.objectHandler.GetObjectFromWorldByNameAndAdjectives(processingObject, parts);
         if (item != default)
         {
             var partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(item, GrammarCase.Nominative), StringComparison.InvariantCultureIgnoreCase));
@@ -292,6 +294,7 @@ internal sealed class InputAnalyzer
         return allDeclinedAdjectives;
     }
 
+    [Obsolete]
     private List<string> ReplaceVerbInParts(IReadOnlyList<string> sentence, ICollection<string> parts, string objectOne, string objectTwo)
     {
         Verb verb = default;
@@ -480,6 +483,7 @@ internal sealed class InputAnalyzer
         return result;
     }
 
+    [Obsolete]
     private bool IsObjectInCorrectCaseForPreposition(Verb possibleVerb, string preposition, string objectOne, IReadOnlyList<string> sentence)
     {
         var prepositionCaseFromVerb = possibleVerb.Prepositions
@@ -498,7 +502,7 @@ internal sealed class InputAnalyzer
 
         foreach (var prepositionCase in prepositionCases)
         {
-            var itemOne = this.objectHandler.GetObjectFromWorldByName(objectOne);
+            var itemOne = this.objectHandler.GetObjectFromWorldByNameAndAdjectives(objectOne, new List<string>());
             if (prepositionCase.Equals("DATIVE", StringComparison.InvariantCultureIgnoreCase))
             {
                 if (itemOne != default)
@@ -643,11 +647,12 @@ internal sealed class InputAnalyzer
         throw new NoVerbException();
     }
     
+    [Obsolete]
     private string GetCharacter(IList<string> sentence)
     {
         foreach (var word in sentence)
         {
-            var key = this.objectHandler.GetCharacterKeyByName(word);
+            var key = this.objectHandler.GetObjectKeyByNameAndAdjectives<Character>(word, sentence);
             if (!string.IsNullOrEmpty(key))
             {
                 return word;
@@ -657,13 +662,14 @@ internal sealed class InputAnalyzer
         return string.Empty;
     }
     
+    [Obsolete]
     private string GetLocation(IList<string> sentence)
     {
         foreach (var word in sentence)
         {
             if (!this.grammar.IsVerb(word, this.universe.ActiveLocation))
             {
-                this.objectHandler.GetItemKeyByName(word);
+                this.objectHandler.GetObjectKeyByNameAndAdjectives<Item>(word, sentence);
                 if (this.universe.LocationResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
                 {
                     return word;
@@ -674,6 +680,7 @@ internal sealed class InputAnalyzer
         return string.Empty;
     }
     
+    [Obsolete]
     private string GetItem(IList<string> sentence)
     {
         foreach (var word in sentence)
@@ -697,7 +704,7 @@ internal sealed class InputAnalyzer
         
         foreach (var word in sentence)
         {
-            var key = this.objectHandler.GetObjectKeyByName<T>(word);
+            var key = this.objectHandler.GetObjectKeyByNameAndAdjectives<T>(word, sentence);
             if (!string.IsNullOrEmpty(key))
             {
                 result = this.objectHandler.GetObjectFromWorldByKey<T>(key);
@@ -715,25 +722,7 @@ internal sealed class InputAnalyzer
         
         return result;
     }
-    
-    private Character GetCharacterForRequest(IList<string> sentence)
-    {
-        foreach (var word in sentence)
-        {
-            var key = this.objectHandler.GetCharacterKeyByName(word);
-            if (!string.IsNullOrEmpty(key))
-            {
-                var objectFromWorld = this.objectHandler.GetObjectFromWorldByKey(key);
-                if (objectFromWorld is Character character)
-                {
-                    return character;
-                }
-            }
-        }
 
-        return default;
-    }
-    
     private string GetConversationAnswer(IList<string> sentence)
     {
         foreach (var word in sentence)

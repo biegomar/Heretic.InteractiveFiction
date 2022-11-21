@@ -73,7 +73,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.LOOK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 try
@@ -112,7 +112,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.LOOK == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Look(verb, processingObject);
             }
@@ -125,7 +125,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.READ == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 if (item.IsReadable)
@@ -167,7 +167,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.EAT == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
@@ -217,7 +217,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SWITCHON == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.SwitchOn(verb, processingObjects);
             }
@@ -230,7 +230,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SWITCHON == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
@@ -276,7 +276,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SWITCHOFF == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.SwitchOff(verb, processingObjects);
             }
@@ -289,7 +289,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SWITCHOFF == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
@@ -335,7 +335,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.WEAR == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Wear(verb, processingObjects);
             }
@@ -354,7 +354,7 @@ internal sealed class VerbHandler
         
         if (VerbKeys.WEAR == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
@@ -416,7 +416,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.DRINK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
@@ -486,7 +486,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.PULL == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -514,7 +514,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.PULL == verb)
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(subjectName);
 
             if (subject == default)
             {
@@ -523,7 +523,7 @@ internal sealed class VerbHandler
             
             this.objectHandler.StoreAsActiveObject(subject);
 
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(objectName);
 
             if (item == default)
             {
@@ -551,7 +551,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.PUSH == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -580,7 +580,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.PUSH == verb)
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(subjectName);
 
             if (subject == default)
             {
@@ -589,7 +589,7 @@ internal sealed class VerbHandler
             
             this.objectHandler.StoreAsActiveObject(subject);
 
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(objectName);
 
             if (item == default)
             {
@@ -636,7 +636,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.ALTER_EGO == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -751,7 +751,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.USE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             
             if (item != default)
             {
@@ -788,7 +788,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.USE == verb)
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(subjectName);
 
             if (subject == default)
             {
@@ -797,7 +797,7 @@ internal sealed class VerbHandler
 
             this.objectHandler.StoreAsActiveObject(subject);
             
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(objectName);
             
             if (item != default)
             {
@@ -830,7 +830,7 @@ internal sealed class VerbHandler
                 return printingSubsystem.PayWithWhat();
             }
 
-            var key = this.objectHandler.GetItemKeyByName(processingObject);
+            var key = this.objectHandler.GetObjectKeyByNameAndAdjectives<Item>(processingObject);
             if (this.universe.ActivePlayer.GetUnhiddenItem(key) != default)
             {
                 return printingSubsystem.ItemAlreadyOwned();
@@ -864,7 +864,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.BUY == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Buy(verb, processingObject);
             }
@@ -877,7 +877,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.TURN == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
 
             if (item != default)
             {
@@ -906,7 +906,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.JUMP == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
 
             if (item != default)
             {
@@ -936,7 +936,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.KINDLE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
 
             if (item != default)
             {
@@ -965,7 +965,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.KINDLE == verb)
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(subjectName);
 
             if (subject == default)
             {
@@ -974,7 +974,7 @@ internal sealed class VerbHandler
 
             this.objectHandler.StoreAsActiveObject(subject);
             
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(objectName);
             
             if (item != default)
             {
@@ -1002,7 +1002,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.CUT == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
 
             if (item != default)
             {
@@ -1031,7 +1031,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.CUT == verb)
         {
-            var subject = this.objectHandler.GetUnhiddenObjectByNameActive(subjectName);
+            var subject = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(subjectName);
 
             if (subject == default)
             {
@@ -1040,7 +1040,7 @@ internal sealed class VerbHandler
 
             this.objectHandler.StoreAsActiveObject(subject);
             
-            var item = this.objectHandler.GetUnhiddenObjectByNameActive(objectName);
+            var item = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(objectName);
             
             if (item != default)
             {
@@ -1112,7 +1112,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SMELL == verb)
         {
-            var activeObject = this.objectHandler.GetUnhiddenObjectByNameActive(processingObject);
+            var activeObject = this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject);
             
             if (activeObject != default)
             {
@@ -1168,7 +1168,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SLEEP == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
 
             if (item != default)
             {
@@ -1224,7 +1224,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.TASTE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
 
             if (item != default)
             {
@@ -1254,7 +1254,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.CLIMB == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             this.objectHandler.StoreAsActiveObject(item);
 
             if (item != default)
@@ -1310,7 +1310,7 @@ internal sealed class VerbHandler
         if (VerbKeys.CLIMB == verb)
         {
             
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Climb(verb, processingObject);
             }
@@ -1325,7 +1325,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.CLOSE == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             this.objectHandler.StoreAsActiveObject(item);
 
             if (item != default)
@@ -1372,7 +1372,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.OPEN == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
 
             if (item != default)
             {
@@ -1427,7 +1427,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.TALK == verb)
         {
-            var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(processingObject);
+            var character = this.objectHandler.GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(processingObject);
 
             if (character == default)
             {
@@ -1508,12 +1508,12 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.SIT == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingObject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.SitDown(verb);
             }
             
-            var key = this.objectHandler.GetItemKeyByName(processingObject);
+            var key = this.objectHandler.GetObjectKeyByNameAndAdjectives<Item>(processingObject);
             var item = this.universe.ActiveLocation.GetUnhiddenItem(key) ?? this.universe.ActivePlayer.GetUnhiddenItem(key);
 
             if (item != default)
@@ -1559,7 +1559,7 @@ internal sealed class VerbHandler
         if (VerbKeys.SIT == verb)
         {
             
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.SitDown(verb, processingObject);
             }
@@ -1649,7 +1649,7 @@ internal sealed class VerbHandler
         {
             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != default)
             {
-                var compareItem = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+                var compareItem = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
                 var item = this.universe.ActivePlayer.ClimbedObject;
                 if (item.Key == compareItem.Key)
                 {
@@ -1692,7 +1692,7 @@ internal sealed class VerbHandler
         if (VerbKeys.ASK == verb)
         {
             //I can only speak to visible people in the active location
-            var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
+            var character = this.objectHandler.GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(characterName);
 
             if (character == default)
             {
@@ -1700,13 +1700,13 @@ internal sealed class VerbHandler
             }
 
             //but I can speak about every unhidden or virtual item or character in the world
-            var item = this.objectHandler.GetUnhiddenObjectFromWorldByName(subjectName);
+            var item = this.objectHandler.GetUnhiddenObjectFromWorldByNameAndAdjectives(subjectName);
             if (item == default)
             {
-                item = this.objectHandler.GetUnhiddenCharacterByName(subjectName);
+                item = this.objectHandler.GetUnhiddenCharacterByNameAndAdjectives(subjectName);
                 if (item == default)
                 {
-                    item = this.objectHandler.GetVirtualItemByName(subjectName);
+                    item = this.objectHandler.GetVirtualItemByNameAndAdjectives(subjectName);
                     if (item == default)
                     {
                         return printingSubsystem.NoAnswerToInvisibleObject(character);
@@ -1737,7 +1737,7 @@ internal sealed class VerbHandler
         if (VerbKeys.SAY == verb)
         {
             //I can only speak to visible people
-            var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
+            var character = this.objectHandler.GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(characterName);
             if (character == default)
             {
                 return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
@@ -1771,14 +1771,14 @@ internal sealed class VerbHandler
         if (VerbKeys.GIVE == verb)
         {
             //I can only give things to visible people.
-            var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(characterName);
+            var character = this.objectHandler.GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(characterName);
             if (character == default)
             {
                 return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
             }
             
             //...and I can give only items that i own.
-            var item = this.universe.ActivePlayer.GetUnhiddenItem(this.objectHandler.GetItemKeyByName(itemName));
+            var item = this.universe.ActivePlayer.GetUnhiddenItem(this.objectHandler.GetObjectKeyByNameAndAdjectives<Item>(itemName));
             if (item == default)
             {
                 return printingSubsystem.ItemNotOwned();
@@ -1822,7 +1822,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.BREAK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             
             if (item != default)
             {
@@ -1865,8 +1865,8 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.BREAK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
-            var toolItem = this.objectHandler.GetUnhiddenItemByNameActive(tool);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
+            var toolItem = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(tool);
 
             if (item != default)
             {
@@ -1911,7 +1911,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.UNLOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -1961,8 +1961,8 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.UNLOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
-            var key = this.objectHandler.GetUnhiddenItemByNameActive(unlockKey);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
+            var key = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(unlockKey);
 
             if (item != default)
             {
@@ -2024,7 +2024,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.LOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
             if (item != default)
             {
                 this.objectHandler.StoreAsActiveObject(item);
@@ -2074,8 +2074,8 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.LOCK == verb)
         {
-            var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
-            var key = this.objectHandler.GetUnhiddenItemByNameActive(lockKey);
+            var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
+            var key = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(lockKey);
 
             if (item != default)
             {
@@ -2140,10 +2140,10 @@ internal sealed class VerbHandler
             var result = true;
             foreach (var processingObject in processingObjects)
             {
-                var item = this.objectHandler.GetUnhiddenItemByNameActive(processingObject);
+                var item = this.objectHandler.GetUnhiddenItemByNameAndAdjectivesActive(processingObject);
                 if (item == default)
                 {
-                    var character = this.objectHandler.GetUnhiddenCharacterByNameFromActiveLocation(processingObject);
+                    var character = this.objectHandler.GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(processingObject);
                     if (character != default)
                     {
                         result = result && printingSubsystem.ImpossiblePickup(character);
@@ -2182,7 +2182,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.TAKE == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingSubject) is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Take(verb, processingObjects);
             }
@@ -2247,14 +2247,14 @@ internal sealed class VerbHandler
             var result = true;
             foreach (var processingObject in processingObjects)
             {
-                if (this.objectHandler.GetUnhiddenObjectByNameActive(processingObject) is { } player &&
+                if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(processingObject) is { } player &&
                     player.Key == this.universe.ActivePlayer.Key)
                 {
                     result = result && this.Sleep(VerbKeys.SLEEP);
                 }
                 else
                 {
-                    var key = this.objectHandler.GetItemKeyByName(processingObject);
+                    var key = this.objectHandler.GetObjectKeyByNameAndAdjectives<Item>(processingObject);
 
                     var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == key);
                     var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == key);
@@ -2318,13 +2318,13 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.DROP == verb)
         {
-            if (this.objectHandler.GetUnhiddenObjectByNameActive(subjectName) is { } player &&
+            if (this.objectHandler.GetUnhiddenObjectByNameAndAdjectivesActive(subjectName) is { } player &&
                 player.Key == this.universe.ActivePlayer.Key)
             {
                 return this.Sleep(VerbKeys.SLEEP, objectName);
             }
             
-            var subjectKey = this.objectHandler.GetItemKeyByName(subjectName);
+            var subjectKey = this.objectHandler.GetObjectKeyByNameAndAdjectives<Item>(subjectName);
             
             if (this.universe.ActivePlayer.OwnsItem(subjectKey))
             {
@@ -2334,7 +2334,7 @@ internal sealed class VerbHandler
                 
                 if (itemToDrop.IsDropable)
                 {
-                    var objectKey = this.objectHandler.GetItemKeyByName(objectName);
+                    var objectKey = this.objectHandler.GetObjectKeyByNameAndAdjectives<Item>(objectName);
 
                     var isPlayerOwnerOfItem = this.universe.ActivePlayer.OwnsItem(objectKey);
                     var isActiveLocationOwnerOfItem = this.universe.ActiveLocation.OwnsItem(objectKey);
@@ -2392,7 +2392,7 @@ internal sealed class VerbHandler
     {
         if (VerbKeys.TOBE == verb)
         {
-            var subject = this.objectHandler.GetObjectFromWorldByName(subjectName);
+            var subject = this.objectHandler.GetObjectFromWorldByNameAndAdjectives(subjectName);
 
             if (subject != default)
             {
@@ -2495,7 +2495,7 @@ internal sealed class VerbHandler
 
     internal bool ChangeLocationByName(string input)
     {
-        var locationKey = this.objectHandler.GetLocationKeyByName(input);
+        var locationKey = this.objectHandler.GetObjectKeyByNameAndAdjectives<Location>(input);
         if (!string.IsNullOrEmpty(locationKey))
         {
             if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
