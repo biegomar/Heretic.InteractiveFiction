@@ -46,6 +46,25 @@ public class ResourceProvider: IResourceProvider
         return result;
     }
     
+    public IDictionary<string, IEnumerable<string>> GetLocationsFromResources()
+    {
+        var result = new Dictionary<string, IEnumerable<string>>();
+
+        ResourceSet resourceSet =
+            Locations.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+        if (resourceSet != null)
+        {
+            foreach (DictionaryEntry entry in resourceSet)
+            {
+                var inputList = entry.Value?.ToString()?.Split('|').ToList();
+                var normalizedList = this.NormalizeResourceList(inputList);
+                result.Add(entry.Key.ToString()!, normalizedList);
+            }
+        }
+
+        return result;
+    }
+    
     private IEnumerable<string> NormalizeResourceList(IEnumerable<string> inputList)
     {
         var result = new List<string>();

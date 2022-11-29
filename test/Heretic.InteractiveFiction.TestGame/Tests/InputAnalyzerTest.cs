@@ -96,7 +96,7 @@ public class InputAnalyzerTest: IClassFixture<TestFixture>
 
     [Theory]
     [MemberData(nameof(Data))]
-    public void AnalyzeSentenceTest(List<string> sentence, string verbKey, string objectOne, string objectTwo)
+    public void AnalyzeSentenceTest(List<string> sentence, string verbKey, string objectOne = "", string objectTwo = "")
     {
         var sut = new InputAnalyzer(this.universe, this.grammar);
 
@@ -113,7 +113,15 @@ public class InputAnalyzerTest: IClassFixture<TestFixture>
     public static IEnumerable<object[]> Data =>
         new List<object[]>
         {
-            new object[] { new List<string>() {"schaue", "dir", "die", "Lampe", "an"}, "LOOK", "PLAYER", "PETROLEUM_LAMP" },
+            new object[] { new List<string>() {"l"}, "LOOK" },
+            new object[] { new List<string>() {"schaue", "dir", "den", "rostigen", "Schlüssel", "an"}, "LOOK", "PLAYER", "RUSTY_KEY" },
+            new object[] { new List<string>() {"schaue", "dir", "den", "alten", "Schlüssel", "an"}, "LOOK", "PLAYER", "RUSTY_KEY" },
+            new object[] { new List<string>() {"schaue", "dir", "den", "alten", "rostigen", "Schlüssel", "an"}, "LOOK", "PLAYER", "RUSTY_KEY" },
+            new object[] { new List<string>() {"schaue", "dir", "den", "rostigen", "alten", "Schlüssel", "an"}, "LOOK", "PLAYER", "RUSTY_KEY" },
+            new object[] { new List<string>() {"schaue", "dir", "den", "hölzernen", "Schlüssel", "an"}, "LOOK", "PLAYER", "WOODEN_KEY" },
+            new object[] { new List<string>() {"schaue", "dir", "die", "Kerze", "an"}, "LOOK", "PLAYER", "CANDLE" },
+            new object[] { new List<string>() {"l", "rostigen", "Schlüssel"}, "LOOK", "RUSTY_KEY" },
+            new object[] { new List<string>() {"l", "hölzernen", "Schlüssel"}, "LOOK", "WOODEN_KEY" },
             new object[] { new List<string>() {"nimm", "den", "rostigen", "Schlüssel"}, "TAKE", "RUSTY_KEY", string.Empty },
         };
 }

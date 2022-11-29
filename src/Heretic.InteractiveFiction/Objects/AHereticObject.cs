@@ -175,29 +175,61 @@ public abstract partial class AHereticObject
         return BaseDescriptions.HERE;
     }
     
-    protected abstract StringBuilder ToStringExtension(); 
+    protected abstract StringBuilder ToStringExtension();
+
+    public bool OwnsObject(AHereticObject objectToInspect)
+    {
+        return this.OwnsObject(objectToInspect, new List<AHereticObject>()) != default;
+    }
     
+    internal virtual bool OwnsObject(AHereticObject objectToInspect, ICollection<AHereticObject> visitedItems)
+    {
+        if (visitedItems.Contains(this))
+        {
+            return default;
+        }
+        
+        visitedItems.Add(this);
+
+        if (this == objectToInspect)
+        {
+            return true;
+        }
+
+        foreach (var item in this.Items)
+        {
+            var result = item.OwnsObject(objectToInspect, visitedItems);
+            if (result)
+            {
+                return true;
+            }
+        }
+        
+        foreach (var character in this.Characters)
+        {
+            var result = character.OwnsObject(objectToInspect, visitedItems);
+            if (result)
+            {
+                return true;
+            }
+        }
+
+        foreach (var item in this.LinkedTo)
+        {
+            var result = item.OwnsObject(objectToInspect, visitedItems);
+            if (result)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     
     public bool OwnsItem(string itemKey)
     {
         var item = this.GetItem(itemKey);
         return item != default;
-    }
-
-    public bool OwnsItem(Item item)
-    {
-        return this.OwnsItem(item.Key);
-    }
-    
-    public bool OwnsCharacter(string itemKey)
-    {
-        var character = this.GetCharacter(itemKey);
-        return character != default;
-    }
-    
-    public bool OwnsCharacter(Character character)
-    {
-        return this.OwnsCharacter(character.Key);
     }
 
     internal virtual AHereticObject GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
@@ -260,7 +292,7 @@ public abstract partial class AHereticObject
 
         foreach (var item in this.Items)
         {
-            var result = item.GetObject(itemKey, visitedItems);
+            var result = item.GetObject<T>(itemKey, visitedItems);
             if (result != default && result.GetType() == typeof(T))
             {
                 return (T)result;
@@ -269,7 +301,7 @@ public abstract partial class AHereticObject
         
         foreach (var character in this.Characters)
         {
-            var result = character.GetObject(itemKey, visitedItems);
+            var result = character.GetObject<T>(itemKey, visitedItems);
             if (result != default && result.GetType() == typeof(T))
             {
                 return (T)result;
@@ -278,7 +310,7 @@ public abstract partial class AHereticObject
 
         foreach (var item in this.LinkedTo)
         {
-            var result = item.GetObject(itemKey, visitedItems);
+            var result = item.GetObject<T>(itemKey, visitedItems);
             if (result != default && result.GetType() == typeof(T))
             {
                 return (T)result;
@@ -297,7 +329,7 @@ public abstract partial class AHereticObject
     public T GetObject<T>(string itemKey) where T: AHereticObject
     {
         var result = this.GetObject<T>(itemKey, new List<AHereticObject>());
-        return result ?? default;
+        return result;
     }
     
     public AHereticObject GetObject(AHereticObject item)

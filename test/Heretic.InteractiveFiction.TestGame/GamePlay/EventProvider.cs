@@ -82,7 +82,7 @@ internal class EventProvider
             var candleObject = this.objectHandler.GetObjectFromWorldByKey(Keys.CANDLE);
             var cookTopObject = this.objectHandler.GetObjectFromWorldByKey(Keys.COOKTOP);
 
-            if (cookTopObject is Item { IsLighterSwitchedOn: true } cookTop && candleObject is Item candle && cookTop.OwnsItem(candle) && this.universe.ActiveLocation.Key == Keys.LIVINGROOM)
+            if (cookTopObject is Item { IsLighterSwitchedOn: true } cookTop && candleObject is Item candle && cookTop.OwnsObject(candle) && this.universe.ActiveLocation.Key == Keys.LIVINGROOM)
             {
                 switch (waitCounter)
                 {
@@ -157,7 +157,7 @@ internal class EventProvider
 
             if (petroleum != default && destinationItem != default)
             {
-                if (!this.universe.ActivePlayer.OwnsItem(petroleum))
+                if (!this.universe.ActivePlayer.OwnsObject(petroleum))
                 {
                     throw new UseException(BaseDescriptions.ITEM_NOT_OWNED);     
                 }
@@ -193,7 +193,7 @@ internal class EventProvider
 
             if (petroleum != default && destinationItem != default)
             {
-                if (!this.universe.ActivePlayer.OwnsItem(petroleum) || !this.universe.ActivePlayer.OwnsItem(petroleum))
+                if (!this.universe.ActivePlayer.OwnsObject(petroleum) || !this.universe.ActivePlayer.OwnsObject(petroleum))
                 {
                     throw new UseException(BaseDescriptions.ITEM_NOT_OWNED);     
                 }
@@ -229,7 +229,7 @@ internal class EventProvider
             var candle = itemList.SingleOrDefault(i => i.Key == Keys.CANDLE);
             if (candle != default)
             {
-                if (!this.universe.ActivePlayer.OwnsItem(candle))
+                if (!this.universe.ActivePlayer.OwnsObject(candle))
                 {
                     var candleName = ArticleHandler.GetNameWithArticleForObject(candle, GrammarCase.Accusative, lowerFirstCharacter: true);
                     throw new KindleException(string.Format(BaseDescriptions.ITEM_NOT_OWNED_FORMATTED, candleName));     
@@ -266,7 +266,7 @@ internal class EventProvider
                 var petroleumLamp = itemList.SingleOrDefault(i => i.Key == Keys.PETROLEUM_LAMP);
                 if (petroleumLamp != default)
                 {
-                    if (!this.universe.ActivePlayer.OwnsItem(petroleumLamp))
+                    if (!this.universe.ActivePlayer.OwnsObject(petroleumLamp))
                     {
                         throw new KindleException(BaseDescriptions.ITEM_NOT_OWNED);     
                     }
@@ -349,7 +349,7 @@ internal class EventProvider
         }
         else
         {
-            if (!this.universe.ActivePlayer.OwnsItem(note))
+            if (!this.universe.ActivePlayer.OwnsObject(note))
             {
                 throw new KindleException(BaseDescriptions.ITEM_NOT_OWNED);     
             }

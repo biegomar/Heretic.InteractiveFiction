@@ -1,5 +1,8 @@
+using System.Reflection;
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.GamePlay;
 
@@ -122,6 +125,12 @@ public sealed class ObjectHandler
 
         return containerObject;
     }
+
+    public bool IsObjectUnhiddenAndInInventoryOrActiveLocation(AHereticObject item)
+    {
+        return !item.IsHidden && (this.universe.ActiveLocation.OwnsObject(item) || this.universe.ActivePlayer.OwnsObject(item));
+    }
+    
     public string GetConversationAnswerKeyByName(string phrase)
     {
         return this.GetKeyByNameAndAdjectivesFromResource(phrase, this.universe.ConversationAnswersResources, new List<string>());
@@ -262,25 +271,49 @@ public sealed class ObjectHandler
         var allItemKeysFromActivePlayer = this.GetItemKeysRecursive(this.universe.ActivePlayer.Items);
         var prioritizedKeysOfActiveLocationAndPlayer = allItemKeysFromActiveLocation.Union(allItemKeysFromActivePlayer).ToList();
         var prioritizedItemResources =
-            this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key));
+            this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key)).ToList();
+        var onlyItemsWithItemNameInValues =
+            prioritizedItemResources.Where(res => res.Value.Contains(itemName)).ToList();
 
-        foreach (var (key, value) in prioritizedItemResources)
+        if (onlyItemsWithItemNameInValues.Any())
         {
-            var listOfValues = value.ToList();
-            var keys = listOfValues.Where(x => x.Equals(itemName, StringComparison.InvariantCultureIgnoreCase)).ToList();
-            if (keys.Any())
+            switch (onlyItemsWithItemNameInValues.Count)
             {
-                if (keys.Count == 1)
-                {
-                    return key;
-                }
-
-                var item = this.GetObjectFromWorldByKey<Item>(key);
+                case 1:
+                    return onlyItemsWithItemNameInValues.Single().Key;
+                case > 1:
+                    return this.GetItemKeyMatchingAdjectives(onlyItemsWithItemNameInValues.Select(x => x.Key).ToList(),
+                        adjectives);
             }
         }
 
         return string.Empty;
     }
+
+    private string GetItemKeyMatchingAdjectives(IEnumerable<string> itemKeys, IEnumerable<string> adjectives)
+    {
+        var itemList = itemKeys.Select(this.GetObjectFromWorldByKey<Item>).ToList();
+        List<KeyValuePair<string, List<string>>> reducedType = new();
+        foreach (var item in itemList)
+        {
+            var allDeclinedAdjectives = new List<string>(AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(item));
+            reducedType.Add(new KeyValuePair<string, List<string>>(item.Key, allDeclinedAdjectives));
+        }
+
+        var result = reducedType.Where(x => x.Value.Intersect(adjectives).Any()).Select(x => x.Key).ToList();
+
+        if (result.Any())
+        {
+            if (result.Count == 1)
+            {
+                return result.Single();
+            }
+            throw new AmbiguousHereticObjectException(BaseDescriptions.AMBIGUOUS_HERETICOBJECT);
+        }
+
+        return string.Empty;
+    }
+    
     private IEnumerable<string> GetItemKeysRecursive(IEnumerable<Item> items)
     {
         var result = new List<string>();

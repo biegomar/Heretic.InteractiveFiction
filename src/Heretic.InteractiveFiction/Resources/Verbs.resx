@@ -133,7 +133,7 @@
     <value>Osten|Ost|O|E</value>
   </data>
   <data name="GO" xml:space="preserve">
-    <value>Gehe:zu|Geh:zu|Go|G</value>
+    <value>Gehe:zu|Geh:zu|Go|G|Gehe:in|Geh:in</value>
   </data>
   <data name="HELP" xml:space="preserve">
     <value>Hilfe|Help</value>

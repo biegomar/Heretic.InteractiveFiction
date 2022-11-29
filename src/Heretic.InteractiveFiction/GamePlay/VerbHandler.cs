@@ -1975,7 +1975,7 @@ internal sealed class VerbHandler
                         {
                             if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
                             {
-                                if (this.universe.ActivePlayer.OwnsItem(key))
+                                if (this.universe.ActivePlayer.OwnsObject(key))
                                 {
                                     try
                                     {
@@ -2088,7 +2088,7 @@ internal sealed class VerbHandler
                         {
                             if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
                             {
-                                if (this.universe.ActivePlayer.OwnsItem(key))
+                                if (this.universe.ActivePlayer.OwnsObject(key))
                                 {
                                     try
                                     {

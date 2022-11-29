@@ -16,6 +16,20 @@ public static class AdjectiveDeclinationHandler
             _ => throw new ArgumentOutOfRangeException(nameof(grammarCase), grammarCase, null)
         };
     }
+    
+    public static IEnumerable<string> GetAllDeclinedAdjectivesForAllCases(AHereticObject processingObject)
+    {
+        List<string> allDeclinedAdjectives = new List<string>();
+        
+        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Nominative));
+        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Genitive));
+        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Dative));
+        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Accusative));
+        allDeclinedAdjectives.AddRange(GetAllUnDeclinedAdjectivesForObject(processingObject));
+
+        return allDeclinedAdjectives;
+    }
+    
 
     public static IEnumerable<string> GetAllDeclinedAdjectivesForObject(AHereticObject processingObject,
         GrammarCase grammarCase)
@@ -26,6 +40,11 @@ public static class AdjectiveDeclinationHandler
         var adjectiveList = splitList.Select(item => item + declination).ToList();
 
         return adjectiveList;
+    }
+    
+    public static IEnumerable<string> GetAllUnDeclinedAdjectivesForObject(AHereticObject processingObject)
+    {
+        return processingObject.Adjectives.Split('|').ToList();
     }
     
     private static string GetNominativeAdjectiveDeclination(AHereticObject processingObject)

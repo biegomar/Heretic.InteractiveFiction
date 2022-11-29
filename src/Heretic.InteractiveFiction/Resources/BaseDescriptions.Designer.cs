@@ -1190,5 +1190,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("DONT_SMELL_ON_PERSON", resourceCulture);
             }
         }
+        
+        public static string AMBIGUOUS_HERETICOBJECT {
+            get {
+                return ResourceManager.GetString("AMBIGUOUS_HERETICOBJECT", resourceCulture);
+            }
+        }
     }
 }

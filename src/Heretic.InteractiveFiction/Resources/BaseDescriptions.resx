@@ -691,4 +691,7 @@
   <data name="DONT_SMELL_ON_PERSON" xml:space="preserve">
     <value>Es ist vielleicht etwas unhöflich einfach so an einer Person zu riechen.</value>
   </data>
+  <data name="AMBIGUOUS_HERETICOBJECT" xml:space="preserve">
+    <value>Oh, scheinbar gibt es hier mehrere Objekte des selben Typs. Könntest Du etwas genauer beschreiben, was Du meinst?</value>
+  </data>
 </root>

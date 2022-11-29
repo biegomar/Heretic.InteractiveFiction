@@ -10,6 +10,7 @@ public sealed class InputProcessor
 {
     private readonly Universe universe;
     private readonly VerbHandler verbHandler;
+    private readonly CommandExecutor commandExecutor;
     private readonly HistoryAdministrator historyAdministrator;
     private readonly InputAnalyzer inputAnalyzer;
     private readonly IPrintingSubsystem PrintingSubsystem;
@@ -19,6 +20,7 @@ public sealed class InputProcessor
         this.PrintingSubsystem = printingSubsystem;
         this.universe = universe;
         this.verbHandler = new VerbHandler(this.universe, grammar, printingSubsystem);
+        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem);
         this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
         this.historyAdministrator = new HistoryAdministrator(this.inputAnalyzer);
     }
@@ -26,26 +28,32 @@ public sealed class InputProcessor
     internal bool Process(string input)
     {
         var sentence = this.inputAnalyzer.Analyze(input);
+        var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
 
         this.historyAdministrator.Add(input);
 
-        if (verbHandler.Save(sentence[0], this.historyAdministrator.All))
+        if (commandExecutor.Save(adventureEvent, this.historyAdministrator.All))
         {
             return true;
         }
         
-        if (VerbKeys.REM == sentence[0])
+        if (VerbKeys.REM == adventureEvent.Predicate.Key)
         {
             return true;
         }
-        
-        var result = sentence.Length switch
+
+        var result =ProcessAdventureEvent(adventureEvent);
+
+        if (!result)
         {
-            1 => this.ProcessSingleVerb(sentence[0]),
-            2 => this.ProcessTwoWords(sentence[0], sentence[1]),
-            3 => this.ProcessThreeWords(sentence[0], sentence[1], sentence[2]),
-            _ => PrintingSubsystem.Misconcept()
-        };
+            result = sentence.Length switch
+            {
+                1 => true,
+                2 => this.ProcessTwoWords(sentence[0], sentence[1]),
+                3 => this.ProcessThreeWords(sentence[0], sentence[1], sentence[2]),
+                _ => PrintingSubsystem.Misconcept()
+            };
+        }
 
         FirePeriodicEvent();
 
@@ -80,33 +88,55 @@ public sealed class InputProcessor
         }
     }
 
-    private bool ProcessSingleVerb(string verb)
+    private bool ProcessAdventureEvent(AdventureEvent adventureEvent)
     {
-        var result = verbHandler.Quit(verb);
-        result = result || verbHandler.Directions(verb);
-        result = result || verbHandler.ChangeLocationByName(verb);
-        result = result || verbHandler.Look(verb);
-        result = result || verbHandler.Take(verb);
-        result = result || verbHandler.Inventory(verb);
-        result = result || verbHandler.Ways(verb);
-        result = result || verbHandler.Score(verb);
-        result = result || verbHandler.Help(verb);
-        result = result || verbHandler.Credits(verb);
-        result = result || verbHandler.SitDown(verb);
-        result = result || verbHandler.StandUp(verb);
-        result = result || verbHandler.Descend(verb);
-        result = result || verbHandler.AlterEgo(verb);
-        result = result || verbHandler.Wait(verb);
-        result = result || verbHandler.Sleep(verb);
-        result = result || verbHandler.Smell(verb);
-        result = result || verbHandler.Taste(verb);
-        result = result || verbHandler.History(verb, this.historyAdministrator.All);
+        var result = this.commandExecutor.Quit(adventureEvent);
+        result = result || commandExecutor.Look(adventureEvent);
+        result = result || commandExecutor.Directions(adventureEvent);
+        result = result || commandExecutor.Take(adventureEvent);
+        result = result || commandExecutor.Inventory(adventureEvent);
+        result = result || commandExecutor.Score(adventureEvent);
+        result = result || commandExecutor.Credits(adventureEvent);
+        result = result || commandExecutor.Wait(adventureEvent);
+        result = result || commandExecutor.Sleep(adventureEvent);
+        result = result || commandExecutor.Smell(adventureEvent);
+        result = result || commandExecutor.Taste(adventureEvent);
+        result = result || commandExecutor.AlterEgo(adventureEvent);
+        result = result || commandExecutor.SitDown(adventureEvent);
+        result = result || commandExecutor.StandUp(adventureEvent);
+        result = result || commandExecutor.Descend(adventureEvent);
+        result = result || commandExecutor.Ways(adventureEvent);
+        result = result || commandExecutor.Help(adventureEvent);
+        result = result || commandExecutor.History(adventureEvent, this.historyAdministrator.All);
+        result = result || commandExecutor.Use(adventureEvent);
+        result = result || commandExecutor.Buy(adventureEvent);
+        result = result || commandExecutor.Open(adventureEvent);
+        result = result || commandExecutor.Close(adventureEvent);
+        result = result || commandExecutor.Talk(adventureEvent);
+        result = result || commandExecutor.Pull(adventureEvent);
+        result = result || commandExecutor.Push(adventureEvent);
+        result = result || commandExecutor.Turn(adventureEvent);
+        result = result || commandExecutor.Jump(adventureEvent);
+        result = result || commandExecutor.Cut(adventureEvent);
+        result = result || commandExecutor.Climb(adventureEvent);
+        result = result || commandExecutor.Kindle(adventureEvent);
+        result = result || commandExecutor.Lock(adventureEvent);
+        result = result || commandExecutor.Unlock(adventureEvent);
+        result = result || commandExecutor.Break(adventureEvent);
+        result = result || commandExecutor.Eat(adventureEvent);
+        result = result || commandExecutor.Wear(adventureEvent);
+        result = result || commandExecutor.Read(adventureEvent);
+        result = result || commandExecutor.Go(adventureEvent);
+        result = result || commandExecutor.SwitchOn(adventureEvent);
+        result = result || commandExecutor.SwitchOff(adventureEvent);
+        result = result || commandExecutor.Write(adventureEvent);
+        result = result || commandExecutor.Hint(adventureEvent);
 
         if (!result)
         {
             this.PrintingSubsystem.Misconcept();
         }
-
+        
         return true;
     }
 
@@ -115,40 +145,8 @@ public sealed class InputProcessor
         var processingSubject = subject.ToLower();
 
         var commaSeparatedList = processingSubject.Split(",");
-
-        var result = verbHandler.Look(verb, processingSubject);
-        result = result || verbHandler.Go(verb, subject);
-        result = result || verbHandler.Take(verb, commaSeparatedList);
-        result = result || verbHandler.Talk(verb, processingSubject);
-        result = result || verbHandler.Use(verb, processingSubject);
-        result = result || verbHandler.Buy(verb, processingSubject);
-        result = result || verbHandler.Open(verb, processingSubject);
-        result = result || verbHandler.Close(verb, processingSubject);
+        var result = verbHandler.Take(verb, commaSeparatedList);
         result = result || verbHandler.Drop(verb, commaSeparatedList);
-        result = result || verbHandler.Pull(verb, processingSubject);
-        result = result || verbHandler.Push(verb, processingSubject);
-        result = result || verbHandler.Turn(verb, processingSubject);
-        result = result || verbHandler.Jump(verb, processingSubject);
-        result = result || verbHandler.Sleep(verb, processingSubject);
-        result = result || verbHandler.Smell(verb, processingSubject);
-        result = result || verbHandler.Taste(verb, processingSubject);
-        result = result || verbHandler.Cut(verb, processingSubject);
-        result = result || verbHandler.Climb(verb, processingSubject);
-        result = result || verbHandler.Descend(verb, processingSubject);
-        result = result || verbHandler.Kindle(verb, processingSubject);
-        result = result || verbHandler.AlterEgo(verb, processingSubject);
-        result = result || verbHandler.Lock(verb, processingSubject);
-        result = result || verbHandler.Unlock(verb, processingSubject);
-        result = result || verbHandler.Break(verb, processingSubject);
-        result = result || verbHandler.SitDown(verb, processingSubject);
-        result = result || verbHandler.Eat(verb, processingSubject);
-        result = result || verbHandler.Wear(verb, processingSubject);
-        result = result || verbHandler.Drink(verb, processingSubject);
-        result = result || verbHandler.Read(verb, processingSubject);
-        result = result || verbHandler.SwitchOn(verb, processingSubject);
-        result = result || verbHandler.SwitchOff(verb, processingSubject);
-        result = result || verbHandler.Write(verb, processingSubject);
-        result = result || verbHandler.Hint(verb, processingSubject);
 
         if (!result)
         {
@@ -166,8 +164,8 @@ public sealed class InputProcessor
         var commaSeparatedList = processingObject.Split(",");
 
         var result = verbHandler.Ask(verb, processingSubject, processingObject);
-        result = result || verbHandler.Look(verb, processingSubject, processingObject);
-        result = result || verbHandler.Take(verb, processingSubject, commaSeparatedList);
+        //result = result || verbHandler.Look(verb, processingSubject, processingObject);
+        //result = result || verbHandler.Take(verb, processingSubject, commaSeparatedList);
         result = result || verbHandler.Say(verb, processingSubject, processingObject);
         result = result || verbHandler.Give(verb, processingSubject, processingObject);
         result = result || verbHandler.Lock(verb, processingSubject, processingObject);

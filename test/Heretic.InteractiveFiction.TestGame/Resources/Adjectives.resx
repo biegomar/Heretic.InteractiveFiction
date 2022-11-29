@@ -25,6 +25,6 @@
         <value>hölzern</value>
     </data>
     <data name="RUSTY_KEY" xml:space="preserve">
-        <value>rostig</value>
+        <value>rostig|alt</value>
     </data>
 </root>
