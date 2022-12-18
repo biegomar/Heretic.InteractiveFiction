@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class PushItemEventArgs: UseItemEventArgs
+public sealed class PushItemEventArgs: UseItemEventArgs
 {
     
 }

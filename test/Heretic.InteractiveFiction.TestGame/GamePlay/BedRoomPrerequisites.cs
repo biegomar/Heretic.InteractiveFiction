@@ -50,7 +50,7 @@ internal static class BedRoomPrerequisites
     
     private static void AddChangeLocationEvents(Location room, EventProvider eventProvider)
     {
-        room.BeforeChangeLocation += eventProvider.ChangeRoomWithoutLight;
+        room.BeforeEnterLocation += eventProvider.EnterRoomWithoutLight;
     }
     
     private static void AddKindleEvents(Item item, EventProvider eventProvider)

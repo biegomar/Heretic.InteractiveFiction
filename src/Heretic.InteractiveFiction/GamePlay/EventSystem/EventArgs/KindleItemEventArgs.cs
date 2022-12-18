@@ -1,6 +1,6 @@
 ﻿namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class KindleItemEventArgs: UseItemEventArgs
+public sealed class KindleItemEventArgs: UseItemEventArgs
 {
     
 }

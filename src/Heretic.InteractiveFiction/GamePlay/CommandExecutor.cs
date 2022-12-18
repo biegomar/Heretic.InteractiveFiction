@@ -1,4 +1,3 @@
-using System.Reflection;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Grammars;
@@ -30,16 +29,53 @@ public class CommandExecutor
     {
         if (VerbKeys.ALTER_EGO == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any())
             {
                 return this.HandleAlterEgoEventOnActiveLocation(adventureEvent);    
             }
-            else if (adventureEvent.ObjectOne != default)
+            
+            if (adventureEvent.AllObjects.Count == 1)
             {
                 return this.HandleAlterEgoEventOnSingleObject(adventureEvent);
             }
 
             return true;
+        }
+
+        return false;
+    }
+    
+    internal bool Ask(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.ASK == adventureEvent.Predicate.Key)
+        {
+            //I can only speak to visible people in the active location
+            if (adventureEvent.ObjectOne is Character character 
+                && this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
+            {
+                //but I can speak about every unhidden or virtual item or character in the world
+                var item = adventureEvent.ObjectTwo;
+                if (item == default)
+                {
+                    return printingSubsystem.NoAnswerToInvisibleObject(character);
+                }
+                
+                try
+                {
+                    var conversationEventArgs = new ConversationEventArgs()
+                        { Item = item, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                    character.OnAsk(conversationEventArgs);
+                }
+                catch (AskException ex)
+                {
+                    printingSubsystem.NoAnswerToQuestion(ex.Message);
+                }
+
+                return true;
+            }
+
+            return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
         }
 
         return false;
@@ -70,14 +106,14 @@ public class CommandExecutor
         return printingSubsystem.ItemNotVisible();
     }
     
-    internal bool Buy(AdventureEvent adventureEvent)
+    private bool HandleBuy(AdventureEvent adventureEvent)
     {
         if (VerbKeys.BUY == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                if (this.universe.ActiveLocation.OwnsObject(item))
                 {
                     if (!this.universe.ActivePlayer.HasPaymentMethod)
                     {
@@ -89,22 +125,19 @@ public class CommandExecutor
                         return printingSubsystem.ItemAlreadyOwned();
                     }
 
-                    if (this.universe.ActiveLocation.OwnsObject(item) && !item.IsHidden)
-                    {
-                        this.objectHandler.StoreAsActiveObject(item);
+                    this.objectHandler.StoreAsActiveObject(item);
                 
-                        try
-                        {
-                            var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
-                            adventureEvent.ObjectOne.OnBuy(containerObjectEventArgs);
+                    try
+                    {
+                        var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
+                        adventureEvent.ObjectOne.OnBuy(containerObjectEventArgs);
                     
-                            return true;
-                        }
-                        catch (BuyException ex)
-                        {
-                            return printingSubsystem.Resource(ex.Message);
-                        }
-                    } 
+                        return true;
+                    }
+                    catch (BuyException ex)
+                    {
+                        return printingSubsystem.Resource(ex.Message);
+                    }
                 }
 
                 return printingSubsystem.ItemNotVisible();
@@ -115,57 +148,55 @@ public class CommandExecutor
 
         return false;
     }
-    
-    internal bool Break(AdventureEvent adventureEvent)
+
+    private bool HandleBreakEventOnObjects(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.BREAK == adventureEvent.Predicate.Key)
+        var item = adventureEvent.ObjectOne;
+        if (item != default)
         {
-            var item = adventureEvent.ObjectOne;
-            if (item != default)
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                this.objectHandler.StoreAsActiveObject(item);
+                if (item.IsBreakable)
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
-                    if (item.IsBreakable)
+                    if (!item.IsBroken)
                     {
-                        if (!item.IsBroken)
+                        try
                         {
-                            try
+                            var eventArgs = new BreakItemEventArgs()
                             {
-                                var eventArgs = new BreakItemEventArgs()
-                                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-                                item.OnBeforeBreak(eventArgs);
+                                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                                ItemToUse = adventureEvent.ObjectTwo
+                            };
+                            item.OnBeforeBreak(eventArgs);
 
-                                item.IsBroken = true;
-                                item.OnBreak(eventArgs);
+                            item.IsBroken = true;
+                            item.OnBreak(eventArgs);
 
-                                item.OnAfterBreak(eventArgs);
-                                return true;
-                            }
-                            catch (BreakException ex)
-                            {
-                                item.IsBroken = false;
-                                return printingSubsystem.Resource(ex.Message);
-                            }
+                            item.OnAfterBreak(eventArgs);
+                            return true;
                         }
-
-                        return printingSubsystem.ItemAlreadyBroken(item);
+                        catch (BreakException ex)
+                        {
+                            item.IsBroken = false;
+                            return printingSubsystem.Resource(ex.Message);
+                        }
                     }
 
-                    return printingSubsystem.ItemUnbreakable(item);
-
+                    return printingSubsystem.ItemAlreadyBroken(item);
                 }
 
-                return printingSubsystem.ItemNotVisible();
+                return printingSubsystem.ItemUnbreakable(item);
+
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du zerbrechen?");
+            return printingSubsystem.ItemNotVisible();
         }
 
-        return false;
+        return printingSubsystem.ItemNotVisible();
     }
-    
-    internal bool Climb(AdventureEvent adventureEvent)
+
+    private bool HandleClimbEvent(AdventureEvent adventureEvent)
     {
         if (VerbKeys.CLIMB == adventureEvent.Predicate.Key)
         {
@@ -303,7 +334,10 @@ public class CommandExecutor
                     try
                     {
                         var containerObjectEventArgs = new CutItemEventArgs
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            ItemToUse = adventureEvent.ObjectTwo
+                        };
                         item.OnCut(containerObjectEventArgs);
 
                         return true;
@@ -327,11 +361,12 @@ public class CommandExecutor
     {
         if (VerbKeys.DESCEND == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any())
             {
                 return this.HandleDescendEventOnActiveLocation(adventureEvent);    
             }
-            else if (adventureEvent.ObjectOne != default)
+            
+            if (adventureEvent.AllObjects.Count == 1)
             {
                 return this.HandleDescendEventOnSingleObject(adventureEvent);
             }
@@ -394,6 +429,76 @@ public class CommandExecutor
 
                 return printingSubsystem.ItemNotVisible();
             }
+        }
+
+        return false;
+    }
+    
+    internal bool Drop(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.DROP == adventureEvent.Predicate.Key)
+        {
+            var result = true;
+            foreach (var processingObject in adventureEvent.AllObjects)
+            {
+                if (processingObject is Player player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var playerAdventureEvent = new AdventureEvent();
+                    playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.SLEEP);
+                    playerAdventureEvent.AllObjects.Add(adventureEvent.ObjectOne);
+                    result = result && this.Sleep(playerAdventureEvent);
+                }
+                else
+                {
+                    var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == processingObject.Key);
+                    var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject.Key);
+                    if (isPlayerItem || isPlayerCloths)
+                    {
+                        if (processingObject is Item { IsDropable: true } item)
+                        {
+                            try
+                            {
+                                var dropItemEventArgs = new DropItemEventArgs()
+                                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                                item.OnBeforeDrop(dropItemEventArgs);
+
+                                var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
+                                result = result && singleDropResult;
+
+                                if (singleDropResult)
+                                {
+                                    this.universe.ActiveLocation.Items.Add(item);
+
+                                    item.OnDrop(dropItemEventArgs);
+                                    printingSubsystem.ItemDropSuccess(item);
+
+                                    item.OnAfterDrop(dropItemEventArgs);
+                                }
+                                else
+                                {
+                                    printingSubsystem.ImpossibleDrop(item);
+                                }
+                            }
+                            catch (DropException e)
+                            {
+                                this.universe.PickObject(item, true);
+                                printingSubsystem.Resource(e.Message);
+                            }
+                        }
+                        else
+                        {
+                            printingSubsystem.ImpossibleDrop(processingObject);
+                        }
+                    }
+                    else
+                    {
+                        printingSubsystem.ItemNotOwned();
+                    }
+                }
+            }
+
+            return result;
         }
 
         return false;
@@ -599,6 +704,58 @@ public class CommandExecutor
 
         return false;
     }
+    
+    internal bool Give(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.GIVE == adventureEvent.Predicate.Key)
+        {
+            //I can only give things to visible people.
+            if (adventureEvent.ObjectOne is Character character &&
+                this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
+            {
+                //...and I can give only items that i own.
+                if (adventureEvent.ObjectTwo is Item item && this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                {
+                    this.objectHandler.StoreAsActiveObject(item);
+
+                    try
+                    {
+                        var eventArgs = new ContainerObjectEventArgs()
+                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                        this.universe.ActivePlayer.OnBeforeGive(eventArgs);
+                        character.OnBeforeGive(eventArgs);
+                        item.OnBeforeGive(eventArgs);
+
+                        character.Items.Add(item);
+                        this.universe.ActivePlayer.RemoveItem(item);
+
+                        this.universe.ActivePlayer.OnGive(eventArgs);
+                        character.OnGive(eventArgs);
+                        item.OnGive(eventArgs);
+
+                        this.universe.ActivePlayer.OnAfterGive(eventArgs);
+                        character.OnAfterGive(eventArgs);
+                        item.OnAfterGive(eventArgs);
+
+                        return true;
+                    }
+                    catch (GiveException ex)
+                    {
+                        this.universe.ActivePlayer.Items.Add(item);
+                        character.RemoveItem(item);
+                        return printingSubsystem.Resource(ex.Message);
+                    }
+                }
+
+                return printingSubsystem.ItemNotOwned();
+            }
+
+            return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
+        }
+
+        return false;
+    }
 
     internal bool Help(AdventureEvent adventureEvent)
     {
@@ -642,45 +799,7 @@ public class CommandExecutor
 
         return false;
     }
-    
-    // internal bool ChangeLocationByName(AdventureEvent adventureEvent)
-    // {
-    //     var locationKey = this.objectHandler.GetObjectKeyByNameAndAdjectives<Location>(input);
-    //     if (!string.IsNullOrEmpty(locationKey))
-    //     {
-    //         if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
-    //         {
-    //             if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
-    //             {
-    //                 return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
-    //             }
-    //             
-    //             if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != null)    
-    //             {
-    //                 return printingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
-    //             }
-    //             
-    //             var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
-    //             var newLocation = mappings.Where(i => !i.IsHidden).SingleOrDefault(x => x.Location.Key == locationKey);
-    //             if (newLocation != default)
-    //             {
-    //                 if (!newLocation.Location.IsLocked)
-    //                 {
-    //                     this.universe.ActiveLocation = newLocation.Location;
-    //                     this.objectHandler.ClearActiveObjectIfNotInInventory();
-    //                     return printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
-    //                 }
-    //
-    //                 return printingSubsystem.Resource(BaseDescriptions.ROOM_LOCKDESCRIPTION);
-    //             }
-    //         }
-    //
-    //         return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
-    //     }
-    //
-    //     return false;
-    // }
-    
+
     internal bool Open(AdventureEvent adventureEvent)
     {
         if (VerbKeys.OPEN == adventureEvent.Predicate.Key)
@@ -753,7 +872,11 @@ public class CommandExecutor
                 
                     try
                     {
-                        var pullItemEventArgs = new PullItemEventArgs() {OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
+                        var pullItemEventArgs = new PullItemEventArgs()
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            ItemToUse = adventureEvent.ObjectTwo
+                        };
                         item.OnPull(pullItemEventArgs);
                     
                         return true;
@@ -788,7 +911,10 @@ public class CommandExecutor
                         try
                         {
                             var pushItemEventArgs = new PushItemEventArgs()
-                                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                            {
+                                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                                ItemToUse = adventureEvent.ObjectTwo
+                            };
 
                             item.OnPush(pushItemEventArgs);
 
@@ -805,6 +931,86 @@ public class CommandExecutor
             }
             
             return printingSubsystem.Resource("Was genau möchtest Du drücken?");
+        }
+
+        return false;
+    }
+    
+    internal bool PutOn(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.PUTON == adventureEvent.Predicate.Key)
+        {
+            var item = adventureEvent.ObjectOne;
+            var target = adventureEvent.ObjectTwo;
+            if (item != default && target != default)
+            {
+                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item)
+                    || this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(target))
+                {
+                    this.objectHandler.StoreAsActiveObject(item);
+
+                    if (target.IsSurfaceContainer)
+                    {
+                        try
+                        {
+                            var putOnEventArgs = new PutOnEventArgs()
+                            {
+                                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                                ItemToUse = target
+                            };
+
+                            var targetEventArgs = new PutOnEventArgs()
+                            {
+                                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                                ItemToUse = item
+                            };
+
+                            item.OnBeforePutOn(putOnEventArgs);
+                            target.OnBeforePutOn(targetEventArgs);
+
+                            var playerItem = this.universe.ActivePlayer.GetItem(item);
+                            if (playerItem != default)
+                            {
+                                this.universe.ActivePlayer.RemoveItem(playerItem);
+                                target.Items.Add(playerItem);
+                            }
+                            else
+                            {
+                                var locationItem = this.universe.ActiveLocation.GetItem(item);
+                                if (locationItem != default)
+                                {
+                                    this.universe.ActiveLocation.RemoveItem(locationItem);
+                                    target.Items.Add(locationItem);
+                                }
+                                else
+                                {
+                                    throw new PutOnException("Irgendwas hat nicht funktioniert.");
+                                }
+                            }
+                            
+                            item.OnPutOn(putOnEventArgs);
+                            target.OnPutOn(targetEventArgs);
+                            printingSubsystem.Resource("Das Objekt wurde abgelegt.");
+                            
+                            item.OnAfterPutOn(putOnEventArgs);
+                            target.OnAfterPutOn(targetEventArgs);
+
+                            return true;
+                        }
+                        catch (PutOnException ex)
+                        {
+                            return printingSubsystem.Resource(ex.Message);
+                        }
+                    }
+
+                    return printingSubsystem.Resource(
+                        $"Du kannst nichts auf {ArticleHandler.GetNameWithArticleForObject(target, GrammarCase.Accusative, lowerFirstCharacter: true)} abstellen.");
+                }
+
+                return printingSubsystem.ItemNotVisible();
+            }
+            
+            return printingSubsystem.Resource("Worauf genau möchtest Du etwas stellen?");
         }
 
         return false;
@@ -1014,7 +1220,10 @@ public class CommandExecutor
                     try
                     {
                         var containerObjectEventArgs = new KindleItemEventArgs()
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            ItemToUse = adventureEvent.ObjectTwo
+                        };
                         item.OnKindle(containerObjectEventArgs);
 
                         return true;
@@ -1034,89 +1243,153 @@ public class CommandExecutor
         return false;
     }
 
-    internal bool Lock(AdventureEvent adventureEvent)
+    private bool HandleLock(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.LOCK == adventureEvent.Predicate.Key)
+        var item = adventureEvent.ObjectOne;
+        var key = adventureEvent.ObjectTwo;
+
+        if (item != default)
         {
-            var item = adventureEvent.ObjectOne;
-            if (item != default)
+            this.objectHandler.StoreAsActiveObject(item);
+            if (key != default)
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                if (item.IsLockable)
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
-                    if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
-                        this.universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
+                    if (!item.IsLocked)
                     {
-                        var key = this.universe.ActivePlayer.GetItem(item.UnlockWithKey);
-                        if (item.IsLockable)
+                        if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
                         {
-                            if (!item.IsLocked)
+                            if (this.universe.ActivePlayer.OwnsObject(key))
                             {
-                                if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                                try
                                 {
-                                    try
+                                    var lockContainerEventArgs = new LockContainerEventArgs
+                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                                    item.OnBeforeLock(lockContainerEventArgs);
+
+                                    if (!string.IsNullOrEmpty(item.UnlockWithKey) && item.UnlockWithKey == key.Key)
                                     {
-                                        var lockContainerEventArgs = new LockContainerEventArgs
-                                            { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-
-                                        item.OnBeforeLock(lockContainerEventArgs);
-
                                         item.IsLocked = true;
                                         item.OnLock(lockContainerEventArgs);
-                                        var keyName = ArticleHandler.GetNameWithArticleForObject(key,
-                                            GrammarCase.Accusative, lowerFirstCharacter: true);
-                                        printingSubsystem.Resource(string.Format(
-                                            BaseDescriptions.ITEM_LOCKED_WITH_KEY_FROM_INVENTORY, keyName, item.Name));
-
-                                        item.OnAfterLock(lockContainerEventArgs);
-
-                                        return true;
+                                        printingSubsystem.ItemLocked(item);
                                     }
-                                    catch (LockException e)
+                                    else
                                     {
-                                        return printingSubsystem.Resource(e.Message);
+                                        item.OnLock(lockContainerEventArgs);
+                                        printingSubsystem.Resource(string.Format(
+                                            BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, item.Name, key.Name));
                                     }
+
+                                    item.OnAfterLock(lockContainerEventArgs);
+
+                                    return true;
+                                }
+                                catch (LockException e)
+                                {
+                                    return printingSubsystem.Resource(e.Message);
                                 }
                             }
 
-                            return printingSubsystem.ItemAlreadyLocked(item);
+                            printingSubsystem.ItemNotOwned(key);
                         }
-
-                        return printingSubsystem.ItemNotLockAble(item);
                     }
 
-                    return printingSubsystem.ImpossibleLock(item);
+                    return printingSubsystem.ItemAlreadyLocked(item);
                 }
 
-                return printingSubsystem.ItemNotVisible();
+                return printingSubsystem.ItemNotLockAble(item);
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du verschliessen?");
+            return printingSubsystem.KeyNotVisible();
         }
 
-        return false;
+        return printingSubsystem.ItemNotVisible();
     }
-    
+
+    private bool HandleLockWithoutKey(AdventureEvent adventureEvent)
+    {
+        var item = adventureEvent.ObjectOne;
+        if (item != default)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+                if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
+                    this.universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
+                {
+                    var key = this.universe.ActivePlayer.GetItem(item.UnlockWithKey);
+                    if (item.IsLockable)
+                    {
+                        if (!item.IsLocked)
+                        {
+                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                            {
+                                try
+                                {
+                                    var lockContainerEventArgs = new LockContainerEventArgs
+                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                                    item.OnBeforeLock(lockContainerEventArgs);
+
+                                    item.IsLocked = true;
+                                    item.OnLock(lockContainerEventArgs);
+                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key,
+                                        GrammarCase.Accusative, lowerFirstCharacter: true);
+                                    printingSubsystem.Resource(string.Format(
+                                        BaseDescriptions.ITEM_LOCKED_WITH_KEY_FROM_INVENTORY, keyName, item.Name));
+
+                                    item.OnAfterLock(lockContainerEventArgs);
+
+                                    return true;
+                                }
+                                catch (LockException e)
+                                {
+                                    return printingSubsystem.Resource(e.Message);
+                                }
+                            }
+                        }
+
+                        return printingSubsystem.ItemAlreadyLocked(item);
+                    }
+
+                    return printingSubsystem.ItemNotLockAble(item);
+                }
+
+                return printingSubsystem.ImpossibleLock(item);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return printingSubsystem.Resource("Was genau möchtest Du verschliessen?");
+    }
+
     internal bool Look(AdventureEvent adventureEvent)
     {
         if (VerbKeys.LOOK == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any())
             {
                 return this.HandleLookEventOnActiveLocation(adventureEvent);    
             }
             
-            if (adventureEvent.ObjectOne != default && adventureEvent.ObjectTwo == default)
+            if (adventureEvent.AllObjects.Count == 1)
             {
-                return this.HandleLookEventOnSingleObject(adventureEvent);
+                return this.HandleLookEventOnObjects(adventureEvent);
             }
 
-            if (adventureEvent.ObjectOne != default && adventureEvent.ObjectTwo != default)
+            if (adventureEvent.AllObjects.Count > 1)
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    return this.HandleLookEventOnSingleObject(adventureEvent);
-                }   
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleLookEventOnObjects(adventureEventWithoutPlayer);
+                }
+                
+                return this.HandleLookEventOnObjects(adventureEvent);
             }
 
             return true;
@@ -1124,66 +1397,255 @@ public class CommandExecutor
 
         return false;
     }
-
-    private bool HandleLookEventOnSingleObject(AdventureEvent adventureEvent)
+    
+    internal bool Break(AdventureEvent adventureEvent)
     {
-        var item = adventureEvent.ObjectOne;
-        if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        if (VerbKeys.BREAK == adventureEvent.Predicate.Key)
         {
-            try
+            if (adventureEvent.AllObjects.Count > 1)
             {
-                this.objectHandler.StoreAsActiveObject(item);
-
-                var eventArgs = new ContainerObjectEventArgs()
-                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-                var eventArgsForActiveLocation = new ContainerObjectEventArgs()
-                    { ExternalItemKey = item.Key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-
-                item.OnBeforeLook(eventArgs);
-                this.universe.ActiveLocation.OnBeforeLook(eventArgsForActiveLocation);
-
-                this.universe.UnveilFirstLevelObjects(item);
-                item.OnLook(eventArgs);
-                this.universe.ActiveLocation.OnLook(eventArgsForActiveLocation);
-                var result = printingSubsystem.PrintObject(item);
-
-                item.OnAfterLook(new ContainerObjectEventArgs());
-                this.universe.ActiveLocation.OnAfterLook(eventArgsForActiveLocation);
-
-                return result;
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleBreakEventOnObjects(adventureEventWithoutPlayer);
+                }
             }
-            catch (LookException ex)
+            
+            return this.HandleBreakEventOnObjects(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    internal bool Use(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.USE == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count > 1)
             {
-                return printingSubsystem.Resource(ex.Message);
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleUse(adventureEventWithoutPlayer);
+                }
+            }
+            
+            return this.HandleUse(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    internal bool Climb(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.CLIMB == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count > 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleClimbEvent(adventureEventWithoutPlayer);
+                }
+            }
+            
+            return this.HandleClimbEvent(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    internal bool SwitchOn(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.SWITCHON == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count > 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleSwitchOn(adventureEventWithoutPlayer);
+                }
+            }
+            
+            return this.HandleSwitchOn(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    internal bool SwitchOff(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.SWITCHOFF == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count > 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleSwitchOff(adventureEventWithoutPlayer);
+                }
+            }
+            
+            return this.HandleSwitchOff(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    internal bool Wear(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.WEAR == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count > 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleWear(adventureEventWithoutPlayer);
+                }
+            }
+            
+            return this.HandleWear(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    internal bool Buy(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.BUY == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count > 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleBuy(adventureEventWithoutPlayer);
+                }
+            }
+            
+            return this.HandleBuy(adventureEvent);
+        }
+
+        return false;
+    }
+
+    private bool HandleLookEventOnObjects(AdventureEvent adventureEvent)
+    {
+        foreach (var item in adventureEvent.AllObjects)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                try
+                {
+                    this.objectHandler.StoreAsActiveObject(item);
+
+                    var eventArgs = new ContainerObjectEventArgs()
+                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    var eventArgsForActiveLocation = new ContainerObjectEventArgs()
+                        { ExternalItemKey = item.Key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                    item.OnBeforeLook(eventArgs);
+                    this.universe.ActiveLocation.OnBeforeLook(eventArgsForActiveLocation);
+
+                    this.universe.UnveilFirstLevelObjects(item);
+                    item.OnLook(eventArgs);
+                    this.universe.ActiveLocation.OnLook(eventArgsForActiveLocation);
+                    printingSubsystem.PrintObject(item);
+
+                    item.OnAfterLook(new ContainerObjectEventArgs());
+                    this.universe.ActiveLocation.OnAfterLook(eventArgsForActiveLocation);
+                }
+                catch (LookException ex)
+                {
+                    printingSubsystem.Resource(ex.Message);
+                }
+            }
+            else
+            {
+                printingSubsystem.ItemNotVisible();    
             }
         }
 
-        return printingSubsystem.ItemNotVisible();
+        return true;
     }
 
     internal bool Take(AdventureEvent adventureEvent)
     {
         if (VerbKeys.TAKE == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any() && !adventureEvent.UnidentifiedSentenceParts.Any())
             {
-                return HandleTakeEventOnAllPickableAndUnhiddenItems(adventureEvent);    
+                return HandleTakeEventOnAllPickableAndUnhiddenItems(adventureEvent);
             }
 
-            if (adventureEvent.ObjectOne != default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any() && adventureEvent.UnidentifiedSentenceParts.Any())
             {
-                return HandleTakeEventOnSinglePickableAndUnhiddenItems(adventureEvent);
+                return printingSubsystem.ItemNotVisible();
             }
-            
-            if (adventureEvent.ObjectOne != default && adventureEvent.ObjectTwo != default)
+
+            if (adventureEvent.AllObjects.Count == 1)
+            {
+                return HandleTakeEventOnObjects(adventureEvent);
+            }
+
+            if (adventureEvent.AllObjects.Count > 1)
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    return this.HandleTakeEventOnSinglePickableAndUnhiddenItems(adventureEvent);
-                }   
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleTakeEventOnObjects(adventureEvent);
+                }
+
+                return this.HandleTakeEventOnObjects(adventureEvent);
+            }
+        }
+
+        return false;
+    }
+    
+    internal bool Lock(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.LOCK == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count == 1)
+            {
+                return HandleLockWithoutKey(adventureEvent);
             }
 
-            return true;
+            return HandleLock(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    internal bool Unlock(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.UNLOCK == adventureEvent.Predicate.Key)
+        {
+            if (adventureEvent.AllObjects.Count == 1)
+            {
+                return HandleUnlockWithoutKey(adventureEvent);
+            }
+
+            return HandleUnlock(adventureEvent);
         }
 
         return false;
@@ -1214,13 +1676,25 @@ public class CommandExecutor
     {
         if (VerbKeys.SIT == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any())
             {
                 return this.HandleSitDownEventOnActiveLocation(adventureEvent);    
             }
-            else if (adventureEvent.ObjectOne != default)
+            
+            if (adventureEvent.AllObjects.Count == 1)
             {
                 return this.HandleSitDownEventOnSingleObject(adventureEvent);
+            }
+            
+            if (adventureEvent.AllObjects.Count > 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.SitDown(adventureEventWithoutPlayer);
+                }
             }
 
             return true;
@@ -1364,116 +1838,106 @@ public class CommandExecutor
         return false;
     }
 
-    internal bool SwitchOff(AdventureEvent adventureEvent)
+    private bool HandleSwitchOff(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SWITCHOFF == adventureEvent.Predicate.Key)
+        if (adventureEvent.ObjectOne is Item item)
         {
-            if (adventureEvent.ObjectOne is Item item)
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                var itemName =
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
+                        lowerFirstCharacter: true);
+
+                this.objectHandler.StoreAsActiveObject(item);
+
+                if (item.IsSwitchable)
                 {
-                    var itemName =
-                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
-                            lowerFirstCharacter: true);
-
-                    this.objectHandler.StoreAsActiveObject(item);
-
-                    if (item.IsSwitchable)
+                    if (item.IsSwitchedOn)
                     {
-                        if (item.IsSwitchedOn)
+                        try
                         {
-                            try
-                            {
-                                var itemEventArgs = new ContainerObjectEventArgs()
-                                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                            var itemEventArgs = new ContainerObjectEventArgs()
+                                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
 
-                                item.OnBeforeSwitchOff(itemEventArgs);
+                            item.OnBeforeSwitchOff(itemEventArgs);
 
-                                item.IsSwitchedOn = false;
-                                item.OnSwitchOff(itemEventArgs);
+                            item.IsSwitchedOn = false;
+                            item.OnSwitchOff(itemEventArgs);
 
-                                item.OnAfterSwitchOff(itemEventArgs);
+                            item.OnAfterSwitchOff(itemEventArgs);
 
-                                return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDOFF, itemName,
-                                    true);
-                            }
-                            catch (SwitchOffException ex)
-                            {
-                                return printingSubsystem.Resource(ex.Message);
-                            }
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDOFF, itemName,
+                                true);
                         }
-
-                        return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDOFF, itemName,
-                            true);
+                        catch (SwitchOffException ex)
+                        {
+                            return printingSubsystem.Resource(ex.Message);
+                        }
                     }
 
-                    return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHOFF, itemName, true);
-                }
-
-                return printingSubsystem.ItemNotVisible();
-            }
-            
-            return printingSubsystem.Resource("Was genau möchtest Du ausschalten?");
-        }
-
-        return false;
-    }
-    
-    internal bool SwitchOn(AdventureEvent adventureEvent)
-    {
-        if (VerbKeys.SWITCHON == adventureEvent.Predicate.Key)
-        {
-            if (adventureEvent.ObjectOne is Item item)
-            {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
-                {
-                    var itemName =
-                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
-                            lowerFirstCharacter: true);
-
-                    this.objectHandler.StoreAsActiveObject(item);
-
-                    if (item.IsSwitchable)
-                    {
-                        if (!item.IsSwitchedOn)
-                        {
-                            try
-                            {
-                                var itemEventArgs = new ContainerObjectEventArgs()
-                                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-
-                                item.OnBeforeSwitchOn(itemEventArgs);
-
-                                item.IsSwitchedOn = true;
-                                item.OnSwitchOn(itemEventArgs);
-
-                                item.OnAfterSwitchOn(itemEventArgs);
-
-                                return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDON,
-                                    itemName,
-                                    true);
-                            }
-                            catch (SwitchOnException ex)
-                            {
-                                return printingSubsystem.Resource(ex.Message);
-                            }
-                        }
-
-                        return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDON,
-                            itemName, true);
-                    }
-
-                    return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHON, itemName,
+                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDOFF, itemName,
                         true);
                 }
 
-                return printingSubsystem.ItemNotVisible();
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHOFF, itemName, true);
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du anschalten?");
+            return printingSubsystem.ItemNotVisible();
         }
 
-        return false;
+        return printingSubsystem.Resource("Was genau möchtest Du ausschalten?");
+    }
+
+    private bool HandleSwitchOn(AdventureEvent adventureEvent)
+    {
+        if (adventureEvent.ObjectOne is Item item)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                var itemName =
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
+                        lowerFirstCharacter: true);
+
+                this.objectHandler.StoreAsActiveObject(item);
+
+                if (item.IsSwitchable)
+                {
+                    if (!item.IsSwitchedOn)
+                    {
+                        try
+                        {
+                            var itemEventArgs = new ContainerObjectEventArgs()
+                                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                            item.OnBeforeSwitchOn(itemEventArgs);
+
+                            item.IsSwitchedOn = true;
+                            item.OnSwitchOn(itemEventArgs);
+
+                            item.OnAfterSwitchOn(itemEventArgs);
+
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_SWITCHEDON,
+                                itemName,
+                                true);
+                        }
+                        catch (SwitchOnException ex)
+                        {
+                            return printingSubsystem.Resource(ex.Message);
+                        }
+                    }
+
+                    return printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDON,
+                        itemName, true);
+                }
+
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHON, itemName,
+                    true);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return printingSubsystem.Resource("Was genau möchtest Du anschalten?");
     }
 
     internal bool Talk(AdventureEvent adventureEvent)
@@ -1517,95 +1981,157 @@ public class CommandExecutor
 
         return false;
     }
-    
-    internal bool Unlock(AdventureEvent adventureEvent)
+
+    private bool HandleUnlock(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.UNLOCK == adventureEvent.Predicate.Key)
+        if (adventureEvent.ObjectOne is Item item)
         {
-            var item = adventureEvent.ObjectOne;
-            if (item != default)
+            this.objectHandler.StoreAsActiveObject(item);
+            if (adventureEvent.ObjectTwo is Item key)
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                if (item.IsLockable)
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
-                    if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
-                        this.universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
+                    if (item.IsLocked)
                     {
-                        var key = this.universe.ActivePlayer.GetItem(item.UnlockWithKey);
-                        if (item.IsLockable)
+                        if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
                         {
-                            if (item.IsLocked)
+                            if (this.universe.ActivePlayer.OwnsObject(key))
                             {
-                                if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                                try
                                 {
-                                    try
+                                    var unlockContainerEventArgs = new LockContainerEventArgs
+                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                                    item.OnBeforeUnlock(unlockContainerEventArgs);
+
+                                    if (!string.IsNullOrEmpty(item.UnlockWithKey) && item.UnlockWithKey == key.Key)
                                     {
-                                        var unlockContainerEventArgs = new LockContainerEventArgs
-                                            { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-
-                                        item.OnBeforeUnlock(unlockContainerEventArgs);
-
                                         item.IsLocked = false;
                                         item.OnUnlock(unlockContainerEventArgs);
-                                        var keyName = ArticleHandler.GetNameWithArticleForObject(key,
-                                            GrammarCase.Accusative, lowerFirstCharacter: true);
-                                        printingSubsystem.Resource(string.Format(
-                                            BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName,
-                                            item.Name));
-
-                                        item.OnAfterUnlock(unlockContainerEventArgs);
-
-                                        return true;
+                                        printingSubsystem.ItemUnlocked(item);
                                     }
-                                    catch (UnlockException e)
+                                    else
                                     {
-                                        return printingSubsystem.Resource(e.Message);
+                                        item.OnUnlock(unlockContainerEventArgs);
+                                        printingSubsystem.Resource(string.Format(
+                                            BaseDescriptions.IMPOSSIBLE_UNLOCK_WITH_WRONG_KEY, item.Name, key.Name));
                                     }
+
+                                    item.OnAfterUnlock(unlockContainerEventArgs);
+
+                                    return true;
+                                }
+                                catch (UnlockException e)
+                                {
+                                    return printingSubsystem.Resource(e.Message);
                                 }
                             }
 
-                            return printingSubsystem.ItemAlreadyUnlocked(item);
+                            printingSubsystem.ItemNotOwned(key);
                         }
-
-                        return printingSubsystem.ItemNotLockAble(item);
                     }
 
-                    return printingSubsystem.ImpossibleUnlock(item);
+                    return printingSubsystem.ItemAlreadyUnlocked(item);
                 }
 
-                return printingSubsystem.ItemNotVisible();
+                return printingSubsystem.ItemNotLockAble(item);
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du aufschliessen?");
+            return printingSubsystem.KeyNotVisible();
         }
 
-        return false;
+        return printingSubsystem.ItemNotVisible();
     }
 
-    internal bool Use(AdventureEvent adventureEvent)
+    private bool HandleUnlockWithoutKey(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.USE == adventureEvent.Predicate.Key)
+        if (adventureEvent.ObjectOne is Item item)
         {
-            var item = adventureEvent.ObjectOne;
-            if (item != default)
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                this.objectHandler.StoreAsActiveObject(item);
+                if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
+                    this.universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
+                    var key = this.universe.ActivePlayer.GetItem(item.UnlockWithKey);
+                    if (item.IsLockable)
+                    {
+                        if (item.IsLocked)
+                        {
+                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                            {
+                                try
+                                {
+                                    var unlockContainerEventArgs = new LockContainerEventArgs
+                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                                    item.OnBeforeUnlock(unlockContainerEventArgs);
+
+                                    item.IsLocked = false;
+                                    item.OnUnlock(unlockContainerEventArgs);
+                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key,
+                                        GrammarCase.Accusative, lowerFirstCharacter: true);
+                                    printingSubsystem.Resource(string.Format(
+                                        BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName,
+                                        item.Name));
+
+                                    item.OnAfterUnlock(unlockContainerEventArgs);
+
+                                    return true;
+                                }
+                                catch (UnlockException e)
+                                {
+                                    return printingSubsystem.Resource(e.Message);
+                                }
+                            }
+                        }
+
+                        return printingSubsystem.ItemAlreadyUnlocked(item);
+                    }
+
+                    return printingSubsystem.ItemNotLockAble(item);
+                }
+
+                return printingSubsystem.ImpossibleUnlock(item);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return printingSubsystem.Resource("Was genau möchtest Du aufschliessen?");
+    }
+
+    private bool HandleUse(AdventureEvent adventureEvent)
+    {
+        var item = adventureEvent.ObjectOne;
+        if (item != default)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+
+                if (adventureEvent.ObjectTwo is { } itemToUse && this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(itemToUse))
+                {
                     try
                     {
                         string optionalErrorMessage = string.Empty;
                         var errorMessage = adventureEvent.Predicate.ErrorMessage;
                         if (!string.IsNullOrEmpty(errorMessage))
                         {
-                            var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true);
+                            var itemName =
+                                ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative,
+                                    lowerFirstCharacter: true);
                             optionalErrorMessage = string.Format(errorMessage, itemName);
                         }
 
-                        var useItemEventArgs = new UseItemEventArgs() {OptionalErrorMessage = optionalErrorMessage};
-                    
+                        var useItemEventArgs = new UseItemEventArgs()
+                        {
+                            OptionalErrorMessage = optionalErrorMessage,
+                            ItemToUse = itemToUse
+                        };
+
                         item.OnUse(useItemEventArgs);
-                    
+
                         return true;
                     }
                     catch (UseException ex)
@@ -1613,16 +2139,16 @@ public class CommandExecutor
                         return printingSubsystem.Resource(ex.Message);
                     }
                 }
-
-                return printingSubsystem.ItemNotOwned();
+                
+                return printingSubsystem.Resource("Was genau möchtest Du benutzen?");
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du benutzen?");
+            return printingSubsystem.ItemNotOwned();
         }
 
-        return false;
+        return printingSubsystem.Resource("Was genau möchtest Du benutzen?");
     }
-    
+
     internal bool Wait(AdventureEvent adventureEvent)
     {
         if (VerbKeys.WAIT == adventureEvent.Predicate.Key)
@@ -1645,7 +2171,7 @@ public class CommandExecutor
         return false;
     }
 
-    internal bool Wear(AdventureEvent adventureEvent)
+    private bool HandleWear(AdventureEvent adventureEvent)
     {
         void SwapItem(Item item)
         {
@@ -1754,11 +2280,12 @@ public class CommandExecutor
     {
         if (VerbKeys.SLEEP == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any())
             {
                 return this.HandleSleepEventOnActiveLocation(adventureEvent);    
             }
-            else if (adventureEvent.ObjectOne != default)
+            
+            if (adventureEvent.AllObjects.Count == 1)
             {
                 return this.HandleSleepEventOnSingleObject(adventureEvent);
             }
@@ -1814,11 +2341,12 @@ public class CommandExecutor
     {
         if (VerbKeys.SMELL == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any())
             {
                 return this.HandleSmellEventOnActiveLocation(adventureEvent);    
             }
-            else if (adventureEvent.ObjectOne != default)
+            
+            if (adventureEvent.AllObjects.Count == 1)
             {
                 return this.HandleSmellEventOnSingleObject(adventureEvent);
             }
@@ -1878,16 +2406,50 @@ public class CommandExecutor
     {
         if (VerbKeys.TASTE == adventureEvent.Predicate.Key)
         {
-            if (adventureEvent.ObjectOne == default && adventureEvent.ObjectTwo == default)
+            if (!adventureEvent.AllObjects.Any())
             {
                 return this.HandleTasteEventOnActiveLocation(adventureEvent);    
             }
-            else if (adventureEvent.ObjectOne != default)
+            
+            if (adventureEvent.AllObjects.Count == 1)
             {
                 return this.HandleTasteEventOnSingleObject(adventureEvent);
             }
 
             return true;
+        }
+
+        return false;
+    }
+    
+    internal bool ToBe(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.TOBE == adventureEvent.Predicate.Key)
+        {
+            var subject = adventureEvent.ObjectOne;
+
+            if (subject != default)
+            {
+                this.objectHandler.StoreAsActiveObject(subject);
+                
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() 
+                    {
+                        ExternalItemKey = adventureEvent.UnidentifiedSentenceParts.FirstOrDefault(), 
+                        OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage
+                    };
+                    subject.OnToBe(containerObjectEventArgs);
+                    
+                    return true;
+                }
+                catch (ToBeException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotVisible();
         }
 
         return false;
@@ -1955,39 +2517,47 @@ public class CommandExecutor
         return false;
     }
 
-    private bool HandleTakeEventOnSinglePickableAndUnhiddenItems(AdventureEvent adventureEvent)
+    private bool HandleTakeEventOnObjects(AdventureEvent adventureEvent)
     {
-        var objectOne = adventureEvent.ObjectOne;
-        if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(objectOne))
+        foreach (var hereticObject in adventureEvent.AllObjects)
         {
-            if (objectOne is Character character)
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(hereticObject))
             {
-                return printingSubsystem.ImpossiblePickup(character);
-            }
-
-            if (objectOne is Item item)
-            {
-                try
+                if (hereticObject is Character character)
                 {
-                    this.objectHandler.StoreAsActiveObject(objectOne);
+                    printingSubsystem.ImpossiblePickup(character);
+                } 
+                else if (hereticObject is Item item)
+                {
+                    try
+                    {
+                        this.objectHandler.StoreAsActiveObject(hereticObject);
 
-                    var eventArgs = new ContainerObjectEventArgs()
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-                    objectOne.OnBeforeTake(eventArgs);
-                    universe.PickObject(item);
-                    objectOne.OnTake(eventArgs);
-                    objectOne.OnAfterTake(eventArgs);
+                        var eventArgs = new ContainerObjectEventArgs()
+                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        hereticObject.OnBeforeTake(eventArgs);
+                        universe.PickObject(item);
+                        hereticObject.OnTake(eventArgs);
+                        hereticObject.OnAfterTake(eventArgs);
+                    }
+                    catch (TakeException ex)
+                    {
+                        printingSubsystem.Resource(ex.Message);
+                    }   
                 }
-                catch (TakeException ex)
+                else
                 {
-                    return printingSubsystem.Resource(ex.Message);
-                }   
+                    printingSubsystem.ImpossiblePickup(hereticObject);    
+                }
+            }
+            else
+            {
+                printingSubsystem.ItemNotVisible();    
             }
             
-            return printingSubsystem.ImpossiblePickup(objectOne);
         }
 
-        return printingSubsystem.ItemNotVisible();;
+        return true;
     }
 
     private bool HandleTakeEventOnAllPickableAndUnhiddenItems(AdventureEvent adventureEvent)
@@ -2052,54 +2622,57 @@ public class CommandExecutor
                 return printingSubsystem.Resource(BaseDescriptions.ALREADY_SITTING);
             }
             
-            var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
-            var newLocationMap = mappings.Where(i => !i.IsHidden).SingleOrDefault(x => x.Direction == direction);
+            var newMapping = this.universe.LocationMap[this.universe.ActiveLocation].ToList();
+            var newLocationMap = newMapping.Where(i => !i.IsHidden).SingleOrDefault(x => x.Direction == direction);
+
             if (newLocationMap != default)
             {
                 try
                 {
-                    var changeLocationEventArgs = new ChangeLocationEventArgs(newLocationMap) {OptionalErrorMessage = optionalErrorMessage};
+                    var oldMapping = this.universe.LocationMap[newLocationMap.Location].ToList();
+                    var oldLocationMap = oldMapping.Single(i => i.Location == this.universe.ActiveLocation);
                     
-                    this.universe.ActiveLocation.OnBeforeChangeLocation(changeLocationEventArgs);
+                    var leaveLocationEventArgs = new LeaveLocationEventArgs(newLocationMap) {OptionalErrorMessage = optionalErrorMessage};
+                    var enterLocationEventArgs = new EnterLocationEventArgs(oldLocationMap) { OptionalErrorMessage = optionalErrorMessage };
+                    
+                    this.universe.ActiveLocation.OnBeforeLeaveLocation(leaveLocationEventArgs);
+                    newLocationMap.Location.OnBeforeEnterLocation(enterLocationEventArgs);
+                    
                     if (!newLocationMap.Location.IsLocked)
                     {
                         if (!newLocationMap.Location.IsClosed)
                         {
+                            var oldLocation = this.universe.ActiveLocation;
+                            oldLocation.OnLeaveLocation(leaveLocationEventArgs);
+                            
                             this.universe.ActiveLocation = newLocationMap.Location;
+                            
                             this.objectHandler.ClearActiveObjectIfNotInInventory();
-                            this.universe.ActiveLocation.OnChangeLocation(changeLocationEventArgs);
+                            
+                            this.universe.ActiveLocation.OnEnterLocation(enterLocationEventArgs);
+                            
+                            printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+                            
+                            oldLocation.OnAfterLeaveLocation(leaveLocationEventArgs);
+                            this.universe.ActiveLocation.OnAfterEnterLocation(enterLocationEventArgs);
 
-                            return printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+                            return true;
                         }
-                    }
 
-                    //TODO - maybe OnUnsuccessfulLocationChange... 
-                    var status = this.universe.ActiveLocation.OnAfterChangeLocation(changeLocationEventArgs);
-
-                    if (status == ChangeLocationStatus.IsLocked)
-                    {
-                        return printingSubsystem.WayIsLocked(newLocationMap.Location);
-                    }
-                    else if (status == ChangeLocationStatus.IsClosed)
-                    {
                         return printingSubsystem.WayIsClosed(newLocationMap.Location);
                     }
+
+                    return printingSubsystem.WayIsLocked(newLocationMap.Location);
                 }
-                catch (BeforeChangeLocationException ex)
+                catch (LeaveLocationException ex)
                 {
                     return printingSubsystem.Resource(ex.Message);
                 }
             }
-            else
-            {
-                return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
-            }
-        }
-        else
-        {
+
             return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
         }
 
-        return false;
+        return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
     }
 }

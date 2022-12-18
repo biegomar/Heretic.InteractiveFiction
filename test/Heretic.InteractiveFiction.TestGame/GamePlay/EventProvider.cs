@@ -58,13 +58,13 @@ internal class EventProvider
         }
     }
     
-    internal void ChangeRoomWithoutLight(object sender, ChangeLocationEventArgs eventArgs)
+    internal void EnterRoomWithoutLight(object sender, EnterLocationEventArgs eventArgs)
     {
         if (sender is Location)
         {
             if (!this.universe.ActivePlayer.Items.Any(x => x.IsLighter && x.IsLighterSwitchedOn))
             {
-                throw new BeforeChangeLocationException(Descriptions.CANT_LEAVE_ROOM_WITHOUT_LIGHT); 
+                throw new LeaveLocationException(Descriptions.CANT_LEAVE_ROOM_WITHOUT_LIGHT); 
             }
         }
     }
@@ -105,7 +105,7 @@ internal class EventProvider
                         candle.RemoveItem(ironKey);
                         
                         cookTop.Items.Add(ironKey);
-                        cookTop.RemoveItem((Item)candle);
+                        cookTop.RemoveItem(candle);
                         
                         this.universe.Score += this.universe.ScoreBoard[nameof(this.WaitForCandleToMelt)];
                         

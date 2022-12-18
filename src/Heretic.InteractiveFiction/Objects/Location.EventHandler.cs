@@ -4,44 +4,47 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed partial class Location
 {
-    public event EventHandler<ChangeLocationEventArgs> BeforeChangeLocation;
-    public event EventHandler<ChangeLocationEventArgs> ChangeLocation;
-    public event EventHandler<ChangeLocationEventArgs> AfterChangeLocation;
+    public event EventHandler<EnterLocationEventArgs> BeforeEnterLocation;
+    public event EventHandler<EnterLocationEventArgs> EnterLocation;
+    public event EventHandler<EnterLocationEventArgs> AfterEnterLocation;
     
-    public void OnBeforeChangeLocation(ChangeLocationEventArgs eventArgs)
+    public event EventHandler<LeaveLocationEventArgs> BeforeLeaveLocation;
+    public event EventHandler<LeaveLocationEventArgs> LeaveLocation;
+    public event EventHandler<LeaveLocationEventArgs> AfterLeaveLocation;
+    
+    public void OnBeforeEnterLocation(EnterLocationEventArgs eventArgs)
     {
-        var localEventHandler = this.BeforeChangeLocation;
+        var localEventHandler = this.BeforeEnterLocation;
         localEventHandler?.Invoke(this, eventArgs);
     }
     
-    public void OnChangeLocation(ChangeLocationEventArgs eventArgs)
+    public void OnEnterLocation(EnterLocationEventArgs eventArgs)
     {
-        var localEventHandler = this.ChangeLocation;
+        var localEventHandler = this.EnterLocation;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
-    public ChangeLocationStatus OnAfterChangeLocation(ChangeLocationEventArgs eventArgs)
+    public void OnAfterEnterLocation(EnterLocationEventArgs eventArgs)
     {
-        var localEventHandler = this.AfterChangeLocation;
-        if (localEventHandler != null)
-        {
-            localEventHandler(this, eventArgs);
-        }
-        else
-        {
-            if (!eventArgs.NewDestinationNode.Location.IsLocked)
-            {
-                if (eventArgs.NewDestinationNode.Location.IsClosed)
-                {
-                    return ChangeLocationStatus.IsClosed;
-                }
-            }
-            else
-            {
-                return ChangeLocationStatus.IsLocked;
-            }
-        }
+        var localEventHandler = this.AfterEnterLocation;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public void OnBeforeLeaveLocation(LeaveLocationEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeLeaveLocation;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public void OnLeaveLocation(LeaveLocationEventArgs eventArgs)
+    {
+        var localEventHandler = this.LeaveLocation;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
 
-        return ChangeLocationStatus.Ok;
+    public void OnAfterLeaveLocation(LeaveLocationEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterLeaveLocation;
+        localEventHandler?.Invoke(this, eventArgs);
     }
 }

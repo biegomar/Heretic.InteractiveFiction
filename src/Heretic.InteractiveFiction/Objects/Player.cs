@@ -345,4 +345,23 @@ public sealed class Player : AHereticObject
         
         return result;
     }
+
+    internal override bool OwnsObject(AHereticObject objectToInspect, ICollection<AHereticObject> visitedItems)
+    {
+        var result = base.OwnsObject(objectToInspect, visitedItems);
+
+        if (!result)
+        {
+            foreach (var item in this.Clothes)
+            {
+                result = item.OwnsObject(objectToInspect, visitedItems);
+                if (result)
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return result;
+    }
 }

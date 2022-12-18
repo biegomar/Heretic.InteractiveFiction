@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class PullItemEventArgs: UseItemEventArgs
+public sealed class PullItemEventArgs: UseItemEventArgs
 {
     
 }

@@ -694,4 +694,7 @@
   <data name="AMBIGUOUS_HERETICOBJECT" xml:space="preserve">
     <value>Oh, scheinbar gibt es hier mehrere Objekte des selben Typs. Könntest Du etwas genauer beschreiben, was Du meinst?</value>
   </data>
+  <data name="IMPOSSIBLE_CUT_WITHOUT_TOOL" xml:space="preserve">
+    <value>Womit möchtest Du denn {0} zerschneiden?</value>
+  </data>
 </root>

@@ -2,11 +2,11 @@ using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class ChangeLocationEventArgs : ContainerObjectEventArgs
+public sealed class LeaveLocationEventArgs : ContainerObjectEventArgs
 {
     public DestinationNode NewDestinationNode { get; }
 
-    public ChangeLocationEventArgs(DestinationNode newDestinationNode)
+    public LeaveLocationEventArgs(DestinationNode newDestinationNode)
     {
         this.NewDestinationNode = newDestinationNode;
     }

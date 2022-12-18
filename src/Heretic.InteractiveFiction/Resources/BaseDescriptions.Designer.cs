@@ -1196,5 +1196,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("AMBIGUOUS_HERETICOBJECT", resourceCulture);
             }
         }
+        
+        public static string IMPOSSIBLE_CUT_WITHOUT_TOOL {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_CUT_WITHOUT_TOOL", resourceCulture);
+            }
+        }
     }
 }

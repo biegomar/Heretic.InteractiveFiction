@@ -1,5 +1,5 @@
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class BreakItemEventArgs: UseItemEventArgs
+public sealed class BreakItemEventArgs: UseItemEventArgs
 {
 }

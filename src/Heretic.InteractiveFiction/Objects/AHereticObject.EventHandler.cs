@@ -74,6 +74,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> BeforeWear;
     public event EventHandler<ContainerObjectEventArgs> Wear;
     public event EventHandler<ContainerObjectEventArgs> AfterWear;
+    
+    public event EventHandler<PutOnEventArgs> BeforePutOn;
+    public event EventHandler<PutOnEventArgs> PutOn;
+    public event EventHandler<PutOnEventArgs> AfterPutOn;
 
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<CutItemEventArgs> Cut;
@@ -137,15 +141,16 @@ public abstract partial class AHereticObject
             {
                 throw new CutException(eventArgs.OptionalErrorMessage);
             }
-            else if (eventArgs.ItemToUse != default)
+            
+            var itemName = ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Accusative, lowerFirstCharacter: true);
+            
+            if (eventArgs.ItemToUse != default)
             {
                 var itemToUseName = ArticleHandler.GetNameWithArticleForObject(eventArgs.ItemToUse, GrammarCase.Dative, lowerFirstCharacter: true);
-                var itemName = ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Accusative, lowerFirstCharacter: true);
                 throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT, itemName, itemToUseName));    
             }
             
-            throw new CutException(BaseDescriptions.DOES_NOT_WORK);
-            
+            throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT_WITHOUT_TOOL, itemName));
         }
     }
     
@@ -231,6 +236,57 @@ public abstract partial class AHereticObject
                 throw new PushException(eventArgs.OptionalErrorMessage);
             }
             throw new PushException(BaseDescriptions.DOES_NOT_WORK);
+        }
+    }
+    
+    public virtual void OnBeforePutOn(PutOnEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforePutOn;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new PutOnException(eventArgs.OptionalErrorMessage);
+            }
+            throw new PutOnException(BaseDescriptions.DOES_NOT_WORK);
+        }
+    }
+    
+    public virtual void OnPutOn(PutOnEventArgs eventArgs)
+    {
+        var localEventHandler = this.PutOn;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new PutOnException(eventArgs.OptionalErrorMessage);
+            }
+            throw new PutOnException(BaseDescriptions.DOES_NOT_WORK);
+        }
+    }
+    
+    public virtual void OnAfterPutOn(PutOnEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterPutOn;
+        if (localEventHandler != null)
+        {
+            localEventHandler.Invoke(this, eventArgs);
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
+            {
+                throw new PutOnException(eventArgs.OptionalErrorMessage);
+            }
+            throw new PutOnException(BaseDescriptions.DOES_NOT_WORK);
         }
     }
 

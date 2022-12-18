@@ -23,15 +23,22 @@ public sealed class ObjectHandler
         var typeOfLocation = typeof(Location);
         var typeOfPlayer = typeof(Player);
         
-        if (typeofT == typeOfCharacter || typeofT == typeOfPlayer)
+        if (typeofT == typeOfPlayer)
+        {
+            return GetPlayerKeyByName(objectName);
+        }
+        
+        if (typeofT == typeOfCharacter)
         {
             return GetCharacterKeyByNameAndAdjectives(objectName, adjectives);
         }
-        else if (typeofT == typeOfItem)
+        
+        if (typeofT == typeOfItem)
         {
             return GetItemKeyByNameAndAdjectives(objectName, adjectives);
         }
-        else if (typeofT == typeOfLocation)
+        
+        if (typeofT == typeOfLocation)
         {
             return GetLocationKeyByNameAndAdjectives(objectName, adjectives);
         }
@@ -273,7 +280,7 @@ public sealed class ObjectHandler
         var prioritizedItemResources =
             this.universe.ItemResources.Where(x => prioritizedKeysOfActiveLocationAndPlayer.Contains(x.Key)).ToList();
         var onlyItemsWithItemNameInValues =
-            prioritizedItemResources.Where(res => res.Value.Contains(itemName)).ToList();
+            prioritizedItemResources.Where(res => res.Value.Contains(itemName, StringComparer.InvariantCultureIgnoreCase)).ToList();
 
         if (onlyItemsWithItemNameInValues.Any())
         {
@@ -348,29 +355,30 @@ public sealed class ObjectHandler
     {
         return this.GetKeyByNameAndAdjectivesFromResource(locationName, this.universe.LocationResources, adjectives);
     }
-    private string GetCharacterKeyByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
+    
+    private string GetPlayerKeyByName(string playerName)
     {
-        var key = this.GetKeyByNameAndAdjectivesFromResource(itemName, this.universe.CharacterResources, adjectives);
+        var upperItemName = playerName.ToUpperInvariant();
 
-        if (string.IsNullOrEmpty(key))
+        if (upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative, PersonView.FirstPerson).ToUpperInvariant()
+            || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative).ToUpperInvariant()
+            || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Genitive,PersonView.FirstPerson).ToUpperInvariant()
+            || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Genitive).ToUpperInvariant()
+            || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Dative,PersonView.FirstPerson).ToUpperInvariant()
+            || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Dative).ToUpperInvariant()
+            || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative,PersonView.FirstPerson).ToUpperInvariant()
+            || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative).ToUpperInvariant()
+            || upperItemName == this.universe.ActivePlayer.Name.ToUpperInvariant())
         {
-            var upperItemName = itemName.ToUpperInvariant();
-
-            if (upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative, PersonView.FirstPerson).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Nominative).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Genitive,PersonView.FirstPerson).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Genitive).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Dative,PersonView.FirstPerson).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Dative).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative,PersonView.FirstPerson).ToUpperInvariant()
-                || upperItemName == PronounHandler.GetPronounForObject(this.universe.ActivePlayer, GrammarCase.Accusative).ToUpperInvariant()
-                || upperItemName == this.universe.ActivePlayer.Name.ToUpperInvariant())
-            {
-                key = this.universe.ActivePlayer.Key;
-            }
+            return this.universe.ActivePlayer.Key;
         }
 
-        return key;
+        return string.Empty;
+    }
+    
+    private string GetCharacterKeyByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
+    {
+        return this.GetKeyByNameAndAdjectivesFromResource(itemName, this.universe.CharacterResources, adjectives);
     }
     private string GetItemKeyByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
     {

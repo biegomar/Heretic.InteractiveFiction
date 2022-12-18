@@ -181,7 +181,7 @@ public abstract partial class AHereticObject
     {
         return this.OwnsObject(objectToInspect, new List<AHereticObject>()) != default;
     }
-    
+
     internal virtual bool OwnsObject(AHereticObject objectToInspect, ICollection<AHereticObject> visitedItems)
     {
         if (visitedItems.Contains(this))

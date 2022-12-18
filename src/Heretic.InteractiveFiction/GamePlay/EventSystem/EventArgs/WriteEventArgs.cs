@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class WriteEventArgs: ContainerObjectEventArgs
+public sealed class WriteEventArgs: ContainerObjectEventArgs
 {
     public string Text { get; set; }
 }

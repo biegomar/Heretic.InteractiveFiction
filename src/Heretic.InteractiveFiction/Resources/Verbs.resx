@@ -223,7 +223,7 @@
     <value>Setze:hin|Setzen|Setz:hin|Hinsetzen|Sitze|Sitz</value>
   </data>
   <data name="STANDUP" xml:space="preserve">
-    <value>Aufstehen|stehe:auf|steh:auf</value>
+    <value>Aufstehen|stehe:auf|steh:auf|stell:hin|stelle:hin</value>
   </data>
   <data name="WRITE" xml:space="preserve">
     <value>Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe|Tipp</value>
@@ -280,7 +280,7 @@
     <value>Zuhören|Höre:zu|Lausche</value>
   </data>
   <data name="PUTON" xml:space="preserve">
-    <value>Drauflegen</value>
+    <value>Drauflegen|stell|stelle</value>
   </data>
   <data name="SHOW" xml:space="preserve">
     <value>Zeig|Zeige</value>
