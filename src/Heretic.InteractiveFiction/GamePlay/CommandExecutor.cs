@@ -623,66 +623,109 @@ public class CommandExecutor
 
         return false;
     }
-    
+
     internal bool Eat(AdventureEvent adventureEvent)
     {
         if (VerbKeys.EAT == adventureEvent.Predicate.Key)
         {
-            var item = adventureEvent.ObjectOne;
-            if (item != default)
+            if (!adventureEvent.AllObjects.Any())
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                if (adventureEvent.UnidentifiedSentenceParts.Any())
                 {
-                    var itemName =
-                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
-                            lowerFirstCharacter: true);
-
-                    if (item.IsEatable)
-                    {
-                        try
-                        {
-                            var itemEventArgs = new ContainerObjectEventArgs()
-                                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-
-                            item.OnBeforeEat(itemEventArgs);
-
-
-                            if (this.universe.ActivePlayer.Items.Contains(item))
-                            {
-                                this.universe.ActivePlayer.RemoveItem((Item)item);
-                            }
-                            else
-                            {
-                                this.universe.ActiveLocation.RemoveItem((Item)item);
-                            }
-
-                            this.objectHandler.RemoveAsActiveObject(item);
-                            item.OnEat(itemEventArgs);
-
-                            item.OnAfterEat(itemEventArgs);
-
-                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_EATEN, itemName, true);
-                        }
-                        catch (EatException ex)
-                        {
-                            return printingSubsystem.Resource(ex.Message);
-                        }
-                    }
-
-                    this.objectHandler.StoreAsActiveObject(item);
-
-                    return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_EAT, itemName, true);
+                    return this.printingSubsystem.ItemUnknown(adventureEvent);
                 }
-
-                return printingSubsystem.ItemNotVisible();
+                
+                return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_EAT);
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du essen?");
+            if (adventureEvent.AllObjects.Count == 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    if (adventureEvent.UnidentifiedSentenceParts.Any())
+                    {
+                        return this.printingSubsystem.ItemUnknown(adventureEvent);
+                    }
+                    
+                    return this.printingSubsystem.Resource(BaseDescriptions.PLAYER_NOT_EATABLE);
+                }
+
+                return HandleEat(adventureEvent);
+            }
+
+            if (adventureEvent.AllObjects.Count > 1)
+            {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    var adventureEventWithoutPlayer = new AdventureEvent();
+                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    return this.HandleEat(adventureEventWithoutPlayer);
+                }
+                
+                return this.HandleEat(adventureEvent);
+            }
         }
+        
+        return false;
+    }
+
+    private bool HandleEat(AdventureEvent adventureEvent)
+    {
+        var item = adventureEvent.ObjectOne;
+        if (item != default)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                var itemName =
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
+                        lowerFirstCharacter: true);
+
+                if (item.IsEatable)
+                {
+                    try
+                    {
+                        var itemEventArgs = new ContainerObjectEventArgs()
+                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                        item.OnBeforeEat(itemEventArgs);
+                        
+                        if (this.universe.ActivePlayer.Items.Contains(item))
+                        {
+                            this.universe.ActivePlayer.RemoveItem((Item)item);
+                        }
+                        else
+                        {
+                            this.universe.ActiveLocation.RemoveItem((Item)item);
+                        }
+
+                        this.objectHandler.RemoveAsActiveObject(item);
+                        item.OnEat(itemEventArgs);
+
+                        item.OnAfterEat(itemEventArgs);
+
+                        return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_EATEN, itemName, true);
+                    }
+                    catch (EatException ex)
+                    {
+                        return printingSubsystem.Resource(ex.Message);
+                    }
+                }
+
+                this.objectHandler.StoreAsActiveObject(item);
+
+                return printingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_EAT, itemName, true);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_EAT);
+
 
         return false;
     }
-    
+
     internal bool Go(AdventureEvent adventureEvent)
     {
         if (VerbKeys.GO == adventureEvent.Predicate.Key)
@@ -1373,8 +1416,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.UnidentifiedSentenceParts.Any())
                 {
-                    return this.printingSubsystem.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
-                        string.Join(" oder ", adventureEvent.UnidentifiedSentenceParts));
+                    return this.printingSubsystem.ItemUnknown(adventureEvent);
                 }
                 
                 return this.HandleLookEventOnActiveLocation(adventureEvent);    
@@ -1384,8 +1426,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.UnidentifiedSentenceParts.Any() && adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    return this.printingSubsystem.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
-                        string.Join(" oder ", adventureEvent.UnidentifiedSentenceParts));
+                    return this.printingSubsystem.ItemUnknown(adventureEvent);
                 }
 
                 return this.HandleLookEventOnObjects(adventureEvent);
@@ -1617,8 +1658,7 @@ public class CommandExecutor
                 {
                     if (adventureEvent.UnidentifiedSentenceParts.Any())
                     {
-                        return this.printingSubsystem.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
-                            string.Join(" oder ", adventureEvent.UnidentifiedSentenceParts));
+                        return this.printingSubsystem.ItemUnknown(adventureEvent);
                     }
                     
                     return this.printingSubsystem.Resource(BaseDescriptions.PLAYER_NOT_PICKABLE);

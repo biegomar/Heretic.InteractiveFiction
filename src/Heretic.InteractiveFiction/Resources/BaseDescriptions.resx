@@ -700,4 +700,16 @@
   <data name="PLAYER_NOT_PICKABLE" xml:space="preserve">
     <value>Du kannst Dich nicht selbst mitnehmen.</value>
   </data>
+  <data name="ITEM_DOES_NOT_SMELL" xml:space="preserve">
+    <value>Du nimmst an {0} keinen außergewöhnlichen Geruch wahr.</value>
+  </data>
+  <data name="WHAT_TO_EAT" xml:space="preserve">
+    <value>Was genau möchtest Du essen?</value>
+  </data>
+  <data name="BINDING_OR" xml:space="preserve">
+    <value> oder </value>
+  </data>
+  <data name="PLAYER_NOT_EATABLE" xml:space="preserve">
+    <value>Du kannst Dich nicht selbst essen.</value>
+  </data>
 </root>

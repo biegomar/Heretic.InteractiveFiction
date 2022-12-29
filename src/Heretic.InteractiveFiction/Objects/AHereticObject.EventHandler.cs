@@ -462,6 +462,12 @@ public abstract partial class AHereticObject
             {
                 throw new SmellException(eventArgs.OptionalErrorMessage);    
             }
+
+            if (this is Item)
+            {
+                throw new SmellException(string.Format(BaseDescriptions.ITEM_DOES_NOT_SMELL, ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Dative, lowerFirstCharacter: true)));    
+            }
+            
             throw new SmellException(BaseDescriptions.NOTHING_TO_SMELL);
         }
     }

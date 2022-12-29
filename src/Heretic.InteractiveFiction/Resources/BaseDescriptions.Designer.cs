@@ -1208,5 +1208,29 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("PLAYER_NOT_PICKABLE", resourceCulture);
             }
         }
+        
+        public static string ITEM_DOES_NOT_SMELL {
+            get {
+                return ResourceManager.GetString("ITEM_DOES_NOT_SMELL", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_EAT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_EAT", resourceCulture);
+            }
+        }
+        
+        public static string BINDING_OR {
+            get {
+                return ResourceManager.GetString("BINDING_OR", resourceCulture);
+            }
+        }
+        
+        public static string PLAYER_NOT_EATABLE {
+            get {
+                return ResourceManager.GetString("PLAYER_NOT_EATABLE", resourceCulture);
+            }
+        }
     }
 }
