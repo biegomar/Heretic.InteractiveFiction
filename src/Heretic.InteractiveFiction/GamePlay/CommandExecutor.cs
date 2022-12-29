@@ -1613,6 +1613,17 @@ public class CommandExecutor
 
             if (adventureEvent.AllObjects.Count == 1)
             {
+                if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    if (adventureEvent.UnidentifiedSentenceParts.Any())
+                    {
+                        return this.printingSubsystem.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
+                            string.Join(" oder ", adventureEvent.UnidentifiedSentenceParts));
+                    }
+                    
+                    return this.printingSubsystem.Resource(BaseDescriptions.PLAYER_NOT_PICKABLE);
+                }
+
                 return HandleTakeEventOnObjects(adventureEvent);
             }
 
@@ -1623,7 +1634,7 @@ public class CommandExecutor
                     var adventureEventWithoutPlayer = new AdventureEvent();
                     adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
                     adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
-                    return this.HandleTakeEventOnObjects(adventureEvent);
+                    return this.HandleTakeEventOnObjects(adventureEventWithoutPlayer);
                 }
 
                 return this.HandleTakeEventOnObjects(adventureEvent);

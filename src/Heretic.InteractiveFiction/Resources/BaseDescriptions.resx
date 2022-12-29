@@ -697,4 +697,7 @@
   <data name="IMPOSSIBLE_CUT_WITHOUT_TOOL" xml:space="preserve">
     <value>Womit möchtest Du denn {0} zerschneiden?</value>
   </data>
+  <data name="PLAYER_NOT_PICKABLE" xml:space="preserve">
+    <value>Du kannst Dich nicht selbst mitnehmen.</value>
+  </data>
 </root>

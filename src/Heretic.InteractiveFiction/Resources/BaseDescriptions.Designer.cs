@@ -1202,5 +1202,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("IMPOSSIBLE_CUT_WITHOUT_TOOL", resourceCulture);
             }
         }
+        
+        public static string PLAYER_NOT_PICKABLE {
+            get {
+                return ResourceManager.GetString("PLAYER_NOT_PICKABLE", resourceCulture);
+            }
+        }
     }
 }
