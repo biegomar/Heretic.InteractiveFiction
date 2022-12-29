@@ -1371,11 +1371,23 @@ public class CommandExecutor
         {
             if (!adventureEvent.AllObjects.Any())
             {
+                if (adventureEvent.UnidentifiedSentenceParts.Any())
+                {
+                    return this.printingSubsystem.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
+                        string.Join(" oder ", adventureEvent.UnidentifiedSentenceParts));
+                }
+                
                 return this.HandleLookEventOnActiveLocation(adventureEvent);    
             }
             
             if (adventureEvent.AllObjects.Count == 1)
             {
+                if (adventureEvent.UnidentifiedSentenceParts.Any() && adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+                {
+                    return this.printingSubsystem.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
+                        string.Join(" oder ", adventureEvent.UnidentifiedSentenceParts));
+                }
+
                 return this.HandleLookEventOnObjects(adventureEvent);
             }
 
