@@ -35,6 +35,7 @@ public interface IPrintingSubsystem
     bool ItemAlreadyLocked(AHereticObject item);
     bool ItemAlreadyUnlocked(AHereticObject item);
     bool ItemUnbreakable(AHereticObject item);
+    bool ItemUnknown(AdventureEvent adventureEvent);
     bool ItemSeated(AHereticObject item);
     bool ItemNotSeatable(AHereticObject item);
     bool ItemStillLocked(AHereticObject item);

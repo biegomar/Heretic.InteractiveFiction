@@ -584,6 +584,16 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool ItemUnknown(AdventureEvent adventureEvent)
+    {
+        if (adventureEvent.UnidentifiedSentenceParts.Any())
+        {
+            return this.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
+                string.Join(BaseDescriptions.BINDING_OR, adventureEvent.UnidentifiedSentenceParts));
+        }
+        return true;
+    }
+
     public bool ItemSeated(AHereticObject item)
     {
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true);
