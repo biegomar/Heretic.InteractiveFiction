@@ -1232,5 +1232,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("PLAYER_NOT_EATABLE", resourceCulture);
             }
         }
+        
+        public static string WHAT_TO_DROP {
+            get {
+                return ResourceManager.GetString("WHAT_TO_DROP", resourceCulture);
+            }
+        }
     }
 }

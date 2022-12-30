@@ -247,7 +247,7 @@
     <value>Save|speichern</value>
   </data>
   <data name="HINT" xml:space="preserve">
-    <value>Hint|Tipp</value>
+    <value>Hint|Hinweis</value>
   </data>
   <data name="REM" xml:space="preserve">
     <value>Kommentar|Comment|Remark|REM</value>

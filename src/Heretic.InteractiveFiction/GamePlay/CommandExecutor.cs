@@ -433,75 +433,88 @@ public class CommandExecutor
 
         return false;
     }
-    
+
     internal bool Drop(AdventureEvent adventureEvent)
     {
         if (VerbKeys.DROP == adventureEvent.Predicate.Key)
         {
-            var result = true;
-            foreach (var processingObject in adventureEvent.AllObjects)
+            if (!adventureEvent.AllObjects.Any())
             {
-                if (processingObject is Player player && player.Key == this.universe.ActivePlayer.Key)
+                if (adventureEvent.UnidentifiedSentenceParts.Any())
                 {
-                    var playerAdventureEvent = new AdventureEvent();
-                    playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.SLEEP);
-                    playerAdventureEvent.AllObjects.Add(adventureEvent.ObjectOne);
-                    result = result && this.Sleep(playerAdventureEvent);
+                    return this.printingSubsystem.ItemUnknown(adventureEvent);
                 }
-                else
+                
+                return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_DROP);
+            }
+
+            if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                var playerAdventureEvent = new AdventureEvent();
+                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.SLEEP);
+                playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects);
+                return this.Sleep(playerAdventureEvent);
+            }
+
+            return this.HandleDrop(adventureEvent);
+        }
+        
+        return false;
+    }
+
+    private bool HandleDrop(AdventureEvent adventureEvent)
+    {
+        var result = true;
+        foreach (var processingObject in adventureEvent.AllObjects)
+        {
+            var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == processingObject.Key);
+            var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject.Key);
+            if (isPlayerItem || isPlayerCloths)
+            {
+                if (processingObject is Item { IsDropable: true } item)
                 {
-                    var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == processingObject.Key);
-                    var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject.Key);
-                    if (isPlayerItem || isPlayerCloths)
+                    try
                     {
-                        if (processingObject is Item { IsDropable: true } item)
+                        var dropItemEventArgs = new DropItemEventArgs()
+                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                        item.OnBeforeDrop(dropItemEventArgs);
+
+                        var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
+                        result = result && singleDropResult;
+
+                        if (singleDropResult)
                         {
-                            try
-                            {
-                                var dropItemEventArgs = new DropItemEventArgs()
-                                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                            this.universe.ActiveLocation.Items.Add(item);
 
-                                item.OnBeforeDrop(dropItemEventArgs);
+                            item.OnDrop(dropItemEventArgs);
+                            printingSubsystem.ItemDropSuccess(item);
 
-                                var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
-                                result = result && singleDropResult;
-
-                                if (singleDropResult)
-                                {
-                                    this.universe.ActiveLocation.Items.Add(item);
-
-                                    item.OnDrop(dropItemEventArgs);
-                                    printingSubsystem.ItemDropSuccess(item);
-
-                                    item.OnAfterDrop(dropItemEventArgs);
-                                }
-                                else
-                                {
-                                    printingSubsystem.ImpossibleDrop(item);
-                                }
-                            }
-                            catch (DropException e)
-                            {
-                                this.universe.PickObject(item, true);
-                                printingSubsystem.Resource(e.Message);
-                            }
+                            item.OnAfterDrop(dropItemEventArgs);
                         }
                         else
                         {
-                            printingSubsystem.ImpossibleDrop(processingObject);
+                            printingSubsystem.ImpossibleDrop(item);
                         }
                     }
-                    else
+                    catch (DropException e)
                     {
-                        printingSubsystem.ItemNotOwned();
+                        this.universe.PickObject(item, true);
+                        printingSubsystem.Resource(e.Message);
                     }
                 }
+                else
+                {
+                    printingSubsystem.ImpossibleDrop(processingObject);
+                }
             }
-
-            return result;
+            else
+            {
+                printingSubsystem.ItemNotOwned();
+            }
         }
 
-        return false;
+        return result;
     }
 
     private bool HandleDescendEventOnActiveLocation(AdventureEvent adventureEvent)

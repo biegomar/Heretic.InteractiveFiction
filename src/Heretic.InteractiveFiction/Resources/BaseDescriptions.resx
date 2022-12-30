@@ -712,4 +712,7 @@
   <data name="PLAYER_NOT_EATABLE" xml:space="preserve">
     <value>Du kannst Dich nicht selbst essen.</value>
   </data>
+  <data name="WHAT_TO_DROP" xml:space="preserve">
+    <value>Was genau möchtest Du fallen lassen?</value>
+  </data>
 </root>
