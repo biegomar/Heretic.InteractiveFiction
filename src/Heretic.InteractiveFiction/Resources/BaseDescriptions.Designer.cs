@@ -1238,5 +1238,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("WHAT_TO_DROP", resourceCulture);
             }
         }
+        
+        public static string ONLY_DIRECT_WAY {
+            get {
+                return ResourceManager.GetString("ONLY_DIRECT_WAY", resourceCulture);
+            }
+        }
     }
 }

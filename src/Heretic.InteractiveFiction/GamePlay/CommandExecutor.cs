@@ -748,14 +748,17 @@ public class CommandExecutor
                 if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
                 {
                     var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
-                    var direction = mappings.Where(i => !i.IsHidden && i.Location.Key == location.Key).Select(x => x.Direction).Single();
-                    return this.ChangeLocation(direction, adventureEvent.Predicate.ErrorMessage);
+                    var direction = mappings.Where(i => !i.IsHidden && i.Location.Key == location.Key).Select(x => x.Direction).SingleOrDefault();
+                    if (direction != default)
+                    {
+                        return this.ChangeLocation(direction, adventureEvent.Predicate.ErrorMessage);    
+                    }
                 }
-
-                return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
+                return printingSubsystem.Resource(BaseDescriptions.ONLY_DIRECT_WAY);
+                
             }
 
-            return printingSubsystem.Resource("Im Moment kannst Du nur einen angrenzenden Raum direkt betreten.");
+            return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
         }
 
         return false;

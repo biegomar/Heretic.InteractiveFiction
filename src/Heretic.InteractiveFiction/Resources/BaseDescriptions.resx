@@ -715,4 +715,7 @@
   <data name="WHAT_TO_DROP" xml:space="preserve">
     <value>Was genau möchtest Du fallen lassen?</value>
   </data>
+  <data name="ONLY_DIRECT_WAY" xml:space="preserve">
+    <value>Im Moment kannst Du nur einen angrenzenden Raum direkt betreten.</value>
+  </data>
 </root>
