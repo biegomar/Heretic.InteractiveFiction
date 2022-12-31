@@ -114,6 +114,7 @@ public sealed class InputProcessor
         result = result || commandExecutor.Talk(adventureEvent);
         result = result || commandExecutor.Pull(adventureEvent);
         result = result || commandExecutor.Push(adventureEvent);
+        result = result || commandExecutor.PutOn(adventureEvent);
         result = result || commandExecutor.Turn(adventureEvent);
         result = result || commandExecutor.Jump(adventureEvent);
         result = result || commandExecutor.Cut(adventureEvent);
