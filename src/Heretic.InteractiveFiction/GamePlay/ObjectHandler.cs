@@ -140,7 +140,7 @@ public sealed class ObjectHandler
     
     public string GetConversationAnswerKeyByName(string phrase)
     {
-        return this.GetKeyByNameAndAdjectivesFromResource(phrase, this.universe.ConversationAnswersResources, new List<string>());
+        return this.GetKeyByNameAndAdjectivesFromResource(phrase, this.universe.ConversationAnswersResources);
     }
     public void HideItemsOnClose(AHereticObject item)
     {
@@ -236,7 +236,7 @@ public sealed class ObjectHandler
 
         return key;
     }
-    private string GetKeyByNameAndAdjectivesFromResource(string name, IDictionary<string, IEnumerable<string>> resource, IEnumerable<string> adjectives)
+    private string GetKeyByNameAndAdjectivesFromResource(string name, IDictionary<string, IEnumerable<string>> resource)
     {
         foreach (var (key, value) in resource)
         {
@@ -248,9 +248,10 @@ public sealed class ObjectHandler
 
         return string.Empty;
     }
+    
     private string GetPrioritizedItemKeysByNameAndAdjectives(string itemName, IEnumerable<string> adjectives)
     {
-        var result = this.GetFirstPriorityItemKeyByName(itemName);
+        var result = this.GetFirstPriorityKeyByName(itemName);
         if (string.IsNullOrEmpty(result))
         {
             return this.GetSecondPriorityItemKeysByNameAndAdjectives(itemName, adjectives);
@@ -258,7 +259,7 @@ public sealed class ObjectHandler
 
         return result;
     }
-    private string GetFirstPriorityItemKeyByName(string itemName)
+    private string GetFirstPriorityKeyByName(string itemName)
     {
         var upperItemName = itemName.ToUpperInvariant();
         var universeActiveObject = this.universe.ActiveObject;
@@ -292,6 +293,58 @@ public sealed class ObjectHandler
                     return this.GetItemKeyMatchingAdjectives(onlyItemsWithItemNameInValues.Select(x => x.Key).ToList(),
                         adjectives);
             }
+        }
+
+        return string.Empty;
+    }
+    
+    private string GetFirstPriorityLocationKeysByName(string locationName, IEnumerable<string> adjectives)
+    {
+        if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
+        {
+            var mappings = this.universe.LocationMap[this.universe.ActiveLocation].ToList();
+            var allLocationKeysFromMappings = mappings.Select(map => map.Location.Key);
+            var prioritizedLocationResources =
+                this.universe.LocationResources.Where(x => allLocationKeysFromMappings.Contains(x.Key)).ToList();
+            var possibleDestinations =
+                prioritizedLocationResources.Where(res => res.Value.Contains(locationName, StringComparer.InvariantCultureIgnoreCase)).ToList();
+            
+            switch (possibleDestinations.Count)
+            {
+                case 1:
+                    return possibleDestinations.Single().Key;
+                case > 1:
+                    var result = this.GetLocationKeyMatchingAdjectives(possibleDestinations.Select(x => x.Key).ToList(), adjectives);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        throw new AmbiguousHereticObjectException(BaseDescriptions.AMBIGUOUS_LOCATION);
+                    }
+                    return result;
+            }
+        }
+
+        return string.Empty;
+    }
+
+    private string GetLocationKeyMatchingAdjectives(IEnumerable<string> locationKeys, IEnumerable<string> adjectives)
+    {
+        var locations = locationKeys.Select(this.GetObjectFromWorldByKey<Location>).ToList();
+        List<KeyValuePair<string, List<string>>> reducedType = new();
+        foreach (var location in locations)
+        {
+            var allDeclinedAdjectives = new List<string>(AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(location));
+            reducedType.Add(new KeyValuePair<string, List<string>>(location.Key, allDeclinedAdjectives));
+        }
+        
+        var result = reducedType.Where(x => x.Value.Intersect(adjectives).Any()).Select(x => x.Key).ToList();
+        
+        if (result.Any())
+        {
+            if (result.Count == 1)
+            {
+                return result.Single();
+            }
+            throw new AmbiguousHereticObjectException(BaseDescriptions.AMBIGUOUS_LOCATION);
         }
 
         return string.Empty;
@@ -353,7 +406,14 @@ public sealed class ObjectHandler
     }
     private string GetLocationKeyByNameAndAdjectives(string locationName, IEnumerable<string> adjectives = null)
     {
-        return this.GetKeyByNameAndAdjectivesFromResource(locationName, this.universe.LocationResources, adjectives);
+        var result = this.GetFirstPriorityLocationKeysByName(locationName, adjectives);
+        
+        if (string.IsNullOrEmpty(result))
+        {
+            result = this.GetKeyByNameAndAdjectivesFromResource(locationName, this.universe.LocationResources);
+        }
+        
+        return result;
     }
     
     private string GetPlayerKeyByName(string playerName)
@@ -378,7 +438,7 @@ public sealed class ObjectHandler
     
     private string GetCharacterKeyByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
     {
-        return this.GetKeyByNameAndAdjectivesFromResource(itemName, this.universe.CharacterResources, adjectives);
+        return this.GetKeyByNameAndAdjectivesFromResource(itemName, this.universe.CharacterResources);
     }
     private string GetItemKeyByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
     {
@@ -388,6 +448,6 @@ public sealed class ObjectHandler
             return itemKey;
         }
 
-        return this.GetKeyByNameAndAdjectivesFromResource(itemName, this.universe.ItemResources, adjectivesList);
+        return this.GetKeyByNameAndAdjectivesFromResource(itemName, this.universe.ItemResources);
     }
 }

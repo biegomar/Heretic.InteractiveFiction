@@ -58,6 +58,10 @@ public sealed class InputProcessor
         {
             return printingSubsystem.Misconcept();
         }
+        catch (AmbiguousHereticObjectException ex)
+        {
+            return printingSubsystem.Resource(ex.Message);
+        }
     }
 
     private void FirePeriodicEvent()

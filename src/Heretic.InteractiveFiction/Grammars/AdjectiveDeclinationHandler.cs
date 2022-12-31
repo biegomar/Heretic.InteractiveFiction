@@ -19,15 +19,20 @@ public static class AdjectiveDeclinationHandler
     
     public static IEnumerable<string> GetAllDeclinedAdjectivesForAllCases(AHereticObject processingObject)
     {
-        List<string> allDeclinedAdjectives = new List<string>();
+        if (processingObject.Adjectives.Any())
+        {
+            List<string> allDeclinedAdjectives = new List<string>();
         
-        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Nominative));
-        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Genitive));
-        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Dative));
-        allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Accusative));
-        allDeclinedAdjectives.AddRange(GetAllUnDeclinedAdjectivesForObject(processingObject));
+            allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Nominative));
+            allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Genitive));
+            allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Dative));
+            allDeclinedAdjectives.AddRange(GetAllDeclinedAdjectivesForObject(processingObject, GrammarCase.Accusative));
+            allDeclinedAdjectives.AddRange(GetAllUnDeclinedAdjectivesForObject(processingObject));
 
-        return allDeclinedAdjectives;
+            return allDeclinedAdjectives;    
+        }
+
+        return Enumerable.Empty<string>();
     }
     
 

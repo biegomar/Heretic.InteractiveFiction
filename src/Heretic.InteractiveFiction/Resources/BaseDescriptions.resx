@@ -718,4 +718,7 @@
   <data name="ONLY_DIRECT_WAY" xml:space="preserve">
     <value>Im Moment kannst Du nur einen angrenzenden Raum direkt betreten.</value>
   </data>
+  <data name="AMBIGUOUS_LOCATION" xml:space="preserve">
+    <value>Oh, scheinbar gibt es hier mehrere Orte mit einer ähnlichen Bezeichnung. Könntest Du etwas genauer beschreiben, welchen Ort Du meinst?</value>
+  </data>
 </root>

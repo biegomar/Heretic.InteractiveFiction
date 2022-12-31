@@ -1244,5 +1244,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("ONLY_DIRECT_WAY", resourceCulture);
             }
         }
+        
+        public static string AMBIGUOUS_LOCATION {
+            get {
+                return ResourceManager.GetString("AMBIGUOUS_LOCATION", resourceCulture);
+            }
+        }
     }
 }
