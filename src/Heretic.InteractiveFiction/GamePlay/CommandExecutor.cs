@@ -452,7 +452,7 @@ public class CommandExecutor
             {
                 var playerAdventureEvent = new AdventureEvent();
                 playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.SLEEP);
-                playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects);
+                playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
                 return this.Sleep(playerAdventureEvent);
             }
 
@@ -749,10 +749,7 @@ public class CommandExecutor
                 {
                     var mappings = this.universe.LocationMap[this.universe.ActiveLocation];
                     var direction = mappings.Where(i => !i.IsHidden && i.Location.Key == location.Key).Select(x => x.Direction).SingleOrDefault();
-                    if (direction != default)
-                    {
-                        return this.ChangeLocation(direction, adventureEvent.Predicate.ErrorMessage);    
-                    }
+                    return this.ChangeLocation(direction, adventureEvent.Predicate.ErrorMessage); 
                 }
                 return printingSubsystem.Resource(BaseDescriptions.ONLY_DIRECT_WAY);
                 
