@@ -56,7 +56,7 @@ internal sealed class InputAnalyzer
                 }
             }
 
-            ObjectAndAssociatedWord objectTwo = new ObjectAndAssociatedWord();
+            ObjectAndAssociatedWord objectTwo = null;
             
             if (objectOne.HereticObject != default)
             {
@@ -297,7 +297,7 @@ internal sealed class InputAnalyzer
         {
             if (prepositionCase.Equals("DATIVE", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (objectOne != default)
+                if (objectOne is { HereticObject: { } })
                 {
                     var article = ArticleHandler.GetArticleForObject(objectOne.HereticObject, GrammarCase.Dative);
                     if (!string.IsNullOrEmpty(article) &&
@@ -309,7 +309,7 @@ internal sealed class InputAnalyzer
             }
             else if (prepositionCase.Equals("ACCUSATIVE", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (objectOne != default)
+                if (objectOne is { HereticObject: { } })
                 {
                     var article = ArticleHandler.GetArticleForObject(objectOne.HereticObject, GrammarCase.Accusative);
                     if (!string.IsNullOrEmpty(article) &&
