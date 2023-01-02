@@ -721,4 +721,13 @@
   <data name="AMBIGUOUS_LOCATION" xml:space="preserve">
     <value>Oh, scheinbar gibt es hier mehrere Orte mit einer ähnlichen Bezeichnung. Könntest Du etwas genauer beschreiben, welchen Ort Du meinst?</value>
   </data>
+  <data name="WHAT_TO_PUTON" xml:space="preserve">
+    <value>Worauf genau möchtest Du etwas stellen?</value>
+  </data>
+  <data name="ITEM_PUTON" xml:space="preserve">
+    <value>{0} ist nun auf {1}.</value>
+  </data>
+  <data name="ITEM_NOT_A_TARGET" xml:space="preserve">
+    <value>Du kannst nichts auf {0} abstellen.</value>
+  </data>
 </root>

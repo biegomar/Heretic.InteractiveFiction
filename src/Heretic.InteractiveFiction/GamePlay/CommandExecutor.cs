@@ -991,87 +991,111 @@ public class CommandExecutor
 
         return false;
     }
-    
+
     internal bool PutOn(AdventureEvent adventureEvent)
     {
         if (VerbKeys.PUTON == adventureEvent.Predicate.Key)
         {
-            var item = adventureEvent.ObjectOne;
-            var target = adventureEvent.ObjectTwo;
-            if (item != default && target != default)
+            if (!adventureEvent.AllObjects.Any())
             {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item)
-                    || this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(target))
+                if (adventureEvent.UnidentifiedSentenceParts.Any())
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
+                    return this.printingSubsystem.ItemUnknown(adventureEvent);
+                }
+                
+                return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_PUTON);
+            }
 
-                    if (target.IsSurfaceContainer)
+            if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
+            {
+                var playerAdventureEvent = new AdventureEvent();
+                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.CLIMB);
+                playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                return this.Climb(playerAdventureEvent);
+            }
+
+            return this.HandlePutOn(adventureEvent);
+        }
+        
+        return false;
+    }
+
+    private bool HandlePutOn(AdventureEvent adventureEvent)
+    {
+        var item = adventureEvent.ObjectOne;
+        var target = adventureEvent.ObjectTwo;
+        if (item != default && target != default)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item)
+                || this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(target))
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+
+                if (target.IsSurfaceContainer)
+                {
+                    try
                     {
-                        try
+                        var putOnEventArgs = new PutOnEventArgs()
                         {
-                            var putOnEventArgs = new PutOnEventArgs()
-                            {
-                                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
-                                ItemToUse = target
-                            };
+                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            ItemToUse = target
+                        };
 
-                            var targetEventArgs = new PutOnEventArgs()
-                            {
-                                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
-                                ItemToUse = item
-                            };
+                        var targetEventArgs = new PutOnEventArgs()
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            ItemToUse = item
+                        };
 
-                            item.OnBeforePutOn(putOnEventArgs);
-                            target.OnBeforePutOn(targetEventArgs);
+                        item.OnBeforePutOn(putOnEventArgs);
+                        target.OnBeforePutOn(targetEventArgs);
 
-                            var playerItem = this.universe.ActivePlayer.GetItem(item);
-                            if (playerItem != default)
+                        var playerItem = this.universe.ActivePlayer.GetItem(item);
+                        if (playerItem != default)
+                        {
+                            this.universe.ActivePlayer.RemoveItem(playerItem);
+                            target.Items.Add(playerItem);
+                        }
+                        else
+                        {
+                            var locationItem = this.universe.ActiveLocation.GetItem(item);
+                            if (locationItem != default)
                             {
-                                this.universe.ActivePlayer.RemoveItem(playerItem);
-                                target.Items.Add(playerItem);
+                                this.universe.ActiveLocation.RemoveItem(locationItem);
+                                target.Items.Add(locationItem);
                             }
                             else
                             {
-                                var locationItem = this.universe.ActiveLocation.GetItem(item);
-                                if (locationItem != default)
-                                {
-                                    this.universe.ActiveLocation.RemoveItem(locationItem);
-                                    target.Items.Add(locationItem);
-                                }
-                                else
-                                {
-                                    throw new PutOnException("Irgendwas hat nicht funktioniert.");
-                                }
+                                throw new PutOnException(BaseDescriptions.DOES_NOT_WORK);
                             }
-                            
-                            item.OnPutOn(putOnEventArgs);
-                            target.OnPutOn(targetEventArgs);
-                            printingSubsystem.Resource("Das Objekt wurde abgelegt.");
-                            
-                            item.OnAfterPutOn(putOnEventArgs);
-                            target.OnAfterPutOn(targetEventArgs);
+                        }
 
-                            return true;
-                        }
-                        catch (PutOnException ex)
-                        {
-                            return printingSubsystem.Resource(ex.Message);
-                        }
+                        item.OnPutOn(putOnEventArgs);
+                        target.OnPutOn(targetEventArgs);
+                        printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_PUTON, ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative),
+                            ArticleHandler.GetNameWithArticleForObject(target, GrammarCase.Dative, lowerFirstCharacter: true)));
+
+                        item.OnAfterPutOn(putOnEventArgs);
+                        target.OnAfterPutOn(targetEventArgs);
+
+                        return true;
                     }
-
-                    return printingSubsystem.Resource(
-                        $"Du kannst nichts auf {ArticleHandler.GetNameWithArticleForObject(target, GrammarCase.Accusative, lowerFirstCharacter: true)} abstellen.");
+                    catch (PutOnException ex)
+                    {
+                        return printingSubsystem.Resource(ex.Message);
+                    }
                 }
 
-                return printingSubsystem.ItemNotVisible();
+                return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_A_TARGET,
+                    ArticleHandler.GetNameWithArticleForObject(target, GrammarCase.Dative, lowerFirstCharacter: true));
             }
-            
-            return printingSubsystem.Resource("Worauf genau möchtest Du etwas stellen?");
+
+            return printingSubsystem.ItemNotVisible();
         }
 
-        return false;
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_PUTON);
     }
-    
+
     internal bool Quit(AdventureEvent adventureEvent)
     {
         if (VerbKeys.QUIT == adventureEvent.Predicate.Key)

@@ -242,52 +242,19 @@ public abstract partial class AHereticObject
     public virtual void OnBeforePutOn(PutOnEventArgs eventArgs)
     {
         var localEventHandler = this.BeforePutOn;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
-            {
-                throw new PutOnException(eventArgs.OptionalErrorMessage);
-            }
-            throw new PutOnException(BaseDescriptions.DOES_NOT_WORK);
-        }
+        localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnPutOn(PutOnEventArgs eventArgs)
     {
         var localEventHandler = this.PutOn;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
-            {
-                throw new PutOnException(eventArgs.OptionalErrorMessage);
-            }
-            throw new PutOnException(BaseDescriptions.DOES_NOT_WORK);
-        }
+        localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnAfterPutOn(PutOnEventArgs eventArgs)
     {
         var localEventHandler = this.AfterPutOn;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
-            {
-                throw new PutOnException(eventArgs.OptionalErrorMessage);
-            }
-            throw new PutOnException(BaseDescriptions.DOES_NOT_WORK);
-        }
+        localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnWrite(WriteEventArgs eventArgs)

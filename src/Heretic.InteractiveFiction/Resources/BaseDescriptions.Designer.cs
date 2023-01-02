@@ -1250,5 +1250,23 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("AMBIGUOUS_LOCATION", resourceCulture);
             }
         }
+        
+        public static string WHAT_TO_PUTON {
+            get {
+                return ResourceManager.GetString("WHAT_TO_PUTON", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_PUTON {
+            get {
+                return ResourceManager.GetString("ITEM_PUTON", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_A_TARGET {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_A_TARGET", resourceCulture);
+            }
+        }
     }
 }
