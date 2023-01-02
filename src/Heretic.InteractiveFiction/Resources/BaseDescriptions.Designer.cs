@@ -1280,5 +1280,107 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("WHAT_TO_CLIMB", resourceCulture);
             }
         }
+        
+        public static string WHAT_TO_CLOSE {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CLOSE", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CUT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CUT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_OPEN {
+            get {
+                return ResourceManager.GetString("WHAT_TO_OPEN", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_PULL {
+            get {
+                return ResourceManager.GetString("WHAT_TO_PULL", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_PUSH {
+            get {
+                return ResourceManager.GetString("WHAT_TO_PUSH", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_READ {
+            get {
+                return ResourceManager.GetString("WHAT_TO_READ", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_TURN {
+            get {
+                return ResourceManager.GetString("WHAT_TO_TURN", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_JUMP {
+            get {
+                return ResourceManager.GetString("WHAT_TO_JUMP", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_KINDLE {
+            get {
+                return ResourceManager.GetString("WHAT_TO_KINDLE", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_LOCK {
+            get {
+                return ResourceManager.GetString("WHAT_TO_LOCK", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_SWITCHOFF {
+            get {
+                return ResourceManager.GetString("WHAT_TO_SWITCHOFF", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_SWITCHON {
+            get {
+                return ResourceManager.GetString("WHAT_TO_SWITCHON", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_TALK {
+            get {
+                return ResourceManager.GetString("WHAT_TO_TALK", resourceCulture);
+            }
+        }
+        
+        public static string DONT_TALK_TO_ITEM {
+            get {
+                return ResourceManager.GetString("DONT_TALK_TO_ITEM", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_UNLOCK {
+            get {
+                return ResourceManager.GetString("WHAT_TO_UNLOCK", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_USE {
+            get {
+                return ResourceManager.GetString("WHAT_TO_USE", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_WEARABLE {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_WEARABLE", resourceCulture);
+            }
+        }
     }
 }

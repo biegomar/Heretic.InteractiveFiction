@@ -198,7 +198,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du schliessen?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_CLOSE);
         }
 
         return false;
@@ -245,7 +245,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du schneiden?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_CUT);
         }
 
         return false;
@@ -801,7 +801,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
             
-            return printingSubsystem.Resource("Was genau möchtest Du öffnen?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_OPEN);
         }
 
         return false;
@@ -838,7 +838,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du ziehen?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_PULL);
         }
 
         return false;
@@ -878,7 +878,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
             
-            return printingSubsystem.Resource("Was genau möchtest Du drücken?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_PUSH);
         }
 
         return false;
@@ -1041,7 +1041,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du lesen?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_READ);
         }
 
         return false;
@@ -1138,7 +1138,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
             
-            return printingSubsystem.Resource("Was genau möchtest Du drehen?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_TURN);
         }
 
         return false;
@@ -1172,7 +1172,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
 
-            return printingSubsystem.Resource("Worauf möchtest Du denn springen?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_JUMP);
         }
 
         return false;
@@ -1209,7 +1209,7 @@ public class CommandExecutor
                 return printingSubsystem.ItemNotVisible();
             }
 
-            return printingSubsystem.Resource("Was genau möchtest Du anzünden?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_KINDLE);
         }
 
         return false;
@@ -1334,7 +1334,7 @@ public class CommandExecutor
             return printingSubsystem.ItemNotVisible();
         }
 
-        return printingSubsystem.Resource("Was genau möchtest Du verschliessen?");
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_LOCK);
     }
 
     internal bool Look(AdventureEvent adventureEvent)
@@ -1958,7 +1958,7 @@ public class CommandExecutor
             return printingSubsystem.ItemNotVisible();
         }
 
-        return printingSubsystem.Resource("Was genau möchtest Du ausschalten?");
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_SWITCHOFF);
     }
 
     private bool HandleSwitchOn(AdventureEvent adventureEvent)
@@ -2010,7 +2010,7 @@ public class CommandExecutor
             return printingSubsystem.ItemNotVisible();
         }
 
-        return printingSubsystem.Resource("Was genau möchtest Du anschalten?");
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_SWITCHON);
     }
 
     internal bool Talk(AdventureEvent adventureEvent)
@@ -2046,10 +2046,10 @@ public class CommandExecutor
                     return printingSubsystem.Resource(BaseDescriptions.CHARACTER_NOT_VISIBLE);
                 }
 
-                return printingSubsystem.Resource("Im Moment macht es keinen Sinn mit einem Gegenstand zu reden.");
+                return printingSubsystem.Resource(BaseDescriptions.DONT_TALK_TO_ITEM);
             }
 
-            return printingSubsystem.Resource("Sag mir doch bitte, mit wem Du reden möchtest?");
+            return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_TALK);
         }
 
         return false;
@@ -2171,7 +2171,7 @@ public class CommandExecutor
             return printingSubsystem.ItemNotVisible();
         }
 
-        return printingSubsystem.Resource("Was genau möchtest Du aufschliessen?");
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_UNLOCK);
     }
 
     private bool HandleUse(AdventureEvent adventureEvent)
@@ -2213,13 +2213,13 @@ public class CommandExecutor
                     }
                 }
                 
-                return printingSubsystem.Resource("Was genau möchtest Du benutzen?");
+                return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
             }
 
             return printingSubsystem.ItemNotOwned();
         }
 
-        return printingSubsystem.Resource("Was genau möchtest Du benutzen?");
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
     }
 
     internal bool Wait(AdventureEvent adventureEvent)
@@ -2317,7 +2317,7 @@ public class CommandExecutor
                     return printingSubsystem.ItemNotVisible();
                 }
                 
-                return printingSubsystem.Resource("Das kannst Du nicht anziehen!");
+                return printingSubsystem.Resource(BaseDescriptions.ITEM_NOT_WEARABLE);
             }
         }
 

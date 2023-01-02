@@ -736,4 +736,55 @@
   <data name="WHAT_TO_CLIMB" xml:space="preserve">
     <value>Worauf genau möchtest Du klettern?</value>
   </data>
+  <data name="WHAT_TO_CLOSE" xml:space="preserve">
+    <value>Was genau möchtest Du schliessen?</value>
+  </data>
+  <data name="WHAT_TO_CUT" xml:space="preserve">
+    <value>Was genau möchtest Du schneiden?</value>
+  </data>
+  <data name="WHAT_TO_OPEN" xml:space="preserve">
+    <value>Was genau möchtest Du öffnen?</value>
+  </data>
+  <data name="WHAT_TO_PULL" xml:space="preserve">
+    <value>Was genau möchtest Du ziehen?</value>
+  </data>
+  <data name="WHAT_TO_PUSH" xml:space="preserve">
+    <value>Was genau möchtest Du drücken?</value>
+  </data>
+  <data name="WHAT_TO_READ" xml:space="preserve">
+    <value>Was genau möchtest Du lesen?</value>
+  </data>
+  <data name="WHAT_TO_TURN" xml:space="preserve">
+    <value>Was genau möchtest Du drehen?</value>
+  </data>
+  <data name="WHAT_TO_JUMP" xml:space="preserve">
+    <value>Worauf möchtest Du denn springen?</value>
+  </data>
+  <data name="WHAT_TO_KINDLE" xml:space="preserve">
+    <value>Was genau möchtest Du anzünden?</value>
+  </data>
+  <data name="WHAT_TO_LOCK" xml:space="preserve">
+    <value>Was genau möchtest Du verschliessen?</value>
+  </data>
+  <data name="WHAT_TO_SWITCHOFF" xml:space="preserve">
+    <value>Was genau möchtest Du ausschalten?</value>
+  </data>
+  <data name="WHAT_TO_SWITCHON" xml:space="preserve">
+    <value>Was genau möchtest Du anschalten?</value>
+  </data>
+  <data name="WHAT_TO_TALK" xml:space="preserve">
+    <value>Sag mir doch bitte, mit wem Du reden möchtest?</value>
+  </data>
+  <data name="DONT_TALK_TO_ITEM" xml:space="preserve">
+    <value>Im Moment macht es keinen Sinn mit einem Gegenstand zu reden.</value>
+  </data>
+  <data name="WHAT_TO_UNLOCK" xml:space="preserve">
+    <value>Was genau möchtest Du aufschliessen?</value>
+  </data>
+  <data name="WHAT_TO_USE" xml:space="preserve">
+    <value>Was genau möchtest Du benutzen?</value>
+  </data>
+  <data name="ITEM_NOT_WEARABLE" xml:space="preserve">
+    <value>Das kannst Du nicht anziehen!</value>
+  </data>
 </root>
