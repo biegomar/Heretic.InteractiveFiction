@@ -153,69 +153,6 @@ public class CommandExecutor
         return printingSubsystem.ItemNotVisible();
     }
 
-    private bool HandleClimbEvent(AdventureEvent adventureEvent)
-    {
-        if (VerbKeys.CLIMB == adventureEvent.Predicate.Key)
-        {
-            var item = adventureEvent.ObjectOne;
-            if (item != default)
-            {
-                if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
-                {
-                    this.objectHandler.StoreAsActiveObject(item);
-                    
-                    var itemName =
-                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
-                            lowerFirstCharacter: true);
-
-                    if (item.IsClimbable)
-                    {
-                        if (!this.universe.ActivePlayer.HasClimbed)
-                        {
-                            try
-                            {
-                                var eventArgs = new ContainerObjectEventArgs()
-                                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-                                item.OnBeforeClimb(eventArgs);
-
-                                this.universe.ActivePlayer.HasClimbed = true;
-                                this.universe.ActivePlayer.ClimbedObject = item;
-                                item.OnClimb(eventArgs);
-
-                                item.OnAfterClimb(eventArgs);
-
-                                return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, itemName);
-                            }
-                            catch (ClimbException ex)
-                            {
-                                this.universe.ActivePlayer.HasClimbed = false;
-                                this.universe.ActivePlayer.ClimbedObject = default;
-                                return printingSubsystem.Resource(ex.Message);
-                            }
-                        }
-
-                        return this.universe.ActivePlayer.ClimbedObject == item
-                            ? printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_CLIMBED_ITEM, itemName)
-                            : printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
-                    }
-
-                    return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_CLIMB);
-                }
-
-                if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
-                {
-                    return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
-                }
-
-                return printingSubsystem.ItemNotVisible();
-            }
-
-            return printingSubsystem.Resource("Worauf genau möchtest Du klettern?");
-        }
-
-        return false;
-    }
-    
     internal bool Close(AdventureEvent adventureEvent)
     {
         if (VerbKeys.CLOSE == adventureEvent.Predicate.Key)
@@ -1507,7 +1444,67 @@ public class CommandExecutor
 
         return false;
     }
-    
+
+    private bool HandleClimbEvent(AdventureEvent adventureEvent)
+    {
+
+        var item = adventureEvent.ObjectOne;
+        if (item != default)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+
+                var itemName =
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
+                        lowerFirstCharacter: true);
+
+                if (item.IsClimbable)
+                {
+                    if (!this.universe.ActivePlayer.HasClimbed)
+                    {
+                        try
+                        {
+                            var eventArgs = new ContainerObjectEventArgs()
+                                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                            item.OnBeforeClimb(eventArgs);
+
+                            this.universe.ActivePlayer.HasClimbed = true;
+                            this.universe.ActivePlayer.ClimbedObject = item;
+                            item.OnClimb(eventArgs);
+
+                            item.OnAfterClimb(eventArgs);
+
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_CLIMBED, itemName);
+                        }
+                        catch (ClimbException ex)
+                        {
+                            this.universe.ActivePlayer.HasClimbed = false;
+                            this.universe.ActivePlayer.ClimbedObject = default;
+                            return printingSubsystem.Resource(ex.Message);
+                        }
+                    }
+
+                    return this.universe.ActivePlayer.ClimbedObject == item
+                        ? printingSubsystem.FormattedResource(BaseDescriptions.ALREADY_CLIMBED_ITEM, itemName)
+                        : printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+                }
+
+                return printingSubsystem.Resource(BaseDescriptions.IMPOSSIBLE_CLIMB);
+            }
+
+            if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject != null)
+            {
+                return printingSubsystem.Resource(BaseDescriptions.ALREADY_CLIMBED);
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_CLIMB);
+
+    }
+
     internal bool SwitchOn(AdventureEvent adventureEvent)
     {
         if (VerbKeys.SWITCHON == adventureEvent.Predicate.Key)

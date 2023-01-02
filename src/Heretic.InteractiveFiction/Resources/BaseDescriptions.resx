@@ -733,4 +733,7 @@
   <data name="WHAT_TO_BUY" xml:space="preserve">
     <value>Was genau möchtest Du kaufen?</value>
   </data>
+  <data name="WHAT_TO_CLIMB" xml:space="preserve">
+    <value>Worauf genau möchtest Du klettern?</value>
+  </data>
 </root>
