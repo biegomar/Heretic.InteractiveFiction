@@ -316,6 +316,6 @@
     <value>Sein|Bin|Ist</value>
   </data>
   <data name="SWITCHOFF" xml:space="preserve">
-    <value>Ausschalten|Schalte:aus|Schalt:aus</value>
+    <value>Ausschalten|Schalte:aus|Schalt:aus|Schalte:ab|Schalt:ab</value>
   </data>
 </root>
