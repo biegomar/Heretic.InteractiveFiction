@@ -564,9 +564,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleEat(adventureEventWithoutPlayer);
                 }
                 
@@ -1367,9 +1365,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleLookEventOnObjects(adventureEventWithoutPlayer);
                 }
                 
@@ -1411,9 +1407,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleUse(adventureEventWithoutPlayer);
                 }
             }
@@ -1423,7 +1417,7 @@ public class CommandExecutor
 
         return false;
     }
-    
+
     internal bool Climb(AdventureEvent adventureEvent)
     {
         if (VerbKeys.CLIMB == adventureEvent.Predicate.Key)
@@ -1432,9 +1426,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleClimbEvent(adventureEventWithoutPlayer);
                 }
             }
@@ -1513,9 +1505,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleSwitchOn(adventureEventWithoutPlayer);
                 }
             }
@@ -1534,9 +1524,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleSwitchOff(adventureEventWithoutPlayer);
                 }
             }
@@ -1555,9 +1543,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleWear(adventureEventWithoutPlayer);
                 }
             }
@@ -1576,9 +1562,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleBuy(adventureEventWithoutPlayer);
                 }
             }
@@ -1701,9 +1685,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.HandleTakeEventOnObjects(adventureEventWithoutPlayer);
                 }
 
@@ -1783,9 +1765,7 @@ public class CommandExecutor
             {
                 if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
                 {
-                    var adventureEventWithoutPlayer = new AdventureEvent();
-                    adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                    adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                    var adventureEventWithoutPlayer = GetAdventureEventWithoutPlayer(adventureEvent);
                     return this.SitDown(adventureEventWithoutPlayer);
                 }
             }
@@ -2767,5 +2747,13 @@ public class CommandExecutor
         }
 
         return printingSubsystem.Resource(BaseDescriptions.NO_WAY);
+    }
+    
+    private static AdventureEvent GetAdventureEventWithoutPlayer(AdventureEvent adventureEvent)
+    {
+        var adventureEventWithoutPlayer = new AdventureEvent();
+        adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
+        adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+        return adventureEventWithoutPlayer;
     }
 }
