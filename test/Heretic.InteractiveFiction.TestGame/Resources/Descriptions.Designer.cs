@@ -590,23 +590,5 @@ namespace Heretic.InteractiveFiction.TestGame.Resources {
                 return ResourceManager.GetString("BOOKSHELF_CONTAINMENT", resourceCulture);
             }
         }
-        
-        internal static string WOODEN_KEY {
-            get {
-                return ResourceManager.GetString("WOODEN_KEY", resourceCulture);
-            }
-        }
-        
-        internal static string RUSTY_KEY {
-            get {
-                return ResourceManager.GetString("RUSTY_KEY", resourceCulture);
-            }
-        }
-        
-        internal static string TEST {
-            get {
-                return ResourceManager.GetString("TEST", resourceCulture);
-            }
-        }
     }
 }

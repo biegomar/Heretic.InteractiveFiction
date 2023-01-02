@@ -20,8 +20,6 @@ internal static class Keys
     internal const string KEY_HOLE = "KEY_HOLE";
     internal const string KEY_HOLE_SHIELD = "KEY_HOLE_SHIELD";
     internal const string IRON_KEY = "IRON_KEY";
-    internal const string RUSTY_KEY = nameof(RUSTY_KEY);
-    internal const string WOODEN_KEY = nameof(WOODEN_KEY);
     internal const string PLANK = "PLANK";
     internal const string DOOR = "DOOR";
     internal const string TABLE = "TABLE";

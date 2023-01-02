@@ -125,9 +125,7 @@ internal static class LivingRoomPrerequisites
 
         table.Items.Add(GetCandle(eventProvider));
         table.Items.Add(GetNote(eventProvider));
-        table.Items.Add(GetRustyKey());
-        table.Items.Add(GetWoodenKey());
-        
+
         return table;
     }
 
@@ -187,34 +185,6 @@ internal static class LivingRoomPrerequisites
         return ironKey;
     }
     
-    private static Item GetRustyKey()
-    {
-        var rustyKey = new Item()
-        {
-            Key = Keys.RUSTY_KEY,
-            Name = Items.RUSTY_KEY,
-            Description = Descriptions.RUSTY_KEY,
-            Adjectives = Adjectives.RUSTY_KEY,
-            Grammar = new IndividualObjectGrammar(Genders.Male)
-        };
-
-        return rustyKey;
-    }
-    
-    private static Item GetWoodenKey()
-    {
-        var rustyKey = new Item()
-        {
-            Key = Keys.WOODEN_KEY,
-            Name = Items.WOODEN_KEY,
-            Description = Descriptions.WOODEN_KEY,
-            Adjectives = Adjectives.WOODEN_KEY,
-            Grammar = new IndividualObjectGrammar(Genders.Male)
-        };
-
-        return rustyKey;
-    }
-
     private static Item GetDoor(EventProvider eventProvider)
     {
         var door = new Item()

@@ -299,13 +299,4 @@ Schon nach kurzer Zeit merkst Du, wie der Ofen heiß wird und sich wohlige Wärm
     <data name="BOOKSHELF_CONTAINMENT" xml:space="preserve">
         <value>An der westlichen Wand befindet sich ein schmales Bücherregal.</value>
     </data>
-    <data name="WOODEN_KEY" xml:space="preserve">
-        <value>Dies ist ein Schlüssel aus Holz.</value>
-    </data>
-    <data name="RUSTY_KEY" xml:space="preserve">
-        <value>Dies ist ein rostiger Schlüssel.</value>
-    </data>
-    <data name="TEST" xml:space="preserve">
-        <value />
-    </data>
 </root>
