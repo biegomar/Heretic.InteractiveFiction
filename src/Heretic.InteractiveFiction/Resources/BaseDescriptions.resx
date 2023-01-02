@@ -730,4 +730,7 @@
   <data name="ITEM_NOT_A_TARGET" xml:space="preserve">
     <value>Du kannst nichts auf {0} abstellen.</value>
   </data>
+  <data name="WHAT_TO_BUY" xml:space="preserve">
+    <value>Was genau möchtest Du kaufen?</value>
+  </data>
 </root>

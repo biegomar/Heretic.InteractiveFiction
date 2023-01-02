@@ -105,49 +105,6 @@ public class CommandExecutor
 
         return printingSubsystem.ItemNotVisible();
     }
-    
-    private bool HandleBuy(AdventureEvent adventureEvent)
-    {
-        if (VerbKeys.BUY == adventureEvent.Predicate.Key)
-        {
-            var item = adventureEvent.ObjectOne;
-            if (item != default)
-            {
-                if (this.universe.ActiveLocation.OwnsObject(item))
-                {
-                    if (!this.universe.ActivePlayer.HasPaymentMethod)
-                    {
-                        return printingSubsystem.PayWithWhat();
-                    }
-                
-                    if (this.universe.ActivePlayer.OwnsObject(item))
-                    {
-                        return printingSubsystem.ItemAlreadyOwned();
-                    }
-
-                    this.objectHandler.StoreAsActiveObject(item);
-                
-                    try
-                    {
-                        var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
-                        adventureEvent.ObjectOne.OnBuy(containerObjectEventArgs);
-                    
-                        return true;
-                    }
-                    catch (BuyException ex)
-                    {
-                        return printingSubsystem.Resource(ex.Message);
-                    }
-                }
-
-                return printingSubsystem.ItemNotVisible();
-            }
-
-            return printingSubsystem.Resource("Was genau möchtest Du kaufen?");
-        }
-
-        return false;
-    }
 
     private bool HandleBreakEventOnObjects(AdventureEvent adventureEvent)
     {
@@ -1633,6 +1590,45 @@ public class CommandExecutor
         }
 
         return false;
+    }
+
+    private bool HandleBuy(AdventureEvent adventureEvent)
+    {
+        var item = adventureEvent.ObjectOne;
+        if (item != default)
+        {
+            if (this.universe.ActiveLocation.OwnsObject(item))
+            {
+                if (!this.universe.ActivePlayer.HasPaymentMethod)
+                {
+                    return printingSubsystem.PayWithWhat();
+                }
+
+                if (this.universe.ActivePlayer.OwnsObject(item))
+                {
+                    return printingSubsystem.ItemAlreadyOwned();
+                }
+
+                this.objectHandler.StoreAsActiveObject(item);
+
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs()
+                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    adventureEvent.ObjectOne.OnBuy(containerObjectEventArgs);
+
+                    return true;
+                }
+                catch (BuyException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+            }
+
+            return printingSubsystem.ItemNotVisible();
+        }
+
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_BUY);
     }
 
     private bool HandleLookEventOnObjects(AdventureEvent adventureEvent)

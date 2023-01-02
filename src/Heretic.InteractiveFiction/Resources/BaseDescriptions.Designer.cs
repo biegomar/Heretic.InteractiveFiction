@@ -1268,5 +1268,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("ITEM_NOT_A_TARGET", resourceCulture);
             }
         }
+        
+        public static string WHAT_TO_BUY {
+            get {
+                return ResourceManager.GetString("WHAT_TO_BUY", resourceCulture);
+            }
+        }
     }
 }
