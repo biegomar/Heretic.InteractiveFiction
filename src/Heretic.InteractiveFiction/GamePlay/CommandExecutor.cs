@@ -31,7 +31,7 @@ public class CommandExecutor
         {
             if (!adventureEvent.AllObjects.Any())
             {
-                return this.HandleAlterEgoEventOnActiveLocation(adventureEvent);    
+                return this.HandleAlterEgoEventOnActiveLocation();    
             }
             
             if (adventureEvent.AllObjects.Count == 1)
@@ -43,6 +43,31 @@ public class CommandExecutor
         }
 
         return false;
+    }
+    
+    private bool HandleAlterEgoEventOnActiveLocation()
+    {
+        var item = this.universe.ActiveObject ?? this.universe.ActivePlayer;
+        if (item != default)
+        {
+            var result = printingSubsystem.AlterEgo(item);
+            return result;
+        }
+
+        return printingSubsystem.ItemNotVisible();
+    }
+    
+    private bool HandleAlterEgoEventOnSingleObject(AdventureEvent adventureEvent)
+    {
+        var item = adventureEvent.ObjectOne;
+        if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        {
+            this.objectHandler.StoreAsActiveObject(item);
+            var result = printingSubsystem.AlterEgo(item);
+            return result;
+        }
+
+        return printingSubsystem.ItemNotVisible();
     }
     
     internal bool Ask(AdventureEvent adventureEvent)
@@ -79,31 +104,6 @@ public class CommandExecutor
         }
 
         return false;
-    }
-    
-    private bool HandleAlterEgoEventOnActiveLocation(AdventureEvent adventureEvent)
-    {
-        var item = this.universe.ActiveObject ?? this.universe.ActivePlayer;
-        if (item != default)
-        {
-            var result = printingSubsystem.AlterEgo(item);
-            return result;
-        }
-
-        return printingSubsystem.ItemNotVisible();
-    }
-    
-    private bool HandleAlterEgoEventOnSingleObject(AdventureEvent adventureEvent)
-    {
-        var item = adventureEvent.ObjectOne;
-        if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
-        {
-            this.objectHandler.StoreAsActiveObject(item);
-            var result = printingSubsystem.AlterEgo(item);
-            return result;
-        }
-
-        return printingSubsystem.ItemNotVisible();
     }
 
     private bool HandleBreakEventOnObjects(AdventureEvent adventureEvent)
