@@ -469,6 +469,12 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         return Resource(BaseDescriptions.ITEM_NOT_VISIBLE);
     }
+    
+    public virtual bool ItemNotVisible(AHereticObject item)
+    {
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+        return FormattedResource(BaseDescriptions.ITEM_NAME_NOT_VISIBLE, itemName);
+    }
 
     public bool KeyNotVisible()
     {

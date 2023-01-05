@@ -1382,5 +1382,35 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("ITEM_NOT_WEARABLE", resourceCulture);
             }
         }
+        
+        public static string WHAT_TO_TAKEOFF {
+            get {
+                return ResourceManager.GetString("WHAT_TO_TAKEOFF", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_WEAR {
+            get {
+                return ResourceManager.GetString("WHAT_TO_WEAR", resourceCulture);
+            }
+        }
+        
+        public static string TAKEOFF_WEARABLE {
+            get {
+                return ResourceManager.GetString("TAKEOFF_WEARABLE", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NAME_NOT_VISIBLE {
+            get {
+                return ResourceManager.GetString("ITEM_NAME_NOT_VISIBLE", resourceCulture);
+            }
+        }
+        
+        public static string CANT_USE_YOURSELF {
+            get {
+                return ResourceManager.GetString("CANT_USE_YOURSELF", resourceCulture);
+            }
+        }
     }
 }
