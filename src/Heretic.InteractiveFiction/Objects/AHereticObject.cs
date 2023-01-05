@@ -191,7 +191,7 @@ public abstract partial class AHereticObject
         
         visitedItems.Add(this);
 
-        if (this == objectToInspect)
+        if (this.Key == objectToInspect.Key)
         {
             return true;
         }
@@ -762,7 +762,7 @@ public abstract partial class AHereticObject
                     linkedObjectDescription.Append(", ");
                 }
 
-                var linkedObjectName = ArticleHandler.GetNameWithArticleForObject(linkedItem, GrammarCase.Dative, ArticleState.Indefinite, lowerFirstCharacter: true);
+                var linkedObjectName = ArticleHandler.GetNameWithArticleForObject(linkedItem, GrammarCase.Dative, lowerFirstCharacter: true);
                 linkedObjectDescription.Append(linkedObjectName);
 
                 linkedItemIndex++;
