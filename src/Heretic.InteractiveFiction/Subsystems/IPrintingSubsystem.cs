@@ -20,6 +20,7 @@ public interface IPrintingSubsystem
     bool Help(IList<Verb> verbs);
     bool History(ICollection<string> historyCollection);
     bool ItemNotVisible();
+    bool ItemNotVisible(AHereticObject item);
     bool KeyNotVisible();
     bool ImpossiblePickup(AHereticObject containerObject);
     bool ItemToHeavy();
