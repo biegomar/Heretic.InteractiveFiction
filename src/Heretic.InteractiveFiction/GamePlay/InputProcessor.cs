@@ -125,6 +125,7 @@ public sealed class InputProcessor
         result = result || commandExecutor.Break(adventureEvent);
         result = result || commandExecutor.Eat(adventureEvent);
         result = result || commandExecutor.Wear(adventureEvent);
+        result = result || commandExecutor.TakeOff(adventureEvent);
         result = result || commandExecutor.Read(adventureEvent);
         result = result || commandExecutor.Go(adventureEvent);
         result = result || commandExecutor.SwitchOn(adventureEvent);
