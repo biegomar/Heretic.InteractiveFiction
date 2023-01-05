@@ -290,8 +290,13 @@ public sealed class ObjectHandler
                 case 1:
                     return onlyItemsWithItemNameInValues.Single().Key;
                 case > 1:
-                    return this.GetItemKeyMatchingAdjectives(onlyItemsWithItemNameInValues.Select(x => x.Key).ToList(),
+                    var result = this.GetItemKeyMatchingAdjectives(onlyItemsWithItemNameInValues.Select(x => x.Key).ToList(),
                         adjectives);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        throw new AmbiguousHereticObjectException(BaseDescriptions.AMBIGUOUS_HERETICOBJECT);
+                    }
+                    return result;
             }
         }
 
