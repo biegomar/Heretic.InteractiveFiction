@@ -54,6 +54,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> BeforeTake;
     public event EventHandler<ContainerObjectEventArgs> Take;
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
+    
+    public event EventHandler<ContainerObjectEventArgs> BeforeTakeOff;
+    public event EventHandler<ContainerObjectEventArgs> TakeOff;
+    public event EventHandler<ContainerObjectEventArgs> AfterTakeOff;
 
     public event EventHandler<SitDownEventArgs> BeforeSitDown;
     public event EventHandler<SitDownEventArgs> SitDown;
@@ -560,6 +564,24 @@ public abstract partial class AHereticObject
     public virtual void OnAfterTake(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.AfterTake;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeTakeOff(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeTakeOff;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnTakeOff(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.TakeOff;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterTakeOff(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterTakeOff;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
