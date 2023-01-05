@@ -18,28 +18,6 @@ public class GermanGrammar: IGrammar
         this.CombinedPrepositionsAndArticles = resourceProvider.PreparePrepositionsAndArticlesFromResource();
     }
 
-    public bool IsVerb(string verbKeyToCheck, Location location)
-    {
-        var verbOverrides = location.OptionalVerbs.Values.SelectMany(x => x).ToList();
-        
-        return verbOverrides.Any()
-            ? this.Verbs.Select(v => v.Key).Contains(verbKeyToCheck, StringComparer.InvariantCultureIgnoreCase)
-              || verbOverrides.Select(v => v.Key).Contains(verbKeyToCheck, StringComparer.InvariantCultureIgnoreCase)
-            : this.Verbs.Select(v => v.Key).Contains(verbKeyToCheck, StringComparer.InvariantCultureIgnoreCase);
-    }
-    
-    public Verb GetVerb(string verbKeyToCheck, Location location)
-    {
-        var result = this.Verbs.FirstOrDefault(v => v.Key.Equals(verbKeyToCheck, StringComparison.InvariantCultureIgnoreCase));
-        if (result != default)
-        {
-            return result;
-        }
-        
-        var verbOverrides = location.OptionalVerbs.SelectMany(x => x.Value).ToList();
-        return verbOverrides.SingleOrDefault(v => v.Key.Equals(verbKeyToCheck, StringComparison.InvariantCultureIgnoreCase));
-    }
-
     public (string preposition, string article) GetPrepositionAndArticleFromCombinedWord(string word)
     {
         return this.CombinedPrepositionsAndArticles.ContainsKey(word) ? this.CombinedPrepositionsAndArticles[word] : default;

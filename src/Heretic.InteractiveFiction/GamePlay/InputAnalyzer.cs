@@ -27,18 +27,19 @@ internal sealed class InputAnalyzer
     {
         var stringToAnalyze = input;
         
-        var normalizedInput = stringToAnalyze.Trim().Replace(",", " ");
+        var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",").Replace(",", " ");
         var sentence = normalizedInput.Split(' ');
+        sentence = sentence.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
         sentence = this.SubstitutePronoun(sentence).ToArray();
         sentence = this.SubstituteCombinedPrepositionsAndArticles(sentence).ToArray();
-            
+
         return this.AnalyzeSentence(sentence);
     }
 
     private AdventureEvent AnalyzeSentence(IReadOnlyList<string> sentence)
     {
         AdventureEvent result = new();
-        var parts = sentence.ToList();
+        var parts = sentence.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
         if (parts.Any())
         {
@@ -61,8 +62,7 @@ internal sealed class InputAnalyzer
             if (objectOne.HereticObject != default)
             {
                 result.AllObjects.Add(objectOne.HereticObject);
-
-
+                
                 if (parts.Any())
                 {
                     ObjectAndAssociatedWord singleObject;
@@ -95,13 +95,18 @@ internal sealed class InputAnalyzer
 
             if (parts.Any())
             {
-                parts = this.ReplaceVerbInParts(sentence, parts, objectOne, objectTwo);
-                var predicate = this.GetVerbForRequest(parts);
+                (var predicate, parts) = this.GetVerbAndRemoveFromParts(sentence, parts, objectOne, objectTwo);
                 result.Predicate = predicate;
 
-                foreach (var hereticObject in result.AllObjects)
+                if (parts.Any())
                 {
-                    RemoveObjectArticlesFromParts(hereticObject, parts);
+                    foreach (var hereticObject in result.AllObjects)
+                    {
+                        if (parts.Any())
+                        {
+                            RemoveObjectArticlesFromParts(hereticObject, parts);
+                        }
+                    }   
                 }
 
                 if (parts.Any())
@@ -171,7 +176,7 @@ internal sealed class InputAnalyzer
         }
     }
     
-    private List<string> ReplaceVerbInParts(IReadOnlyList<string> sentence, ICollection<string> parts, ObjectAndAssociatedWord objectOne, ObjectAndAssociatedWord objectTwo)
+    private (Verb verb, List<string> newParts) GetVerbAndRemoveFromParts(IReadOnlyList<string> sentence, ICollection<string> parts, ObjectAndAssociatedWord objectOne, ObjectAndAssociatedWord objectTwo)
     {
         Verb verb = default;
         var result = parts.ToList();
@@ -179,8 +184,7 @@ internal sealed class InputAnalyzer
         void SetVerb(Verb possibleVerb, string word)
         {
             verb = possibleVerb;
-            var index = result.IndexOf(word);
-            result[index] = verb.Key;
+            result.Remove(word);
         }
         
         var isPrepositionOrPrefixPresentInSentence = this.grammar.HasPrepositionOrPrefix(sentence);
@@ -193,9 +197,7 @@ internal sealed class InputAnalyzer
             {
                 if (possibleVerbsAndVariants.Count == 1)
                 {
-                    verb = possibleVerbsAndVariants.First();
-                    var index = result.IndexOf(word);
-                    result[index] = verb.Key;
+                    SetVerb(possibleVerbsAndVariants.Single(), word);
                 }
                 else if (isPrepositionOrPrefixPresentInSentence)
                 {
@@ -273,8 +275,12 @@ internal sealed class InputAnalyzer
                 result.Remove(partToRemove);
             }
         }
+        else
+        {
+            throw new NoVerbException();
+        }
 
-        return result;
+        return (verb, result);
     }
     
     private bool IsObjectInCorrectCaseForPreposition(Verb possibleVerb, string preposition, ObjectAndAssociatedWord objectOne, IReadOnlyList<string> sentence)
@@ -358,21 +364,6 @@ internal sealed class InputAnalyzer
         var prepositions = possibleVerb.Prepositions.Select(p => p.Name);
         var onlyPossiblePreposition = parts.Intersect(prepositions).FirstOrDefault();
         return onlyPossiblePreposition ?? string.Empty;
-    }
-
-    private Verb GetVerbForRequest(ICollection<string> parts)
-    {
-        var partIterator = parts.ToList();
-        foreach (var word in partIterator)
-        {
-            if (this.grammar.IsVerb(word, this.universe.ActiveLocation))
-            {
-                parts.Remove(word);
-                return this.grammar.GetVerb(word, this.universe.ActiveLocation);
-            }
-        }
-
-        throw new NoVerbException();
     }
 
     private ObjectAndAssociatedWord GetObjectForRequestAndRemoveFromParts<T>(ICollection<string> sentence) where T: AHereticObject
