@@ -1526,6 +1526,132 @@ public class CommandExecutor
         return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
     }
     
+    internal bool Disconnect(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.DISCONNECT == adventureEvent.Predicate.Key)
+        {
+            if (!adventureEvent.AllObjects.Any())
+            {
+                return this.printingSubsystem.Resource(BaseDescriptions.WHAT_TO_DISCONNECT);
+                    
+            }
+            
+            if (adventureEvent.AllObjects.Count == 1)
+            {
+                return this.printingSubsystem.FormattedResource(BaseDescriptions.WHAT_TO_DISCONNECT_FROM,
+                    ArticleHandler.GetNameWithArticleForObject(adventureEvent.ObjectOne, GrammarCase.Dative,
+                        lowerFirstCharacter: true));
+            }
+
+            if (adventureEvent.AllObjects.Count > 2)
+            {
+                if (adventureEvent.AllObjects.Any(x => !x.IsLinkable))
+                {
+                    var nonLinkableObjects = adventureEvent.AllObjects.Where(x => !x.IsLinkable).ToList();
+                    foreach (var nonLinkableObject in nonLinkableObjects)
+                    {
+                        adventureEvent.AllObjects.Remove(nonLinkableObject);
+                        adventureEvent.AllObjects.Add(nonLinkableObject);
+                    }
+                }
+            }
+
+            return this.HandleDisconnect(adventureEvent);
+        }
+
+        return false;
+    }
+    
+    private bool HandleDisconnect(AdventureEvent adventureEvent)
+    {
+        if (adventureEvent.ObjectOne is Item item)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+
+                if (item.IsLinked)
+                {
+                    if (adventureEvent.ObjectTwo is Item itemToUse)
+                    {
+                        if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(itemToUse))
+                        {
+                            if (itemToUse.IsLinked)
+                            {
+                                if (!item.LinkedTo.Contains(itemToUse) && !itemToUse.LinkedTo.Contains(item))
+                                {
+                                    return printingSubsystem.Resource("Die Gegenstände sind nicht miteinander verbunden.");
+                                }
+                                
+                                try
+                                {
+                                    string optionalErrorMessage = string.Empty;
+                                    var errorMessage = adventureEvent.Predicate.ErrorMessage;
+                                    if (!string.IsNullOrEmpty(errorMessage))
+                                    {
+                                        var itemName =
+                                            ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative,
+                                                lowerFirstCharacter: true);
+                                        optionalErrorMessage = string.Format(errorMessage, itemName);
+                                    }
+
+                                    var itemOneEventArgs = new DisconnectEventArgs()
+                                    {
+                                        OptionalErrorMessage = optionalErrorMessage,
+                                        ItemToUse = itemToUse
+                                    };
+
+                                    var itemTwoEventArgs = new DisconnectEventArgs()
+                                    {
+                                        OptionalErrorMessage = optionalErrorMessage,
+                                        ItemToUse = item
+                                    };
+
+                                    item.OnBeforeDisconnect(itemOneEventArgs);
+                                    itemToUse.OnBeforeDisconnect(itemTwoEventArgs);
+
+                                    item.OnDisconnect(itemOneEventArgs);
+                                    itemToUse.OnDisconnect(itemTwoEventArgs);
+                                    
+                                    item.LinkedTo.Remove(itemToUse);
+                                    itemToUse.LinkedTo.Remove(item);
+
+                                    printingSubsystem.Resource(string.Format("{0} ist nun nicht mehr mit {1} verbunden.",
+                                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative),
+                                        ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Dative,
+                                            lowerFirstCharacter: true)));
+
+                                    item.OnAfterDisconnect(itemOneEventArgs);
+                                    itemToUse.OnAfterDisconnect(itemTwoEventArgs);
+
+                                    return true;
+                                }
+                                catch (DisconnectException ex)
+                                {
+                                    return printingSubsystem.Resource(ex.Message);
+                                }
+                            }
+                            
+                            return printingSubsystem.FormattedResource("{0} ist nicht mit anderen Dingen verbunden.",
+                                ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Nominative));
+                        }
+
+                        return printingSubsystem.ItemNotVisible(itemToUse);
+                    }
+
+                    return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
+                }
+                
+                return printingSubsystem.FormattedResource("{0} ist nicht mit anderen Dingen verbunden.",
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative));
+            }
+
+            return printingSubsystem.ItemNotVisible(item);
+        }
+
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
+    }
+    
     internal bool Use(AdventureEvent adventureEvent)
     {
         if (VerbKeys.USE == adventureEvent.Predicate.Key)

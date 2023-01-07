@@ -1436,5 +1436,23 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("WHAT_TO_CONNECT_TO", resourceCulture);
             }
         }
+        
+        public static string DISCONNECT {
+            get {
+                return ResourceManager.GetString("DISCONNECT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_DISCONNECT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_DISCONNECT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_DISCONNECT_FROM {
+            get {
+                return ResourceManager.GetString("WHAT_TO_DISCONNECT_FROM", resourceCulture);
+            }
+        }
     }
 }

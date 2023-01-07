@@ -814,4 +814,13 @@
   <data name="WHAT_TO_CONNECT_TO" xml:space="preserve">
     <value>Was möchtest Du mit {0} verbinden?</value>
   </data>
+  <data name="DISCONNECT" xml:space="preserve">
+    <value>Trennt zwei verbundene Gegenstände voneinander.</value>
+  </data>
+  <data name="WHAT_TO_DISCONNECT" xml:space="preserve">
+    <value>Was möchtest Du von einander trennen?</value>
+  </data>
+  <data name="WHAT_TO_DISCONNECT_FROM" xml:space="preserve">
+    <value>Was möchtest Du von {0} trennen?</value>
+  </data>
 </root>

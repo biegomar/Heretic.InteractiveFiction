@@ -321,4 +321,7 @@
   <data name="CONNECT" xml:space="preserve">
     <value>Verbinde|Verbind|Verzurr|Verzurre|Binde|Bind|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>
   </data>
+  <data name="DISCONNECT" xml:space="preserve">
+    <value>Trenne|Trenn|Lös|Löse|Ziehe:ab|Zieh:ab</value>
+  </data>
 </root>

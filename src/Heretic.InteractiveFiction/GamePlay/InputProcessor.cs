@@ -120,6 +120,7 @@ public sealed class InputProcessor
         result = result || commandExecutor.Cut(adventureEvent);
         result = result || commandExecutor.Climb(adventureEvent);
         result = result || commandExecutor.Connect(adventureEvent);
+        result = result || commandExecutor.Disconnect(adventureEvent);
         result = result || commandExecutor.Kindle(adventureEvent);
         result = result || commandExecutor.Lock(adventureEvent);
         result = result || commandExecutor.Unlock(adventureEvent);

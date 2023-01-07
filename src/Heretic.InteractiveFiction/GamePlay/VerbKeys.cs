@@ -13,6 +13,7 @@ public static class VerbKeys
     public static string CREDITS => nameof(CREDITS);
     public static string CUT => nameof(CUT);
     public static string DESCEND => nameof(DESCEND);
+    public static string DISCONNECT => nameof(DISCONNECT);
     public static string DOWN => nameof(DOWN);
     public static string DRINK => nameof(DRINK);
     public static string DROP => nameof(DROP);

@@ -75,6 +75,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ConnectEventArgs> Connect;
     public event EventHandler<ConnectEventArgs> AfterConnect;
     
+    public event EventHandler<DisconnectEventArgs> BeforeDisconnect;
+    public event EventHandler<DisconnectEventArgs> Disconnect;
+    public event EventHandler<DisconnectEventArgs> AfterDisconnect;
+    
     public event EventHandler<LockContainerEventArgs> BeforeUnlock;
     public event EventHandler<LockContainerEventArgs> Unlock;
     public event EventHandler<LockContainerEventArgs> AfterUnlock;
@@ -350,6 +354,24 @@ public abstract partial class AHereticObject
     public virtual void OnAfterConnect(ConnectEventArgs eventArgs)
     {
         var localEventHandler = this.AfterConnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeDisconnect(DisconnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeDisconnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnDisconnect(DisconnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Disconnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterDisconnect(DisconnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterDisconnect;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
