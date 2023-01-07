@@ -199,7 +199,7 @@
     <value>Hoch|Rauf|Hinauf|H|Herauf</value>
   </data>
   <data name="USE" xml:space="preserve">
-    <value>Benutze|Nutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>
+    <value>Benutze|Nutze</value>
   </data>
   <data name="W" xml:space="preserve">
     <value>Westen|West|W</value>
@@ -317,5 +317,8 @@
   </data>
   <data name="SWITCHOFF" xml:space="preserve">
     <value>Ausschalten|Schalte:aus|Schalt:aus|Schalte:ab|Schalt:ab</value>
+  </data>
+  <data name="CONNECT" xml:space="preserve">
+    <value>Verbinde|Verbind|Verzurr|Verzurre|Binde|Bind|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>
   </data>
 </root>

@@ -46,6 +46,10 @@ public abstract partial class AHereticObject
     /// Is this a physical object or just virtual? 
     /// </summary>
     public bool IsVirtual { get; set; }
+
+    public bool IsLinkable { get; set; }
+    public bool IsLinked => this.LinkedTo.Any();
+    
     /// <summary>
     /// Can the object picked up?
     /// </summary>
@@ -805,6 +809,7 @@ public abstract partial class AHereticObject
         this.IsDrinkable = false;
         this.IsReadable = false;
         this.IsShownInObjectList = true;
+        this.IsLinkable = false;
     }
 
     private void InitializeDescriptions()

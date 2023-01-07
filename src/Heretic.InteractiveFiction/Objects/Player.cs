@@ -27,6 +27,16 @@ public sealed class Player : AHereticObject
         this.IsStranger = true;
     }
 
+    public bool WearsItem(string itemKey)
+    {
+        return this.Clothes.Any(x => x.Key == itemKey);
+    }
+    
+    public bool WearsItem(Item item)
+    {
+        return this.WearsItem(item.Key);
+    }
+    
     protected override string GetObjectName()
     {
         if (this.IsStranger)

@@ -138,6 +138,11 @@ public sealed class ObjectHandler
         return !item.IsHidden && (this.universe.ActiveLocation.OwnsObject(item) || this.universe.ActivePlayer.OwnsObject(item));
     }
     
+    public bool IsObjectUnhiddenAndInInventory(AHereticObject item)
+    {
+        return !item.IsHidden && this.universe.ActivePlayer.OwnsObject(item);
+    }
+    
     public string GetConversationAnswerKeyByName(string phrase)
     {
         return this.GetKeyByNameAndAdjectivesFromResource(phrase, this.universe.ConversationAnswersResources);

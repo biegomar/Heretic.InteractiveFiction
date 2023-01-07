@@ -1412,5 +1412,29 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("CANT_USE_YOURSELF", resourceCulture);
             }
         }
+        
+        public static string CONNECT {
+            get {
+                return ResourceManager.GetString("CONNECT", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_WEARN {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_WEARN", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CONNECT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CONNECT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CONNECT_TO {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CONNECT_TO", resourceCulture);
+            }
+        }
     }
 }

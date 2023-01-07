@@ -9,6 +9,7 @@ public static class VerbKeys
     public static string BREAK => nameof(BREAK);
     public static string CLIMB => nameof(CLIMB);
     public static string CLOSE => nameof(CLOSE);
+    public static string CONNECT => nameof(CONNECT);
     public static string CREDITS => nameof(CREDITS);
     public static string CUT => nameof(CUT);
     public static string DESCEND => nameof(DESCEND);

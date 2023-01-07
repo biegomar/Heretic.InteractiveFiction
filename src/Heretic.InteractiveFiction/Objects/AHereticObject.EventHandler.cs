@@ -71,6 +71,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> Descend;
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
     
+    public event EventHandler<ConnectEventArgs> BeforeConnect;
+    public event EventHandler<ConnectEventArgs> Connect;
+    public event EventHandler<ConnectEventArgs> AfterConnect;
+    
     public event EventHandler<LockContainerEventArgs> BeforeUnlock;
     public event EventHandler<LockContainerEventArgs> Unlock;
     public event EventHandler<LockContainerEventArgs> AfterUnlock;
@@ -328,6 +332,24 @@ public abstract partial class AHereticObject
     public virtual void OnAfterDescend(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.AfterDescend;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeConnect(ConnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeConnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnConnect(ConnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Connect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterConnect(ConnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterConnect;
         localEventHandler?.Invoke(this, eventArgs);
     }
 

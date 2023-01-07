@@ -1399,6 +1399,133 @@ public class CommandExecutor
         return false;
     }
     
+    internal bool Connect(AdventureEvent adventureEvent)
+    {
+        if (VerbKeys.CONNECT == adventureEvent.Predicate.Key)
+        {
+            if (!adventureEvent.AllObjects.Any())
+            {
+                return this.printingSubsystem.Resource(BaseDescriptions.WHAT_TO_CONNECT);
+                    
+            }
+            
+            if (adventureEvent.AllObjects.Count == 1)
+            {
+                return this.printingSubsystem.FormattedResource(BaseDescriptions.WHAT_TO_CONNECT_TO,
+                    ArticleHandler.GetNameWithArticleForObject(adventureEvent.ObjectOne, GrammarCase.Dative,
+                        lowerFirstCharacter: true));
+            }
+
+            if (adventureEvent.AllObjects.Count > 2)
+            {
+                if (adventureEvent.AllObjects.Any(x => !x.IsLinkable))
+                {
+                    var nonLinkableObjects = adventureEvent.AllObjects.Where(x => !x.IsLinkable).ToList();
+                    foreach (var nonLinkableObject in nonLinkableObjects)
+                    {
+                        adventureEvent.AllObjects.Remove(nonLinkableObject);
+                        adventureEvent.AllObjects.Add(nonLinkableObject);
+                    }
+                }
+            }
+
+            return this.HandleConnect(adventureEvent);
+        }
+
+        return false;
+    }
+
+    private bool HandleConnect(AdventureEvent adventureEvent)
+    {
+        if (adventureEvent.ObjectOne is Item item)
+        {
+            if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+
+                if (item.IsLinkable)
+                {
+                    if (adventureEvent.ObjectTwo is Item itemToUse)
+                    {
+                        if (this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(itemToUse))
+                        {
+                            if (itemToUse.IsLinkable)
+                            {
+                                if (item.LinkedTo.Contains(itemToUse) && itemToUse.LinkedTo.Contains(item))
+                                {
+                                    return printingSubsystem.Resource(
+                                        "Die Gegenstände sind bereits miteinander verbunden.");
+                                }
+                                
+                                try
+                                {
+                                    string optionalErrorMessage = string.Empty;
+                                    var errorMessage = adventureEvent.Predicate.ErrorMessage;
+                                    if (!string.IsNullOrEmpty(errorMessage))
+                                    {
+                                        var itemName =
+                                            ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative,
+                                                lowerFirstCharacter: true);
+                                        optionalErrorMessage = string.Format(errorMessage, itemName);
+                                    }
+
+                                    var itemOneEventArgs = new ConnectEventArgs()
+                                    {
+                                        OptionalErrorMessage = optionalErrorMessage,
+                                        ItemToUse = itemToUse
+                                    };
+
+                                    var itemTwoEventArgs = new ConnectEventArgs()
+                                    {
+                                        OptionalErrorMessage = optionalErrorMessage,
+                                        ItemToUse = item
+                                    };
+
+                                    item.OnBeforeConnect(itemOneEventArgs);
+                                    itemToUse.OnBeforeConnect(itemTwoEventArgs);
+
+                                    item.OnConnect(itemOneEventArgs);
+                                    itemToUse.OnConnect(itemTwoEventArgs);
+                                    
+                                    item.LinkedTo.Add(itemToUse);
+                                    itemToUse.LinkedTo.Add(item);
+
+                                    printingSubsystem.Resource(string.Format("{0} ist nun mit {1} verbunden.",
+                                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative),
+                                        ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Dative,
+                                            lowerFirstCharacter: true)));
+
+                                    item.OnAfterConnect(itemOneEventArgs);
+                                    itemToUse.OnAfterConnect(itemTwoEventArgs);
+
+                                    return true;
+                                }
+                                catch (ConnectException ex)
+                                {
+                                    return printingSubsystem.Resource(ex.Message);
+                                }
+                            }
+                            
+                            return printingSubsystem.FormattedResource("{0} kann nicht mit anderen Dingen verbunden werden.",
+                                ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Nominative));
+                        }
+
+                        return printingSubsystem.ItemNotVisible(itemToUse);
+                    }
+
+                    return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
+                }
+                
+                return printingSubsystem.FormattedResource("{0} kann nicht mit anderen Dingen verbunden werden.",
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative));
+            }
+
+            return printingSubsystem.ItemNotVisible(item);
+        }
+
+        return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
+    }
+    
     internal bool Use(AdventureEvent adventureEvent)
     {
         if (VerbKeys.USE == adventureEvent.Predicate.Key)
@@ -2390,6 +2517,7 @@ public class CommandExecutor
                                     item.OnUnlock(unlockContainerEventArgs);
                                     var keyName = ArticleHandler.GetNameWithArticleForObject(key,
                                         GrammarCase.Accusative, lowerFirstCharacter: true);
+                                    
                                     printingSubsystem.Resource(string.Format(
                                         BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName,
                                         item.Name));

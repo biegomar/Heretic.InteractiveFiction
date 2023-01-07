@@ -802,4 +802,16 @@
   <data name="CANT_USE_YOURSELF" xml:space="preserve">
     <value>Du kannst Dich nicht selbst benutzen.</value>
   </data>
+  <data name="CONNECT" xml:space="preserve">
+    <value>Verbindet zwei Gegenstände miteinander.</value>
+  </data>
+  <data name="ITEM_NOT_WEARN" xml:space="preserve">
+    <value>Du hast {0} offensichtlich gar nicht angezogen.</value>
+  </data>
+  <data name="WHAT_TO_CONNECT" xml:space="preserve">
+    <value>Was möchtest Du miteinander verbinden?</value>
+  </data>
+  <data name="WHAT_TO_CONNECT_TO" xml:space="preserve">
+    <value>Was möchtest Du mit {0} verbinden?</value>
+  </data>
 </root>
