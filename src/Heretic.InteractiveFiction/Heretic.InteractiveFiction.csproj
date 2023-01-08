@@ -10,7 +10,7 @@
         <Description>This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers! 
 Heretic.InteractiveFiction intends to return to the old text adventure days of the 1980s and evoke the spirit and mood of the genre.
 </Description>
-        <Copyright>Copyright © 2022</Copyright>
+        <Copyright>Copyright © 2023</Copyright>
         <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
         <FileVersion>$(VersionPrefix)</FileVersion>
         <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
