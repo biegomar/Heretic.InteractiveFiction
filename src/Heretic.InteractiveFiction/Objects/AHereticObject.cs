@@ -280,7 +280,7 @@ public abstract partial class AHereticObject
         return default;
     }
     
-    internal virtual T GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject
+    protected virtual T GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject
     {
         if (visitedItems.Contains(this))
         {
@@ -439,9 +439,21 @@ public abstract partial class AHereticObject
 
         return false;
     }
-    
+
     public AHereticObject GetOwnerOfUnhiddenItemByKey(string key)
     {
+        return this.GetOwnerOfUnhiddenItemByKeyRecursive(key, new List<AHereticObject>());
+    }
+    
+    protected virtual AHereticObject GetOwnerOfUnhiddenItemByKeyRecursive(string key, ICollection<AHereticObject> visitedItems)
+    {
+        if (visitedItems.Contains(this))
+        {
+            return default;
+        }
+        
+        visitedItems.Add(this);
+        
         var unhiddenItems = this.Items.Where(i => !i.IsHidden).ToList();
 
         if (unhiddenItems.Any())
@@ -452,7 +464,7 @@ public abstract partial class AHereticObject
                 {
                     return this;
                 }
-                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+                var result = item.GetOwnerOfUnhiddenItemByKeyRecursive(key, visitedItems);
 
                 if (result != default)
                 {
@@ -470,7 +482,7 @@ public abstract partial class AHereticObject
                 {
                     return this;
                 }
-                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+                var result = item.GetOwnerOfUnhiddenItemByKeyRecursive(key, visitedItems);
 
                 if (result != default)
                 {
@@ -488,7 +500,7 @@ public abstract partial class AHereticObject
                 {
                     return this;
                 }
-                var result = item.GetOwnerOfUnhiddenItemByKey(key);
+                var result = item.GetOwnerOfUnhiddenItemByKeyRecursive(key, visitedItems);
 
                 if (result != default)
                 {
