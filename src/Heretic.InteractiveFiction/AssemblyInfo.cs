@@ -18,5 +18,5 @@ using System.Runtime.InteropServices;
 // Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM
 // bereitgestellt wird.
 
-[assembly: InternalsVisibleTo("Heretic.InteractiveFiction.Test")]
+[assembly: InternalsVisibleTo("Heretic.InteractiveFiction.TestGame")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

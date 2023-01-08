@@ -1,5 +1,6 @@
 ﻿using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
@@ -40,7 +41,8 @@ public sealed partial class Character
         }
         else
         {
-            throw new AskException(eventArgs.Item.DativeArticleName);
+            var itemName = ArticleHandler.GetNameWithArticleForObject(eventArgs.Item, GrammarCase.Dative);
+            throw new AskException(itemName);
         }
     }
 

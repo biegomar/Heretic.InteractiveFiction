@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
@@ -10,6 +9,12 @@ internal sealed class InputAnalyzer
     private readonly Universe universe;
     private readonly ObjectHandler objectHandler;
     private readonly IGrammar grammar;
+    
+    private sealed class ObjectAndAssociatedWord
+    {
+        public AHereticObject HereticObject { get; init; }
+        public string AssociatedWord { get; init; }
+    }
 
     internal InputAnalyzer(Universe universe, IGrammar grammar)
     {
@@ -18,133 +23,133 @@ internal sealed class InputAnalyzer
         this.grammar = grammar;
     }
 
-    internal string[] Analyze(string input)
+    internal AdventureEvent AnalyzeInput(string input)
     {
         var stringToAnalyze = input;
         
-        try
-        {
-            var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",");
-            var sentence = normalizedInput.Split(' ');
-            sentence = this.SubstitutePronoun(sentence).ToArray();
-            sentence = this.SubstituteCombinedPrepositionsAndArticles(sentence).ToArray();
-            sentence = this.OrderSentence(sentence).ToArray();
+        var normalizedInput = stringToAnalyze.Trim().Replace(", ", ",").Replace(",", " ");
+        var sentence = normalizedInput.Split(' ');
+        sentence = sentence.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+        sentence = this.SubstitutePronoun(sentence).ToArray();
+        sentence = this.SubstituteCombinedPrepositionsAndArticles(sentence).ToArray();
 
-            return sentence;
-        }
-        catch (Exception)
-        {
-            return new []{string.Empty};
-        }
+        return this.AnalyzeSentence(sentence);
     }
 
-    private IEnumerable<string> OrderSentence(IReadOnlyList<string> sentence)
+    private AdventureEvent AnalyzeSentence(IReadOnlyList<string> sentence)
     {
-        var objectTwo = string.Empty;
-        var orderedSentence = new List<string>();
-        var parts = sentence.ToList();
+        AdventureEvent result = new();
+        var parts = sentence.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
         if (parts.Any())
         {
-            var normList = this.NormalizeSentence(parts);
-            var objectOne = this.GetCharacter(normList.Keys.ToList());
-            if (string.IsNullOrEmpty(objectOne))
-            {  
-                objectOne = this.GetItem(normList.Keys.ToList());
-                if (string.IsNullOrEmpty(objectOne))
+            var objectOne = this.GetObjectForRequestAndRemoveFromParts<Player>(parts);
+            if (objectOne.HereticObject == default)
+            {
+                objectOne = this.GetObjectForRequestAndRemoveFromParts<Character>(parts);
+                if (objectOne.HereticObject == default)
                 {
-                    objectOne = this.GetLocation(normList.Keys.ToList());
+                    objectOne = this.GetObjectForRequestAndRemoveFromParts<Item>(parts);
+                    if (objectOne.HereticObject == default)
+                    {
+                        objectOne = this.GetObjectForRequestAndRemoveFromParts<Location>(parts);
+                    }
                 }
             }
-            if (!string.IsNullOrEmpty(objectOne))
+
+            ObjectAndAssociatedWord objectTwo = null;
+            
+            if (objectOne.HereticObject != default)
             {
-                RemoveNormlistItemsFromParts(normList[objectOne], parts);
+                result.AllObjects.Add(objectOne.HereticObject);
+                
+                if (parts.Any())
+                {
+                    ObjectAndAssociatedWord singleObject;
+
+                    do
+                    {
+                        singleObject = this.GetObjectForRequestAndRemoveFromParts<Item>(parts);
+                        if (singleObject.HereticObject == default)
+                        {
+                            singleObject = this.GetObjectForRequestAndRemoveFromParts<Player>(parts);
+                            if (singleObject.HereticObject == default)
+                            {
+                                singleObject = this.GetObjectForRequestAndRemoveFromParts<Character>(parts);
+                                if (singleObject.HereticObject == default)
+                                {
+                                    //objectTwo = this.GetConversationAnswer(parts);
+                                }
+                            }
+                        }
+
+                        if (singleObject.HereticObject != default)
+                        {
+                            objectTwo ??= singleObject;
+                            result.AllObjects.Add(singleObject.HereticObject);
+                        }
+
+                    } while (singleObject.HereticObject != default);
+                }
             }
 
             if (parts.Any())
             {
-                normList = this.NormalizeSentence(parts);
-                objectTwo = this.GetItem(normList.Keys.ToList());
-                if (string.IsNullOrEmpty(objectTwo))
-                {
-                    objectTwo = this.GetCharacter(normList.Keys.ToList());
-                    if (string.IsNullOrEmpty(objectTwo))
-                    {
-                        objectTwo = this.GetConversationAnswer(normList.Keys.ToList());
-                    }
-                }
+                (var predicate, parts) = this.GetVerbAndRemoveFromParts(sentence, parts, objectOne, objectTwo);
+                result.Predicate = predicate;
 
-                if (!string.IsNullOrEmpty(objectTwo))
+                if (parts.Any())
                 {
-                    RemoveNormlistItemsFromParts(normList[objectTwo], parts);
+                    foreach (var hereticObject in result.AllObjects)
+                    {
+                        if (parts.Any())
+                        {
+                            RemoveObjectArticlesFromParts(hereticObject, parts);
+                        }
+                    }   
                 }
 
                 if (parts.Any())
                 {
-                    parts = this.ReplaceVerbInParts(sentence, parts, objectOne, objectTwo);
-                    var predicate = this.GetVerb(sentence, parts);
-                    orderedSentence.Add(predicate);
-                    
-                    if (!string.IsNullOrEmpty(objectOne))
-                    {
-                        orderedSentence.Add(objectOne);  
-                        RemoveObjectArticlesFromParts(objectOne, parts);
-                    }
-            
-                    if (!string.IsNullOrEmpty(objectTwo))
-                    {
-                        orderedSentence.Add(objectTwo);  
-                        RemoveObjectArticlesFromParts(objectTwo, parts);
-                    }
-
-                    if (parts.Any())
-                    {
-                        RemovePrepositionsFromParts(parts);
-                    }
-                    
-                    if (parts.Any() && (string.IsNullOrEmpty(objectOne) || string.IsNullOrEmpty(objectTwo)))
-                    {
-                        var partString = string.Join('|', parts);
-                        orderedSentence.Add(partString);
-                    }
+                    RemovePrepositionsFromParts(parts);
                 }
-                else
+
+                if (parts.Any())
                 {
-                    throw new NoVerbException();
+                    result.UnidentifiedSentenceParts.AddRange(parts);
                 }
             }
+            else
+            {
+                throw new NoVerbException();
+            }
         }
-        
-        return orderedSentence;
-    }
 
-    private static void RemoveNormlistItemsFromParts(IEnumerable<string> normList, ICollection<string> parts)
-    {
-        foreach (var item in normList)
-        {
-            parts.Remove(item);
-        }
+        return result;
     }
-
-    private void RemoveObjectArticlesFromParts(string processingObject, ICollection<string> parts)
+    
+    private void RemoveObjectArticlesFromParts(AHereticObject processingObject, ICollection<string> parts)
     {
-        var item = this.objectHandler.GetObjectFromWorldByName(processingObject);
-        if (item != default)
+        if (processingObject != default)
         {
-            var partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            var partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Nominative), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Nominative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
             
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetAccusativeArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Genitive), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetAccusativeIndefiniteArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
-            parts.Remove(partToRemove);
-            
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetDativeArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
-            parts.Remove(partToRemove);
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetDativeIndefiniteArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Genitive, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
             
-            partToRemove = parts.FirstOrDefault(p => p.Equals(this.grammar.GetNominativeIndefiniteArticleForObject(item), StringComparison.InvariantCultureIgnoreCase));
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Dative), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Dative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Accusative), StringComparison.InvariantCultureIgnoreCase));
+            parts.Remove(partToRemove);
+            partToRemove = parts.FirstOrDefault(p => p.Equals(ArticleHandler.GetArticleForObject(processingObject, GrammarCase.Accusative, ArticleState.Indefinite), StringComparison.InvariantCultureIgnoreCase));
             parts.Remove(partToRemove);
         }
     }
@@ -158,7 +163,20 @@ internal sealed class InputAnalyzer
         }
     }
 
-    private List<string> ReplaceVerbInParts(IReadOnlyList<string> sentence, ICollection<string> parts, string objectOne, string objectTwo)
+    private void RemoveAdjectivesFromParts(AHereticObject processingObject, ICollection<string> parts)
+    {
+        if (processingObject != default && !string.IsNullOrEmpty(processingObject.Adjectives))
+        {
+            var allDeclinedAdjectives = AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(processingObject);
+
+            foreach (var adjective in allDeclinedAdjectives)
+            {
+                parts.Remove(adjective);
+            }
+        }
+    }
+    
+    private (Verb verb, List<string> newParts) GetVerbAndRemoveFromParts(IReadOnlyList<string> sentence, ICollection<string> parts, ObjectAndAssociatedWord objectOne, ObjectAndAssociatedWord objectTwo)
     {
         Verb verb = default;
         var result = parts.ToList();
@@ -166,8 +184,7 @@ internal sealed class InputAnalyzer
         void SetVerb(Verb possibleVerb, string word)
         {
             verb = possibleVerb;
-            var index = result.IndexOf(word);
-            result[index] = verb.Key;
+            result.Remove(word);
         }
         
         var isPrepositionOrPrefixPresentInSentence = this.grammar.HasPrepositionOrPrefix(sentence);
@@ -180,19 +197,9 @@ internal sealed class InputAnalyzer
             {
                 if (possibleVerbsAndVariants.Count == 1)
                 {
-                    verb = possibleVerbsAndVariants.First();
-                    var index = result.IndexOf(word);
-                    result[index] = verb.Key;
+                    SetVerb(possibleVerbsAndVariants.Single(), word);
                 }
-                else if (!isPrepositionOrPrefixPresentInSentence)
-                {
-                    var onlyPossibleVerbWithoutPrefix = possibleVerbsAndVariants.SingleOrDefault(v => v.Variants.Count(x => x.Prefix == string.Empty) > 0);
-                    if (onlyPossibleVerbWithoutPrefix != default)
-                    {
-                        SetVerb(onlyPossibleVerbWithoutPrefix, word);
-                    }
-                }
-                else
+                else if (isPrepositionOrPrefixPresentInSentence)
                 {
                     foreach (var possibleVerb in possibleVerbsAndVariants)
                     {
@@ -202,11 +209,23 @@ internal sealed class InputAnalyzer
                         var isPrefixOnly = !string.IsNullOrEmpty(onlyPossiblePrefix) && string.IsNullOrEmpty(onlyPossiblePreposition);
                         var isPrepositionOnly = string.IsNullOrEmpty(onlyPossiblePrefix) && !string.IsNullOrEmpty(onlyPossiblePreposition);
                         var isPrefixAndPreposition = !string.IsNullOrEmpty(onlyPossiblePrefix) && !string.IsNullOrEmpty(onlyPossiblePreposition);
+
+                        bool isObjectInCorrectCaseForPreposition;
+                        var isPrepositionInFrontOfObject = this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence);
+                        if (isPrepositionInFrontOfObject)
+                        {
+                            isObjectInCorrectCaseForPreposition = this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence);
+                        }
+                        else
+                        {
+                            isPrepositionInFrontOfObject = this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectTwo, sentence);
+                            isObjectInCorrectCaseForPreposition = this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectTwo, sentence);
+                        }
                         
                         if (isPrepositionOnly)
                         {
-                            if ((this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) || !this.grammar.HasArticle(sentence)) &&
-                                this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence))
+                            var isNoArticlePresent = !ArticleHandler.HasArticle(sentence);
+                            if ((isObjectInCorrectCaseForPreposition || isNoArticlePresent) && isPrepositionInFrontOfObject)
                             {
                                 SetVerb(possibleVerb, word);
                                 break;
@@ -222,14 +241,22 @@ internal sealed class InputAnalyzer
                         }
                         else if (isPrefixAndPreposition)
                         {
-                            if (this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence) &&
-                                this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence) &&
+                            if (isObjectInCorrectCaseForPreposition &&
+                                isPrepositionInFrontOfObject &&
                                 this.IsPrefixTheLastWordInSentence(onlyPossiblePrefix, sentence))
                             {
                                 SetVerb(possibleVerb, word);
                                 break;
                             }
                         }
+                    }
+                }
+                else 
+                {
+                    var onlyPossibleVerbWithoutPrefix = possibleVerbsAndVariants.SingleOrDefault(v => v.Variants.Count(x => x.Prefix == string.Empty) > 0);
+                    if (onlyPossibleVerbWithoutPrefix != default)
+                    {
+                        SetVerb(onlyPossibleVerbWithoutPrefix, word);
                     }
                 }
             }
@@ -248,11 +275,15 @@ internal sealed class InputAnalyzer
                 result.Remove(partToRemove);
             }
         }
+        else
+        {
+            throw new NoVerbException();
+        }
 
-        return result;
+        return (verb, result);
     }
-
-    private bool IsObjectInCorrectCaseForPreposition(Verb possibleVerb, string preposition, string objectOne, IReadOnlyList<string> sentence)
+    
+    private bool IsObjectInCorrectCaseForPreposition(Verb possibleVerb, string preposition, ObjectAndAssociatedWord objectOne, IReadOnlyList<string> sentence)
     {
         var prepositionCaseFromVerb = possibleVerb.Prepositions
             .Where(c => c.Name.Equals(preposition, StringComparison.InvariantCultureIgnoreCase)).Select(p => p.Case).SingleOrDefault();
@@ -270,12 +301,11 @@ internal sealed class InputAnalyzer
 
         foreach (var prepositionCase in prepositionCases)
         {
-            var itemOne = this.objectHandler.GetObjectFromWorldByName(objectOne);
             if (prepositionCase.Equals("DATIVE", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (itemOne != default)
+                if (objectOne is { HereticObject: { } })
                 {
-                    var article = this.grammar.GetDativeArticleForObject(itemOne);
+                    var article = ArticleHandler.GetArticleForObject(objectOne.HereticObject, GrammarCase.Dative);
                     if (!string.IsNullOrEmpty(article) &&
                         sentence.Contains(article, StringComparer.InvariantCultureIgnoreCase))
                     {
@@ -285,9 +315,9 @@ internal sealed class InputAnalyzer
             }
             else if (prepositionCase.Equals("ACCUSATIVE", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (itemOne != default)
+                if (objectOne is { HereticObject: { } })
                 {
-                    var article = this.grammar.GetAccusativeArticleForObject(itemOne);
+                    var article = ArticleHandler.GetArticleForObject(objectOne.HereticObject, GrammarCase.Accusative);
                     if (!string.IsNullOrEmpty(article) &&
                         sentence.Contains(article, StringComparer.InvariantCultureIgnoreCase))
                     {
@@ -300,11 +330,15 @@ internal sealed class InputAnalyzer
         return false;
     }
 
-    private bool IsPrepositionInFrontOfObject(string preposition, string objectOne, IReadOnlyList<string> sentence)
+    private bool IsPrepositionInFrontOfObject(string preposition, ObjectAndAssociatedWord objectOne, IEnumerable<string> sentence)
     {
+        if (string.IsNullOrEmpty(preposition) || objectOne == default || objectOne.HereticObject == default)
+        {
+            return false;
+        }
         var singleWords = sentence.ToList();
         var positionOfPreposition = singleWords.IndexOf(preposition);
-        var positionOfNomen = singleWords.IndexOf(objectOne);
+        var positionOfNomen = singleWords.IndexOf(objectOne.AssociatedWord);
 
         return positionOfPreposition < positionOfNomen;
     }
@@ -322,113 +356,44 @@ internal sealed class InputAnalyzer
                         !string.IsNullOrEmpty(v.Prefix)).Select(v => v.Prefix).Distinct();
         var intersect = parts.Intersect(allPrefixes);
         var onlyPossiblePrefix = intersect.FirstOrDefault();
-        return onlyPossiblePrefix;
+        return onlyPossiblePrefix ?? string.Empty;
     }
     
     private string GetOnlyPossiblePreposition(ICollection<string> parts, Verb possibleVerb)
     {
-        var onlyPossiblePreposition = parts.Intersect(possibleVerb.Prepositions.Select(p => p.Name)).FirstOrDefault();
-        return onlyPossiblePreposition;
+        var prepositions = possibleVerb.Prepositions.Select(p => p.Name);
+        var onlyPossiblePreposition = parts.Intersect(prepositions).FirstOrDefault();
+        return onlyPossiblePreposition ?? string.Empty;
     }
 
-    private string GetVerb(IReadOnlyList<string> sentence, ICollection<string> parts)
+    private ObjectAndAssociatedWord GetObjectForRequestAndRemoveFromParts<T>(ICollection<string> sentence) where T: AHereticObject
     {
-        foreach (var word in parts)
-        {
-            if (this.grammar.IsVerb(word, this.universe.ActiveLocation))
-            {
-                parts.Remove(word);
-                return word;
-            }
-        }
-
-        throw new NoVerbException();
-    }
-    
-    private string GetCharacter(IList<string> sentence)
-    {
+        T discoveredObject = default;
+        string associatedWord = string.Empty;
+        
         foreach (var word in sentence)
         {
-            var key = this.objectHandler.GetCharacterKeyByName(word);
+            var key = this.objectHandler.GetObjectKeyByNameAndAdjectives<T>(word, sentence);
             if (!string.IsNullOrEmpty(key))
             {
-                return word;
+                discoveredObject = this.objectHandler.GetObjectFromWorldByKey<T>(key);
+                associatedWord = word;
+                break;
             }
         }
-
-        return string.Empty;
-    }
-    
-    private string GetLocation(IList<string> sentence)
-    {
-        foreach (var word in sentence)
-        {
-            if (!this.grammar.IsVerb(word, this.universe.ActiveLocation))
-            {
-                if (this.universe.LocationResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
-                {
-                    return word;
-                }   
-            }
-        }
-
-        return string.Empty;
-    }
-    
-    private string GetItem(IList<string> sentence)
-    {
-        foreach (var word in sentence)
-        {
-            if (!this.grammar.IsVerb(word, this.universe.ActiveLocation))
-            {
-                if (this.universe.ItemResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
-                {
-                    return word;
-                }
-            }
-        }
-
-        return string.Empty;
-    }
-    
-    private string GetConversationAnswer(IList<string> sentence)
-    {
-        foreach (var word in sentence)
-        {
-            if (this.universe.ConversationAnswersResources.Values.SelectMany(x => x).Contains(word, StringComparer.InvariantCultureIgnoreCase))
-            {
-                return word;
-            }
-        }
-
-        return string.Empty;
-    }
-    
-    private IDictionary<string, IEnumerable<string>> NormalizeSentence(IList<string> sentence)
-    {
-        var result = new Dictionary<string, IEnumerable<string>>();
         
-        for (var index = 0; index < sentence.Count; index++)
+        if (associatedWord != string.Empty)
         {
-            var concatWord = sentence[index];
-            var concatWordList = new List<string>() { concatWord };
-            if (!result.ContainsKey(concatWord))
-            {
-                result.Add(concatWord, concatWordList.ToList());    
-            }
-            
-            for (var position = index + 1; position < sentence.Count(); position++)
-            {
-                concatWord += sentence[position];
-                concatWordList.Add(sentence[position]);
-                if (!result.ContainsKey(concatWord))
-                {
-                    result.Add(concatWord, concatWordList.ToList());    
-                }
-            }
+            sentence.Remove(associatedWord);
         }
-
-        return result;
+        
+        this.RemoveAdjectivesFromParts(discoveredObject, sentence);
+        
+        return new ObjectAndAssociatedWord
+        {
+            HereticObject = discoveredObject,
+            AssociatedWord = associatedWord
+        };
     }
 
     private IList<string> SubstitutePronoun(IList<string> sentence)
@@ -436,7 +401,11 @@ internal sealed class InputAnalyzer
         var result = new List<string>();
         foreach (var word in sentence)
         {
-            if (this.grammar.IsPronounActiveObject(this.universe.ActiveObject, word))
+            if (PronounHandler.IsPronounRepresentingActiveObject(this.universe.ActivePlayer, word))
+            {
+                result.Add(word);
+            }
+            else if (PronounHandler.IsPronounRepresentingActiveObject(this.universe.ActiveObject, word))
             {
                 result.Add(GetFirstObjectNameWithoutWhitespace(this.universe.ActiveObject));
             }

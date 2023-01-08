@@ -1,6 +1,6 @@
 using System.Globalization;
 using System.Resources;
-using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.GamePlay;

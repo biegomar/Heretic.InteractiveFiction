@@ -1,11 +1,12 @@
-﻿using Heretic.InteractiveFiction.Resources;
+﻿using Heretic.InteractiveFiction.Grammars;
+using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
 
 public abstract partial class AHereticObject
 {
     protected string name;
-
+    
     /// <summary>
     /// This is the name of the object. This name is used as headline during printout.
     /// </summary>
@@ -15,36 +16,6 @@ public abstract partial class AHereticObject
         set => name = value;
     }
     
-    public string AccusativeIndefiniteArticleName
-    {
-        get => this.GetAccusativeIndefiniteArticleName();
-        set => name = value;
-    }
-    
-    public string AccusativeArticleName
-    {
-        get => this.GetAccusativeArticleName();
-        set => name = value;
-    }
-    
-    public string NominativeIndefiniteArticleName
-    {
-        get => this.GetNominativeIndefiniteArticleName();
-        set => name = value;
-    }
-    
-    public string DativeIndefiniteArticleName
-    {
-        get => this.GetDativeIndefiniteArticleName();
-        set => name = value;
-    }
-    
-    public string DativeArticleName
-    {
-        get => this.GetDativeArticleName();
-        set => name = value;
-    }
-
     /// <summary>
     /// The unique key that is representing the object.
     /// </summary>
@@ -53,7 +24,7 @@ public abstract partial class AHereticObject
     /// <summary>
     /// Used to define some grammar rules.
     /// </summary>
-    public Grammars Grammar { get; set; }
+    public IndividualObjectGrammar Grammar { get; set; }
     
     /// <summary>
     /// Can this object be broken?
@@ -75,6 +46,10 @@ public abstract partial class AHereticObject
     /// Is this a physical object or just virtual? 
     /// </summary>
     public bool IsVirtual { get; set; }
+
+    public bool IsLinkable { get; set; }
+    public bool IsLinked => this.LinkedTo.Any();
+    
     /// <summary>
     /// Can the object picked up?
     /// </summary>
@@ -171,10 +146,15 @@ public abstract partial class AHereticObject
     /// </summary>
     public ICollection<Character> Characters { get; set; }
 
+    /// <summary>
+    /// The list of additional adjectives for the object.
+    /// </summary>
+    public string Adjectives { get; set; }
+
     protected AHereticObject()
     {
         this.name = string.Empty;
-        this.Grammar = new Grammars();
+        this.Grammar = new IndividualObjectGrammar();
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.LinkedTo = new List<Item>();
@@ -199,29 +179,61 @@ public abstract partial class AHereticObject
         return BaseDescriptions.HERE;
     }
     
-    protected abstract StringBuilder ToStringExtension(); 
-    
+    protected abstract StringBuilder ToStringExtension();
+
+    public bool OwnsObject(AHereticObject objectToInspect)
+    {
+        return this.OwnsObject(objectToInspect, new List<AHereticObject>()) != default;
+    }
+
+    internal virtual bool OwnsObject(AHereticObject objectToInspect, ICollection<AHereticObject> visitedItems)
+    {
+        if (visitedItems.Contains(this))
+        {
+            return default;
+        }
+        
+        visitedItems.Add(this);
+
+        if (this.Key == objectToInspect.Key)
+        {
+            return true;
+        }
+
+        foreach (var item in this.Items)
+        {
+            var result = item.OwnsObject(objectToInspect, visitedItems);
+            if (result)
+            {
+                return true;
+            }
+        }
+        
+        foreach (var character in this.Characters)
+        {
+            var result = character.OwnsObject(objectToInspect, visitedItems);
+            if (result)
+            {
+                return true;
+            }
+        }
+
+        foreach (var item in this.LinkedTo)
+        {
+            var result = item.OwnsObject(objectToInspect, visitedItems);
+            if (result)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     
     public bool OwnsItem(string itemKey)
     {
         var item = this.GetItem(itemKey);
         return item != default;
-    }
-
-    public bool OwnsItem(Item item)
-    {
-        return this.OwnsItem(item.Key);
-    }
-    
-    public bool OwnsCharacter(string itemKey)
-    {
-        var character = this.GetCharacter(itemKey);
-        return character != default;
-    }
-    
-    public bool OwnsCharacter(Character character)
-    {
-        return this.OwnsCharacter(character.Key);
     }
 
     internal virtual AHereticObject GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
@@ -268,10 +280,60 @@ public abstract partial class AHereticObject
         return default;
     }
     
+    internal virtual T GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject
+    {
+        if (visitedItems.Contains(this))
+        {
+            return default;
+        }
+        
+        visitedItems.Add(this);
+        
+        if (this.Key == itemKey && this.GetType() == typeof(T))
+        {
+            return (T)this;
+        }
+
+        foreach (var item in this.Items)
+        {
+            var result = item.GetObject<T>(itemKey, visitedItems);
+            if (result != default && result.GetType() == typeof(T))
+            {
+                return (T)result;
+            }
+        }
+        
+        foreach (var character in this.Characters)
+        {
+            var result = character.GetObject<T>(itemKey, visitedItems);
+            if (result != default && result.GetType() == typeof(T))
+            {
+                return (T)result;
+            }
+        }
+
+        foreach (var item in this.LinkedTo)
+        {
+            var result = item.GetObject<T>(itemKey, visitedItems);
+            if (result != default && result.GetType() == typeof(T))
+            {
+                return (T)result;
+            }
+        }
+
+        return default;
+    }
+    
     public AHereticObject GetObject(string itemKey)
     {
         var result = this.GetObject(itemKey, new List<AHereticObject>());
         return result ?? default;
+    }
+    
+    public T GetObject<T>(string itemKey) where T: AHereticObject
+    {
+        var result = this.GetObject<T>(itemKey, new List<AHereticObject>());
+        return result;
     }
     
     public AHereticObject GetObject(AHereticObject item)
@@ -470,8 +532,15 @@ public abstract partial class AHereticObject
 
     protected virtual string GetObjectName()
     {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetArticle()} {sentence[0].Trim()}").Trim();
+        
+        var names = this.name.Split('|');
+        var article = ArticleHandler.GetArticleForObject(this, GrammarCase.Nominative);
+        
+        if (!string.IsNullOrEmpty(this.Adjectives))
+        {
+            return string.Format($"{article} {this.GetAdjectivesForName(GrammarCase.Nominative)} {names[0].Trim()}").Trim();    
+        }
+        return string.Format($"{article} {names[0].Trim()}").Trim();
     }
 
     internal virtual ICollection<string> GetNames()
@@ -479,6 +548,12 @@ public abstract partial class AHereticObject
         return this.name.Split('|').ToList();
     }
     
+    protected virtual string GetAdjectivesForName(GrammarCase grammarCase)
+    {
+        var adjectiveList = AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForObject(this, grammarCase);
+        return string.Join(", ", adjectiveList);
+    }
+
     public override string ToString()
     {
         var description = new StringBuilder();
@@ -540,43 +615,7 @@ public abstract partial class AHereticObject
         var characterNames = this.name.Split('|');
         return string.Join(", ", characterNames);
     }
-    
-    private string GetNominativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        var nominative = this.Grammar.GetNominativeIndefiniteArticle();
-        if (string.IsNullOrEmpty(nominative))
-        {
-            return $" {sentence[0].Trim()}";    
-        }
-        
-        return $"{nominative} {sentence[0].Trim()}";
-    }
-    
-    private string GetDativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetDativeIndefiniteArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetDativeArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetDativeArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetAccusativeIndefiniteArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetAccusativeIndefiniteArticle()} {sentence[0].Trim()}");
-    }
-    
-    private string GetAccusativeArticleName()
-    {
-        var sentence = this.name.Split('|');
-        return string.Format($"{this.Grammar.GetAccusativeArticle()} {sentence[0].Trim()}");
-    }
-    
+
     private string PrintUnhiddenObjects(ICollection<AHereticObject> unhiddenObjects, bool subItems = false)
     {
         var unhiddenObjectDescription = new StringBuilder();
@@ -641,12 +680,14 @@ public abstract partial class AHereticObject
 
                     if (subItems)
                     {
-                        var lowerName = item.NominativeIndefiniteArticleName.LowerFirstChar().Trim();
+                        var lowerName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Nominative,
+                            ArticleState.Indefinite, true).Trim();
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
                     else
                     {
-                        var lowerName = item.AccusativeIndefiniteArticleName.LowerFirstChar().Trim();
+                        var lowerName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
+                            ArticleState.Indefinite, true);
                         unhiddenObjectDescription.Append($"{lowerName}");
                     }
 
@@ -724,8 +765,9 @@ public abstract partial class AHereticObject
                 {
                     linkedObjectDescription.Append(", ");
                 }
-                
-                linkedObjectDescription.Append(linkedItem.DativeIndefiniteArticleName.LowerFirstChar());
+
+                var linkedObjectName = ArticleHandler.GetNameWithArticleForObject(linkedItem, GrammarCase.Dative, lowerFirstCharacter: true);
+                linkedObjectDescription.Append(linkedObjectName);
 
                 linkedItemIndex++;
             }
@@ -767,6 +809,7 @@ public abstract partial class AHereticObject
         this.IsDrinkable = false;
         this.IsReadable = false;
         this.IsShownInObjectList = true;
+        this.IsLinkable = false;
     }
 
     private void InitializeDescriptions()
@@ -785,5 +828,6 @@ public abstract partial class AHereticObject
         this.ClimbedDescription = string.Empty;
         this.LetterContentDescription = string.Empty;
         this.Hint = string.Empty;
+        this.Adjectives = string.Empty;
     }
 }

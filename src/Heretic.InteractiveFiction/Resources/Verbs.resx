@@ -133,7 +133,7 @@
     <value>Osten|Ost|O|E</value>
   </data>
   <data name="GO" xml:space="preserve">
-    <value>Gehe:zu|Geh:zu|Go|G</value>
+    <value>Gehe:zu|Geh:zu|Go|G|Gehe:in|Geh:in</value>
   </data>
   <data name="HELP" xml:space="preserve">
     <value>Hilfe|Help</value>
@@ -199,13 +199,13 @@
     <value>Hoch|Rauf|Hinauf|H|Herauf</value>
   </data>
   <data name="USE" xml:space="preserve">
-    <value>Benutze|Nutze|Binde|Bind|Verbinde|Verbind|Verzurre|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>
+    <value>Benutze|Nutze</value>
   </data>
   <data name="W" xml:space="preserve">
     <value>Westen|West|W</value>
   </data>
   <data name="WAYS" xml:space="preserve">
-    <value>Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang</value>
+    <value>Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang|AG</value>
   </data>
   <data name="ALTER_EGO" xml:space="preserve">
     <value>Alter|Alterego|Alternativ|Alternative|Alias</value>
@@ -223,7 +223,7 @@
     <value>Setze:hin|Setzen|Setz:hin|Hinsetzen|Sitze|Sitz</value>
   </data>
   <data name="STANDUP" xml:space="preserve">
-    <value>Aufstehen|stehe:auf|steh:auf</value>
+    <value>Aufstehen|stehe:auf|steh:auf|stell:hin|stelle:hin</value>
   </data>
   <data name="WRITE" xml:space="preserve">
     <value>Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe|Tipp</value>
@@ -247,7 +247,7 @@
     <value>Save|speichern</value>
   </data>
   <data name="HINT" xml:space="preserve">
-    <value>Hint|Tipp</value>
+    <value>Hint|Hinweis</value>
   </data>
   <data name="REM" xml:space="preserve">
     <value>Kommentar|Comment|Remark|REM</value>
@@ -280,7 +280,7 @@
     <value>Zuhören|Höre:zu|Lausche</value>
   </data>
   <data name="PUTON" xml:space="preserve">
-    <value>Drauflegen</value>
+    <value>Drauflegen|stell|stelle</value>
   </data>
   <data name="SHOW" xml:space="preserve">
     <value>Zeig|Zeige</value>
@@ -316,6 +316,12 @@
     <value>Sein|Bin|Ist</value>
   </data>
   <data name="SWITCHOFF" xml:space="preserve">
-    <value>Ausschalten|Schalte:aus|Schalt:aus</value>
+    <value>Ausschalten|Schalte:aus|Schalt:aus|Schalte:ab|Schalt:ab</value>
+  </data>
+  <data name="CONNECT" xml:space="preserve">
+    <value>Verbinde|Verbind|Verzurr|Verzurre|Binde|Bind|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>
+  </data>
+  <data name="DISCONNECT" xml:space="preserve">
+    <value>Trenne|Trenn|Lös|Löse|Ziehe:ab|Zieh:ab|Entferne|Entfern</value>
   </data>
 </root>

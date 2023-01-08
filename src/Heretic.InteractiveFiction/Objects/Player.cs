@@ -1,3 +1,4 @@
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
@@ -26,8 +27,23 @@ public sealed class Player : AHereticObject
         this.IsStranger = true;
     }
 
+    public bool WearsItem(string itemKey)
+    {
+        return this.Clothes.Any(x => x.Key == itemKey);
+    }
+    
+    public bool WearsItem(Item item)
+    {
+        return this.WearsItem(item.Key);
+    }
+    
     protected override string GetObjectName()
     {
+        if (this.IsStranger)
+        {
+            return "Fremder";
+        }
+        
         var sentence = this.name.Split('|');
         return sentence[0].Trim();
     }
@@ -111,14 +127,16 @@ public sealed class Player : AHereticObject
 
         if (this.IsSitting && this.Seat != default)
         {
-            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, this.Seat.DativeArticleName.LowerFirstChar()));
+            var seatName = ArticleHandler.GetNameWithArticleForObject(this.Seat, GrammarCase.Dative, lowerFirstCharacter: true);
+            result.AppendLine(string.Format(BaseDescriptions.SITTING_ON, seatName));
         }
         
         if (this.HasClimbed && this.ClimbedObject != default)
         {
             if (string.IsNullOrEmpty(this.ClimbedObject.ClimbedDescription))
             {
-                result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, this.ClimbedObject.AccusativeArticleName.LowerFirstChar()));    
+                var climbedName = ArticleHandler.GetNameWithArticleForObject(this.ClimbedObject, GrammarCase.Accusative, lowerFirstCharacter: true);
+                result.AppendLine(string.Format(BaseDescriptions.ITEM_CLIMBED, climbedName));    
             }
             else
             {
@@ -166,7 +184,9 @@ public sealed class Player : AHereticObject
                 {
                     result.Append(", ");    
                 }
-                result.Append(cloth.AccusativeIndefiniteArticleName.LowerFirstChar());
+
+                var clothName = ArticleHandler.GetNameWithArticleForObject(cloth, GrammarCase.Accusative, ArticleState.Indefinite, lowerFirstCharacter: true);
+                result.Append(clothName);
                 itemIndex++;
             }
         }
@@ -332,6 +352,25 @@ public sealed class Player : AHereticObject
         var baseResult = base.PrintItems(subItems);
 
         var result = baseResult.Replace(BaseDescriptions.HERE, BaseDescriptions.INVENTORY);
+        
+        return result;
+    }
+
+    internal override bool OwnsObject(AHereticObject objectToInspect, ICollection<AHereticObject> visitedItems)
+    {
+        var result = base.OwnsObject(objectToInspect, visitedItems);
+
+        if (!result)
+        {
+            foreach (var item in this.Clothes)
+            {
+                result = item.OwnsObject(objectToInspect, visitedItems);
+                if (result)
+                {
+                    return true;
+                }
+            }
+        }
         
         return result;
     }

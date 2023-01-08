@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 
@@ -468,6 +469,12 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         return Resource(BaseDescriptions.ITEM_NOT_VISIBLE);
     }
+    
+    public virtual bool ItemNotVisible(AHereticObject item)
+    {
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+        return FormattedResource(BaseDescriptions.ITEM_NAME_NOT_VISIBLE, itemName);
+    }
 
     public bool KeyNotVisible()
     {
@@ -499,7 +506,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemPickupSuccess(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
     }
@@ -508,7 +516,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         if (string.IsNullOrEmpty(item.UnDropAbleDescription))
         {
-            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
+            var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), itemName);
             Console.WriteLine();
             
             return true;
@@ -581,16 +590,28 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
+    public bool ItemUnknown(AdventureEvent adventureEvent)
+    {
+        if (adventureEvent.UnidentifiedSentenceParts.Any())
+        {
+            return this.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
+                string.Join(BaseDescriptions.BINDING_OR, adventureEvent.UnidentifiedSentenceParts));
+        }
+        return true;
+    }
+
     public bool ItemSeated(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), item.DativeArticleName.LowerFirstChar());
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
     }
 
     public bool ItemNotSeatable(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
     }
@@ -635,19 +656,21 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ItemDropSuccess(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
     }
 
     public bool ItemDropSuccess(AHereticObject itemToDrop, AHereticObject containerItem)
     {
+        var itemToDropName = ArticleHandler.GetNameWithArticleForObject(itemToDrop, GrammarCase.Accusative, lowerFirstCharacter: true);
+        var containerItemName = ArticleHandler.GetNameWithArticleForObject(containerItem, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(
             containerItem.IsSurfaceContainer
                 ? WordWrap(BaseDescriptions.ITEM_DROP_ONTO, this.ConsoleWidth)
                 : WordWrap(BaseDescriptions.ITEM_DROP_INTO, this.ConsoleWidth),
-            itemToDrop.AccusativeArticleName.LowerFirstChar(),
-            containerItem.AccusativeArticleName.LowerFirstChar());
+            itemToDropName, containerItemName);
 
         Console.WriteLine();
         return true;
@@ -667,7 +690,8 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     
     public virtual bool ItemNotOwned(AHereticObject item)
     {
-        return FormattedResource(BaseDescriptions.ITEM_NOT_OWNED_FORMATTED, item.AccusativeArticleName, true);
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative);
+        return FormattedResource(BaseDescriptions.ITEM_NOT_OWNED_FORMATTED, itemName, true);
     }
 
     public virtual bool ItemAlreadyOwned()
@@ -836,14 +860,16 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool ImpossibleLock(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_LOCK, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_LOCK, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
     }
     
     public virtual bool ImpossibleUnlock(AHereticObject item)
     {
-        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), item.AccusativeArticleName.LowerFirstChar());
+        var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+        Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), itemName);
         Console.WriteLine();
         return true;
     }

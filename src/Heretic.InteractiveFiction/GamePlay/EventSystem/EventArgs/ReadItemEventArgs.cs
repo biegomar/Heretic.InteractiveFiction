@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class ReadItemEventArgs: ContainerObjectEventArgs
+public sealed class ReadItemEventArgs: ContainerObjectEventArgs
 {
     
 }

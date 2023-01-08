@@ -27,4 +27,7 @@
     <data name="PULL" xml:space="preserve">
         <value>an:DATIVE</value>
     </data>
+    <data name="PUTON" xml:space="preserve">
+        <value>auf:ACCUSATIVE</value>
+    </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using Heretic.InteractiveFiction.Objects;
+﻿using Heretic.InteractiveFiction.Grammars;
+using Heretic.InteractiveFiction.Objects;
 
 namespace Heretic.InteractiveFiction.Subsystems;
 
@@ -19,6 +20,7 @@ public interface IPrintingSubsystem
     bool Help(IList<Verb> verbs);
     bool History(ICollection<string> historyCollection);
     bool ItemNotVisible();
+    bool ItemNotVisible(AHereticObject item);
     bool KeyNotVisible();
     bool ImpossiblePickup(AHereticObject containerObject);
     bool ItemToHeavy();
@@ -34,6 +36,7 @@ public interface IPrintingSubsystem
     bool ItemAlreadyLocked(AHereticObject item);
     bool ItemAlreadyUnlocked(AHereticObject item);
     bool ItemUnbreakable(AHereticObject item);
+    bool ItemUnknown(AdventureEvent adventureEvent);
     bool ItemSeated(AHereticObject item);
     bool ItemNotSeatable(AHereticObject item);
     bool ItemStillLocked(AHereticObject item);

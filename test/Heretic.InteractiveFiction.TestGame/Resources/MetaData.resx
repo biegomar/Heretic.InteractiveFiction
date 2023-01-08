@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="TITLE" xml:space="preserve">
+        <value>Die Blockhütte - Ein Interactive Fiction Abenteuer</value>
+    </data>
+    <data name="VERSION" xml:space="preserve">
+        <value>v0.1.6</value>
+    </data>
+    <data name="QUEST_I" xml:space="preserve">
+        <value>Schalte das Licht an.</value>
+    </data>
+    <data name="QUEST_II" xml:space="preserve">
+        <value>Mache Feuer.</value>
+    </data>
+    <data name="ASCII_TITLE" xml:space="preserve">
+        <value>
+ ██▓     ▒█████    ▄████     ▄████▄   ▄▄▄       ▄▄▄▄    ██▓ ███▄    █ 
+▓██▒    ▒██▒  ██▒ ██▒ ▀█▒   ▒██▀ ▀█  ▒████▄    ▓█████▄ ▓██▒ ██ ▀█   █ 
+▒██░    ▒██░  ██▒▒██░▄▄▄░   ▒▓█    ▄ ▒██  ▀█▄  ▒██▒ ▄██▒██▒▓██  ▀█ ██▒
+▒██░    ▒██   ██░░▓█  ██▓   ▒▓▓▄ ▄██▒░██▄▄▄▄██ ▒██░█▀  ░██░▓██▒  ▐▌██▒
+░██████▒░ ████▓▒░░▒▓███▀▒   ▒ ▓███▀ ░ ▓█   ▓██▒░▓█  ▀█▓░██░▒██░   ▓██░
+░ ▒░▓  ░░ ▒░▒░▒░  ░▒   ▒    ░ ░▒ ▒  ░ ▒▒   ▓▒█░░▒▓███▀▒░▓  ░ ▒░   ▒ ▒ 
+░ ░ ▒  ░  ░ ▒ ▒░   ░   ░      ░  ▒     ▒   ▒▒ ░▒░▒   ░  ▒ ░░ ░░   ░ ▒░
+  ░ ░   ░ ░ ░ ▒  ░ ░   ░    ░          ░   ▒    ░    ░  ▒ ░   ░   ░ ░ 
+    ░  ░    ░ ░        ░    ░ ░            ░  ░ ░       ░           ░ 
+                            ░                        ░                
+</value>
+    </data>
+    <data name="AUTHOR" xml:space="preserve">
+        <value>Marc Biegota</value>
+    </data>
+    <data name="COPYRIGHT" xml:space="preserve">
+        <value>(c) by Marc Biegota 2022</value>
+    </data>
+</root>

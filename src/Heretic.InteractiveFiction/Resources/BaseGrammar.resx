@@ -24,16 +24,16 @@
     <data name="ACCUSATIVE_INDEFINITEARTICLE_MALE_SINGULAR" xml:space="preserve">
         <value>Einen</value>
     </data>
-    <data name="ARTICLE_FEMALE_SINGULAR" xml:space="preserve">
+    <data name="NOMINATIVE_ARTICLE_FEMALE_SINGULAR" xml:space="preserve">
         <value>Die</value>
     </data>
-    <data name="ARTICLE_MALE_SINGULAR" xml:space="preserve">
+    <data name="NOMINATIVE_ARTICLE_MALE_SINGULAR" xml:space="preserve">
         <value>Der</value>
     </data>
     <data name="ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
         <value>Ein</value>
     </data>
-    <data name="ARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
+    <data name="NOMINATIVE_ARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
         <value>Das</value>
     </data>
     <data name="NOMINATIVE_INDEFINITEARTICLE_FEMALE_SINGULAR" xml:space="preserve">
@@ -72,13 +72,7 @@
     <data name="DATIVE_ARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
         <value>Dem</value>
     </data>
-    <data name="ACCUSATIVE_ARTICLE_FEMALE_PLURAL" xml:space="preserve">
-        <value>Die</value>
-    </data>
-    <data name="ACCUSATIVE_ARTICLE_MALE_PLURAL" xml:space="preserve">
-        <value>Die</value>
-    </data>
-    <data name="ACCUSATIVE_ARTICLE_NEUTRUM_PLURAL" xml:space="preserve">
+    <data name="ACCUSATIVE_ARTICLE_PLURAL" xml:space="preserve">
         <value>Die</value>
     </data>
     <data name="NOMINATIVE_PRONOUN_YOU" xml:space="preserve">
@@ -126,13 +120,7 @@
     <data name="ACCUSATIVE_PRONOUN_THEY" xml:space="preserve">
         <value>Sie</value>
     </data>
-    <data name="DATIVE_ARTICLE_FEMALE_PLURAL" xml:space="preserve">
-        <value>Den</value>
-    </data>
-    <data name="DATIVE_ARTICLE_MALE_PLURAL" xml:space="preserve">
-        <value>Den</value>
-    </data>
-    <data name="DATIVE_ARTICLE_NEUTRUM_PLURAL" xml:space="preserve">
+    <data name="DATIVE_ARTICLE_PLURAL" xml:space="preserve">
         <value>Den</value>
     </data>
     <data name="COMBINED_PREPOSITIONS_AND_ARTICLES" xml:space="preserve">
@@ -140,5 +128,122 @@
     </data>
     <data name="UMLAUTS" xml:space="preserve">
         <value>ä:ae|ö:oe|ü:ue|ß:ss</value>
+    </data>
+    <data name="NOMINATIVE_ARTICLE_PLURAL" xml:space="preserve">
+        <value>Die</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_NOMINATIVE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>e</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_NOMINATIVE_MALE_SINGULAR" xml:space="preserve">
+        <value>e</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_NOMINATIVE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>e</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_PLURAL" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>Der</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_MALE_SINGULAR" xml:space="preserve">
+        <value>Des</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>Des</value>
+    </data>
+    <data name="GENITIVE_ARTICLE_PLURAL" xml:space="preserve">
+        <value>Der</value>
+    </data>
+    <data name="GENITIVE_INDEFINITEARTICLE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>Einer</value>
+    </data>
+    <data name="GENITIVE_INDEFINITEARTICLE_MALE_SINGULAR" xml:space="preserve">
+        <value>Eines</value>
+    </data>
+    <data name="GENITIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>Eines</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_GENITIVE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_GENITIVE_MALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_GENITIVE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_ACCUSATIVE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>e</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_ACCUSATIVE_MALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_ACCUSATIVE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>e</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_DATIVE_FEMALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_DATIVE_MALE_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="ADJECTIVE_DECLINATION_DATIVE_NEUTRUM_SINGULAR" xml:space="preserve">
+        <value>en</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Ich</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Wir</value>
+    </data>
+    <data name="NOMINATIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Ihr</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_HE" xml:space="preserve">
+        <value>Seiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_IT" xml:space="preserve">
+        <value>Seiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Meiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_SHE" xml:space="preserve">
+        <value>Ihrer</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_THEY" xml:space="preserve">
+        <value>Ihrer</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Unser</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_YOU" xml:space="preserve">
+        <value>Deiner</value>
+    </data>
+    <data name="GENITIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Euer</value>
+    </data>
+    <data name="DATIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Mir</value>
+    </data>
+    <data name="DATIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Uns</value>
+    </data>
+    <data name="DATIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Euch</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_ME" xml:space="preserve">
+        <value>Mich</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_WE" xml:space="preserve">
+        <value>Uns</value>
+    </data>
+    <data name="ACCUSATIVE_PRONOUN_YOU_P" xml:space="preserve">
+        <value>Euch</value>
+    </data>
+    <data name="PLAYER" xml:space="preserve">
+        <value>Ich|Mich|Player|Spieler|Mir|Dich|Dir|Mein</value>
     </data>
 </root>

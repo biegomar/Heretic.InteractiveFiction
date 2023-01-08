@@ -62,5 +62,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("PULL", resourceCulture);
             }
         }
+        
+        internal static string PUTON {
+            get {
+                return ResourceManager.GetString("PUTON", resourceCulture);
+            }
+        }
     }
 }

@@ -1184,5 +1184,311 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("ITEM_SWITCHEDOFF", resourceCulture);
             }
         }
+        
+        public static string DONT_SMELL_ON_PERSON {
+            get {
+                return ResourceManager.GetString("DONT_SMELL_ON_PERSON", resourceCulture);
+            }
+        }
+        
+        public static string AMBIGUOUS_HERETICOBJECT {
+            get {
+                return ResourceManager.GetString("AMBIGUOUS_HERETICOBJECT", resourceCulture);
+            }
+        }
+        
+        public static string IMPOSSIBLE_CUT_WITHOUT_TOOL {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_CUT_WITHOUT_TOOL", resourceCulture);
+            }
+        }
+        
+        public static string PLAYER_NOT_PICKABLE {
+            get {
+                return ResourceManager.GetString("PLAYER_NOT_PICKABLE", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_DOES_NOT_SMELL {
+            get {
+                return ResourceManager.GetString("ITEM_DOES_NOT_SMELL", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_EAT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_EAT", resourceCulture);
+            }
+        }
+        
+        public static string BINDING_OR {
+            get {
+                return ResourceManager.GetString("BINDING_OR", resourceCulture);
+            }
+        }
+        
+        public static string PLAYER_NOT_EATABLE {
+            get {
+                return ResourceManager.GetString("PLAYER_NOT_EATABLE", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_DROP {
+            get {
+                return ResourceManager.GetString("WHAT_TO_DROP", resourceCulture);
+            }
+        }
+        
+        public static string ONLY_DIRECT_WAY {
+            get {
+                return ResourceManager.GetString("ONLY_DIRECT_WAY", resourceCulture);
+            }
+        }
+        
+        public static string AMBIGUOUS_LOCATION {
+            get {
+                return ResourceManager.GetString("AMBIGUOUS_LOCATION", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_PUTON {
+            get {
+                return ResourceManager.GetString("WHAT_TO_PUTON", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_PUTON {
+            get {
+                return ResourceManager.GetString("ITEM_PUTON", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_A_TARGET {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_A_TARGET", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_BUY {
+            get {
+                return ResourceManager.GetString("WHAT_TO_BUY", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CLIMB {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CLIMB", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CLOSE {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CLOSE", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CUT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CUT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_OPEN {
+            get {
+                return ResourceManager.GetString("WHAT_TO_OPEN", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_PULL {
+            get {
+                return ResourceManager.GetString("WHAT_TO_PULL", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_PUSH {
+            get {
+                return ResourceManager.GetString("WHAT_TO_PUSH", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_READ {
+            get {
+                return ResourceManager.GetString("WHAT_TO_READ", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_TURN {
+            get {
+                return ResourceManager.GetString("WHAT_TO_TURN", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_JUMP {
+            get {
+                return ResourceManager.GetString("WHAT_TO_JUMP", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_KINDLE {
+            get {
+                return ResourceManager.GetString("WHAT_TO_KINDLE", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_LOCK {
+            get {
+                return ResourceManager.GetString("WHAT_TO_LOCK", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_SWITCHOFF {
+            get {
+                return ResourceManager.GetString("WHAT_TO_SWITCHOFF", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_SWITCHON {
+            get {
+                return ResourceManager.GetString("WHAT_TO_SWITCHON", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_TALK {
+            get {
+                return ResourceManager.GetString("WHAT_TO_TALK", resourceCulture);
+            }
+        }
+        
+        public static string DONT_TALK_TO_ITEM {
+            get {
+                return ResourceManager.GetString("DONT_TALK_TO_ITEM", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_UNLOCK {
+            get {
+                return ResourceManager.GetString("WHAT_TO_UNLOCK", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_USE {
+            get {
+                return ResourceManager.GetString("WHAT_TO_USE", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_WEARABLE {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_WEARABLE", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_TAKEOFF {
+            get {
+                return ResourceManager.GetString("WHAT_TO_TAKEOFF", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_WEAR {
+            get {
+                return ResourceManager.GetString("WHAT_TO_WEAR", resourceCulture);
+            }
+        }
+        
+        public static string TAKEOFF_WEARABLE {
+            get {
+                return ResourceManager.GetString("TAKEOFF_WEARABLE", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NAME_NOT_VISIBLE {
+            get {
+                return ResourceManager.GetString("ITEM_NAME_NOT_VISIBLE", resourceCulture);
+            }
+        }
+        
+        public static string CANT_USE_YOURSELF {
+            get {
+                return ResourceManager.GetString("CANT_USE_YOURSELF", resourceCulture);
+            }
+        }
+        
+        public static string CONNECT {
+            get {
+                return ResourceManager.GetString("CONNECT", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_WEARN {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_WEARN", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CONNECT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CONNECT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_CONNECT_TO {
+            get {
+                return ResourceManager.GetString("WHAT_TO_CONNECT_TO", resourceCulture);
+            }
+        }
+        
+        public static string DISCONNECT {
+            get {
+                return ResourceManager.GetString("DISCONNECT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_DISCONNECT {
+            get {
+                return ResourceManager.GetString("WHAT_TO_DISCONNECT", resourceCulture);
+            }
+        }
+        
+        public static string WHAT_TO_DISCONNECT_FROM {
+            get {
+                return ResourceManager.GetString("WHAT_TO_DISCONNECT_FROM", resourceCulture);
+            }
+        }
+        
+        public static string ITEMS_NOT_CONNECTED {
+            get {
+                return ResourceManager.GetString("ITEMS_NOT_CONNECTED", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_CONNECTED_TO {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_CONNECTED_TO", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOT_CONNECTED_TO_OTHER_ITEMS {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_CONNECTED_TO_OTHER_ITEMS", resourceCulture);
+            }
+        }
+        
+        public static string ITEMS_ALREADY_CONNECTED {
+            get {
+                return ResourceManager.GetString("ITEMS_ALREADY_CONNECTED", resourceCulture);
+            }
+        }
+        
+        public static string ITEM_NOW_CONNECTED_TO {
+            get {
+                return ResourceManager.GetString("ITEM_NOW_CONNECTED_TO", resourceCulture);
+            }
+        }
+        
+        public static string IMPOSSIBLE_CONNECT {
+            get {
+                return ResourceManager.GetString("IMPOSSIBLE_CONNECT", resourceCulture);
+            }
+        }
     }
 }

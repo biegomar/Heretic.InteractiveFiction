@@ -1,5 +1,6 @@
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.Objects;
@@ -53,6 +54,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> BeforeTake;
     public event EventHandler<ContainerObjectEventArgs> Take;
     public event EventHandler<ContainerObjectEventArgs> AfterTake;
+    
+    public event EventHandler<ContainerObjectEventArgs> BeforeTakeOff;
+    public event EventHandler<ContainerObjectEventArgs> TakeOff;
+    public event EventHandler<ContainerObjectEventArgs> AfterTakeOff;
 
     public event EventHandler<SitDownEventArgs> BeforeSitDown;
     public event EventHandler<SitDownEventArgs> SitDown;
@@ -66,6 +71,14 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> Descend;
     public event EventHandler<ContainerObjectEventArgs> AfterDescend;
     
+    public event EventHandler<ConnectEventArgs> BeforeConnect;
+    public event EventHandler<ConnectEventArgs> Connect;
+    public event EventHandler<ConnectEventArgs> AfterConnect;
+    
+    public event EventHandler<DisconnectEventArgs> BeforeDisconnect;
+    public event EventHandler<DisconnectEventArgs> Disconnect;
+    public event EventHandler<DisconnectEventArgs> AfterDisconnect;
+    
     public event EventHandler<LockContainerEventArgs> BeforeUnlock;
     public event EventHandler<LockContainerEventArgs> Unlock;
     public event EventHandler<LockContainerEventArgs> AfterUnlock;
@@ -73,6 +86,10 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs> BeforeWear;
     public event EventHandler<ContainerObjectEventArgs> Wear;
     public event EventHandler<ContainerObjectEventArgs> AfterWear;
+    
+    public event EventHandler<PutOnEventArgs> BeforePutOn;
+    public event EventHandler<PutOnEventArgs> PutOn;
+    public event EventHandler<PutOnEventArgs> AfterPutOn;
 
     public event EventHandler<ContainerObjectEventArgs> Buy;
     public event EventHandler<CutItemEventArgs> Cut;
@@ -136,13 +153,16 @@ public abstract partial class AHereticObject
             {
                 throw new CutException(eventArgs.OptionalErrorMessage);
             }
-            else if (eventArgs.ItemToUse != default)
+            
+            var itemName = ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Accusative, lowerFirstCharacter: true);
+            
+            if (eventArgs.ItemToUse != default)
             {
-                throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT, this.AccusativeArticleName.LowerFirstChar(), eventArgs.ItemToUse.DativeArticleName.LowerFirstChar()));    
+                var itemToUseName = ArticleHandler.GetNameWithArticleForObject(eventArgs.ItemToUse, GrammarCase.Dative, lowerFirstCharacter: true);
+                throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT, itemName, itemToUseName));    
             }
             
-            throw new CutException(BaseDescriptions.DOES_NOT_WORK);
-            
+            throw new CutException(string.Format(BaseDescriptions.IMPOSSIBLE_CUT_WITHOUT_TOOL, itemName));
         }
     }
     
@@ -210,7 +230,7 @@ public abstract partial class AHereticObject
             {
                 throw new PullException(eventArgs.OptionalErrorMessage);
             }
-            throw new PullException(string.Format(BaseDescriptions.PULL_DOES_NOT_WORK, this.DativeArticleName.LowerFirstChar()));
+            throw new PullException(string.Format(BaseDescriptions.PULL_DOES_NOT_WORK, ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Dative, lowerFirstCharacter: true)));
         }
     }
 
@@ -229,6 +249,24 @@ public abstract partial class AHereticObject
             }
             throw new PushException(BaseDescriptions.DOES_NOT_WORK);
         }
+    }
+    
+    public virtual void OnBeforePutOn(PutOnEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforePutOn;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnPutOn(PutOnEventArgs eventArgs)
+    {
+        var localEventHandler = this.PutOn;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnAfterPutOn(PutOnEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterPutOn;
+        localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnWrite(WriteEventArgs eventArgs)
@@ -298,6 +336,42 @@ public abstract partial class AHereticObject
     public virtual void OnAfterDescend(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.AfterDescend;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeConnect(ConnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeConnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnConnect(ConnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Connect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterConnect(ConnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterConnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeDisconnect(DisconnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeDisconnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnDisconnect(DisconnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.Disconnect;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterDisconnect(DisconnectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterDisconnect;
         localEventHandler?.Invoke(this, eventArgs);
     }
 
@@ -403,6 +477,12 @@ public abstract partial class AHereticObject
             {
                 throw new SmellException(eventArgs.OptionalErrorMessage);    
             }
+
+            if (this is Item)
+            {
+                throw new SmellException(string.Format(BaseDescriptions.ITEM_DOES_NOT_SMELL, ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Dative, lowerFirstCharacter: true)));    
+            }
+            
             throw new SmellException(BaseDescriptions.NOTHING_TO_SMELL);
         }
     }
@@ -528,6 +608,24 @@ public abstract partial class AHereticObject
     public virtual void OnAfterTake(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.AfterTake;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+    
+    public virtual void OnBeforeTakeOff(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.BeforeTakeOff;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnTakeOff(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.TakeOff;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public virtual void OnAfterTakeOff(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.AfterTakeOff;
         localEventHandler?.Invoke(this, eventArgs);
     }
 

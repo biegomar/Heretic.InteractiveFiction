@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="LIVINGROOM" xml:space="preserve">
+        <value>Offensichtlich befindest Du Dich in einer Blockhütte. Alles um Dich herum, die Wände, der Boden, die Decke über Dir und ein großer Tisch, sind aus massivem Holz gefertigt.</value>
+    </data>
+    <data name="PLAYER" xml:space="preserve">
+        <value>Das bist Du.</value>
+    </data>
+    <data name="OPENING" xml:space="preserve">
+        <value>Langsam öffnest Du Deine Augen. Ein pochender Schmerz durchdringt Deinen Schädel. Die Mischung aus Alkohol und diverser Partydrogen in der letzten Nacht scheint Dir nicht wirklich bekommen zu sein. So langsam gelingt es Dir, Deine Umgebung wahrzunehmen. Du liegst offensichtlich auf den harten Dielen eines Holzfußbodens. Behäbig setzt Du Dich auf und schaust Dich um. Irgendwo her spendet eine flackernde Lichtquelle ein spärliches Licht. Um Dich herum gibt es nichts, was Dir bekannt vorkommt. Langsam raffst Du Dich auf und stehst nun auf wackeligen Beinen. Wo bist Du? Und wie bist Du hier her gekommen?</value>
+    </data>
+    <data name="CLOSING" xml:space="preserve">
+        <value>Vielen Dank, dass Du 'Die Waldhütte' gespielt hast.</value>
+    </data>
+    <data name="CREDITS" xml:space="preserve">
+        <value>Geschrieben von Marc Biegota.</value>
+    </data>
+    <data name="CHEST" xml:space="preserve">
+        <value>Bei der Truhe handelt es sich um eine massive Kiste aus dicken, naturbelassenen Brettern. Der breite Deckel bietet genug Platz, um sich darauf zu setzen. An der Vorderseite kannst Du ein Schlüsselloch erkennen.</value>
+    </data>
+    <data name="PLANK" xml:space="preserve">
+        <value>Die Bretter sind aus Eichenholz, grob geschliffen und ansonsten unbehandelt.</value>
+    </data>
+    <data name="CHEST_LOCKED" xml:space="preserve">
+        <value>Die Truhe ist abgeschlossen.</value>
+    </data>
+    <data name="DOOR" xml:space="preserve">
+        <value>Die Tür scheint Dein Weg nach Draußen zu sein. Sie besteht aus massiven Holzbohlen, die schon die Idee zunichte machen, sie mit Gewalt öffnen zu wollen.</value>
+    </data>
+    <data name="DOOR_FIRSTLOOK" xml:space="preserve">
+        <value>Du drückst die Türklinke nach unten und versuchst die Tür zu öffnen. Sie ist verschlossen und bewegt sich keinen Millimeter.</value>
+    </data>
+    <data name="BEDROOM" xml:space="preserve">
+        <value>Das ist das Schlafzimmer.</value>
+    </data>
+    <data name="CELLAR" xml:space="preserve">
+        <value>Das ist der Keller.</value>
+    </data>
+    <data name="ATTIC" xml:space="preserve">
+        <value>Das ist der Dachboden.</value>
+    </data>
+    <data name="FREEDOM" xml:space="preserve">
+        <value>Du bist in Freiheit!</value>
+    </data>
+    <data name="KEY_HOLE" xml:space="preserve">
+        <value>Das Schlüsselloch ist der einzige sichtbare Hinweis auf den Schliessmechanismus der Truhe. Es ist mit einem geschnörkelten Schlüsselschild verziert und in das Schlüsselloch scheint ein recht großer Schlüssel hinein zu passen.</value>
+    </data>
+    <data name="TABLE" xml:space="preserve">
+        <value>Ein massiver Holztisch. Sieht sehr schwer aus.</value>
+    </data>
+    <data name="CANDLE" xml:space="preserve">
+        <value>Eine große weiße Kerze, die bestimmt einige Tage brennen kann. </value>
+    </data>
+    <data name="CANDLE_CONTAINMENT" xml:space="preserve">
+        <value>Auf dem Tisch steht eine brennende Kerze, die ein spärliches Licht in den kalten Raum wirft.</value>
+    </data>
+    <data name="CANT_LEAVE_ROOM_WITHOUT_LIGHT" xml:space="preserve">
+        <value>Der Raum, den Du betreten willst ist stockdunkel. Vielleicht nimmst Du irgendeine Lichtquelle mit?</value>
+    </data>
+    <data name="STOVE" xml:space="preserve">
+        <value>Der Küchenherd wird mit Scheitholz befeuert und das rustikale Äußere versetzt Dich zurück in vergangene Zeiten. Der Herd besitzt eine Tür mit Sichtscheibe, die den Zugang zur Brennkammer ermöglicht. Ein Ofenrohr ist mit dem Ofen verbunden und wird durch die Holzwand nach draußen geführt. Vermutlich führt es dort in einen Kamin, der dafür sorgt, dass der Rauch gut abziehen kann.</value>
+    </data>
+    <data name="STOVE_FIRSTLOOK" xml:space="preserve">
+        <value>Du kannst deutlich erkennen, dass in der Brennkammer bereits Feuerholz liegt.</value>
+    </data>
+    <data name="CANDLE_PICKUP" xml:space="preserve">
+        <value>Als Du die Kerze in die Hand nimmst, fühlt sie sich schwerer an, als Du vermutet hättest. Als wäre etwas im Wachs, das dort nicht hinein gehört.</value>
+    </data>
+    <data name="STOVE_CLOSED" xml:space="preserve">
+        <value>Die Brennkammer ist geschlossen.</value>
+    </data>
+    <data name="STOVE_MUST_BE_OPEN" xml:space="preserve">
+        <value>Um an die Brennkammer zu gelangen, musst Du den Ofen erst öffnen.</value>
+    </data>
+    <data name="PILE_OF_WOOD" xml:space="preserve">
+        <value>Die Scheite aus Buchenholz sind fein säuberlich im Ofen aufgeschichtet.</value>
+    </data>
+    <data name="LIVINGROOM_WINDOW" xml:space="preserve">
+        <value>Das Fenster ist geschlossen, aber Du kannst keinen Griff oder sonst einen Mechanismus erkennen, mit dem es sich öffnen lässt. Du siehst, dass von Außen Fensterläden angebracht sind, die aktuell geschlossen sind. Diese sind so dicht, das kein Licht in den Raum dringt.</value>
+    </data>
+    <data name="WALL" xml:space="preserve">
+        <value>Die Wände bestehen aus Holzstämmen, die übereinander gestapel das eigentliche Gebäude definieren.</value>
+    </data>
+    <data name="FLOOR" xml:space="preserve">
+        <value>Der Fußboden besteht aus massiven Holzbohlen. </value>
+    </data>
+    <data name="CEILING" xml:space="preserve">
+        <value>Die Zimmerdecke besteht aus den gleichen massiven Holzbohlen wie der Fußboden.</value>
+    </data>
+    <data name="IRON_KEY" xml:space="preserve">
+        <value>Der Schlüssel ist aus Eisen, ungefähr so groß, dass er gerade so auf Deine geöffnete Handfläche passt. Er sieht altmodisch, fast schon antik aus. Zumindest soweit Du das beurteilen kannst. Zumindest scheint er optisch zu dem Schloß in der Kiste zu gehören.</value>
+    </data>
+    <data name="NOTE" xml:space="preserve">
+        <value>Der Zettel ist ein Blatt aus hochwertigem Büttenpapier. Es scheint etwas darauf geschrieben zu sein.</value>
+    </data>
+    <data name="NOTE_LETTER_CONTENT" xml:space="preserve">
+        <value>Hallo Fremder, 
+wir entschuldigen uns schon jetzt für die Unannehmlichkeiten und hoffen, dass Dein Schädel nicht all zu sehr von unserem speziellen Cocktail schmerzt. Sei es drum. Denn scheinbar hattest Du gestern auf unserer Party eine Menge Spaß. 
+Nun, jetzt wollen wir unseren Spaß! Zugegeben: etwas unfair, da Du uns ja überhaupt nicht kennst. Aber was ist schon fair?
+Um es kurz zu machen: bereite uns doch die Freude, Dir dabei zuzuschauen, wie Du versuchst aus diesem kleinen Gefängnis zu entkommen. 
+Vielleicht bist Du ja der Erste, dem es gelingt? Und wenn nicht...na ja, das ist dann halt immer die unangenehme Seite an diesem Vergnügen. Aber Kopf hoch! Einer ist immer der Erste.
+
+Hochachtungsvoll.
+Nuit Macabre</value>
+    </data>
+    <data name="SHUTTER" xml:space="preserve">
+        <value>Die Fensterläden sind von Außen geschlossen und es dringt kein Licht in den Raum hinein.</value>
+    </data>
+    <data name="INSPECTION_WINDOW" xml:space="preserve">
+        <value>Das Sichtfenster des Ofens ist zwar leicht verrußt, aber es gibt dennoch den Blick frei auf die Brennkammer.</value>
+    </data>
+    <data name="STOVE_CONTAINMENT" xml:space="preserve">
+        <value>An der östlichen Wand steht ein alter Ofen, der mit Holz befeuert wird. Er dient wohl gleichermaßen zum Heizen, als auch zum Kochen.</value>
+    </data>
+    <data name="KITCHEN_CABINET" xml:space="preserve">
+        <value>Das Regal besteht eigentlich nur aus zwei Brettern, die übereinander angebracht und an den Seiten jeweils verbunden sind.</value>
+    </data>
+    <data name="KITCHEN_CABINET_CONTAINMENT" xml:space="preserve">
+        <value>Über dem Ofen hängt ein kleiner offener Küchenschrank, der genug Platz für einige Küchenutensilien bieten könnte. Viel sieht man dort allerdings nicht.</value>
+    </data>
+    <data name="SAUSAGE" xml:space="preserve">
+        <value>Ein Stück Dauerwurst, wahrscheinlich Salami. Es sieht schon leicht verdorben aus und Du würdest es nicht mehr essen wollen.</value>
+    </data>
+    <data name="SAUSAGE_CONTAINMENT" xml:space="preserve">
+        <value>Auf einem der Bretter liegt, etwas verloren, ein kleines Stück Wurst.</value>
+    </data>
+    <data name="CHEST_LOCK" xml:space="preserve">
+        <value>Es scheint sich um ein Einlassschloss zu handeln, dass den Deckel der Kiste von unten sichert. </value>
+    </data>
+    <data name="KEY_HOLE_SHIELD" xml:space="preserve">
+        <value>Hm? So richtig kennst Du Dich mit sowas ja nicht aus, aber die Verzierung könnte eine typische Barock-Arbeit sein.</value>
+    </data>
+    <data name="COMBUSTION_CHAMBER" xml:space="preserve">
+        <value>Die Brennkammer ist ein kleiner Raum, in dem das Holz verbrannt wird, um die erforderliche Energie für den Ofen zu erzeugen.</value>
+    </data>
+    <data name="STOVE_OPEN" xml:space="preserve">
+        <value>Die Brennkammer ist geöffnet.</value>
+    </data>
+    <data name="BOOKSHELF" xml:space="preserve">
+        <value>Ein altes Bücherregal aus Holz. Neben viel Staub stehen dort nur einige Bücher drin.</value>
+    </data>
+    <data name="BOOKS" xml:space="preserve">
+        <value>Du nimmst Dir wahllos eines der Bücher aus dem Regel. "{0}" - ein weiteres Meisterwerk der Weltliteratur. Mit einem Lächeln im Gesicht steckst Du es zurück an seinen Platz.</value>
+    </data>
+    <data name="BOOK_I" xml:space="preserve">
+        <value>Die Verwandlung</value>
+    </data>
+    <data name="BOOK_II" xml:space="preserve">
+        <value>Krieg und Frieden</value>
+    </data>
+    <data name="BOOK_III" xml:space="preserve">
+        <value>De Profundis</value>
+    </data>
+    <data name="BOOK_IV" xml:space="preserve">
+        <value>Die Blechtrommel</value>
+    </data>
+    <data name="BOOK_V" xml:space="preserve">
+        <value>Die Dreigroschenoper</value>
+    </data>
+    <data name="LAMP_OIL_BUCKET" xml:space="preserve">
+        <value>Die Kanne ist aus Weißblech und fasst ca. einen halben Liter Flüssigkeit.</value>
+    </data>
+    <data name="LAMP_OIL_BUCKET_CONTAINMENT" xml:space="preserve">
+        <value>Auf dem oberen Brett steht eine Kanne mit der Aufschrift 'Petroleum'.</value>
+    </data>
+    <data name="PETROLEUM" xml:space="preserve">
+        <value>Petroleum eignet sich wunderbar dafür, in eine entsprechende Lampe gefüllt zu werden. Aber auch als direkter Brandbeschleuniger kann es benutzt werden.</value>
+    </data>
+    <data name="CANT_DROP_CANDLE_IN_STOVE" xml:space="preserve">
+        <value>Die Kerze ist zu groß und passt neben den Holzscheiten nicht in den Ofen.</value>
+    </data>
+    <data name="NO_FIRE_ACCELERATOR" xml:space="preserve">
+        <value>Du hälst die Flamme an das Brennholz, doch diese ist nicht starkt genug, um es zu entzünden. Vielleicht benötigst Du einen leicht entzündlichen Gegenstand, der Dir helfen kann?</value>
+    </data>
+    <data name="NOTE_BURNED" xml:space="preserve">
+        <value>Vorsichtig hälst Du die Flamme an das Papier, das sofort Feuer fängt. Das Blatt entwickelt beim Verbrennen die nötige Hitze, um auch die Scheite zu entfachen. Super! Das hat funktioniert!</value>
+    </data>
+    <data name="PETROLEUM_BURNED" xml:space="preserve">
+        <value>Vorsichtig hälst Du die Flamme an die mit Petroleum überschütteten Holzscheite, die sofort Feuer fangen. Das Petroleum entwickelt beim Verbrennen die nötige Hitze, um auch die Scheite zu entfachen. Super! Das hat funktioniert!</value>
+    </data>
+    <data name="FIRE_STARTER" xml:space="preserve">
+        <value>Die brennenden Scheite entwickeln schnell eine große Hitze. Damit Du Dich nicht verbrennst, schliesst Du den Ofen wieder. 
+Schon nach kurzer Zeit merkst Du, wie der Ofen heiß wird und sich wohlige Wärme im Raum breit macht.</value>
+    </data>
+    <data name="CANT_OPEN_STOVE_ON_FIRE" xml:space="preserve">
+        <value>Der Ofen ist durch das Feuer so heiß geworden, dass Du lieber die Finger von der Brennkammer lässt.</value>
+    </data>
+    <data name="CHIMNEY" xml:space="preserve">
+        <value>Das Ofenrohr ist ein handelsübliches, schwarz lackiertes Edelstahlrohr. Es ist fest mit dem Ofen und der Wand verbunden. Und ein Tipp: eine weitere Betrachtung des Gegenstandes wird Dich nicht weiter bringen!</value>
+    </data>
+    <data name="COOKTOP" xml:space="preserve">
+        <value>Das gusseiserne Kochfeld ist fest mit dem Ofen verbaut. Ist der Ofen angefeuert, wird auch die Platte heiß. Eine Temperaturregulierung gibt es nicht. Die Temperatur ist einzig und allein von dem prasselnden Feuer des Ofens abhängig.</value>
+    </data>
+    <data name="COOCKTOP_LINKEDTO" xml:space="preserve">
+        <value>Das gusseiserne Kochfeld ist fest mit dem Ofen verbaut und ermöglicht es, Speisen und andere Dinge zu erhitzen, sobald der Ofen befeuert wird.</value>
+    </data>
+    <data name="LIVINGROOM_WAIT" xml:space="preserve">
+        <value>Die Kerze brennt ein kleines Stückchen weiter herunter.</value>
+    </data>
+    <data name="CANT_TAKE_PETROLEUM" xml:space="preserve">
+        <value>Da Petroleum flüssig ist, kannst Du es nicht einfach nehmen.</value>
+    </data>
+    <data name="LAMP_OIL_BUCKET_FIRSTLOOK" xml:space="preserve">
+        <value>Du riechst an der mit Flüßigkeit gut gefüllten Kanne. Es scheint sich tatsächlich um Petroleum zu handeln. Das wird Dir bestimmt noch nützlich sein.</value>
+    </data>
+    <data name="PILE_OF_WOOD_WITH_PETROLEUM" xml:space="preserve">
+        <value>Die Scheite aus Buchenholz sind fein säuberlich im Ofen aufgeschichtet und ordentlich mit Petroleum benetzt.</value>
+    </data>
+    <data name="NOTHING_TO_HOLD" xml:space="preserve">
+        <value>Was soll das bringen?</value>
+    </data>
+    <data name="PETROLEUM_IN_STOVE" xml:space="preserve">
+        <value>Es ist schon ausreichend Petroleum auf dem Feuerholz vorhanden. Das genügt für ein ordentliches Feuer!</value>
+    </data>
+    <data name="PAPER_IN_STOVE" xml:space="preserve">
+        <value>Es ist schon das Papier im Ofen. Das genügt für ein ordentliches Feuer!</value>
+    </data>
+    <data name="POOR_PETROLEUM_OVER_WOOD" xml:space="preserve">
+        <value>Du schüttest einen Teil des Petroleums über die Scheite.</value>
+    </data>
+    <data name="PETROLEUM_LAMP" xml:space="preserve">
+        <value>Eine alte und offensichtlich schon stark beanspruchte Petroleumlampe, die man als Lichtquelle gut nutzen kann. </value>
+    </data>
+    <data name="PETROLEUM_LAMP_FIRSTLOOK" xml:space="preserve">
+        <value>Du erkennst, dass die Lampe im Moment leer ist.</value>
+    </data>
+    <data name="BURN_NOTE" xml:space="preserve">
+        <value>Du hälst {0} an das Papier, das sofort lichterlohn in Flammen steht. Geistesgegewärtig lässt Du es los und es schwebt, getragen durch die Hitze des Feuers, eine kurze Zeit in der Luft. Ein letztes Mal flammt das Papier noch auf, das Feuer erstirbt und ein paar unbedeutende Aschekrümel fallen auf den Boden.</value>
+    </data>
+    <data name="ENOUGH_PETROLEUM_IN_LAMP" xml:space="preserve">
+        <value>Es ist bereits genug Petroleum in der Lamp.</value>
+    </data>
+    <data name="POOR_PETROLEUM_IN_LAMP" xml:space="preserve">
+        <value>Du füllst etwas Petroleum in die Lampe. Nun sollte man sie wieder benutzen können.</value>
+    </data>
+    <data name="PETROLEUM_LAMP_NOT_BURNING" xml:space="preserve">
+        <value>{0} brennt scheinbar gar nicht.</value>
+    </data>
+    <data name="NO_PETROLEUM_IN_LAMP" xml:space="preserve">
+        <value>Die Lampe ist leer. Um zu funktionieren benötigt sie etwas Petroleum.</value>
+    </data>
+    <data name="PETROLEUM_LAMP_IS_BURNING" xml:space="preserve">
+        <value>Die Lampe brennt bereits.</value>
+    </data>
+    <data name="PETROLEUM_LAMP_SWITCH_ON" xml:space="preserve">
+        <value>Du hälst die Flamme an den Docht der Lampe und dieser fängt sofort an zu brennen. Die Lampe ist an!</value>
+    </data>
+    <data name="LIGHTER_ON" xml:space="preserve">
+        <value>Sie brennt.</value>
+    </data>
+    <data name="LIGHTER_OFF" xml:space="preserve">
+        <value>Sie brennt gerade nicht.</value>
+    </data>
+    <data name="PETROLEUM_LAMP_FIRSTLOOK_POORED" xml:space="preserve">
+        <value>Du hast sie gut mit Petroleum gefüllt.</value>
+    </data>
+    <data name="FREEDOM_DESTINATION_DESCRIPTION" xml:space="preserve">
+        <value>Der Weg in die Freiheit liegt scheinbar Richtung Süden.</value>
+    </data>
+    <data name="FREEDOM_LOCK_DESCRIPTION" xml:space="preserve">
+        <value>Doch die massive Holztür versperrt Dir den Weg.</value>
+    </data>
+    <data name="HOW_TO_DO" xml:space="preserve">
+        <value>Wie genau möchtest Du das tun?</value>
+    </data>
+    <data name="FIRE_FIRE_WITH_FIRE" xml:space="preserve">
+        <value>Du willst wirklich {0} mit {1} anzünden? Wie soll das gehen?</value>
+    </data>
+    <data name="MELT_CANDLE_I" xml:space="preserve">
+        <value>Die Kerze beginnt durch die große Hitze der Platte zu schmelzen.</value>
+    </data>
+    <data name="MELT_CANDLE_II" xml:space="preserve">
+        <value>Das Wachs der Kerze zerfliesst ziemlich schnell und Du kannst plötzlich etwas durch die weiche, schmilzende Masse erkennen...</value>
+    </data>
+    <data name="MELT_CANDLE_III" xml:space="preserve">
+        <value>Das Wachs ist nun vollständig verflüssigt und fliesst hinweg. Übrig bleibt ein großer Schlüssel aus Eisen.</value>
+    </data>
+    <data name="CENTRAL_MESSAGE_UNDERSTOOD" xml:space="preserve">
+        <value>Nun gut. Zumindest weißt Du nun schon mal, um WAS es hier geht. Doch wer die Typen sind weißt Du noch immer nicht. Oh Gott, was passiert, wenn Du hier nicht rauskommst...?</value>
+    </data>
+    <data name="BOOKSHELF_CONTAINMENT" xml:space="preserve">
+        <value>An der westlichen Wand befindet sich ein schmales Bücherregal.</value>
+    </data>
+</root>
