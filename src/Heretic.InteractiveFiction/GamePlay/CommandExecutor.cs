@@ -1589,7 +1589,7 @@ public class CommandExecutor
                                     if (!string.IsNullOrEmpty(errorMessage))
                                     {
                                         var itemName =
-                                            ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative,
+                                            ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Nominative,
                                                 lowerFirstCharacter: true);
                                         optionalErrorMessage = string.Format(errorMessage, itemName);
                                     }
@@ -1642,7 +1642,7 @@ public class CommandExecutor
                 }
                 
                 return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_CONNECTED_TO_OTHER_ITEMS,
-                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative));
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Nominative));
             }
 
             return printingSubsystem.ItemNotVisible(item);

@@ -205,7 +205,7 @@
     <value>Westen|West|W</value>
   </data>
   <data name="WAYS" xml:space="preserve">
-    <value>Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang</value>
+    <value>Wege|Auswege|Weg|Ausweg|Exits|Exit|Ausgänge|Ausgang|AG</value>
   </data>
   <data name="ALTER_EGO" xml:space="preserve">
     <value>Alter|Alterego|Alternativ|Alternative|Alias</value>
@@ -322,6 +322,6 @@
     <value>Verbinde|Verbind|Verzurr|Verzurre|Binde|Bind|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>
   </data>
   <data name="DISCONNECT" xml:space="preserve">
-    <value>Trenne|Trenn|Lös|Löse|Ziehe:ab|Zieh:ab</value>
+    <value>Trenne|Trenn|Lös|Löse|Ziehe:ab|Zieh:ab|Entferne|Entfern</value>
   </data>
 </root>
