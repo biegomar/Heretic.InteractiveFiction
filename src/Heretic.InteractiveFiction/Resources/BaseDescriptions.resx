@@ -823,4 +823,22 @@
   <data name="WHAT_TO_DISCONNECT_FROM" xml:space="preserve">
     <value>Was möchtest Du von {0} trennen?</value>
   </data>
+  <data name="ITEMS_NOT_CONNECTED" xml:space="preserve">
+    <value>Die Gegenstände sind nicht miteinander verbunden.</value>
+  </data>
+  <data name="ITEM_NOT_CONNECTED_TO" xml:space="preserve">
+    <value>{0} ist nun nicht mehr mit {1} verbunden.</value>
+  </data>
+  <data name="ITEM_NOT_CONNECTED_TO_OTHER_ITEMS" xml:space="preserve">
+    <value>{0} ist nicht mit anderen Dingen verbunden.</value>
+  </data>
+  <data name="ITEMS_ALREADY_CONNECTED" xml:space="preserve">
+    <value>Die Gegenstände sind bereits miteinander verbunden.</value>
+  </data>
+  <data name="ITEM_NOW_CONNECTED_TO" xml:space="preserve">
+    <value>{0} ist nun mit {1} verbunden.</value>
+  </data>
+  <data name="IMPOSSIBLE_CONNECT" xml:space="preserve">
+    <value>{0} kann nicht mit anderen Dingen verbunden werden.</value>
+  </data>
 </root>

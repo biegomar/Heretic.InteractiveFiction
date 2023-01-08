@@ -1453,8 +1453,7 @@ public class CommandExecutor
                             {
                                 if (item.LinkedTo.Contains(itemToUse) && itemToUse.LinkedTo.Contains(item))
                                 {
-                                    return printingSubsystem.Resource(
-                                        "Die Gegenstände sind bereits miteinander verbunden.");
+                                    return printingSubsystem.Resource(BaseDescriptions.ITEMS_ALREADY_CONNECTED);
                                 }
                                 
                                 try
@@ -1490,7 +1489,7 @@ public class CommandExecutor
                                     item.LinkedTo.Add(itemToUse);
                                     itemToUse.LinkedTo.Add(item);
 
-                                    printingSubsystem.Resource(string.Format("{0} ist nun mit {1} verbunden.",
+                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_NOW_CONNECTED_TO,
                                         ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative),
                                         ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Dative,
                                             lowerFirstCharacter: true)));
@@ -1506,7 +1505,7 @@ public class CommandExecutor
                                 }
                             }
                             
-                            return printingSubsystem.FormattedResource("{0} kann nicht mit anderen Dingen verbunden werden.",
+                            return printingSubsystem.FormattedResource(BaseDescriptions.IMPOSSIBLE_CONNECT,
                                 ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Nominative));
                         }
 
@@ -1516,7 +1515,7 @@ public class CommandExecutor
                     return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
                 }
                 
-                return printingSubsystem.FormattedResource("{0} kann nicht mit anderen Dingen verbunden werden.",
+                return printingSubsystem.FormattedResource(BaseDescriptions.IMPOSSIBLE_CONNECT,
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative));
             }
 
@@ -1580,7 +1579,7 @@ public class CommandExecutor
                             {
                                 if (!item.LinkedTo.Contains(itemToUse) && !itemToUse.LinkedTo.Contains(item))
                                 {
-                                    return printingSubsystem.Resource("Die Gegenstände sind nicht miteinander verbunden.");
+                                    return printingSubsystem.Resource(BaseDescriptions.ITEMS_NOT_CONNECTED);
                                 }
                                 
                                 try
@@ -1616,7 +1615,7 @@ public class CommandExecutor
                                     item.LinkedTo.Remove(itemToUse);
                                     itemToUse.LinkedTo.Remove(item);
 
-                                    printingSubsystem.Resource(string.Format("{0} ist nun nicht mehr mit {1} verbunden.",
+                                    printingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_NOT_CONNECTED_TO,
                                         ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative),
                                         ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Dative,
                                             lowerFirstCharacter: true)));
@@ -1632,7 +1631,7 @@ public class CommandExecutor
                                 }
                             }
                             
-                            return printingSubsystem.FormattedResource("{0} ist nicht mit anderen Dingen verbunden.",
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_CONNECTED_TO_OTHER_ITEMS,
                                 ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Nominative));
                         }
 
@@ -1642,7 +1641,7 @@ public class CommandExecutor
                     return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_USE);
                 }
                 
-                return printingSubsystem.FormattedResource("{0} ist nicht mit anderen Dingen verbunden.",
+                return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_CONNECTED_TO_OTHER_ITEMS,
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative));
             }
 
