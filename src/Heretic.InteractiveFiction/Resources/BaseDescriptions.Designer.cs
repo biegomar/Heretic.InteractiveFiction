@@ -1490,5 +1490,17 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("IMPOSSIBLE_CONNECT", resourceCulture);
             }
         }
+        
+        public static string CANT_OPEN_ITEM_WHILE_SITTING_ON_IT {
+            get {
+                return ResourceManager.GetString("CANT_OPEN_ITEM_WHILE_SITTING_ON_IT", resourceCulture);
+            }
+        }
+        
+        public static string CANT_OPEN_ITEM_WHILE_STANDING_ON_IT {
+            get {
+                return ResourceManager.GetString("CANT_OPEN_ITEM_WHILE_STANDING_ON_IT", resourceCulture);
+            }
+        }
     }
 }

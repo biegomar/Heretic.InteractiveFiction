@@ -358,57 +358,62 @@ public class CommandExecutor
 
     private bool HandleDrop(AdventureEvent adventureEvent)
     {
-        var result = true;
-        foreach (var processingObject in adventureEvent.AllObjects)
+        var processingObject = adventureEvent.ObjectOne;
+        var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == processingObject.Key);
+        var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject.Key);
+        if (isPlayerItem || isPlayerCloths)
         {
-            var isPlayerItem = this.universe.ActivePlayer.Items.Any(x => x.Key == processingObject.Key);
-            var isPlayerCloths = this.universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject.Key);
-            if (isPlayerItem || isPlayerCloths)
+            if (processingObject is Item { IsDropable: true } item)
             {
-                if (processingObject is Item { IsDropable: true } item)
+                try
                 {
-                    try
+                    var dropItemEventArgs = new DropItemEventArgs()
                     {
-                        var dropItemEventArgs = new DropItemEventArgs()
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                        ItemToUse = adventureEvent.ObjectTwo
+                    };
 
-                        item.OnBeforeDrop(dropItemEventArgs);
-
-                        var singleDropResult = this.universe.ActivePlayer.RemoveItem(item);
-                        result = result && singleDropResult;
-
-                        if (singleDropResult)
+                    item.OnBeforeDrop(dropItemEventArgs);
+                    
+                    if (adventureEvent.ObjectTwo is {} container)
+                    {
+                        if (container.IsContainer || container.IsSurfaceContainer)
                         {
-                            this.universe.ActiveLocation.Items.Add(item);
-
+                            this.universe.ActivePlayer.RemoveItem(item);
+                            container.Items.Add(item);
+                            
                             item.OnDrop(dropItemEventArgs);
-                            printingSubsystem.ItemDropSuccess(item);
-
-                            item.OnAfterDrop(dropItemEventArgs);
+                            printingSubsystem.ItemDropSuccess(item, container);
                         }
                         else
                         {
-                            printingSubsystem.ImpossibleDrop(item);
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_A_TARGET,
+                                ArticleHandler.GetNameWithArticleForObject(container, GrammarCase.Dative, lowerFirstCharacter: true));
                         }
                     }
-                    catch (DropException e)
+                    else
                     {
-                        this.universe.PickObject(item, true);
-                        printingSubsystem.Resource(e.Message);
+                        this.universe.ActivePlayer.RemoveItem(item);
+                        this.universe.ActiveLocation.Items.Add(item);
+                        
+                        item.OnDrop(dropItemEventArgs);
+                        printingSubsystem.ItemDropSuccess(item);
                     }
-                }
-                else
-                {
-                    printingSubsystem.ImpossibleDrop(processingObject);
-                }
-            }
-            else
-            {
-                printingSubsystem.ItemNotOwned();
-            }
-        }
+                    
+                    item.OnAfterDrop(dropItemEventArgs);
 
-        return result;
+                    return true;
+                }
+                catch (DropException e)
+                {
+                    return printingSubsystem.Resource(e.Message);
+                }
+            }
+            
+            return printingSubsystem.ImpossibleDrop(processingObject);
+        }
+        
+        return printingSubsystem.ItemNotOwned();
     }
 
     private bool HandleDescendEventOnActiveLocation(AdventureEvent adventureEvent)
@@ -768,6 +773,18 @@ public class CommandExecutor
                         if (!item.IsClosed)
                         {
                             return printingSubsystem.ItemAlreadyOpen(item);
+                        }
+                        
+                        if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat == item)
+                        {
+                            return printingSubsystem.FormattedResource(
+                                BaseDescriptions.CANT_OPEN_ITEM_WHILE_SITTING_ON_IT, item.Name);
+                        }
+                        
+                        if (this.universe.ActivePlayer.HasClimbed && this.universe.ActivePlayer.ClimbedObject == item)
+                        {
+                            return printingSubsystem.FormattedResource(
+                                BaseDescriptions.CANT_OPEN_ITEM_WHILE_STANDING_ON_IT, item.Name);
                         }
 
                         try
@@ -2377,36 +2394,61 @@ public class CommandExecutor
     {
         if (VerbKeys.STANDUP == adventureEvent.Predicate.Key)
         {
-            if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != default)
+            if (!adventureEvent.AllObjects.Any())
             {
-                var item = this.universe.ActivePlayer.Seat;
-                try
+                if (adventureEvent.UnidentifiedSentenceParts.Any())
                 {
-                    this.objectHandler.StoreAsActiveObject(item);
-                
-                    var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
-                
-                    this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
-                    item.OnBeforeStandUp(eventArgs);
-                
-                    this.universe.ActivePlayer.StandUpFromSeat();
-                    item.OnStandUp(eventArgs);
-                    var result = printingSubsystem.Resource(BaseDescriptions.STANDING_UP);
-                
-                    item.OnAfterStandUp(eventArgs);
-                    this.universe.ActivePlayer.OnAfterStandUp(eventArgs);
-                    return result;
+                    return this.printingSubsystem.ItemUnknown(adventureEvent);
                 }
-                catch (StandUpException ex)
-                {
-                    this.universe.ActivePlayer.SitDownOnSeat(item);
-                    return printingSubsystem.Resource(ex.Message);
-                }
+                
+                return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_PUTON);
             }
-            return printingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
+
+            if (adventureEvent.ObjectOne is { } item && item.Key != this.universe.ActivePlayer.Key)
+            {
+                var playerAdventureEvent = new AdventureEvent();
+                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.DROP);
+                playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects);
+                return this.Drop(playerAdventureEvent);
+            }
+
+            return this.HandleStandUp(adventureEvent);
+        }
+        
+        return false;
+    }
+
+    private bool HandleStandUp(AdventureEvent adventureEvent)
+    {
+        if (this.universe.ActivePlayer.IsSitting && this.universe.ActivePlayer.Seat != default)
+        {
+            var item = this.universe.ActivePlayer.Seat;
+            try
+            {
+                this.objectHandler.StoreAsActiveObject(item);
+
+                var eventArgs = new ContainerObjectEventArgs()
+                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+
+                this.universe.ActivePlayer.OnBeforeStandUp(eventArgs);
+                item.OnBeforeStandUp(eventArgs);
+
+                this.universe.ActivePlayer.StandUpFromSeat();
+                item.OnStandUp(eventArgs);
+                var result = printingSubsystem.Resource(BaseDescriptions.STANDING_UP);
+
+                item.OnAfterStandUp(eventArgs);
+                this.universe.ActivePlayer.OnAfterStandUp(eventArgs);
+                return result;
+            }
+            catch (StandUpException ex)
+            {
+                this.universe.ActivePlayer.SitDownOnSeat(item);
+                return printingSubsystem.Resource(ex.Message);
+            }
         }
 
-        return false;
+        return printingSubsystem.Resource(BaseDescriptions.NOT_SITTING);
     }
 
     private bool HandleSwitchOff(AdventureEvent adventureEvent)

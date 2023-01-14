@@ -362,7 +362,7 @@ internal class EventProvider
 
     internal void CantDropCandleInStove(object sender, DropItemEventArgs eventArgs)
     {
-        if (sender is Item { Key: Keys.CANDLE } && eventArgs.ItemContainer is Item {Key: Keys.STOVE})
+        if (sender is Item { Key: Keys.CANDLE } && eventArgs.ItemToUse is Item {Key: Keys.STOVE})
         {
             throw new DropException(Descriptions.CANT_DROP_CANDLE_IN_STOVE);
         }
