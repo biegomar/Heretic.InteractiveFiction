@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <VersionPrefix>0.10.0</VersionPrefix>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
