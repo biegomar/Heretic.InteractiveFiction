@@ -43,7 +43,14 @@ public class ObjectHandlerTest: IClassFixture<TestFixture>
     [Fact]
     public void ClearActiveObjectIfNotInInventoryShouldFail()
     {
+        var table = _universe.ActiveLocation.Items.First(i => i.Key == "TABLE");
+        _universe.ActiveObject = table;
+        _universe.ActivePlayer.Items.Add(table);
         
+        _sut.ClearActiveObjectIfNotInInventory();
+        var actual = _universe.ActiveObject == default;
+        
+        Assert.False(actual);
     }
     
     [Fact]
