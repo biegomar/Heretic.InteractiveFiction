@@ -847,4 +847,13 @@
   <data name="CANT_OPEN_ITEM_WHILE_STANDING_ON_IT" xml:space="preserve">
     <value>Du kannst {0} nicht öffnen, während Du Dich noch darauf befindest.</value>
   </data>
+  <data name="YOU_SCORED_I" xml:space="preserve">
+    <value>Du hast gerade Punkte bekommen!</value>
+  </data>
+  <data name="YOU_SCORED_II" xml:space="preserve">
+    <value>Du scheinst Fortschritte zu machen.</value>
+  </data>
+  <data name="YOU_SCORED_III" xml:space="preserve">
+    <value>Du bist Deinem Ziel wieder einen Schritt näher gekommen.</value>
+  </data>
 </root>

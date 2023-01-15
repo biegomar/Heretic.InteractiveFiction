@@ -1,4 +1,6 @@
-﻿using Heretic.InteractiveFiction.Comparer;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Heretic.InteractiveFiction.Comparer;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.GamePlay.EventSystem;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
@@ -7,9 +9,13 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public sealed class Universe
+public sealed class Universe: INotifyPropertyChanged
 {
-    public int Score;
+    public int Score
+    {
+        get => score;
+        set => SetField(ref score, value);
+    }
 
     public int MaxScore
     {
@@ -37,18 +43,22 @@ public sealed class Universe
     public bool IsPeriodicEventActivated { get => this.periodicEvent.Active; set => this.periodicEvent.Active = value; }
     public ICollection<string> Quests { get; set; }
     public readonly IDictionary<string, int> ScoreBoard = new Dictionary<string, int>();
+    
     public event EventHandler<PeriodicEventArgs> PeriodicEvents;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly IList<string> SolvedQuests;
     private int maxScore;
     private PeriodicEvent periodicEvent;
+    private int score;
 
     public Universe(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider)
     {
         this.printingSubsystem = printingSubsystem;
         this.SolvedQuests = new List<string>();
         this.Score = 0;
+        this.PropertyChanged += this.SetScore;
         this.ItemResources = resourceProvider.GetItemsFromResources();
         this.CharacterResources = resourceProvider.GetCharactersFromResources();
         this.LocationResources = resourceProvider.GetLocationsFromResources();
@@ -203,23 +213,43 @@ public sealed class Universe
     {
         return this.LocationMap.Keys.SingleOrDefault(l => l.Key == key);
     }
-    
-    // public AHereticObject GetObjectFromWorld(string key)
-    // {
-    //     foreach (var location in this.LocationMap.Keys)
-    //     {
-    //         var result = location.GetObject(key);
-    //         if (result != default && result.Key == key)
-    //         {
-    //             return result;
-    //         }
-    //     }
-    //
-    //     return this.ActivePlayer.GetObject(key);
-    // }
 
     private int GetMaxScore()
     {
         return this.ScoreBoard.Sum(kv => kv.Value);
+    }
+
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
+
+    private void SetScore(object sender, PropertyChangedEventArgs eventArgs)
+    {
+        this.printingSubsystem.ForegroundColor = TextColor.Magenta;
+        this.printingSubsystem.Resource(this.GetYouScored());
+        this.printingSubsystem.ResetColors();
+    }
+    
+    private string GetYouScored()
+    {
+        var scored = new List<string>
+        {
+            BaseDescriptions.YOU_SCORED_I,
+            BaseDescriptions.YOU_SCORED_II,
+            BaseDescriptions.YOU_SCORED_III
+        }; 
+        
+        var rnd = new Random();
+        
+        return scored[rnd.Next(0, scored.Count)];
     }
 }

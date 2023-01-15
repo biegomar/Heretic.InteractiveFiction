@@ -1502,5 +1502,23 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("CANT_OPEN_ITEM_WHILE_STANDING_ON_IT", resourceCulture);
             }
         }
+        
+        public static string YOU_SCORED_I {
+            get {
+                return ResourceManager.GetString("YOU_SCORED_I", resourceCulture);
+            }
+        }
+        
+        public static string YOU_SCORED_II {
+            get {
+                return ResourceManager.GetString("YOU_SCORED_II", resourceCulture);
+            }
+        }
+        
+        public static string YOU_SCORED_III {
+            get {
+                return ResourceManager.GetString("YOU_SCORED_III", resourceCulture);
+            }
+        }
     }
 }
