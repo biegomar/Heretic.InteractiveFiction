@@ -27,6 +27,11 @@ public sealed class InputProcessor
     {
         try
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return true;
+            }
+            
             var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
             
             this.historyAdministrator.Add(input);

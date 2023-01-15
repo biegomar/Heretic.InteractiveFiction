@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>10</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <VersionPrefix>0.10.0</VersionPrefix>
+        <VersionPrefix>0.10.1</VersionPrefix>
         <Title>Heretic Interactive Fiction - an interactive fiction programming framework</Title>
         <Authors>Marc Biegota</Authors>
         <Description>This is a framework for creating interactive fiction in a classic text adventure style. It is primarily intended for programmers - not for writers! 
@@ -22,11 +22,7 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageVersion>$(VersionPrefix)</PackageVersion>
         <PackageProjectUrl>https://github.com/biegomar/Heretic.InteractiveFiction</PackageProjectUrl>
-        <PackageReleaseNotes>*** BREAKING CHANGES *** 
-            * complete new grammar implementation
-            * new verbs
-            * better verb overloading
-            * new properties on objects
+        <PackageReleaseNotes>fix a bug on empty input string.
         </PackageReleaseNotes>
     </PropertyGroup>
 
