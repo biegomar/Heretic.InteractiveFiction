@@ -64,7 +64,7 @@ internal class EventProvider
         {
             if (!this.universe.ActivePlayer.Items.Any(x => x.IsLighter && x.IsLighterSwitchedOn))
             {
-                throw new LeaveLocationException(Descriptions.CANT_LEAVE_ROOM_WITHOUT_LIGHT); 
+                throw new EnterLocationException(Descriptions.CANT_LEAVE_ROOM_WITHOUT_LIGHT); 
             }
         }
     }

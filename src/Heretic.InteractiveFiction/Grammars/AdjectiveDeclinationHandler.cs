@@ -52,6 +52,19 @@ public static class AdjectiveDeclinationHandler
         return processingObject.Adjectives.Split('|').ToList();
     }
     
+    public static void RemoveAdjectivesFromParts(AHereticObject processingObject, ICollection<string> parts)
+    {
+        if (processingObject != default && !string.IsNullOrEmpty(processingObject.Adjectives))
+        {
+            var allDeclinedAdjectives = GetAllDeclinedAdjectivesForAllCases(processingObject);
+
+            foreach (var adjective in allDeclinedAdjectives)
+            {
+                parts.Remove(adjective);
+            }
+        }
+    }
+    
     private static string GetNominativeAdjectiveDeclination(AHereticObject processingObject)
     {
         if (processingObject.Grammar.IsSingular)

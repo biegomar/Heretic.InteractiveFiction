@@ -30,4 +30,7 @@
     <data name="PUTON" xml:space="preserve">
         <value>auf:ACCUSATIVE</value>
     </data>
+    <data name="DROP" xml:space="preserve">
+        <value>in:ACCUSATIVE</value>
+    </data>
 </root>

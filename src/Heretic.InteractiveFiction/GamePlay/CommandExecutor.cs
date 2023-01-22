@@ -2394,16 +2394,6 @@ public class CommandExecutor
     {
         if (VerbKeys.STANDUP == adventureEvent.Predicate.Key)
         {
-            if (!adventureEvent.AllObjects.Any())
-            {
-                if (adventureEvent.UnidentifiedSentenceParts.Any())
-                {
-                    return this.printingSubsystem.ItemUnknown(adventureEvent);
-                }
-                
-                return printingSubsystem.Resource(BaseDescriptions.WHAT_TO_PUTON);
-            }
-
             if (adventureEvent.ObjectOne is { } item && item.Key != this.universe.ActivePlayer.Key)
             {
                 var playerAdventureEvent = new AdventureEvent();
@@ -3151,6 +3141,10 @@ public class CommandExecutor
                     return printingSubsystem.WayIsLocked(newLocationMap.Location);
                 }
                 catch (LeaveLocationException ex)
+                {
+                    return printingSubsystem.Resource(ex.Message);
+                }
+                catch (EnterLocationException ex)
                 {
                     return printingSubsystem.Resource(ex.Message);
                 }

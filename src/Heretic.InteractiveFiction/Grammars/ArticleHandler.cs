@@ -9,7 +9,7 @@ public static class ArticleHandler
     private const string ACCUSATIVE_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
     private const string DATIV_INDEFINITEARTICLE_NEUTRUM_SINGULAR = "";
     
-    public static bool HasArticle(IEnumerable<string> sentence)
+    public static bool HasArticleInFrontOfObject(IEnumerable<string> sentence, AHereticObject processingObject, string associatedWord)
     {
         var allArticles = new List<string>
         {
@@ -47,7 +47,25 @@ public static class ArticleHandler
         };
 
         var distinctArticles = allArticles.Distinct();
-        return sentence.Any(s => distinctArticles.Contains(s,StringComparer.InvariantCultureIgnoreCase)); 
+
+        var singleWords = sentence.ToList();
+        
+        AdjectiveDeclinationHandler.RemoveAdjectivesFromParts(processingObject, singleWords);
+
+        var positionOfNomen = singleWords.IndexOf(associatedWord);
+        
+        var articleList = singleWords.Where(s => distinctArticles.Contains(s, StringComparer.InvariantCultureIgnoreCase))
+            .ToList();
+
+        foreach (var article in articleList)
+        {
+            if (singleWords.IndexOf(article) == positionOfNomen - 1)
+            {
+                return true;
+            }   
+        }
+
+        return false;
     }
     
     public static string GetArticleForObject(AHereticObject processingObject, GrammarCase grammarCase, ArticleState articleState = ArticleState.Definite)

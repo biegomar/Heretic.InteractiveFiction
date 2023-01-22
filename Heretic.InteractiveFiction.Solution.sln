@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heretic.InteractiveFiction"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heretic.InteractiveFiction.TestGame", "test\Heretic.InteractiveFiction.TestGame\Heretic.InteractiveFiction.TestGame.csproj", "{68BB8DA5-D12D-4663-8F10-62CF4C1174D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heretic.InteractiveFiction.Tests", "test\Heretic.InteractiveFiction.Tests\Heretic.InteractiveFiction.Tests.csproj", "{B4DA34DA-37B8-4805-AC3C-B290B8F92541}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +28,9 @@ Global
 		{68BB8DA5-D12D-4663-8F10-62CF4C1174D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68BB8DA5-D12D-4663-8F10-62CF4C1174D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68BB8DA5-D12D-4663-8F10-62CF4C1174D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4DA34DA-37B8-4805-AC3C-B290B8F92541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4DA34DA-37B8-4805-AC3C-B290B8F92541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4DA34DA-37B8-4805-AC3C-B290B8F92541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4DA34DA-37B8-4805-AC3C-B290B8F92541}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

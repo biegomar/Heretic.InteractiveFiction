@@ -2,6 +2,7 @@
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -66,6 +67,10 @@ public sealed class InputProcessor
         catch (AmbiguousHereticObjectException ex)
         {
             return printingSubsystem.Resource(ex.Message);
+        }
+        catch (Exception)
+        {
+            return printingSubsystem.Resource(BaseDescriptions.SYSTEM_ERROR);
         }
     }
 

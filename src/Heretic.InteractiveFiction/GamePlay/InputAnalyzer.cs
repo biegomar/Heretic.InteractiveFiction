@@ -163,19 +163,6 @@ internal sealed class InputAnalyzer
         }
     }
 
-    private void RemoveAdjectivesFromParts(AHereticObject processingObject, ICollection<string> parts)
-    {
-        if (processingObject != default && !string.IsNullOrEmpty(processingObject.Adjectives))
-        {
-            var allDeclinedAdjectives = AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(processingObject);
-
-            foreach (var adjective in allDeclinedAdjectives)
-            {
-                parts.Remove(adjective);
-            }
-        }
-    }
-    
     private (Verb verb, List<string> newParts) GetVerbAndRemoveFromParts(IReadOnlyList<string> sentence, ICollection<string> parts, ObjectAndAssociatedWord objectOne, ObjectAndAssociatedWord objectTwo)
     {
         Verb verb = default;
@@ -211,20 +198,22 @@ internal sealed class InputAnalyzer
                         var isPrefixAndPreposition = !string.IsNullOrEmpty(onlyPossiblePrefix) && !string.IsNullOrEmpty(onlyPossiblePreposition);
 
                         bool isObjectInCorrectCaseForPreposition;
+                        bool isNoArticlePresent;
                         var isPrepositionInFrontOfObject = this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence);
                         if (isPrepositionInFrontOfObject)
                         {
                             isObjectInCorrectCaseForPreposition = this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence);
+                            isNoArticlePresent = !ArticleHandler.HasArticleInFrontOfObject(sentence, objectOne.HereticObject, objectOne.AssociatedWord);
                         }
                         else
                         {
                             isPrepositionInFrontOfObject = this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectTwo, sentence);
                             isObjectInCorrectCaseForPreposition = this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectTwo, sentence);
+                            isNoArticlePresent = !ArticleHandler.HasArticleInFrontOfObject(sentence, objectTwo.HereticObject, objectTwo.AssociatedWord);
                         }
                         
                         if (isPrepositionOnly)
                         {
-                            var isNoArticlePresent = !ArticleHandler.HasArticle(sentence);
                             if ((isObjectInCorrectCaseForPreposition || isNoArticlePresent) && isPrepositionInFrontOfObject)
                             {
                                 SetVerb(possibleVerb, word);
@@ -387,7 +376,7 @@ internal sealed class InputAnalyzer
             sentence.Remove(associatedWord);
         }
         
-        this.RemoveAdjectivesFromParts(discoveredObject, sentence);
+        AdjectiveDeclinationHandler.RemoveAdjectivesFromParts(discoveredObject, sentence);
         
         return new ObjectAndAssociatedWord
         {

@@ -1520,5 +1520,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("YOU_SCORED_III", resourceCulture);
             }
         }
+        
+        public static string SYSTEM_ERROR {
+            get {
+                return ResourceManager.GetString("SYSTEM_ERROR", resourceCulture);
+            }
+        }
     }
 }

@@ -856,4 +856,7 @@
   <data name="YOU_SCORED_III" xml:space="preserve">
     <value>Du bist Deinem Ziel wieder einen Schritt näher gekommen.</value>
   </data>
+  <data name="SYSTEM_ERROR" xml:space="preserve">
+    <value>Etwas ist schief gegangen. Bitte probiere es erneut oder starte das Programm neu.</value>
+  </data>
 </root>
