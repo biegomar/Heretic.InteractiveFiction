@@ -113,6 +113,10 @@ public abstract partial class AHereticObject
     /// </summary>
     public bool IsSurfaceContainer { get; set; }
     /// <summary>
+    /// Is this object on the surface of an surface container?
+    /// </summary>
+    public bool IsOnSurface { get; set; }
+    /// <summary>
     /// If the object is a surrounding, then it will not be listed in the room description.
     /// </summary>
     public bool IsSurrounding { get; set; }
@@ -379,7 +383,14 @@ public abstract partial class AHereticObject
 
     protected virtual string PrintCharacters()
     {
-        var unhiddenItems = this.Characters.Where(i => !i.IsHidden && !i.IsSurrounding && i.IsShownInObjectList).ToList<AHereticObject>();
+        var unhiddenItems = this.Characters.Where(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true }).ToList<AHereticObject>();
+
+        return this.PrintUnhiddenObjects(unhiddenItems);
+    }
+    
+    protected virtual string PrintCharactersOnSurface()
+    {
+        var unhiddenItems = this.Characters.Where(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true, IsOnSurface: true }).ToList<AHereticObject>();
 
         return this.PrintUnhiddenObjects(unhiddenItems);
     }
@@ -387,9 +398,17 @@ public abstract partial class AHereticObject
     protected virtual string PrintItems(bool subItems = false)
     {
 
-        var unhiddenNonSurroundingItems = this.Items.Where(i => !i.IsHidden && !i.IsSurrounding && i.IsShownInObjectList).ToList<AHereticObject>();
+        var unhiddenNonSurroundingItems = this.Items.Where(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true }).ToList<AHereticObject>();
 
         return this.PrintUnhiddenObjects(unhiddenNonSurroundingItems);
+    }
+    
+    protected virtual string PrintItemsOnSurface(bool subItems = false)
+    {
+
+        var unhiddenNonSurroundingSurfaceItems = this.Items.Where(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true, IsOnSurface: true }).ToList<AHereticObject>();
+
+        return this.PrintUnhiddenObjects(unhiddenNonSurroundingSurfaceItems);
     }
 
     public Item GetVirtualItem(string key)
@@ -410,6 +429,7 @@ public abstract partial class AHereticObject
         {
             if (item.Key == itemToRemove.Key)
             {
+                itemToRemove.IsOnSurface = false;
                 return this.Items.Remove(itemToRemove);
             }
             var result = item.RemoveItem(itemToRemove);
@@ -426,6 +446,7 @@ public abstract partial class AHereticObject
             {
                 if (item.Key == itemToRemove.Key)
                 {
+                    itemToRemove.IsOnSurface = false;
                     return character.Items.Remove(itemToRemove);
                 }
                 var result = item.RemoveItem(itemToRemove);
@@ -615,6 +636,16 @@ public abstract partial class AHereticObject
 
             description.Append(this.PrintCharacters());
             description.Append(this.PrintItems());
+        } else if (this.IsSurfaceContainer)
+        {
+            if (this.Items.Any(i => i is { IsHidden: false, IsOnSurface: true }) ||
+                this.Characters.Any(i => i is { IsHidden: false, IsOnSurface: true }))
+            {
+                description.AppendLine();
+            }
+
+            description.Append(this.PrintCharactersOnSurface());
+            description.Append(this.PrintItemsOnSurface());
         }
         
         description.Append(GetLinkedObjectsDescription(this, false));
@@ -806,11 +837,7 @@ public abstract partial class AHereticObject
         this.IsBreakable = false;
         this.IsBroken = false;
         this.IsHidden = false;
-        this.HideOnContainerClose = true;
         this.IsVirtual = false;
-        this.IsPickable = true;
-        this.IsDropable = true;
-        this.IsUnveilable = true;
         this.IsLockable = false;
         this.IsLocked = false;
         this.IsClosed = false;
@@ -820,8 +847,13 @@ public abstract partial class AHereticObject
         this.IsEatable = false;
         this.IsDrinkable = false;
         this.IsReadable = false;
-        this.IsShownInObjectList = true;
         this.IsLinkable = false;
+        
+        this.IsPickable = true;
+        this.IsDropable = true;
+        this.IsUnveilable = true;
+        this.HideOnContainerClose = true;
+        this.IsShownInObjectList = true;
     }
 
     private void InitializeDescriptions()

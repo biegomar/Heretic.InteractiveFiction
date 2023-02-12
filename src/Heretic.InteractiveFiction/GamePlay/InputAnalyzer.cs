@@ -12,8 +12,8 @@ internal sealed class InputAnalyzer
     
     private sealed class ObjectAndAssociatedWord
     {
-        public AHereticObject HereticObject { get; init; }
-        public string AssociatedWord { get; init; }
+        public AHereticObject? HereticObject { get; init; }
+        public string? AssociatedWord { get; init; }
     }
 
     internal InputAnalyzer(Universe universe, IGrammar grammar)
@@ -163,7 +163,7 @@ internal sealed class InputAnalyzer
         }
     }
 
-    private (Verb verb, List<string> newParts) GetVerbAndRemoveFromParts(IReadOnlyList<string> sentence, ICollection<string> parts, ObjectAndAssociatedWord objectOne, ObjectAndAssociatedWord objectTwo)
+    private (Verb verb, List<string> newParts) GetVerbAndRemoveFromParts(IReadOnlyList<string> sentence, ICollection<string> parts, ObjectAndAssociatedWord? objectOne, ObjectAndAssociatedWord? objectTwo)
     {
         Verb verb = default;
         var result = parts.ToList();
@@ -198,18 +198,24 @@ internal sealed class InputAnalyzer
                         var isPrefixAndPreposition = !string.IsNullOrEmpty(onlyPossiblePrefix) && !string.IsNullOrEmpty(onlyPossiblePreposition);
 
                         bool isObjectInCorrectCaseForPreposition;
-                        bool isNoArticlePresent;
+                        bool isNoArticlePresent = true;
                         var isPrepositionInFrontOfObject = this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectOne, sentence);
                         if (isPrepositionInFrontOfObject)
                         {
                             isObjectInCorrectCaseForPreposition = this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectOne, sentence);
-                            isNoArticlePresent = !ArticleHandler.HasArticleInFrontOfObject(sentence, objectOne.HereticObject, objectOne.AssociatedWord);
+                            if (objectOne != null)
+                            {
+                                isNoArticlePresent = !ArticleHandler.HasArticleInFrontOfObject(sentence, objectOne.HereticObject, objectOne.AssociatedWord);    
+                            }
                         }
                         else
                         {
                             isPrepositionInFrontOfObject = this.IsPrepositionInFrontOfObject(onlyPossiblePreposition, objectTwo, sentence);
                             isObjectInCorrectCaseForPreposition = this.IsObjectInCorrectCaseForPreposition(possibleVerb, onlyPossiblePreposition, objectTwo, sentence);
-                            isNoArticlePresent = !ArticleHandler.HasArticleInFrontOfObject(sentence, objectTwo.HereticObject, objectTwo.AssociatedWord);
+                            if(objectTwo != null)
+                            {
+                                isNoArticlePresent = !ArticleHandler.HasArticleInFrontOfObject(sentence, objectTwo.HereticObject, objectTwo.AssociatedWord);
+                            }
                         }
                         
                         if (isPrepositionOnly)
@@ -355,9 +361,9 @@ internal sealed class InputAnalyzer
         return onlyPossiblePreposition ?? string.Empty;
     }
 
-    private ObjectAndAssociatedWord GetObjectForRequestAndRemoveFromParts<T>(ICollection<string> sentence) where T: AHereticObject
+    private ObjectAndAssociatedWord GetObjectForRequestAndRemoveFromParts<T>(ICollection<string> sentence) where T: AHereticObject?
     {
-        T discoveredObject = default;
+        T? discoveredObject = default;
         string associatedWord = string.Empty;
         
         foreach (var word in sentence)
@@ -366,8 +372,11 @@ internal sealed class InputAnalyzer
             if (!string.IsNullOrEmpty(key))
             {
                 discoveredObject = this.objectHandler.GetObjectFromWorldByKey<T>(key);
-                associatedWord = word;
-                break;
+                if (discoveredObject != default)
+                {
+                    associatedWord = word;
+                    break;    
+                }
             }
         }
         

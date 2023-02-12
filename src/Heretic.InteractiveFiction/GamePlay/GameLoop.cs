@@ -66,6 +66,10 @@ public sealed class GameLoop
         {
             FinalizeGame();
         }
+        catch (Exception ex)
+        {
+            printingSubsystem.Resource(BaseDescriptions.SYSTEM_ERROR);
+        }
     }
 
     private Queue<string> GetCommandList(string fileName)

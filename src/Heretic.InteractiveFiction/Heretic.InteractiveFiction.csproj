@@ -24,6 +24,7 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <PackageProjectUrl>https://github.com/biegomar/Heretic.InteractiveFiction</PackageProjectUrl>
         <PackageReleaseNotes>fix a bug on empty input string.
         </PackageReleaseNotes>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>

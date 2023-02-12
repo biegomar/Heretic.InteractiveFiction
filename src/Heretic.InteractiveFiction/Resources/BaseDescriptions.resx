@@ -859,4 +859,7 @@
   <data name="SYSTEM_ERROR" xml:space="preserve">
     <value>Etwas ist schief gegangen. Bitte probiere es erneut oder starte das Programm neu.</value>
   </data>
+  <data name="ITEM_NOT_A_DROPTARGET" xml:space="preserve">
+    <value>Du kannst nichts in {0} legen.</value>
+  </data>
 </root>

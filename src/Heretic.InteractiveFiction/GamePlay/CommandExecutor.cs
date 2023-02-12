@@ -377,18 +377,25 @@ public class CommandExecutor
                     
                     if (adventureEvent.ObjectTwo is {} container)
                     {
-                        if (container.IsContainer || container.IsSurfaceContainer)
+                        if (container.IsContainer)
                         {
-                            this.universe.ActivePlayer.RemoveItem(item);
-                            container.Items.Add(item);
+                            if (!container.IsCloseable || container is { IsCloseable: true, IsClosed: false })
+                            {
+                                this.universe.ActivePlayer.RemoveItem(item);
+                                container.Items.Add(item);
                             
-                            item.OnDrop(dropItemEventArgs);
-                            printingSubsystem.ItemDropSuccess(item, container);
+                                item.OnDrop(dropItemEventArgs);
+                                printingSubsystem.ItemDropSuccess(item, container);   
+                            }
+                            else
+                            {
+                                printingSubsystem.ItemStillClosed(container);
+                            }
                         }
                         else
                         {
-                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_A_TARGET,
-                                ArticleHandler.GetNameWithArticleForObject(container, GrammarCase.Dative, lowerFirstCharacter: true));
+                            return printingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_A_DROPTARGET,
+                                ArticleHandler.GetNameWithArticleForObject(container, GrammarCase.Accusative, lowerFirstCharacter: true));
                         }
                     }
                     else
@@ -964,6 +971,7 @@ public class CommandExecutor
                         {
                             this.universe.ActivePlayer.RemoveItem(playerItem);
                             target.Items.Add(playerItem);
+                            playerItem.IsOnSurface = true;
                         }
                         else
                         {
@@ -972,6 +980,7 @@ public class CommandExecutor
                             {
                                 this.universe.ActiveLocation.RemoveItem(locationItem);
                                 target.Items.Add(locationItem);
+                                locationItem.IsOnSurface = true;
                             }
                             else
                             {

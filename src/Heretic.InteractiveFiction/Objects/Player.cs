@@ -258,6 +258,7 @@ public sealed class Player : AHereticObject
             }
 
             this.Items.Add(item);
+            item.IsOnSurface = false;
             return true;
         }
 

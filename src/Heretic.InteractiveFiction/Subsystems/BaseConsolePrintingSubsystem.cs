@@ -666,12 +666,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     {
         var itemToDropName = ArticleHandler.GetNameWithArticleForObject(itemToDrop, GrammarCase.Accusative, lowerFirstCharacter: true);
         var containerItemName = ArticleHandler.GetNameWithArticleForObject(containerItem, GrammarCase.Accusative, lowerFirstCharacter: true);
-        Console.Write(
-            containerItem.IsSurfaceContainer
-                ? WordWrap(BaseDescriptions.ITEM_DROP_ONTO, this.ConsoleWidth)
-                : WordWrap(BaseDescriptions.ITEM_DROP_INTO, this.ConsoleWidth),
-            itemToDropName, containerItemName);
-
+        Console.Write(WordWrap(BaseDescriptions.ITEM_DROP_INTO, this.ConsoleWidth), itemToDropName, containerItemName);
         Console.WriteLine();
         return true;
     }

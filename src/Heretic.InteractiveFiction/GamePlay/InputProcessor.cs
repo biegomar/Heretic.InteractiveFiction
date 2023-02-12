@@ -68,10 +68,6 @@ public sealed class InputProcessor
         {
             return printingSubsystem.Resource(ex.Message);
         }
-        catch (Exception)
-        {
-            return printingSubsystem.Resource(BaseDescriptions.SYSTEM_ERROR);
-        }
     }
 
     private void FirePeriodicEvent()

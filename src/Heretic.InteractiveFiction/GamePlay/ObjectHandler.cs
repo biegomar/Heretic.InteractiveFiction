@@ -75,7 +75,7 @@ public sealed class ObjectHandler
 
         return this.universe.ActivePlayer.GetObject(key);
     }
-    public T GetObjectFromWorldByKey<T>(string key) where T: AHereticObject
+    public T? GetObjectFromWorldByKey<T>(string key) where T: AHereticObject?
     {
         if (key == this.universe.ActivePlayer.Key)
         {

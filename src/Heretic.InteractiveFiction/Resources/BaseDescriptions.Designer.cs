@@ -1526,5 +1526,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("SYSTEM_ERROR", resourceCulture);
             }
         }
+        
+        public static string ITEM_NOT_A_DROPTARGET {
+            get {
+                return ResourceManager.GetString("ITEM_NOT_A_DROPTARGET", resourceCulture);
+            }
+        }
     }
 }
