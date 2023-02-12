@@ -27,7 +27,7 @@ public class CommandExecutor
     
     internal bool AlterEgo(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.ALTER_EGO == adventureEvent.Predicate.Key)
+        if (VerbKey.ALTER_EGO == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -72,7 +72,7 @@ public class CommandExecutor
     
     internal bool Ask(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.ASK == adventureEvent.Predicate.Key)
+        if (VerbKey.ASK == adventureEvent.Predicate.Key)
         {
             //I can only speak to visible people in the active location
             if (adventureEvent.ObjectOne is Character character 
@@ -155,7 +155,7 @@ public class CommandExecutor
 
     internal bool Close(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.CLOSE == adventureEvent.Predicate.Key)
+        if (VerbKey.CLOSE == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -206,7 +206,7 @@ public class CommandExecutor
     
     internal bool Credits(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.CREDITS == adventureEvent.Predicate.Key)
+        if (VerbKey.CREDITS == adventureEvent.Predicate.Key)
         {
             return printingSubsystem.Credits();
         }
@@ -216,7 +216,7 @@ public class CommandExecutor
     
     internal bool Cut(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.CUT == adventureEvent.Predicate.Key)
+        if (VerbKey.CUT == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -253,7 +253,7 @@ public class CommandExecutor
     
     internal bool Descend(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.DESCEND == adventureEvent.Predicate.Key)
+        if (VerbKey.DESCEND == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -273,7 +273,7 @@ public class CommandExecutor
 
     internal bool Drink(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.DRINK == adventureEvent.Predicate.Key)
+        if (VerbKey.DRINK == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -330,7 +330,7 @@ public class CommandExecutor
 
     internal bool Drop(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.DROP == adventureEvent.Predicate.Key)
+        if (VerbKey.DROP == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -345,7 +345,7 @@ public class CommandExecutor
             if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 var playerAdventureEvent = new AdventureEvent();
-                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.SLEEP);
+                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.SLEEP);
                 playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
                 return this.Sleep(playerAdventureEvent);
             }
@@ -498,44 +498,44 @@ public class CommandExecutor
         var verbKey = adventureEvent.Predicate.Key;
         var optionalErrorMessage = adventureEvent.Predicate.ErrorMessage;
 
-        if (VerbKeys.E == verbKey)
+        if (VerbKey.E == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.E, optionalErrorMessage);
         }
 
-        if (VerbKeys.W == verbKey)
+        if (VerbKey.W == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.W, optionalErrorMessage);
         }
-        if (VerbKeys.N == verbKey)
+        if (VerbKey.N == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.N, optionalErrorMessage);
         }
-        if (VerbKeys.S == verbKey)
+        if (VerbKey.S == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.S, optionalErrorMessage);
         }
-        if (VerbKeys.SE == verbKey)
+        if (VerbKey.SE == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.SE, optionalErrorMessage);
         }
-        if (VerbKeys.SW == verbKey)
+        if (VerbKey.SW == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.SW, optionalErrorMessage);
         }
-        if (VerbKeys.NE == verbKey)
+        if (VerbKey.NE == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.NE, optionalErrorMessage);
         }
-        if (VerbKeys.NW == verbKey)
+        if (VerbKey.NW == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.NW, optionalErrorMessage);
         }
-        if (VerbKeys.UP == verbKey)
+        if (VerbKey.UP == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.UP, optionalErrorMessage);
         }
-        if (VerbKeys.DOWN == verbKey)
+        if (VerbKey.DOWN == verbKey)
         {
             return this.ChangeLocation(Objects.Directions.DOWN, optionalErrorMessage);
         }
@@ -545,7 +545,7 @@ public class CommandExecutor
 
     internal bool Eat(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.EAT == adventureEvent.Predicate.Key)
+        if (VerbKey.EAT == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -645,7 +645,7 @@ public class CommandExecutor
 
     internal bool Go(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.GO == adventureEvent.Predicate.Key)
+        if (VerbKey.GO == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.ObjectOne is Location location)
             {
@@ -667,7 +667,7 @@ public class CommandExecutor
     
     internal bool Give(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.GIVE == adventureEvent.Predicate.Key)
+        if (VerbKey.GIVE == adventureEvent.Predicate.Key)
         {
             //I can only give things to visible people.
             if (adventureEvent.ObjectOne is Character character &&
@@ -719,7 +719,7 @@ public class CommandExecutor
 
     internal bool Help(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.HELP == adventureEvent.Predicate.Key)
+        if (VerbKey.HELP == adventureEvent.Predicate.Key)
         {
             return printingSubsystem.Help(this.grammar.Verbs);
         }
@@ -729,7 +729,7 @@ public class CommandExecutor
     
     internal bool Hint(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.HINT == adventureEvent.Predicate.Key)
+        if (VerbKey.HINT == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.UnidentifiedSentenceParts.Count == 1)
             {
@@ -752,7 +752,7 @@ public class CommandExecutor
     
     internal bool History(AdventureEvent adventureEvent, ICollection<string> historyCollection)
     {
-        if (VerbKeys.HISTORY == adventureEvent.Predicate.Key)
+        if (VerbKey.HISTORY == adventureEvent.Predicate.Key)
         {
             return printingSubsystem.History(historyCollection);
         }
@@ -762,7 +762,7 @@ public class CommandExecutor
 
     internal bool Open(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.OPEN == adventureEvent.Predicate.Key)
+        if (VerbKey.OPEN == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -833,7 +833,7 @@ public class CommandExecutor
     
     internal bool Pull(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.PULL == adventureEvent.Predicate.Key)
+        if (VerbKey.PULL == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -870,7 +870,7 @@ public class CommandExecutor
     
     internal bool Push(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.PUSH == adventureEvent.Predicate.Key)
+        if (VerbKey.PUSH == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -910,7 +910,7 @@ public class CommandExecutor
 
     internal bool PutOn(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.PUTON == adventureEvent.Predicate.Key)
+        if (VerbKey.PUTON == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -925,7 +925,7 @@ public class CommandExecutor
             if (adventureEvent.ObjectOne is { } player && player.Key == this.universe.ActivePlayer.Key)
             {
                 var playerAdventureEvent = new AdventureEvent();
-                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.CLIMB);
+                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.CLIMB);
                 playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
                 return this.Climb(playerAdventureEvent);
             }
@@ -1016,7 +1016,7 @@ public class CommandExecutor
 
     internal bool Quit(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.QUIT == adventureEvent.Predicate.Key)
+        if (VerbKey.QUIT == adventureEvent.Predicate.Key)
         {
             throw new QuitGameException(BaseDescriptions.QUIT_GAME);
         }
@@ -1026,7 +1026,7 @@ public class CommandExecutor
     
     internal bool Read(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.READ == adventureEvent.Predicate.Key)
+        if (VerbKey.READ == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -1077,7 +1077,7 @@ public class CommandExecutor
     {
         try
         {
-            if (VerbKeys.SAVE == adventureEvent.Predicate.Key)
+            if (VerbKey.SAVE == adventureEvent.Predicate.Key)
             {
                 var history = new StringBuilder(historyCollection.Count);
                 history.AppendJoin(Environment.NewLine, historyCollection);
@@ -1104,7 +1104,7 @@ public class CommandExecutor
     
     internal bool Say(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SAY == adventureEvent.Predicate.Key)
+        if (VerbKey.SAY == adventureEvent.Predicate.Key)
         {
             //I can only speak to visible people
             if (adventureEvent.ObjectOne is Character character && this.objectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
@@ -1138,7 +1138,7 @@ public class CommandExecutor
     
     internal bool Turn(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.TURN == adventureEvent.Predicate.Key)
+        if (VerbKey.TURN == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -1172,7 +1172,7 @@ public class CommandExecutor
     
     internal bool Jump(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.JUMP == adventureEvent.Predicate.Key)
+        if (VerbKey.JUMP == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -1206,7 +1206,7 @@ public class CommandExecutor
     
     internal bool Kindle(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.KINDLE == adventureEvent.Predicate.Key)
+        if (VerbKey.KINDLE == adventureEvent.Predicate.Key)
         {
             var item = adventureEvent.ObjectOne;
             if (item != default)
@@ -1365,7 +1365,7 @@ public class CommandExecutor
 
     internal bool Look(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.LOOK == adventureEvent.Predicate.Key)
+        if (VerbKey.LOOK == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -1406,7 +1406,7 @@ public class CommandExecutor
     
     internal bool Break(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.BREAK == adventureEvent.Predicate.Key)
+        if (VerbKey.BREAK == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -1427,7 +1427,7 @@ public class CommandExecutor
     
     internal bool Connect(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.CONNECT == adventureEvent.Predicate.Key)
+        if (VerbKey.CONNECT == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -1553,7 +1553,7 @@ public class CommandExecutor
     
     internal bool Disconnect(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.DISCONNECT == adventureEvent.Predicate.Key)
+        if (VerbKey.DISCONNECT == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -1679,7 +1679,7 @@ public class CommandExecutor
     
     internal bool Use(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.USE == adventureEvent.Predicate.Key)
+        if (VerbKey.USE == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -1800,7 +1800,7 @@ public class CommandExecutor
 
     internal bool Climb(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.CLIMB == adventureEvent.Predicate.Key)
+        if (VerbKey.CLIMB == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -1879,7 +1879,7 @@ public class CommandExecutor
 
     internal bool SwitchOn(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SWITCHON == adventureEvent.Predicate.Key)
+        if (VerbKey.SWITCHON == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -1898,7 +1898,7 @@ public class CommandExecutor
     
     internal bool SwitchOff(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SWITCHOFF == adventureEvent.Predicate.Key)
+        if (VerbKey.SWITCHOFF == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -1917,7 +1917,7 @@ public class CommandExecutor
     
     internal bool Wear(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.WEAR == adventureEvent.Predicate.Key)
+        if (VerbKey.WEAR == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -2014,7 +2014,7 @@ public class CommandExecutor
 
     internal bool TakeOff(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.TAKEOFF == adventureEvent.Predicate.Key)
+        if (VerbKey.TAKEOFF == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -2080,7 +2080,7 @@ public class CommandExecutor
 
     internal bool Buy(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.BUY == adventureEvent.Predicate.Key)
+        if (VerbKey.BUY == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count > 1)
             {
@@ -2178,7 +2178,7 @@ public class CommandExecutor
 
     internal bool Take(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.TAKE == adventureEvent.Predicate.Key)
+        if (VerbKey.TAKE == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any() && !adventureEvent.UnidentifiedSentenceParts.Any())
             {
@@ -2222,7 +2222,7 @@ public class CommandExecutor
     
     internal bool Lock(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.LOCK == adventureEvent.Predicate.Key)
+        if (VerbKey.LOCK == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count == 1)
             {
@@ -2237,7 +2237,7 @@ public class CommandExecutor
     
     internal bool Unlock(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.UNLOCK == adventureEvent.Predicate.Key)
+        if (VerbKey.UNLOCK == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.AllObjects.Count == 1)
             {
@@ -2252,7 +2252,7 @@ public class CommandExecutor
     
     internal bool Inventory(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.INV == adventureEvent.Predicate.Key)
+        if (VerbKey.INV == adventureEvent.Predicate.Key)
         {
             printingSubsystem.ActivePlayer(this.universe.ActivePlayer);
             return true;
@@ -2263,7 +2263,7 @@ public class CommandExecutor
     
     internal bool Score(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SCORE == adventureEvent.Predicate.Key)
+        if (VerbKey.SCORE == adventureEvent.Predicate.Key)
         {
             return printingSubsystem.Score(universe.Score, universe.MaxScore);
         }
@@ -2273,7 +2273,7 @@ public class CommandExecutor
     
     internal bool SitDown(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SIT == adventureEvent.Predicate.Key)
+        if (VerbKey.SIT == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -2401,12 +2401,12 @@ public class CommandExecutor
 
     internal bool StandUp(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.STANDUP == adventureEvent.Predicate.Key)
+        if (VerbKey.STANDUP == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.ObjectOne is { } item && item.Key != this.universe.ActivePlayer.Key)
             {
                 var playerAdventureEvent = new AdventureEvent();
-                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKeys.DROP);
+                playerAdventureEvent.Predicate = this.grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.DROP);
                 playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects);
                 return this.Drop(playerAdventureEvent);
             }
@@ -2554,7 +2554,7 @@ public class CommandExecutor
 
     internal bool Talk(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.TALK == adventureEvent.Predicate.Key)
+        if (VerbKey.TALK == adventureEvent.Predicate.Key)
         {
             if (adventureEvent.ObjectOne != default)
             {
@@ -2716,7 +2716,7 @@ public class CommandExecutor
 
     internal bool Wait(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.WAIT == adventureEvent.Predicate.Key)
+        if (VerbKey.WAIT == adventureEvent.Predicate.Key)
         {
             try
             {
@@ -2738,7 +2738,7 @@ public class CommandExecutor
 
     internal bool Write(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.WRITE == adventureEvent.Predicate.Key)
+        if (VerbKey.WRITE == adventureEvent.Predicate.Key)
         {
             try
             {
@@ -2763,7 +2763,7 @@ public class CommandExecutor
 
     internal bool Sleep(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SLEEP == adventureEvent.Predicate.Key)
+        if (VerbKey.SLEEP == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -2824,7 +2824,7 @@ public class CommandExecutor
     
     internal bool Smell(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.SMELL == adventureEvent.Predicate.Key)
+        if (VerbKey.SMELL == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -2889,7 +2889,7 @@ public class CommandExecutor
     
     internal bool Taste(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.TASTE == adventureEvent.Predicate.Key)
+        if (VerbKey.TASTE == adventureEvent.Predicate.Key)
         {
             if (!adventureEvent.AllObjects.Any())
             {
@@ -2909,7 +2909,7 @@ public class CommandExecutor
     
     internal bool ToBe(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.TOBE == adventureEvent.Predicate.Key)
+        if (VerbKey.TOBE == adventureEvent.Predicate.Key)
         {
             var subject = adventureEvent.ObjectOne;
 
@@ -2988,7 +2988,7 @@ public class CommandExecutor
     
     internal bool Ways(AdventureEvent adventureEvent)
     {
-        if (VerbKeys.WAYS == adventureEvent.Predicate.Key)
+        if (VerbKey.WAYS == adventureEvent.Predicate.Key)
         {
             if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation) 
                 && this.universe.LocationMap[this.universe.ActiveLocation].Any(l => !l.IsHidden))

@@ -17,9 +17,9 @@ internal static class LivingRoomPrerequisites
             FirstLookDescription = Descriptions.CANDLE_CONTAINMENT
         };
 
-        livingRoom.AddOptionalVerb(VerbKeys.USE, OptionalVerbs.POOR, string.Empty);
-        livingRoom.AddOptionalVerb(VerbKeys.USE, OptionalVerbs.HOLD, Descriptions.NOTHING_TO_HOLD);
-        livingRoom.AddOptionalVerb(VerbKeys.DROP, OptionalVerbs.PUT, string.Empty);
+        livingRoom.AddOptionalVerb(VerbKey.USE, OptionalVerbs.POOR, string.Empty);
+        livingRoom.AddOptionalVerb(VerbKey.USE, OptionalVerbs.HOLD, Descriptions.NOTHING_TO_HOLD);
+        livingRoom.AddOptionalVerb(VerbKey.DROP, OptionalVerbs.PUT, string.Empty);
         
         livingRoom.Items.Add(GetTable(eventProvider));
         livingRoom.Items.Add(GetChest());

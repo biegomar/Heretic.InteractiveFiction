@@ -4,11 +4,11 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed partial class Location : AHereticObject
 {
-    public IDictionary<string, IList<Verb>> OptionalVerbs { get; set; }
+    public IDictionary<VerbKey, IList<Verb>> OptionalVerbs { get; set; }
 
     public Location()
     {
-        this.OptionalVerbs = new Dictionary<string, IList<Verb>>();
+        this.OptionalVerbs = new Dictionary<VerbKey, IList<Verb>>();
         
         this.InitializeStates();
     }
@@ -18,13 +18,8 @@ public sealed partial class Location : AHereticObject
         this.IsPickable = false;
     }
 
-    public void AddOptionalVerb(string originalVerbKey, string newVerbName, Description newErrorMessage)
+    public void AddOptionalVerb(VerbKey originalVerbKey, string newVerbName, Description newErrorMessage)
     {
-        if (originalVerbKey == null)
-        {
-            throw new ArgumentNullException(nameof(originalVerbKey));
-        }
-        
         var variantList = new List<VerbVariant>();
         var wordList = newVerbName.Split('|').ToList();
         

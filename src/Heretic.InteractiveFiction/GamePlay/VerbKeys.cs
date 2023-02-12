@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.GamePlay;
 
-public static class VerbKeys
+public static class VerbKeys2
 {
     public static string ALTER_EGO => nameof(ALTER_EGO);
     public static string ASK => nameof(ASK);

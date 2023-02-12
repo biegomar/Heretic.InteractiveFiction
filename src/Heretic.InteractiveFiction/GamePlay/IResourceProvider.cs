@@ -35,7 +35,8 @@ public interface IResourceProvider
                  {
                      var verb = new Verb
                      {
-                         Key = entry.Key.ToString(),
+                         //Key = entry.Key.ToString(),
+                         Key = Enum.Parse<VerbKey>(entry.Key.ToString(), true),
                          Prepositions = prepositions
                      };
 

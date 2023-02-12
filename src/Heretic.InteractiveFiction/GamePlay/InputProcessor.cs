@@ -42,7 +42,7 @@ public sealed class InputProcessor
                 return true;
             }
         
-            if (VerbKeys.REM == adventureEvent.Predicate.Key)
+            if (VerbKey.REM == adventureEvent.Predicate.Key)
             {
                 return true;
             }

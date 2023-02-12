@@ -138,11 +138,11 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    private void VerbHelp(IDictionary<string, IEnumerable<string>> verbResource)
+    private void VerbHelp(IDictionary<VerbKey, IEnumerable<string>> verbResource)
     {
         foreach (var verbs in verbResource)
         {
-            Console.Write(BaseDescriptions.ResourceManager.GetString(verbs.Key));
+            Console.Write(BaseDescriptions.ResourceManager.GetString(verbs.Key.ToString()));
             var index = 0;
             this.ForegroundColor = TextColor.Magenta;
             foreach (var value in verbs.Value)
@@ -159,22 +159,22 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         }
     }
 
-    private IDictionary<string, IEnumerable<string>> GetDirectionVerbs(IList<Verb> verbs)
+    private IDictionary<VerbKey, IEnumerable<string>> GetDirectionVerbs(IList<Verb> verbs)
     {
-        var directionVerbKeys = new Collection<string>()
+        var directionVerbKeys = new Collection<VerbKey>()
         {
-            nameof(Verbs.N),
-            nameof(Verbs.S),
-            nameof(Verbs.E),
-            nameof(Verbs.W),
-            nameof(Verbs.NE),
-            nameof(Verbs.NW),
-            nameof(Verbs.SE),
-            nameof(Verbs.SW),
-            nameof(Verbs.UP),
-            nameof(Verbs.DOWN),
-            nameof(Verbs.GO),
-            nameof(Verbs.WAYS)
+            VerbKey.N,
+            VerbKey.S,
+            VerbKey.E,
+            VerbKey.W,
+            VerbKey.NE,
+            VerbKey.NW,
+            VerbKey.SE,
+            VerbKey.SW,
+            VerbKey.UP,
+            VerbKey.DOWN,
+            VerbKey.GO,
+            VerbKey.WAYS
         };
             
         var result = FilterVerbs(verbs, directionVerbKeys);
@@ -182,7 +182,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return result;
     }
 
-    private static Dictionary<string, IEnumerable<string>> FilterVerbs(IList<Verb> verbs, Collection<string> verbKeys)
+    private static Dictionary<VerbKey, IEnumerable<string>> FilterVerbs(IList<Verb> verbs, Collection<VerbKey> verbKeys)
     {
         var result = verbs.Where(x => verbKeys.Contains(x.Key)).OrderBy(x => x.Key)
             .ToDictionary(x => x.Key, x => x.Variants.Select(v => v.Name));
@@ -215,20 +215,20 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetMetaInfoVerbs(IList<Verb> verbs)
+    private IDictionary<VerbKey, IEnumerable<string>> GetMetaInfoVerbs(IList<Verb> verbs)
     {
-        var directionVerbKeys = new Collection<string>()
+        var directionVerbKeys = new Collection<VerbKey>()
         {
-            nameof(Verbs.INV),
-            nameof(Verbs.CREDITS),
-            nameof(Verbs.SCORE),
-            nameof(Verbs.ALTER_EGO),
-            nameof(Verbs.HISTORY),
-            nameof(Verbs.HELP),
-            nameof(Verbs.HINT),
-            nameof(Verbs.REM),
-            nameof(Verbs.SAVE),
-            nameof(Verbs.QUIT)
+            VerbKey.INV,
+            VerbKey.CREDITS,
+            VerbKey.SCORE,
+            VerbKey.ALTER_EGO,
+            VerbKey.HISTORY,
+            VerbKey.HELP,
+            VerbKey.HINT,
+            VerbKey.REM,
+            VerbKey.SAVE,
+            VerbKey.QUIT,
         };
             
         var result = FilterVerbs(verbs, directionVerbKeys);
@@ -267,25 +267,25 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetInteractVerbs(IList<Verb> verbs)
+    private IDictionary<VerbKey, IEnumerable<string>> GetInteractVerbs(IList<Verb> verbs)
     {
-        var directionVerbKeys = new Collection<string>()
+        var directionVerbKeys = new Collection<VerbKey>()
         {
-            nameof(Verbs.TAKE),
-            nameof(Verbs.DROP),
-            nameof(Verbs.PULL),
-            nameof(Verbs.PUSH),
-            nameof(Verbs.BUY),
-            nameof(Verbs.BREAK),
-            nameof(Verbs.USE),
-            nameof(Verbs.LOOK),
-            nameof(Verbs.SIT),
-            nameof(Verbs.STANDUP),
-            nameof(Verbs.JUMP),
-            nameof(Verbs.CLIMB),
-            nameof(Verbs.DESCEND),
-            nameof(Verbs.WAIT),
-            nameof(Verbs.WRITE),
+            VerbKey.TAKE,
+            VerbKey.DROP,
+            VerbKey.PULL,
+            VerbKey.PUSH,
+            VerbKey.BUY,
+            VerbKey.BREAK,
+            VerbKey.USE,
+            VerbKey.LOOK,
+            VerbKey.SIT,
+            VerbKey.STANDUP,
+            VerbKey.JUMP,
+            VerbKey.CLIMB,
+            VerbKey.DESCEND,
+            VerbKey.WAIT,
+            VerbKey.WRITE,
         };
 
         var result = FilterVerbs(verbs, directionVerbKeys);
@@ -336,14 +336,14 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetTalkVerbs(IList<Verb> verbs)
+    private IDictionary<VerbKey, IEnumerable<string>> GetTalkVerbs(IList<Verb> verbs)
     {
-        var directionVerbKeys = new Collection<string>()
+        var directionVerbKeys = new Collection<VerbKey>()
         {
-            nameof(Verbs.TALK),
-            nameof(Verbs.SAY),
-            nameof(Verbs.ASK),
-            nameof(Verbs.GIVE),
+            VerbKey.TALK,
+            VerbKey.SAY,
+            VerbKey.ASK,
+            VerbKey.GIVE,
         };
 
         var result = FilterVerbs(verbs, directionVerbKeys);
@@ -382,15 +382,15 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.WriteLine();
     }
 
-    private IDictionary<string, IEnumerable<string>> GetContainerVerbs(IList<Verb> verbs)
+    private IDictionary<VerbKey, IEnumerable<string>> GetContainerVerbs(IList<Verb> verbs)
     {
-        var directionVerbKeys = new Collection<string>()
+        var directionVerbKeys = new Collection<VerbKey>()
         {
-            nameof(Verbs.CLOSE),
-            nameof(Verbs.OPEN),
-            nameof(Verbs.UNLOCK),
-            nameof(Verbs.LOCK),
-            nameof(Verbs.TURN)
+            VerbKey.CLOSE,
+            VerbKey.OPEN,
+            VerbKey.UNLOCK,
+            VerbKey.LOCK,
+            VerbKey.TURN,
         };
 
         var result = FilterVerbs(verbs, directionVerbKeys);

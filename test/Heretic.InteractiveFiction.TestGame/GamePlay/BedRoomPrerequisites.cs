@@ -17,10 +17,10 @@ internal static class BedRoomPrerequisites
             Grammar = new IndividualObjectGrammar(Genders.Neutrum)
         };
         
-        bedRoom.AddOptionalVerb(VerbKeys.USE, OptionalVerbs.POOR, string.Empty);
-        bedRoom.AddOptionalVerb(VerbKeys.USE, OptionalVerbs.HOLD, Descriptions.NOTHING_TO_HOLD);
-        bedRoom.AddOptionalVerb(VerbKeys.USE, OptionalVerbs.KINDLE, string.Empty);
-        bedRoom.AddOptionalVerb(VerbKeys.DROP, OptionalVerbs.PUT, string.Empty);
+        bedRoom.AddOptionalVerb(VerbKey.USE, OptionalVerbs.POOR, string.Empty);
+        bedRoom.AddOptionalVerb(VerbKey.USE, OptionalVerbs.HOLD, Descriptions.NOTHING_TO_HOLD);
+        bedRoom.AddOptionalVerb(VerbKey.USE, OptionalVerbs.KINDLE, string.Empty);
+        bedRoom.AddOptionalVerb(VerbKey.DROP, OptionalVerbs.PUT, string.Empty);
         
         bedRoom.Items.Add(GetPetroleumLamp(eventProvider));
         
