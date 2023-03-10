@@ -19,9 +19,9 @@ public sealed class InputProcessor
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
-        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem);
-        this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
         this.historyAdministrator = new HistoryAdministrator();
+        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, this.historyAdministrator);
+        this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
     }
 
     internal bool Process(string input)
@@ -33,20 +33,9 @@ public sealed class InputProcessor
                 return true;
             }
             
-            var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
-            
             this.historyAdministrator.Add(input);
-
-            if (commandExecutor.Save(adventureEvent, this.historyAdministrator.All))
-            {
-                return true;
-            }
-        
-            if (VerbKey.REM == adventureEvent.Predicate.Key)
-            {
-                return true;
-            }
-
+            
+            var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
             var result = ProcessAdventureEvent(adventureEvent);
             
             FirePeriodicEvent();
@@ -93,63 +82,6 @@ public sealed class InputProcessor
 
     private bool ProcessAdventureEvent(AdventureEvent adventureEvent)
     {
-        var result = this.commandExecutor.Quit(adventureEvent);
-        result = result || commandExecutor.Look(adventureEvent);
-        result = result || commandExecutor.Directions(adventureEvent);
-        result = result || commandExecutor.Take(adventureEvent);
-        result = result || commandExecutor.Inventory(adventureEvent);
-        result = result || commandExecutor.Score(adventureEvent);
-        result = result || commandExecutor.Credits(adventureEvent);
-        result = result || commandExecutor.Wait(adventureEvent);
-        result = result || commandExecutor.Sleep(adventureEvent);
-        result = result || commandExecutor.Smell(adventureEvent);
-        result = result || commandExecutor.Taste(adventureEvent);
-        result = result || commandExecutor.AlterEgo(adventureEvent);
-        result = result || commandExecutor.SitDown(adventureEvent);
-        result = result || commandExecutor.StandUp(adventureEvent);
-        result = result || commandExecutor.Descend(adventureEvent);
-        result = result || commandExecutor.Drink(adventureEvent);
-        result = result || commandExecutor.Ways(adventureEvent);
-        result = result || commandExecutor.Help(adventureEvent);
-        result = result || commandExecutor.History(adventureEvent, this.historyAdministrator.All);
-        result = result || commandExecutor.Use(adventureEvent);
-        result = result || commandExecutor.Buy(adventureEvent);
-        result = result || commandExecutor.Open(adventureEvent);
-        result = result || commandExecutor.Give(adventureEvent);
-        result = result || commandExecutor.Close(adventureEvent);
-        result = result || commandExecutor.Talk(adventureEvent);
-        result = result || commandExecutor.Pull(adventureEvent);
-        result = result || commandExecutor.Push(adventureEvent);
-        result = result || commandExecutor.PutOn(adventureEvent);
-        result = result || commandExecutor.Turn(adventureEvent);
-        result = result || commandExecutor.Jump(adventureEvent);
-        result = result || commandExecutor.Cut(adventureEvent);
-        result = result || commandExecutor.Climb(adventureEvent);
-        result = result || commandExecutor.Connect(adventureEvent);
-        result = result || commandExecutor.Disconnect(adventureEvent);
-        result = result || commandExecutor.Kindle(adventureEvent);
-        result = result || commandExecutor.Lock(adventureEvent);
-        result = result || commandExecutor.Unlock(adventureEvent);
-        result = result || commandExecutor.Break(adventureEvent);
-        result = result || commandExecutor.Eat(adventureEvent);
-        result = result || commandExecutor.Wear(adventureEvent);
-        result = result || commandExecutor.TakeOff(adventureEvent);
-        result = result || commandExecutor.Read(adventureEvent);
-        result = result || commandExecutor.Go(adventureEvent);
-        result = result || commandExecutor.SwitchOn(adventureEvent);
-        result = result || commandExecutor.SwitchOff(adventureEvent);
-        result = result || commandExecutor.Write(adventureEvent);
-        result = result || commandExecutor.Hint(adventureEvent);
-        result = result || commandExecutor.Drop(adventureEvent);
-        result = result || commandExecutor.ToBe(adventureEvent);
-        result = result || commandExecutor.Say(adventureEvent);
-        result = result || commandExecutor.Ask(adventureEvent);
-
-        if (!result)
-        {
-            this.printingSubsystem.Misconcept();
-        }
-        
-        return true;
+        return this.commandExecutor.Execute(adventureEvent) || this.printingSubsystem.Misconcept();
     }
 }

@@ -11,6 +11,7 @@ public sealed class TestFixture
 {
     private readonly IResourceProvider resourceProvider;
     private readonly IPrintingSubsystem printingSubsystem;
+    private readonly HistoryAdministrator historyAdministrator;
     internal Universe Universe { get; }
     internal ObjectHandler ObjectHandler { get; }
     internal CommandExecutor CommandExecutor { get; }
@@ -26,6 +27,7 @@ public sealed class TestFixture
         this.printingSubsystem = InitializePrintingSubsystem();
         this.Universe = this.GetUniverse();
         this.ObjectHandler = new ObjectHandler(this.Universe);
+        this.historyAdministrator = new HistoryAdministrator();
         this.CommandExecutor = this.GetCommandExecutor();
         this.Table = this.ObjectHandler.GetObjectFromWorldByKey<Item>(Keys.TABLE);
         this.Lamp = this.ObjectHandler.GetObjectFromWorldByKey<Item>(Keys.PETROLEUM_LAMP);
@@ -45,7 +47,8 @@ public sealed class TestFixture
 
     private CommandExecutor GetCommandExecutor()
     {
-        return new CommandExecutor(this.Universe, new GermanGrammar(this.resourceProvider), this.printingSubsystem);
+        return new CommandExecutor(this.Universe, new GermanGrammar(this.resourceProvider), this.printingSubsystem,
+            this.historyAdministrator);
     }
     
     private Universe GetUniverse()
