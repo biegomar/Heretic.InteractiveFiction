@@ -16,7 +16,7 @@ public sealed class Description
     
     public static implicit operator string(Description description)  
     {
-        return description?.ToString();
+        return description.ToString();
     } 
     
     public Description()

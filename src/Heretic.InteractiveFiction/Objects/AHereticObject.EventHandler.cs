@@ -7,104 +7,104 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public abstract partial class AHereticObject
 {
-    public event EventHandler<BreakItemEventArgs> BeforeBreak;
-    public event EventHandler<BreakItemEventArgs> Break;
-    public event EventHandler<BreakItemEventArgs> AfterBreak;
+    public event EventHandler<BreakItemEventArgs>? BeforeBreak;
+    public event EventHandler<BreakItemEventArgs>? Break;
+    public event EventHandler<BreakItemEventArgs>? AfterBreak;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeClimb;
-    public event EventHandler<ContainerObjectEventArgs> Climb;
-    public event EventHandler<ContainerObjectEventArgs> AfterClimb;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeClimb;
+    public event EventHandler<ContainerObjectEventArgs>? Climb;
+    public event EventHandler<ContainerObjectEventArgs>? AfterClimb;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeClose;
-    public event EventHandler<ContainerObjectEventArgs> Close;
-    public event EventHandler<ContainerObjectEventArgs> AfterClose;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeClose;
+    public event EventHandler<ContainerObjectEventArgs>? Close;
+    public event EventHandler<ContainerObjectEventArgs>? AfterClose;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeDrink;
-    public event EventHandler<ContainerObjectEventArgs> Drink;
-    public event EventHandler<ContainerObjectEventArgs> AfterDrink;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeDrink;
+    public event EventHandler<ContainerObjectEventArgs>? Drink;
+    public event EventHandler<ContainerObjectEventArgs>? AfterDrink;
     
-    public event EventHandler<DropItemEventArgs> BeforeDrop;
-    public event EventHandler<DropItemEventArgs> Drop;
-    public event EventHandler<DropItemEventArgs> AfterDrop;
+    public event EventHandler<DropItemEventArgs>? BeforeDrop;
+    public event EventHandler<DropItemEventArgs>? Drop;
+    public event EventHandler<DropItemEventArgs>? AfterDrop;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeEat;
-    public event EventHandler<ContainerObjectEventArgs> Eat;
-    public event EventHandler<ContainerObjectEventArgs> AfterEat;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeEat;
+    public event EventHandler<ContainerObjectEventArgs>? Eat;
+    public event EventHandler<ContainerObjectEventArgs>? AfterEat;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeGive;
-    public event EventHandler<ContainerObjectEventArgs> Give;
-    public event EventHandler<ContainerObjectEventArgs> AfterGive;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeGive;
+    public event EventHandler<ContainerObjectEventArgs>? Give;
+    public event EventHandler<ContainerObjectEventArgs>? AfterGive;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeOpen;
-    public event EventHandler<ContainerObjectEventArgs> Open;
-    public event EventHandler<ContainerObjectEventArgs> AfterOpen;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeOpen;
+    public event EventHandler<ContainerObjectEventArgs>? Open;
+    public event EventHandler<ContainerObjectEventArgs>? AfterOpen;
 
-    public event EventHandler<ReadItemEventArgs> BeforeRead;
-    public event EventHandler<ReadItemEventArgs> Read;
-    public event EventHandler<ReadItemEventArgs> AfterRead;
+    public event EventHandler<ReadItemEventArgs>? BeforeRead;
+    public event EventHandler<ReadItemEventArgs>? Read;
+    public event EventHandler<ReadItemEventArgs>? AfterRead;
 
-    public event EventHandler<LockContainerEventArgs> BeforeLock;
-    public event EventHandler<LockContainerEventArgs> Lock;
-    public event EventHandler<LockContainerEventArgs> AfterLock;
+    public event EventHandler<LockContainerEventArgs>? BeforeLock;
+    public event EventHandler<LockContainerEventArgs>? Lock;
+    public event EventHandler<LockContainerEventArgs>? AfterLock;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeLook;
-    public event EventHandler<ContainerObjectEventArgs> Look;
-    public event EventHandler<ContainerObjectEventArgs> AfterLook;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeLook;
+    public event EventHandler<ContainerObjectEventArgs>? Look;
+    public event EventHandler<ContainerObjectEventArgs>? AfterLook;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeTake;
-    public event EventHandler<ContainerObjectEventArgs> Take;
-    public event EventHandler<ContainerObjectEventArgs> AfterTake;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeTake;
+    public event EventHandler<ContainerObjectEventArgs>? Take;
+    public event EventHandler<ContainerObjectEventArgs>? AfterTake;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeTakeOff;
-    public event EventHandler<ContainerObjectEventArgs> TakeOff;
-    public event EventHandler<ContainerObjectEventArgs> AfterTakeOff;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeTakeOff;
+    public event EventHandler<ContainerObjectEventArgs>? TakeOff;
+    public event EventHandler<ContainerObjectEventArgs>? AfterTakeOff;
 
-    public event EventHandler<SitDownEventArgs> BeforeSitDown;
-    public event EventHandler<SitDownEventArgs> SitDown;
-    public event EventHandler<SitDownEventArgs> AfterSitDown;
+    public event EventHandler<SitDownEventArgs>? BeforeSitDown;
+    public event EventHandler<SitDownEventArgs>? SitDown;
+    public event EventHandler<SitDownEventArgs>? AfterSitDown;
 
-    public event EventHandler<ContainerObjectEventArgs> BeforeStandUp;
-    public event EventHandler<ContainerObjectEventArgs> StandUp;
-    public event EventHandler<ContainerObjectEventArgs> AfterStandUp;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeStandUp;
+    public event EventHandler<ContainerObjectEventArgs>? StandUp;
+    public event EventHandler<ContainerObjectEventArgs>? AfterStandUp;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeDescend;
-    public event EventHandler<ContainerObjectEventArgs> Descend;
-    public event EventHandler<ContainerObjectEventArgs> AfterDescend;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeDescend;
+    public event EventHandler<ContainerObjectEventArgs>? Descend;
+    public event EventHandler<ContainerObjectEventArgs>? AfterDescend;
     
-    public event EventHandler<ConnectEventArgs> BeforeConnect;
-    public event EventHandler<ConnectEventArgs> Connect;
-    public event EventHandler<ConnectEventArgs> AfterConnect;
+    public event EventHandler<ConnectEventArgs>? BeforeConnect;
+    public event EventHandler<ConnectEventArgs>? Connect;
+    public event EventHandler<ConnectEventArgs>? AfterConnect;
     
-    public event EventHandler<DisconnectEventArgs> BeforeDisconnect;
-    public event EventHandler<DisconnectEventArgs> Disconnect;
-    public event EventHandler<DisconnectEventArgs> AfterDisconnect;
+    public event EventHandler<DisconnectEventArgs>? BeforeDisconnect;
+    public event EventHandler<DisconnectEventArgs>? Disconnect;
+    public event EventHandler<DisconnectEventArgs>? AfterDisconnect;
     
-    public event EventHandler<LockContainerEventArgs> BeforeUnlock;
-    public event EventHandler<LockContainerEventArgs> Unlock;
-    public event EventHandler<LockContainerEventArgs> AfterUnlock;
+    public event EventHandler<LockContainerEventArgs>? BeforeUnlock;
+    public event EventHandler<LockContainerEventArgs>? Unlock;
+    public event EventHandler<LockContainerEventArgs>? AfterUnlock;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeWear;
-    public event EventHandler<ContainerObjectEventArgs> Wear;
-    public event EventHandler<ContainerObjectEventArgs> AfterWear;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeWear;
+    public event EventHandler<ContainerObjectEventArgs>? Wear;
+    public event EventHandler<ContainerObjectEventArgs>? AfterWear;
     
-    public event EventHandler<PutOnEventArgs> BeforePutOn;
-    public event EventHandler<PutOnEventArgs> PutOn;
-    public event EventHandler<PutOnEventArgs> AfterPutOn;
+    public event EventHandler<PutOnEventArgs>? BeforePutOn;
+    public event EventHandler<PutOnEventArgs>? PutOn;
+    public event EventHandler<PutOnEventArgs>? AfterPutOn;
 
-    public event EventHandler<ContainerObjectEventArgs> Buy;
-    public event EventHandler<CutItemEventArgs> Cut;
-    public event EventHandler<ContainerObjectEventArgs> Jump;
-    public event EventHandler<KindleItemEventArgs> Kindle;
-    public event EventHandler<PullItemEventArgs> Pull;
-    public event EventHandler<PushItemEventArgs> Push;
-    public event EventHandler<ContainerObjectEventArgs> Sleep;
-    public event EventHandler<ContainerObjectEventArgs> Smell;
-    public event EventHandler<ContainerObjectEventArgs> Taste;
-    public event EventHandler<ContainerObjectEventArgs> ToBe;
-    public event EventHandler<TurnItemEventArgs> Turn;
-    public event EventHandler<UseItemEventArgs> Use;
-    public event EventHandler<ContainerObjectEventArgs> Wait;
-    public event EventHandler<WriteEventArgs> Write;
+    public event EventHandler<ContainerObjectEventArgs>? Buy;
+    public event EventHandler<CutItemEventArgs>? Cut;
+    public event EventHandler<ContainerObjectEventArgs>? Jump;
+    public event EventHandler<KindleItemEventArgs>? Kindle;
+    public event EventHandler<PullItemEventArgs>? Pull;
+    public event EventHandler<PushItemEventArgs>? Push;
+    public event EventHandler<ContainerObjectEventArgs>? Sleep;
+    public event EventHandler<ContainerObjectEventArgs>? Smell;
+    public event EventHandler<ContainerObjectEventArgs>? Taste;
+    public event EventHandler<ContainerObjectEventArgs>? ToBe;
+    public event EventHandler<TurnItemEventArgs>? Turn;
+    public event EventHandler<UseItemEventArgs>? Use;
+    public event EventHandler<ContainerObjectEventArgs>? Wait;
+    public event EventHandler<WriteEventArgs>? Write;
 
     public virtual void OnUse(UseItemEventArgs eventArgs)
     {

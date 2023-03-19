@@ -36,36 +36,34 @@ public sealed class Item : AHereticObject
     /// <summary>
     /// This description can be used if the object is a lighter and is switched on.
     /// </summary>
-    public Description LighterSwitchedOnDescription { get; set; }
+    public Description LighterSwitchedOnDescription { get; set; } = string.Empty;
     
     /// <summary>
     /// This description can be used if the object is a lighter and is switched off.
     /// </summary>
-    public Description LighterSwitchedOffDescription { get; set; }
+    public Description LighterSwitchedOffDescription { get; set; } = string.Empty;
     
     /// <summary>
     /// This description can be used if the object is switched on.
     /// </summary>
-    public Description SwitchedOnDescription { get; set; }
+    public Description SwitchedOnDescription { get; set; } = string.Empty;
     
     /// <summary>
     /// This description can be used if the object is switched off.
     /// </summary>
-    public Description SwitchedOffDescription { get; set; }
+    public Description SwitchedOffDescription { get; set; } = string.Empty;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeSwitchOn;
-    public event EventHandler<ContainerObjectEventArgs> SwitchOn;
-    public event EventHandler<ContainerObjectEventArgs> AfterSwitchOn;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeSwitchOn;
+    public event EventHandler<ContainerObjectEventArgs>? SwitchOn;
+    public event EventHandler<ContainerObjectEventArgs>? AfterSwitchOn;
     
-    public event EventHandler<ContainerObjectEventArgs> BeforeSwitchOff;
-    public event EventHandler<ContainerObjectEventArgs> SwitchOff;
-    public event EventHandler<ContainerObjectEventArgs> AfterSwitchOff;
+    public event EventHandler<ContainerObjectEventArgs>? BeforeSwitchOff;
+    public event EventHandler<ContainerObjectEventArgs>? SwitchOff;
+    public event EventHandler<ContainerObjectEventArgs>? AfterSwitchOff;
     
     public Item()
     {
         this.InitializeStates();
-        
-        this.InitializeDescriptions();
     }
     
     public void OnBeforeSwitchOn(ContainerObjectEventArgs eventArgs)
@@ -145,13 +143,5 @@ public sealed class Item : AHereticObject
         this.IsLighterSwitchedOn = false;
         this.IsSwitchable = false;
         this.IsSwitchedOn = false;
-    }
-    
-    private void InitializeDescriptions()
-    {
-        this.LighterSwitchedOffDescription = string.Empty;
-        this.LighterSwitchedOnDescription = string.Empty;
-        this.SwitchedOffDescription = string.Empty;
-        this.SwitchedOnDescription = string.Empty;
     }
 }

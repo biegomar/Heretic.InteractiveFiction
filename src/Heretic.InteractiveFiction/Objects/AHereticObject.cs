@@ -19,12 +19,12 @@ public abstract partial class AHereticObject
     /// <summary>
     /// The unique key that is representing the object.
     /// </summary>
-    public string Key { get; set; }
+    public string Key { get; init; } = string.Empty;
 
     /// <summary>
     /// Used to define some grammar rules.
     /// </summary>
-    public IndividualObjectGrammar Grammar { get; set; }
+    public IndividualObjectGrammar Grammar { get; init; }
     
     /// <summary>
     /// Can this object be broken?
@@ -90,7 +90,7 @@ public abstract partial class AHereticObject
     /// <summary>
     /// This is the id <see cref="AHereticObject.Key"/> of the object, that can unlock/lock this item.
     /// </summary>
-    public string UnlockWithKey { get; set; }
+    public string UnlockWithKey { get; set; } = string.Empty;
     /// <summary>
     /// Can this object be closed?
     /// </summary>
@@ -147,6 +147,9 @@ public abstract partial class AHereticObject
     /// </summary>
     public ICollection<Item> Items { get; set; }
 
+    /// <summary>
+    /// The list of linked objects.
+    /// </summary>
     public ICollection<Item> LinkedTo { get; set; }
 
     /// <summary>
@@ -171,8 +174,6 @@ public abstract partial class AHereticObject
         this.LinkedTo = new List<Item>();
         
         InitializeStates();
-
-        InitializeDescriptions();
     }
 
     protected virtual string GetVariationOfYouSee(int itemCount)
@@ -247,7 +248,7 @@ public abstract partial class AHereticObject
         return item != default;
     }
 
-    internal virtual AHereticObject GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
+    internal virtual AHereticObject? GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
     {
         if (visitedItems.Contains(this))
         {
@@ -291,7 +292,7 @@ public abstract partial class AHereticObject
         return default;
     }
     
-    protected virtual T GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject
+    protected virtual T? GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject
     {
         if (visitedItems.Contains(this))
         {
@@ -335,53 +336,53 @@ public abstract partial class AHereticObject
         return default;
     }
     
-    public AHereticObject GetObject(string itemKey)
+    public AHereticObject? GetObject(string itemKey)
     {
         var result = this.GetObject(itemKey, new List<AHereticObject>());
         return result ?? default;
     }
     
-    public T GetObject<T>(string itemKey) where T: AHereticObject
+    public T? GetObject<T>(string itemKey) where T: AHereticObject
     {
         var result = this.GetObject<T>(itemKey, new List<AHereticObject>());
         return result;
     }
     
-    public AHereticObject GetObject(AHereticObject item)
+    public AHereticObject? GetObject(AHereticObject item)
     {
         return this.GetObject(item.Key);
     }
 
-    public Item GetItem(string itemKey)
+    public Item? GetItem(string itemKey)
     {
         var result = this.GetObject(itemKey, new List<AHereticObject>());
         return result as Item ?? default;
     }
     
-    public Item GetItem(AHereticObject item)
+    public Item? GetItem(AHereticObject item)
     {
         return this.GetItem(item.Key);
     }
     
-    public Item GetUnhiddenItem(string key)
+    public Item? GetUnhiddenItem(string key)
     {
         var item = this.GetItem(key);
 
         return item is { IsHidden: false } ? item : default;
     }
     
-    public Character GetCharacter(string itemKey)
+    public Character? GetCharacter(string itemKey)
     {
         var result = this.GetObject(itemKey, new List<AHereticObject>());
         return result as Character ?? default;
     }
 
-    public Character GetCharacter(Character character)
+    public Character? GetCharacter(Character character)
     {
         return this.GetCharacter(character.Key);
     }
     
-    public Character GetUnhiddenCharacter(string key)
+    public Character? GetUnhiddenCharacter(string key)
     {
         var character = this.GetCharacter(key);
 
@@ -418,7 +419,7 @@ public abstract partial class AHereticObject
         return this.PrintUnhiddenObjects(unhiddenNonSurroundingSurfaceItems);
     }
 
-    public Item GetVirtualItem(string key)
+    public Item? GetVirtualItem(string key)
     {
         var item = this.GetItem(key);
 
@@ -468,12 +469,12 @@ public abstract partial class AHereticObject
         return false;
     }
 
-    public AHereticObject GetOwnerOfUnhiddenItemByKey(string key)
+    public AHereticObject? GetOwnerOfUnhiddenItemByKey(string key)
     {
         return this.GetOwnerOfUnhiddenItemByKeyRecursive(key, new List<AHereticObject>());
     }
     
-    protected virtual AHereticObject GetOwnerOfUnhiddenItemByKeyRecursive(string key, ICollection<AHereticObject> visitedItems)
+    protected virtual AHereticObject? GetOwnerOfUnhiddenItemByKeyRecursive(string key, ICollection<AHereticObject> visitedItems)
     {
         if (visitedItems.Contains(this))
         {
@@ -861,24 +862,5 @@ public abstract partial class AHereticObject
         this.IsUnveilable = true;
         this.HideOnContainerClose = true;
         this.IsShownInObjectList = true;
-    }
-
-    private void InitializeDescriptions()
-    {
-        this.Description = string.Empty;
-        this.FirstLookDescription = string.Empty;
-        this.OpenDescription = string.Empty;
-        this.CloseDescription = string.Empty;
-        this.UnPickAbleDescription = string.Empty;
-        this.UnDropAbleDescription = string.Empty;
-        this.LockDescription = string.Empty;
-        this.ContainmentDescription = string.Empty;
-        this.BrokenDescription = string.Empty;
-        this.UnbreakableDescription = string.Empty;
-        this.LinkedToDescription = string.Empty;
-        this.ClimbedDescription = string.Empty;
-        this.LetterContentDescription = string.Empty;
-        this.Hint = string.Empty;
-        this.Adjectives = string.Empty;
     }
 }

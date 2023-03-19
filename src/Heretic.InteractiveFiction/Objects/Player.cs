@@ -6,7 +6,7 @@ namespace Heretic.InteractiveFiction.Objects;
 public sealed class Player : AHereticObject
 {
     public bool HasPaymentMethod { get; set; }
-    public Item PaymentMethod { get; set; }
+    public Item? PaymentMethod { get; set; }
 
     public ICollection<Item> Clothes { get; set; }
 
@@ -15,9 +15,9 @@ public sealed class Player : AHereticObject
 
     public bool HasClimbed { get; set; }
 
-    public AHereticObject Seat { get; set; }
+    public AHereticObject? Seat { get; set; }
 
-    public AHereticObject ClimbedObject { get; set; }
+    public AHereticObject? ClimbedObject { get; set; }
 
     public Player()
     {

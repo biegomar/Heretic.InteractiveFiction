@@ -1,4 +1,3 @@
-using System.Reflection;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
@@ -15,7 +14,7 @@ public sealed class ObjectHandler
         this.universe = universe;
     }
 
-    public string GetObjectKeyByNameAndAdjectives<T>(string objectName, IEnumerable<string> adjectives = null) where T : AHereticObject
+    public string GetObjectKeyByNameAndAdjectives<T>(string objectName, IEnumerable<string>? adjectives = null) where T : AHereticObject
     {
         var typeofT = typeof(T);
         var typeOfCharacter = typeof(Character);
@@ -45,19 +44,22 @@ public sealed class ObjectHandler
 
         return string.Empty;
     }
-    public Character GetUnhiddenCharacterByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
+    
+    public Character? GetUnhiddenCharacterByNameAndAdjectives(string itemName, IEnumerable<string>? adjectives = null)
     {
         return this.GetUnhiddenCharacterByKey(this.GetCharacterKeyByNameAndAdjectives(itemName, adjectives));
     }
-    public Character GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(string itemName, IEnumerable<string> adjectives = null)
+    
+    public Character? GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(string itemName, IEnumerable<string>? adjectives = null)
     {
         return this.GetUnhiddenCharacterByKeyFromActiveLocation(this.GetCharacterKeyByNameAndAdjectives(itemName, adjectives));
     }
-    public Item GetVirtualItemByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
+    
+    public Item? GetVirtualItemByNameAndAdjectives(string itemName, IEnumerable<string>? adjectives = null)
     {
         return this.GetVirtualItemByKey(this.GetItemKeyByNameAndAdjectives(itemName, adjectives));
     }
-    public AHereticObject GetObjectFromWorldByKey(string key)
+    public AHereticObject? GetObjectFromWorldByKey(string key)
     {
         if (key == this.universe.ActivePlayer.Key)
         {
@@ -75,7 +77,8 @@ public sealed class ObjectHandler
 
         return this.universe.ActivePlayer.GetObject(key);
     }
-    public T? GetObjectFromWorldByKey<T>(string key) where T: AHereticObject?
+    
+    public T? GetObjectFromWorldByKey<T>(string key) where T: AHereticObject
     {
         if (key == this.universe.ActivePlayer.Key)
         {
@@ -91,18 +94,20 @@ public sealed class ObjectHandler
             }
         }
 
-        return (T)this.universe.ActivePlayer.GetObject(key);
+        return (T?)this.universe.ActivePlayer.GetObject(key);
     }
-    public AHereticObject GetObjectFromWorldByNameAndAdjectives(string objectName, IEnumerable<string> adjectives = null)
+    
+    public AHereticObject? GetObjectFromWorldByNameAndAdjectives(string objectName, IEnumerable<string>? adjectives = null)
     {
         var objectKey = this.GetKeyByNameAndAdjectivesFromAllResources(objectName, adjectives);
         return !string.IsNullOrEmpty(objectKey) ? this.GetObjectFromWorldByKey(objectKey) : default;
     }
-    public Item GetUnhiddenItemByNameAndAdjectivesActive(string itemName, IEnumerable<string> adjectives = null)
+    public Item? GetUnhiddenItemByNameAndAdjectivesActive(string itemName, IEnumerable<string>? adjectives = null)
     {
         return this.GetUnhiddenItemByKeyActive(this.GetItemKeyByNameAndAdjectives(itemName, adjectives));
     }
-    public AHereticObject GetUnhiddenObjectFromWorldByNameAndAdjectives(string objectName, IEnumerable<string> adjectives = null)
+    
+    public AHereticObject? GetUnhiddenObjectFromWorldByNameAndAdjectives(string objectName, IEnumerable<string>? adjectives = null)
     {
         var item = this.GetObjectFromWorldByKey(this.GetKeyByNameAndAdjectivesFromAllResources(objectName, adjectives));
 
@@ -113,17 +118,20 @@ public sealed class ObjectHandler
 
         return item;
     }
-    public AHereticObject GetUnhiddenObjectByNameAndAdjectivesActive(string objectName, IEnumerable<string> adjectives = null)
+    
+    public AHereticObject? GetUnhiddenObjectByNameAndAdjectivesActive(string objectName, IEnumerable<string>? adjectives = null)
     {
-        AHereticObject containerObject = this.GetUnhiddenItemByNameAndAdjectivesActive(objectName, adjectives);
+        var enumerable = (adjectives ?? Array.Empty<string>()).ToList();
+        
+        AHereticObject? containerObject = this.GetUnhiddenItemByNameAndAdjectivesActive(objectName, enumerable);
         if (containerObject == default)
         {
-            containerObject = this.GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(objectName, adjectives);
+            containerObject = this.GetUnhiddenCharacterByNameAndAdjectivesFromActiveLocation(objectName, enumerable);
         }
 
         if (containerObject == default)
         {
-            var key = this.GetCharacterKeyByNameAndAdjectives(objectName, adjectives);
+            var key = this.GetCharacterKeyByNameAndAdjectives(objectName, enumerable);
             if (key == this.universe.ActivePlayer.Key)
             {
                 containerObject = this.universe.ActivePlayer;
@@ -147,6 +155,7 @@ public sealed class ObjectHandler
     {
         return this.GetKeyByNameAndAdjectivesFromResource(phrase, this.universe.ConversationAnswersResources);
     }
+    
     public void HideItemsOnClose(AHereticObject item)
     {
         if (item.IsClosed)
@@ -171,9 +180,10 @@ public sealed class ObjectHandler
     {
         this.universe.ActiveObject = default;
     }
+    
     public void RemoveAsActiveObject(AHereticObject hereticObject)
     {
-        if (hereticObject != default && this.universe.ActiveObject == hereticObject)
+        if (this.universe.ActiveObject == hereticObject)
         {
             this.ClearActiveObject();
         }
@@ -191,13 +201,10 @@ public sealed class ObjectHandler
     }
     public void StoreAsActiveObject(AHereticObject hereticObject)
     {
-        if (hereticObject != default)
-        {
-            this.universe.ActiveObject = hereticObject;
-        }
+        this.universe.ActiveObject = hereticObject;
     }
 
-    private Item GetUnhiddenItemByKeyActive(string key)
+    private Item? GetUnhiddenItemByKeyActive(string key)
     {
         var result = this.universe.ActiveLocation.GetUnhiddenItem(key);
         if (result == default)
@@ -207,11 +214,11 @@ public sealed class ObjectHandler
 
         return result;
     }
-    private Character GetUnhiddenCharacterByKeyFromActiveLocation(string key)
+    private Character? GetUnhiddenCharacterByKeyFromActiveLocation(string key)
     {
         return this.universe.ActiveLocation.GetUnhiddenCharacter(key);
     }
-    private Item GetVirtualItemByKey(string key)
+    private Item? GetVirtualItemByKey(string key)
     {
         var result = this.universe.ActiveLocation.GetVirtualItem(key);
         if (result == default)
@@ -221,16 +228,18 @@ public sealed class ObjectHandler
 
         return result;
     }
-    private string GetKeyByNameAndAdjectivesFromAllResources(string name, IEnumerable<string> adjectives)
+    private string GetKeyByNameAndAdjectivesFromAllResources(string name, IEnumerable<string>? adjectives)
     {
-        var key = this.GetCharacterKeyByNameAndAdjectives(name, adjectives);
+        var enumerable = (adjectives ?? Array.Empty<string>()).ToList();
+        
+        var key = this.GetCharacterKeyByNameAndAdjectives(name, enumerable);
         if (string.IsNullOrEmpty(key))
         {
-            key = this.GetItemKeyByNameAndAdjectives(name, adjectives);
+            key = this.GetItemKeyByNameAndAdjectives(name, enumerable);
             
             if (string.IsNullOrEmpty(key))
             {
-                key = this.GetLocationKeyByNameAndAdjectives(name, adjectives);
+                key = this.GetLocationKeyByNameAndAdjectives(name, enumerable);
                 
                 if (string.IsNullOrEmpty(key))
                 {
@@ -254,7 +263,7 @@ public sealed class ObjectHandler
         return string.Empty;
     }
     
-    private string GetPrioritizedItemKeysByNameAndAdjectives(string itemName, IEnumerable<string> adjectives)
+    private string GetPrioritizedItemKeysByNameAndAdjectives(string itemName, IEnumerable<string>? adjectives)
     {
         var result = this.GetFirstPriorityKeyByName(itemName);
         if (string.IsNullOrEmpty(result))
@@ -273,12 +282,15 @@ public sealed class ObjectHandler
                                              || upperItemName == PronounHandler.GetPronounForObject(universeActiveObject, GrammarCase.Dative).ToUpperInvariant()
                                              || upperItemName == PronounHandler.GetPronounForObject(universeActiveObject, GrammarCase.Accusative).ToUpperInvariant()))
         {
-            return this.universe.ActiveObject.Key;
+            if (this.universe.ActiveObject != null)
+            {
+                return this.universe.ActiveObject.Key;
+            }
         }
 
         return string.Empty;
     }
-    private string GetSecondPriorityItemKeysByNameAndAdjectives(string itemName, IEnumerable<string> adjectives)
+    private string GetSecondPriorityItemKeysByNameAndAdjectives(string itemName, IEnumerable<string>? adjectives)
     {
         var allItemKeysFromActiveLocation = this.GetItemKeysRecursive(this.universe.ActiveLocation.Items);
         var allItemKeysFromActivePlayer = this.GetItemKeysRecursive(this.universe.ActivePlayer.Items);
@@ -308,7 +320,7 @@ public sealed class ObjectHandler
         return string.Empty;
     }
     
-    private string GetFirstPriorityLocationKeysByName(string locationName, IEnumerable<string> adjectives)
+    private string GetFirstPriorityLocationKeysByName(string locationName, IEnumerable<string>? adjectives)
     {
         if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
         {
@@ -336,17 +348,20 @@ public sealed class ObjectHandler
         return string.Empty;
     }
 
-    private string GetLocationKeyMatchingAdjectives(IEnumerable<string> locationKeys, IEnumerable<string> adjectives)
+    private string GetLocationKeyMatchingAdjectives(IEnumerable<string> locationKeys, IEnumerable<string>? adjectives)
     {
         var locations = locationKeys.Select(this.GetObjectFromWorldByKey<Location>).ToList();
         List<KeyValuePair<string, List<string>>> reducedType = new();
         foreach (var location in locations)
         {
-            var allDeclinedAdjectives = new List<string>(AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(location));
-            reducedType.Add(new KeyValuePair<string, List<string>>(location.Key, allDeclinedAdjectives));
+            if (location != null)
+            {
+                var allDeclinedAdjectives = new List<string>(AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(location));
+                reducedType.Add(new KeyValuePair<string, List<string>>(location.Key, allDeclinedAdjectives));
+            }
         }
         
-        var result = reducedType.Where(x => x.Value.Intersect(adjectives).Any()).Select(x => x.Key).ToList();
+        var result = reducedType.Where(x => adjectives != null && x.Value.Intersect(adjectives).Any()).Select(x => x.Key).ToList();
         
         if (result.Any())
         {
@@ -360,17 +375,20 @@ public sealed class ObjectHandler
         return string.Empty;
     }
 
-    private string GetItemKeyMatchingAdjectives(IEnumerable<string> itemKeys, IEnumerable<string> adjectives)
+    private string GetItemKeyMatchingAdjectives(IEnumerable<string> itemKeys, IEnumerable<string>? adjectives)
     {
         var itemList = itemKeys.Select(this.GetObjectFromWorldByKey<Item>).ToList();
         List<KeyValuePair<string, List<string>>> reducedType = new();
         foreach (var item in itemList)
         {
-            var allDeclinedAdjectives = new List<string>(AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(item));
-            reducedType.Add(new KeyValuePair<string, List<string>>(item.Key, allDeclinedAdjectives));
+            if (item != null)
+            {
+                var allDeclinedAdjectives = new List<string>(AdjectiveDeclinationHandler.GetAllDeclinedAdjectivesForAllCases(item));
+                reducedType.Add(new KeyValuePair<string, List<string>>(item.Key, allDeclinedAdjectives));
+            }
         }
 
-        var result = reducedType.Where(x => x.Value.Intersect(adjectives).Any()).Select(x => x.Key).ToList();
+        var result = reducedType.Where(x => adjectives != null && x.Value.Intersect(adjectives).Any()).Select(x => x.Key).ToList();
 
         if (result.Any())
         {
@@ -405,7 +423,7 @@ public sealed class ObjectHandler
 
         return result;
     }
-    private Character GetUnhiddenCharacterByKey(string key)
+    private Character? GetUnhiddenCharacterByKey(string key)
     {
         if (this.GetObjectFromWorldByKey(key) is Character { IsHidden: false } character)
         {
@@ -414,7 +432,7 @@ public sealed class ObjectHandler
 
         return default;
     }
-    private string GetLocationKeyByNameAndAdjectives(string locationName, IEnumerable<string> adjectives = null)
+    private string GetLocationKeyByNameAndAdjectives(string locationName, IEnumerable<string>? adjectives = null)
     {
         var result = this.GetFirstPriorityLocationKeysByName(locationName, adjectives);
         
@@ -446,11 +464,11 @@ public sealed class ObjectHandler
         return string.Empty;
     }
     
-    private string GetCharacterKeyByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
+    private string GetCharacterKeyByNameAndAdjectives(string itemName, IEnumerable<string>? adjectives = null)
     {
         return this.GetKeyByNameAndAdjectivesFromResource(itemName, this.universe.CharacterResources);
     }
-    private string GetItemKeyByNameAndAdjectives(string itemName, IEnumerable<string> adjectives = null)
+    private string GetItemKeyByNameAndAdjectives(string itemName, IEnumerable<string>? adjectives = null)
     {
         var adjectivesList = adjectives?.ToList();
         if (GetPrioritizedItemKeysByNameAndAdjectives(itemName, adjectivesList) is { } itemKey && !string.IsNullOrEmpty(itemKey))

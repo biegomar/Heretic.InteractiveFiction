@@ -4,7 +4,7 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed partial class Location : AHereticObject
 {
-    public IDictionary<VerbKey, IList<Verb>> OptionalVerbs { get; set; }
+    public IDictionary<VerbKey, IList<Verb>> OptionalVerbs { get; }
 
     public Location()
     {

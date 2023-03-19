@@ -4,13 +4,13 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed partial class Location
 {
-    public event EventHandler<EnterLocationEventArgs> BeforeEnterLocation;
-    public event EventHandler<EnterLocationEventArgs> EnterLocation;
-    public event EventHandler<EnterLocationEventArgs> AfterEnterLocation;
+    public event EventHandler<EnterLocationEventArgs>? BeforeEnterLocation;
+    public event EventHandler<EnterLocationEventArgs>? EnterLocation;
+    public event EventHandler<EnterLocationEventArgs>? AfterEnterLocation;
     
-    public event EventHandler<LeaveLocationEventArgs> BeforeLeaveLocation;
-    public event EventHandler<LeaveLocationEventArgs> LeaveLocation;
-    public event EventHandler<LeaveLocationEventArgs> AfterLeaveLocation;
+    public event EventHandler<LeaveLocationEventArgs>? BeforeLeaveLocation;
+    public event EventHandler<LeaveLocationEventArgs>? LeaveLocation;
+    public event EventHandler<LeaveLocationEventArgs>? AfterLeaveLocation;
     
     public void OnBeforeEnterLocation(EnterLocationEventArgs eventArgs)
     {

@@ -5,14 +5,13 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed partial class Character : AHereticObject
 {
-    public Description TalkDescription { get; set; }
-    public string StandardPhrases { get; set; }
+    public Description TalkDescription { get; set; } = string.Empty;
+    public string StandardPhrases { get; set; } = string.Empty;
     public bool Talked { get; set; }
 
     public Character()
     {
         this.IsPickable = false;
-        this.TalkDescription = string.Empty;
     }
 
     public string DoTalk()

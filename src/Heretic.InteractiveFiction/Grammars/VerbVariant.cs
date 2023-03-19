@@ -2,6 +2,6 @@
 
 public sealed class VerbVariant
 {
-    public string Name { get; set; }
-    public string Prefix { get; set; }
+    public string Name { get; init; } = string.Empty;
+    public string Prefix { get; init; } = string.Empty;
 }
