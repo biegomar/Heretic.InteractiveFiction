@@ -47,7 +47,14 @@ public abstract partial class AHereticObject
     /// </summary>
     public bool IsVirtual { get; set; }
 
+    /// <summary>
+    /// Can this object be linked to an other object?
+    /// </summary>
     public bool IsLinkable { get; set; }
+    
+    /// <summary>
+    /// Is this object linked to another object? 
+    /// </summary>
     public bool IsLinked => this.LinkedTo.Any();
     
     /// <summary>

@@ -332,7 +332,7 @@ internal static class LivingRoomPrerequisites
     private static void AddAfterTakeEvents(Item item, EventProvider eventProvider)
     {
         item.AfterTake += eventProvider.TakeCandle;
-        eventProvider.ScoreBoard.Add(nameof(eventProvider.TakeCandle), 1);
+        eventProvider.RegisterScore(nameof(eventProvider.TakeCandle), 1);
     }
 
     private static void AddChangeLocationEvents(Location room, EventProvider eventProvider)
@@ -343,10 +343,7 @@ internal static class LivingRoomPrerequisites
     private static void AddKindleEvents(Item item, EventProvider eventProvider)
     {
         item.Kindle += eventProvider.UseLightersOnThings;
-        if (!eventProvider.ScoreBoard.ContainsKey(nameof(eventProvider.UseLightersOnThings)))
-        {
-            eventProvider.ScoreBoard.Add(nameof(eventProvider.UseLightersOnThings), 1);
-        }
+        eventProvider.RegisterScore(nameof(eventProvider.UseLightersOnThings), 1);
     }
 
     private static void AddPoorEvents(Item item, EventProvider eventProvider)
@@ -363,7 +360,7 @@ internal static class LivingRoomPrerequisites
     private static void AddReadEvents(Item note, EventProvider eventProvider)
     {
         note.AfterRead += eventProvider.ReadNote;
-        eventProvider.ScoreBoard.Add(nameof(eventProvider.ReadNote), 1);
+        eventProvider.RegisterScore(nameof(eventProvider.ReadNote), 1);
     }
     
     private static void AddDropEvents(Item note, EventProvider eventProvider)

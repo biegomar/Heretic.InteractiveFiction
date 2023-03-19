@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Heretic.InteractiveFiction.Comparer;
+﻿using Heretic.InteractiveFiction.Comparer;
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.GamePlay.EventSystem;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
@@ -9,26 +8,8 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.Objects;
 
-public sealed class Universe: INotifyPropertyChanged
-{
-    public int Score
-    {
-        get => score;
-        set => SetField(ref score, value);
-    }
-
-    public int MaxScore
-    {
-        get
-        {
-            if (maxScore == 0)
-            {
-                maxScore = GetMaxScore();
-            }
-            return maxScore;
-        }
-    }
-
+public sealed class Universe
+{ 
     public int NumberOfSolvedQuests => this.SolvedQuests.Count;
     
     public readonly IDictionary<string, IEnumerable<string>> ItemResources;
@@ -42,23 +23,21 @@ public sealed class Universe: INotifyPropertyChanged
     public AHereticObject ActiveObject { get; set; }
     public bool IsPeriodicEventActivated { get => this.periodicEvent.Active; set => this.periodicEvent.Active = value; }
     public ICollection<string> Quests { get; set; }
-    public readonly IDictionary<string, int> ScoreBoard = new Dictionary<string, int>();
-    
-    public event EventHandler<PeriodicEventArgs> PeriodicEvents;
-    public event PropertyChangedEventHandler PropertyChanged;
 
+    public event EventHandler<PeriodicEventArgs> PeriodicEvents;
+    
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly IList<string> SolvedQuests;
     private int maxScore;
     private PeriodicEvent periodicEvent;
     private int score;
+    private bool gameWon;
 
     public Universe(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider)
     {
         this.printingSubsystem = printingSubsystem;
         this.SolvedQuests = new List<string>();
-        this.Score = 0;
-        this.PropertyChanged += this.SetScore;
+        this.gameWon = false;
         this.ItemResources = resourceProvider.GetItemsFromResources();
         this.CharacterResources = resourceProvider.GetCharactersFromResources();
         this.LocationResources = resourceProvider.GetLocationsFromResources();
@@ -112,6 +91,15 @@ public sealed class Universe: INotifyPropertyChanged
             printingSubsystem.ForegroundColor = TextColor.Magenta;
             printingSubsystem.FormattedResource(BaseDescriptions.QUEST_SOLVED, quest);
             printingSubsystem.ResetColors();
+        }
+    }
+
+    public void DidYouWin()
+    {
+        if (!this.gameWon && this.Quests.Count == this.NumberOfSolvedQuests)
+        {
+            this.gameWon = true;
+            throw new GameWonException(BaseDescriptions.QUIT_GAME);
         }
     }
 
@@ -212,44 +200,5 @@ public sealed class Universe: INotifyPropertyChanged
     public Location GetLocationByKey(string key)
     {
         return this.LocationMap.Keys.SingleOrDefault(l => l.Key == key);
-    }
-
-    private int GetMaxScore()
-    {
-        return this.ScoreBoard.Sum(kv => kv.Value);
-    }
-
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
-
-    private void SetScore(object sender, PropertyChangedEventArgs eventArgs)
-    {
-        this.printingSubsystem.ForegroundColor = TextColor.Magenta;
-        this.printingSubsystem.Resource(this.GetYouScored());
-        this.printingSubsystem.ResetColors();
-    }
-    
-    private string GetYouScored()
-    {
-        var scored = new List<string>
-        {
-            BaseDescriptions.YOU_SCORED_I,
-            BaseDescriptions.YOU_SCORED_II,
-            BaseDescriptions.YOU_SCORED_III
-        }; 
-        
-        var rnd = new Random();
-        
-        return scored[rnd.Next(0, scored.Count)];
     }
 }

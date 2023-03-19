@@ -862,4 +862,7 @@
   <data name="ITEM_NOT_A_DROPTARGET" xml:space="preserve">
     <value>Du kannst nichts in {0} legen.</value>
   </data>
+  <data name="PICK_AND_PULLON_WEARABLE" xml:space="preserve">
+    <value>Du hast {0} genommen und {1} angezogen.</value>
+  </data>
 </root>

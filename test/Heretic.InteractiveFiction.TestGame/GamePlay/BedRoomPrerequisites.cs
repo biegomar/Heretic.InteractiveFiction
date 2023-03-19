@@ -56,22 +56,13 @@ internal static class BedRoomPrerequisites
     private static void AddKindleEvents(Item item, EventProvider eventProvider)
     {
         item.Kindle += eventProvider.UseLightersOnThings;
-        if (!eventProvider.ScoreBoard.ContainsKey(nameof(eventProvider.UseLightersOnThings)))
-        {
-            eventProvider.ScoreBoard.Add(nameof(eventProvider.UseLightersOnThings), 1);
-        }
-        if (!eventProvider.ScoreBoard.ContainsKey(nameof(eventProvider.StartPetroleumLampWithCandle)))
-        {
-            eventProvider.ScoreBoard.Add(nameof(eventProvider.StartPetroleumLampWithCandle), 1);
-        }
+        eventProvider.RegisterScore(nameof(eventProvider.UseLightersOnThings), 1);
+        eventProvider.RegisterScore(nameof(eventProvider.StartPetroleumLampWithCandle), 1);
     }
     
     private static void AddPoorEvents(Item item, EventProvider eventProvider)
     {
         item.Use += eventProvider.PoorPetroleumInPetroleumLamp;
-        if (!eventProvider.ScoreBoard.ContainsKey(nameof(eventProvider.PoorPetroleumInPetroleumLamp)))
-        {
-            eventProvider.ScoreBoard.Add(nameof(eventProvider.PoorPetroleumInPetroleumLamp), 1);
-        }
+        eventProvider.RegisterScore(nameof(eventProvider.PoorPetroleumInPetroleumLamp), 1);
     }
 }

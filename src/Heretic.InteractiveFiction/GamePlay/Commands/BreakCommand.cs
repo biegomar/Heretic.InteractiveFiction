@@ -64,8 +64,6 @@ internal sealed record BreakCommand(Universe Universe, IPrintingSubsystem Printi
                 return PrintingSubsystem.ItemUnbreakable(item);
 
             }
-
-            return PrintingSubsystem.ItemNotVisible();
         }
 
         return PrintingSubsystem.ItemNotVisible();

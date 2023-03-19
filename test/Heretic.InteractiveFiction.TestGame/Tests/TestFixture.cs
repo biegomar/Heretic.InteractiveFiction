@@ -12,6 +12,7 @@ public sealed class TestFixture
     private readonly IResourceProvider resourceProvider;
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly HistoryAdministrator historyAdministrator;
+    private readonly ScoreBoard scoreBoard;
     internal Universe Universe { get; }
     internal ObjectHandler ObjectHandler { get; }
     internal CommandExecutor CommandExecutor { get; }
@@ -28,6 +29,7 @@ public sealed class TestFixture
         this.Universe = this.GetUniverse();
         this.ObjectHandler = new ObjectHandler(this.Universe);
         this.historyAdministrator = new HistoryAdministrator();
+        this.scoreBoard = new ScoreBoard(this.printingSubsystem);
         this.CommandExecutor = this.GetCommandExecutor();
         this.Table = this.ObjectHandler.GetObjectFromWorldByKey<Item>(Keys.TABLE);
         this.Lamp = this.ObjectHandler.GetObjectFromWorldByKey<Item>(Keys.PETROLEUM_LAMP);
@@ -48,7 +50,7 @@ public sealed class TestFixture
     private CommandExecutor GetCommandExecutor()
     {
         return new CommandExecutor(this.Universe, new GermanGrammar(this.resourceProvider), this.printingSubsystem,
-            this.historyAdministrator);
+            this.historyAdministrator, this.scoreBoard);
     }
     
     private Universe GetUniverse()
@@ -57,7 +59,7 @@ public sealed class TestFixture
 
         var universe = new Universe(printingSubsystem, resourceProvider);
         
-        var eventProvider = new EventProvider(universe, printingSubsystem);
+        var eventProvider = new EventProvider(universe, printingSubsystem, scoreBoard);
         
         IGamePrerequisitesAssembler gamePrerequisitesAssembler = new GamePrerequisitesAssembler(eventProvider);
         var gamePrerequisites = gamePrerequisitesAssembler.AssembleGame();

@@ -8,9 +8,10 @@ using Heretic.InteractiveFiction.TestGame.Printing;
 IResourceProvider resourceProvider = new ResourceProvider();
 IPrintingSubsystem printingSubsystem = new ConsolePrinting();
 var universe = new Universe(printingSubsystem, resourceProvider);
-var eventProvider = new EventProvider(universe, printingSubsystem);
+var scoreBoard = new ScoreBoard(printingSubsystem);
+var eventProvider = new EventProvider(universe, printingSubsystem, scoreBoard);
 IGamePrerequisitesAssembler gamePrerequisitesAssembler = new GamePrerequisitesAssembler(eventProvider);
 IGrammar grammar = new GermanGrammar(resourceProvider);
-var gameLoop = new GameLoop(printingSubsystem, universe, gamePrerequisitesAssembler, grammar);
+var gameLoop = new GameLoop(printingSubsystem, universe, gamePrerequisitesAssembler, grammar, scoreBoard);
 
 gameLoop.Run();

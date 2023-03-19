@@ -95,7 +95,7 @@ internal sealed record ConnectCommand(IPrintingSubsystem PrintingSubsystem, Obje
                                     itemToUse.LinkedTo.Add(item);
 
                                     PrintingSubsystem.Resource(string.Format(BaseDescriptions.ITEM_NOW_CONNECTED_TO,
-                                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative),
+                                        ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Nominative),
                                         ArticleHandler.GetNameWithArticleForObject(itemToUse, GrammarCase.Dative,
                                             lowerFirstCharacter: true)));
 

@@ -12,16 +12,24 @@ public sealed class GameLoop
     private readonly InputProcessor processor;
     private Queue<string> commands;
     private readonly IPrintingSubsystem printingSubsystem;
+    private readonly ScoreBoard scoreBoard;
     private const string SAVE = "SAVE";
 
-    public GameLoop(IPrintingSubsystem printingSubsystem, Universe universe, IGamePrerequisitesAssembler gamePrerequisitesAssembler, IGrammar grammar, int consoleWidth = 0)
+    public GameLoop(
+        IPrintingSubsystem printingSubsystem, 
+        Universe universe, 
+        IGamePrerequisitesAssembler gamePrerequisitesAssembler, 
+        IGrammar grammar, 
+        ScoreBoard scoreBoard, 
+        int consoleWidth = 0)
     {
         this.printingSubsystem = printingSubsystem;
         this.printingSubsystem.ConsoleWidth = consoleWidth;
+        this.scoreBoard = scoreBoard;
 
         this.universe = universe;
         
-        this.processor = new InputProcessor(printingSubsystem, this.universe, grammar);
+        this.processor = new InputProcessor(printingSubsystem, this.universe, grammar, this.scoreBoard);
         this.commands = new Queue<string>();
         
         AssemblyGame(gamePrerequisitesAssembler);
@@ -58,11 +66,11 @@ public sealed class GameLoop
                 unfinished = this.processor.Process(input);
             } while (unfinished);
         }
-        catch (QuitGameException e)
+        catch (QuitGameException ex)
         {
-            printingSubsystem.Resource(e.Message);
+            printingSubsystem.Resource(ex.Message);
         }
-        catch (GameWonException)
+        catch (GameWonException ex)
         {
             FinalizeGame();
         }
@@ -91,7 +99,7 @@ public sealed class GameLoop
     private void InitializeScreen()
     {
         printingSubsystem.ClearScreen();
-        printingSubsystem.TitleAndScore(this.universe.Score, this.universe.MaxScore);
+        printingSubsystem.TitleAndScore(this.scoreBoard.Score, this.scoreBoard.MaxScore);
         printingSubsystem.Opening();
         printingSubsystem.ForegroundColor = TextColor.DarkCyan;
         printingSubsystem.Resource(BaseDescriptions.START_THE_GAME);

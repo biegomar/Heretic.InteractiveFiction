@@ -2,7 +2,6 @@
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
-using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -14,13 +13,15 @@ public sealed class InputProcessor
     private readonly HistoryAdministrator historyAdministrator;
     private readonly InputAnalyzer inputAnalyzer;
     private readonly IPrintingSubsystem printingSubsystem;
+    private readonly ScoreBoard scoreBoard;
 
-    public InputProcessor(IPrintingSubsystem printingSubsystem, Universe universe, IGrammar grammar)
+    public InputProcessor(IPrintingSubsystem printingSubsystem, Universe universe, IGrammar grammar, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
         this.historyAdministrator = new HistoryAdministrator();
-        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, this.historyAdministrator);
+        this.scoreBoard = scoreBoard;
+        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, this.historyAdministrator, this.scoreBoard);
         this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
     }
 
@@ -32,21 +33,18 @@ public sealed class InputProcessor
             {
                 return true;
             }
-            
+
             this.historyAdministrator.Add(input);
-            
+
             var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
             var result = ProcessAdventureEvent(adventureEvent);
-            
+
             FirePeriodicEvent();
 
-            printingSubsystem.TitleAndScore(universe.Score, universe.MaxScore);
-        
-            if (this.universe.Quests.Count == this.universe.NumberOfSolvedQuests)
-            {
-                throw new GameWonException();
-            }
-        
+            printingSubsystem.TitleAndScore(scoreBoard.Score, scoreBoard.MaxScore);
+            
+            this.universe.DidYouWin();
+
             return result;
         }
         catch (NoVerbException ex)

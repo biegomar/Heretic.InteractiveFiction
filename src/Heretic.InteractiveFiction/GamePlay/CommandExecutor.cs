@@ -14,15 +14,17 @@ internal class CommandExecutor
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly ObjectHandler objectHandler;
     private readonly HistoryAdministrator historyAdministrator;
+    private readonly ScoreBoard scoreBoard;
     
     private bool isHintActive;
     
-    internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, HistoryAdministrator historyAdministrator)
+    internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, HistoryAdministrator historyAdministrator, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
         this.grammar = grammar;
         this.historyAdministrator = historyAdministrator;
+        this.scoreBoard = scoreBoard;
         objectHandler = new ObjectHandler(universe);
         isHintActive = false;
 
@@ -46,6 +48,8 @@ internal class CommandExecutor
         
         result.Add(VerbKey.REM, new RemarkCommand());
         result.Add(VerbKey.QUIT, new QuitCommand());
+        
+        result.Add(VerbKey.SCORE, new ScoreCommand(scoreBoard));
         
         result.Add(VerbKey.CREDITS, new CreditsCommand(printingSubsystem));
         result.Add(VerbKey.HINT, new HintCommand(printingSubsystem));

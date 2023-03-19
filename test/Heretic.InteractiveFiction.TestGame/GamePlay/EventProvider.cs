@@ -14,19 +14,24 @@ internal class EventProvider
     private readonly Universe universe;
     private readonly ObjectHandler objectHandler;
     private readonly IPrintingSubsystem printingSubsystem;
+    private readonly ScoreBoard scoreBoard;
     private bool isPaperInStove;
     private bool isPetroleumInStove;
     private bool isPetroleumInLamp;
     private int waitCounter;
-
-    internal IDictionary<string, int> ScoreBoard => this.universe.ScoreBoard;
-
-    public EventProvider(Universe universe, IPrintingSubsystem printingSubsystem)
+    
+    internal EventProvider(Universe universe, IPrintingSubsystem printingSubsystem, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
+        this.scoreBoard = scoreBoard;
         this.objectHandler = new ObjectHandler(this.universe);
         this.waitCounter = 0;
+    }
+    
+    internal void RegisterScore(string key, int value)
+    {
+        this.scoreBoard.RegisterScore(key, value);
     }
     
     internal void SetPlayersName(object sender, ContainerObjectEventArgs eventArgs)
@@ -53,7 +58,7 @@ internal class EventProvider
         if (sender is Item { Key: Keys.CANDLE } candle)
         {
             printingSubsystem.Resource(Descriptions.CANDLE_PICKUP);
-            this.universe.Score += this.universe.ScoreBoard[nameof(this.TakeCandle)];
+            this.scoreBoard.WinScore(nameof(TakeCandle));
             candle.AfterTake -= this.TakeCandle;
         }
     }
@@ -72,7 +77,7 @@ internal class EventProvider
     internal void AddEventsForUniverse()
     {
         this.universe.PeriodicEvents += this.WaitForCandleToMelt;
-        this.ScoreBoard.Add(nameof(WaitForCandleToMelt), 1);
+        this.RegisterScore(nameof(WaitForCandleToMelt), 1);
     }
 
     internal void WaitForCandleToMelt(object sender, PeriodicEventArgs eventArgs)
@@ -107,7 +112,7 @@ internal class EventProvider
                         cookTop.Items.Add(ironKey);
                         cookTop.RemoveItem(candle);
                         
-                        this.universe.Score += this.universe.ScoreBoard[nameof(this.WaitForCandleToMelt)];
+                        this.scoreBoard.WinScore(nameof(WaitForCandleToMelt));
                         
                         throw new PeriodicException(Descriptions.MELT_CANDLE_III);
                     }
@@ -124,7 +129,7 @@ internal class EventProvider
             printingSubsystem.Resource(Descriptions.CENTRAL_MESSAGE_UNDERSTOOD);
             printingSubsystem.ResetColors();
             
-            this.universe.Score += this.universe.ScoreBoard[nameof(this.ReadNote)];
+            this.scoreBoard.WinScore(nameof(ReadNote));
             note.AfterRead -= this.ReadNote;
         }
     }
@@ -206,7 +211,7 @@ internal class EventProvider
                 isPetroleumInLamp = true;
                 destinationItem.FirstLookDescription = Descriptions.PETROLEUM_LAMP_FIRSTLOOK_POORED;
                 printingSubsystem.Resource(Descriptions.POOR_PETROLEUM_IN_LAMP);
-                this.universe.Score += this.universe.ScoreBoard[nameof(this.PoorPetroleumInPetroleumLamp)];
+                this.scoreBoard.WinScore(nameof(PoorPetroleumInPetroleumLamp));
             }
         }
     }
@@ -324,7 +329,7 @@ internal class EventProvider
 
         lamp.IsLighterSwitchedOn = true;
         printingSubsystem.Resource(Descriptions.PETROLEUM_LAMP_SWITCH_ON);
-        this.universe.Score += this.universe.ScoreBoard[nameof(StartPetroleumLampWithCandle)];
+        this.scoreBoard.WinScore(nameof(StartPetroleumLampWithCandle));
     }
 
     private void StartFireInStoveWithLighterAndNote(Item lighter, Item note)
@@ -344,7 +349,7 @@ internal class EventProvider
 
             AssignEventForCombustionChamber();
         
-            this.universe.Score += this.universe.ScoreBoard[nameof(UseLightersOnThings)];
+            this.scoreBoard.WinScore(nameof(UseLightersOnThings));
             this.universe.SolveQuest(MetaData.QUEST_II);
         }
         else
@@ -438,7 +443,7 @@ internal class EventProvider
 
         AssignEventForCombustionChamber();
         
-        this.universe.Score += this.universe.ScoreBoard[nameof(UseLightersOnThings)];
+        this.scoreBoard.WinScore(nameof(UseLightersOnThings));
         this.universe.SolveQuest(MetaData.QUEST_II);
     }
 

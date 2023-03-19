@@ -36,8 +36,8 @@ internal sealed record TakeOffCommand(Universe Universe, IPrintingSubsystem Prin
             if (Universe.ActivePlayer.Clothes.Contains(item))
             {
                 var itemName =
-                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
-                        lowerFirstCharacter: true);
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+                var itemPronoun = PronounHandler.GetPronounForObject(item, GrammarCase.Accusative).LowerFirstChar();
 
                 ObjectHandler.StoreAsActiveObject(item);
 
@@ -53,10 +53,7 @@ internal sealed record TakeOffCommand(Universe Universe, IPrintingSubsystem Prin
 
                     item.OnAfterTakeOff(itemEventArgs);
 
-                    return PrintingSubsystem.Resource(string.Format(BaseDescriptions.TAKEOFF_WEARABLE, 
-                        itemName,
-                        PronounHandler.GetPronounForObject(item, GrammarCase.Accusative).LowerFirstChar(),
-                        true));
+                    return PrintingSubsystem.Resource(string.Format(BaseDescriptions.TAKEOFF_WEARABLE, itemName, itemPronoun));
                 }
                 catch (TakeOffException ex)
                 {

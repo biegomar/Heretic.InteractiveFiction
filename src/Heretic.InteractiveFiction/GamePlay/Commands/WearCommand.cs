@@ -40,6 +40,8 @@ internal sealed record WearCommand(Universe Universe, IPrintingSubsystem Printin
                     var itemName =
                         ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
                             lowerFirstCharacter: true);
+                    string message = string.Format(BaseDescriptions.PULLON_WEARABLE,
+                        itemName.LowerFirstChar());
 
                     ObjectHandler.StoreAsActiveObject(item);
 
@@ -70,15 +72,19 @@ internal sealed record WearCommand(Universe Universe, IPrintingSubsystem Printin
                                         //TODO refactor PickUp!
                                         return true;
                                     }
+
+                                    var itemPronoun = PronounHandler.GetPronounForObject(item, GrammarCase.Accusative);
+                                    message = string.Format(BaseDescriptions.PICK_AND_PULLON_WEARABLE,
+                                        itemName.LowerFirstChar(), itemPronoun.LowerFirstChar());
                                 }
 
                                 item.OnWear(itemEventArgs);
+                                
+                                PrintingSubsystem.Resource(message);
 
                                 item.OnAfterWear(itemEventArgs);
 
-                                return PrintingSubsystem.FormattedResource(BaseDescriptions.PULLON_WEARABLE,
-                                    itemName,
-                                    true);
+                                return true;
                             }
                             catch (WearException ex)
                             {
