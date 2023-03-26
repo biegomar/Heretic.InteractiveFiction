@@ -25,7 +25,12 @@ internal sealed record AskCommand(IPrintingSubsystem PrintingSubsystem, ObjectHa
             try
             {
                 var conversationEventArgs = new ConversationEventArgs()
-                    { Item = item, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                {
+                    Item = item,
+                    OptionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty
+                };
 
                 character.OnAsk(conversationEventArgs);
             }

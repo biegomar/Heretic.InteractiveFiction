@@ -44,7 +44,11 @@ internal sealed record TakeOffCommand(Universe Universe, IPrintingSubsystem Prin
                 try
                 {
                     var itemEventArgs = new ContainerObjectEventArgs()
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
 
                     item.OnBeforeTakeOff(itemEventArgs);
 
@@ -53,7 +57,8 @@ internal sealed record TakeOffCommand(Universe Universe, IPrintingSubsystem Prin
 
                     item.OnAfterTakeOff(itemEventArgs);
 
-                    return PrintingSubsystem.Resource(string.Format(BaseDescriptions.TAKEOFF_WEARABLE, itemName, itemPronoun));
+                    return PrintingSubsystem.Resource(string.Format(BaseDescriptions.TAKEOFF_WEARABLE, itemName,
+                        itemPronoun));
                 }
                 catch (TakeOffException ex)
                 {

@@ -13,7 +13,11 @@ internal sealed record WaitCommand(Universe Universe, IPrintingSubsystem Printin
         try
         {
             var containerObjectEventArgs = new ContainerObjectEventArgs()
-                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+            {
+                OptionalErrorMessage = adventureEvent.Predicate != default
+                    ? adventureEvent.Predicate.ErrorMessage
+                    : string.Empty
+            };
 
             Universe.ActiveLocation.OnWait(containerObjectEventArgs);
 

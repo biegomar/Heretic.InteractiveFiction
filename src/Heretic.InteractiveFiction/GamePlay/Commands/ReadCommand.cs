@@ -22,7 +22,11 @@ internal sealed record ReadCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
                     try
                     {
                         var readItemEventArgs = new ReadItemEventArgs()
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
 
                         item.OnBeforeRead(readItemEventArgs);
 

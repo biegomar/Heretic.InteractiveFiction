@@ -28,13 +28,16 @@ internal sealed record TasteCommand(Universe Universe, IPrintingSubsystem Printi
     {
         try
         {
+            Description optionalErrorMessage = adventureEvent.Predicate != default
+                ? adventureEvent.Predicate.ErrorMessage
+                : string.Empty;
+            
             var containerObjectEventArgs = new ContainerObjectEventArgs
-                { OptionalErrorMessage = BaseDescriptions.WHAT_TO_TASTE };
-
-            if (!string.IsNullOrEmpty(adventureEvent.Predicate.ErrorMessage))
             {
-                containerObjectEventArgs.OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage;
-            }
+                OptionalErrorMessage = !string.IsNullOrEmpty(optionalErrorMessage)
+                    ? optionalErrorMessage
+                    : BaseDescriptions.WHAT_TO_TASTE
+            };
 
             Universe.ActiveLocation.OnTaste(containerObjectEventArgs);
 
@@ -48,25 +51,32 @@ internal sealed record TasteCommand(Universe Universe, IPrintingSubsystem Printi
     
     private bool HandleTasteEventOnSingleObject(AdventureEvent adventureEvent)
     {
-        var item = adventureEvent.ObjectOne;
-        if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        if (adventureEvent.ObjectOne is {} item)
         {
-            ObjectHandler.StoreAsActiveObject(item);
+            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                ObjectHandler.StoreAsActiveObject(item);
                 
-            try
-            {
-                var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs()
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
                     
-                item.OnTaste(containerObjectEventArgs);
+                    item.OnTaste(containerObjectEventArgs);
                     
-                return true;
-            }
-            catch (TasteException ex)
-            {
-                return PrintingSubsystem.Resource(ex.Message);
+                    return true;
+                }
+                catch (TasteException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
             }
         }
-
+        
         return PrintingSubsystem.ItemNotVisible();
     }
 }

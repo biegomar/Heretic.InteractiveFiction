@@ -24,7 +24,11 @@ internal sealed record GiveCommand(Universe Universe, IPrintingSubsystem Printin
                 try
                 {
                     var eventArgs = new ContainerObjectEventArgs()
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
 
                     Universe.ActivePlayer.OnBeforeGive(eventArgs);
                     character.OnBeforeGive(eventArgs);

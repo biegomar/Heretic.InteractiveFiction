@@ -163,7 +163,7 @@ public abstract partial class AHereticObject
     /// <summary>
     /// The list of additional adjectives for the object.
     /// </summary>
-    public string Adjectives { get; set; }
+    public string Adjectives { get; set; } = string.Empty;
 
     protected AHereticObject()
     {

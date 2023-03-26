@@ -31,7 +31,12 @@ internal sealed record DescendCommand(Universe Universe, IPrintingSubsystem Prin
             var item = Universe.ActivePlayer.ClimbedObject;
             try
             {
-                var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
+                var eventArgs = new ContainerObjectEventArgs()
+                {
+                    OptionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty
+                };
                 
                 Universe.ActivePlayer.OnBeforeDescend(eventArgs);
                 item.OnBeforeDescend(eventArgs);
@@ -59,36 +64,43 @@ internal sealed record DescendCommand(Universe Universe, IPrintingSubsystem Prin
     {
         if (Universe.ActivePlayer.HasClimbed && Universe.ActivePlayer.ClimbedObject != default)
         {
-            var compareItem = adventureEvent.ObjectOne;
-            var item = Universe.ActivePlayer.ClimbedObject;
-            if (item.Key == compareItem.Key)
+            if (adventureEvent.ObjectOne is {} compareItem)
             {
-                try
+                var item = Universe.ActivePlayer.ClimbedObject;
+                if (item.Key == compareItem.Key)
                 {
-                    var eventArgs = new ContainerObjectEventArgs() { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    try
+                    {
+                        var eventArgs = new ContainerObjectEventArgs()
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
 
-                    Universe.ActivePlayer.OnBeforeDescend(eventArgs);
-                    item.OnBeforeDescend(eventArgs);
+                        Universe.ActivePlayer.OnBeforeDescend(eventArgs);
+                        item.OnBeforeDescend(eventArgs);
 
-                    Universe.ActivePlayer.DescendFromObject();
-                    Universe.ActivePlayer.OnDescend(eventArgs);
-                    item.OnDescend(eventArgs);
+                        Universe.ActivePlayer.DescendFromObject();
+                        Universe.ActivePlayer.OnDescend(eventArgs);
+                        item.OnDescend(eventArgs);
 
-                    var result = PrintingSubsystem.Resource(BaseDescriptions.DESCENDING);
+                        var result = PrintingSubsystem.Resource(BaseDescriptions.DESCENDING);
 
-                    item.OnAfterDescend(eventArgs);
-                    Universe.ActivePlayer.OnAfterDescend(eventArgs);
+                        item.OnAfterDescend(eventArgs);
+                        Universe.ActivePlayer.OnAfterDescend(eventArgs);
 
-                    return result;
+                        return result;
+                    }
+                    catch (DescendException ex)
+                    {
+                        return PrintingSubsystem.Resource(ex.Message);
+                    }
                 }
-                catch (DescendException ex)
-                {
-                    return PrintingSubsystem.Resource(ex.Message);
-                }
+                
+                var itemName = ArticleHandler.GetNameWithArticleForObject(compareItem, GrammarCase.Dative, lowerFirstCharacter: true);
+                return PrintingSubsystem.FormattedResource(BaseDescriptions.NOT_CLIMBED_ON_ITEM, itemName);
             }
-
-            var itemName = ArticleHandler.GetNameWithArticleForObject(compareItem, GrammarCase.Dative, lowerFirstCharacter: true);
-            return PrintingSubsystem.FormattedResource(BaseDescriptions.NOT_CLIMBED_ON_ITEM, itemName);
         }
             
         return PrintingSubsystem.Resource(BaseDescriptions.NOT_CLIMBED);

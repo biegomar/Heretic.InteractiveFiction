@@ -4,22 +4,15 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class DestinationNode
 {
-    public Directions Direction { get; set; }
-    public Location Location { get; set; }
-    public bool IsHidden { get; set; }
-    public bool ShowInDescription { get; set; }
+    public Directions Direction { get; init; }
+    public Location? Location { get; init; }
+    public bool IsHidden { get; set; } = false;
+    public bool ShowInDescription { get; set; } = true;
     /// <summary>
     /// This description is displayed when the location is listed in a way description.
     /// If the value is not set, a standardized message is shown.
     /// </summary>
-    public string DestinationDescription { get; set; }
-
-    public DestinationNode()
-    {
-        this.IsHidden = false;
-        this.ShowInDescription = true;
-        this.DestinationDescription = string.Empty;
-    }
+    public string DestinationDescription { get; set; } = string.Empty;
 
     public override string ToString()
     {
@@ -28,7 +21,7 @@ public sealed class DestinationNode
             if (string.IsNullOrEmpty(this.DestinationDescription))
             {
                 return
-                    $"{Location.Name} {BaseDescriptions.WAY} {this.GetDirectionDescription()}. {this.GetLockDescription()}";
+                    $"{Location?.Name} {BaseDescriptions.WAY} {this.GetDirectionDescription()}. {this.GetLockDescription()}";
             }
 
             return $"{this.DestinationDescription} {this.GetLockDescription()}";
@@ -59,6 +52,6 @@ public sealed class DestinationNode
 
     private string GetLockDescription()
     {
-        return Location.IsLocked ? Location.LockDescription : string.Empty;
+        return Location is { IsLocked: true } ? Location.LockDescription : string.Empty;
     }
 }

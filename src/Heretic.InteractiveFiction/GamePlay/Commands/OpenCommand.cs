@@ -44,12 +44,16 @@ internal sealed record OpenCommand(Universe Universe, IPrintingSubsystem Printin
                     try
                     {
                         var containerObjectEventArgs = new ContainerObjectEventArgs
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
 
                         item.OnBeforeOpen(containerObjectEventArgs);
 
                         item.IsClosed = false;
-                        Universe.UnveilFirstLevelObjects(item);
+                        ObjectHandler.UnveilFirstLevelObjects(item);
 
                         item.OnOpen(containerObjectEventArgs);
 

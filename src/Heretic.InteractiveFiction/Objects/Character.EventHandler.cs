@@ -41,7 +41,13 @@ public sealed partial class Character
         }
         else
         {
-            var itemName = ArticleHandler.GetNameWithArticleForObject(eventArgs.Item, GrammarCase.Dative);
+            var itemName = string.Empty;
+            if (eventArgs.Item != null)
+            {
+                itemName = ArticleHandler.GetNameWithArticleForObject(eventArgs.Item, GrammarCase.Dative);
+                
+            }
+            
             throw new AskException(itemName);
         }
     }

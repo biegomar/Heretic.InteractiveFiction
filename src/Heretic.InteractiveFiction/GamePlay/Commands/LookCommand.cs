@@ -49,11 +49,16 @@ internal sealed record LookCommand(Universe Universe, IPrintingSubsystem Printin
     {
         try
         {
-            var eventArgs = new ContainerObjectEventArgs() { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+            var eventArgs = new ContainerObjectEventArgs()
+            {
+                OptionalErrorMessage = adventureEvent.Predicate != default
+                    ? adventureEvent.Predicate.ErrorMessage
+                    : string.Empty
+            };
 
             Universe.ActiveLocation.OnBeforeLook(eventArgs);
 
-            Universe.UnveilFirstLevelObjects(Universe.ActiveLocation);
+            ObjectHandler.UnveilFirstLevelObjects(Universe.ActiveLocation);
             Universe.ActiveLocation.OnLook(eventArgs);
 
             Universe.ActiveLocation.OnAfterLook(eventArgs);
@@ -76,14 +81,23 @@ internal sealed record LookCommand(Universe Universe, IPrintingSubsystem Printin
                     ObjectHandler.StoreAsActiveObject(item);
 
                     var eventArgs = new ContainerObjectEventArgs()
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
                     var eventArgsForActiveLocation = new ContainerObjectEventArgs()
-                        { ExternalItemKey = item.Key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    {
+                        ExternalItemKey = item.Key,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
 
                     item.OnBeforeLook(eventArgs);
                     Universe.ActiveLocation.OnBeforeLook(eventArgsForActiveLocation);
 
-                    Universe.UnveilFirstLevelObjects(item);
+                    ObjectHandler.UnveilFirstLevelObjects(item);
                     item.OnLook(eventArgs);
                     Universe.ActiveLocation.OnLook(eventArgsForActiveLocation);
                     PrintingSubsystem.PrintObject(item);

@@ -20,7 +20,9 @@ internal sealed record ToBeCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
                 var containerObjectEventArgs = new ContainerObjectEventArgs()
                 {
                     ExternalItemKey = adventureEvent.UnidentifiedSentenceParts.FirstOrDefault(),
-                    OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage
+                    OptionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty
                 };
                 subject.OnToBe(containerObjectEventArgs);
 

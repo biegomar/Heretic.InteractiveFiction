@@ -29,7 +29,11 @@ internal sealed record SmellCommand(Universe Universe, IPrintingSubsystem Printi
         try
         {
             var containerObjectEventArgs = new ContainerObjectEventArgs()
-                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+            {
+                OptionalErrorMessage = adventureEvent.Predicate != default
+                    ? adventureEvent.Predicate.ErrorMessage
+                    : string.Empty
+            };
 
             Universe.ActiveLocation.OnSmell(containerObjectEventArgs);
 
@@ -43,29 +47,35 @@ internal sealed record SmellCommand(Universe Universe, IPrintingSubsystem Printi
     
     private bool HandleSmellEventOnSingleObject(AdventureEvent adventureEvent)
     {
-        var activeObject = adventureEvent.ObjectOne;
-        if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(activeObject))
+        if (adventureEvent.ObjectOne is {} activeObject)
         {
-            ObjectHandler.StoreAsActiveObject(activeObject);
+            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(activeObject))
+            {
+                ObjectHandler.StoreAsActiveObject(activeObject);
                 
-            try
-            {
-                var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
-                if (activeObject is Character && string.IsNullOrEmpty(containerObjectEventArgs.OptionalErrorMessage))
+                try
                 {
-                    containerObjectEventArgs.OptionalErrorMessage = BaseDescriptions.DONT_SMELL_ON_PERSON;
+                    Description optionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty;
+                
+                    if (activeObject is Character && string.IsNullOrEmpty(optionalErrorMessage))
+                    {
+                        optionalErrorMessage = BaseDescriptions.DONT_SMELL_ON_PERSON;
+                    }
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = optionalErrorMessage};
+                    
+                    activeObject.OnSmell(containerObjectEventArgs);
+                    
+                    return true;
                 }
-                    
-                activeObject.OnSmell(containerObjectEventArgs);
-                    
-                return true;
-            }
-            catch (SmellException ex)
-            {
-                return PrintingSubsystem.Resource(ex.Message);
+                catch (SmellException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
             }
         }
-
+        
         return PrintingSubsystem.ItemNotVisible();
     }
 }

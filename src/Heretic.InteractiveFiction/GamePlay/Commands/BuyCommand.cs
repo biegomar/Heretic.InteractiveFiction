@@ -45,8 +45,12 @@ internal sealed record BuyCommand(Universe Universe, IPrintingSubsystem Printing
                 try
                 {
                     var containerObjectEventArgs = new ContainerObjectEventArgs()
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-                    adventureEvent.ObjectOne.OnBuy(containerObjectEventArgs);
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
+                    adventureEvent.ObjectOne?.OnBuy(containerObjectEventArgs);
 
                     return true;
                 }

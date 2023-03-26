@@ -23,9 +23,11 @@ internal sealed record PutOnCommand(Universe Universe, IGrammar Grammar, IPrinti
 
         if (adventureEvent.ObjectOne is { } player && player.Key == Universe.ActivePlayer.Key)
         {
-            var playerAdventureEvent = new AdventureEvent();
-            playerAdventureEvent.Predicate = Grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.CLIMB);
-            playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+            var playerAdventureEvent = new AdventureEvent
+            {
+                Predicate = Grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.CLIMB),
+                AllObjects = adventureEvent.AllObjects.Skip(1).ToList()
+            };
             return ClimbCommand.Execute(playerAdventureEvent);
         }
 
@@ -49,13 +51,17 @@ internal sealed record PutOnCommand(Universe Universe, IGrammar Grammar, IPrinti
                     {
                         var putOnEventArgs = new PutOnEventArgs()
                         {
-                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty,
                             ItemToUse = target
                         };
 
                         var targetEventArgs = new PutOnEventArgs()
                         {
-                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty,
                             ItemToUse = item
                         };
 

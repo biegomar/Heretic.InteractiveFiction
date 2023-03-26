@@ -14,7 +14,7 @@ internal sealed record GoCommand(Universe Universe, IPrintingSubsystem PrintingS
             if (Universe.LocationMap.ContainsKey(Universe.ActiveLocation))
             {
                 var mappings = Universe.LocationMap[Universe.ActiveLocation];
-                var direction = mappings.Where(i => !i.IsHidden && i.Location.Key == location.Key)
+                var direction = mappings.Where(i => !i.IsHidden && i.Location?.Key == location.Key)
                     .Select(x => x.Direction).SingleOrDefault();
 
                 if (direction != default && DirectionCommands.ContainsKey(direction))

@@ -21,7 +21,9 @@ internal sealed record PullCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
                 {
                     var pullItemEventArgs = new PullItemEventArgs()
                     {
-                        OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty,
                         ItemToUse = adventureEvent.ObjectTwo
                     };
                     item.OnPull(pullItemEventArgs);

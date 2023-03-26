@@ -42,7 +42,11 @@ internal sealed record SwitchOnCommand(Universe Universe, IPrintingSubsystem Pri
                         try
                         {
                             var itemEventArgs = new ContainerObjectEventArgs()
-                                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                            {
+                                OptionalErrorMessage = adventureEvent.Predicate != default
+                                    ? adventureEvent.Predicate.ErrorMessage
+                                    : string.Empty
+                            };
 
                             item.OnBeforeSwitchOn(itemEventArgs);
 

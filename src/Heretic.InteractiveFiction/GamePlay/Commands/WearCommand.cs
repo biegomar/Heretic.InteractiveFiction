@@ -52,7 +52,7 @@ internal sealed record WearCommand(Universe Universe, IPrintingSubsystem Printin
                             try
                             {
                                 var itemEventArgs = new ContainerObjectEventArgs()
-                                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                                    { OptionalErrorMessage = adventureEvent.Predicate != default ? adventureEvent.Predicate.ErrorMessage : string.Empty };
 
                                 item.OnBeforeWear(itemEventArgs);
 

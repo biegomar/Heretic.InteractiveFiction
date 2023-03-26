@@ -25,7 +25,11 @@ internal sealed record DrinkCommand(Universe Universe, IPrintingSubsystem Printi
                     try
                     {
                         var itemEventArgs = new ContainerObjectEventArgs()
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
 
                         item.OnBeforeDrink(itemEventArgs);
 

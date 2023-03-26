@@ -25,7 +25,12 @@ internal sealed record CloseCommand(IPrintingSubsystem PrintingSubsystem, Object
 
                     try
                     {
-                        var eventArgs = new ContainerObjectEventArgs(){OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
+                        var eventArgs = new ContainerObjectEventArgs()
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
                     
                         item.OnBeforeClose(eventArgs);
 

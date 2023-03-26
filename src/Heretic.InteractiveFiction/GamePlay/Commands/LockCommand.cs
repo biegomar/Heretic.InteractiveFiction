@@ -40,7 +40,12 @@ internal sealed record LockCommand(Universe Universe, IPrintingSubsystem Printin
                                 try
                                 {
                                     var lockContainerEventArgs = new LockContainerEventArgs
-                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                                    {
+                                        Key = key,
+                                        OptionalErrorMessage = adventureEvent.Predicate != default
+                                            ? adventureEvent.Predicate.ErrorMessage
+                                            : string.Empty
+                                    };
 
                                     item.OnBeforeLock(lockContainerEventArgs);
 
@@ -98,7 +103,12 @@ internal sealed record LockCommand(Universe Universe, IPrintingSubsystem Printin
                                 try
                                 {
                                     var lockContainerEventArgs = new LockContainerEventArgs
-                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                                    {
+                                        Key = key,
+                                        OptionalErrorMessage = adventureEvent.Predicate != default
+                                            ? adventureEvent.Predicate.ErrorMessage
+                                            : string.Empty
+                                    };
 
                                     item.OnBeforeLock(lockContainerEventArgs);
 

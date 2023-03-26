@@ -21,7 +21,9 @@ internal sealed record CutCommand(IPrintingSubsystem PrintingSubsystem, ObjectHa
                 {
                     var containerObjectEventArgs = new CutItemEventArgs
                     {
-                        OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty,
                         ItemToUse = adventureEvent.ObjectTwo
                     };
                     item.OnCut(containerObjectEventArgs);

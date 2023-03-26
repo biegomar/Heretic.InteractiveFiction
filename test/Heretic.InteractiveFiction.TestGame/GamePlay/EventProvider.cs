@@ -48,8 +48,11 @@ internal class EventProvider
     {
         if (sender is Item {Key: Keys.DOOR})
         {
-            var destination = this.universe.GetDestinationNodeFromActiveLocationByDirection(Directions.S);
-            destination.IsHidden = false;
+            var destination = this.objectHandler.GetDestinationNodeFromActiveLocationByDirection(Directions.S);
+            if (destination != default)
+            {
+                destination.IsHidden = false;
+            }
         }
     }
     
@@ -59,7 +62,7 @@ internal class EventProvider
         {
             printingSubsystem.Resource(Descriptions.CANDLE_PICKUP);
             this.scoreBoard.WinScore(nameof(TakeCandle));
-            candle.AfterTake -= this.TakeCandle;
+            candle.AfterTake -= this.TakeCandle!;
         }
     }
     

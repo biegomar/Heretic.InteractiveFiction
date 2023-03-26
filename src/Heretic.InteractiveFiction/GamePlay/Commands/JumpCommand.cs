@@ -20,7 +20,11 @@ internal sealed record JumpCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
                 try
                 {
                     var containerObjectEventArgs = new ContainerObjectEventArgs()
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
 
                     item.OnJump(containerObjectEventArgs);
 

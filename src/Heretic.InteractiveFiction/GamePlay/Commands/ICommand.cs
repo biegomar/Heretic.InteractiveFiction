@@ -8,9 +8,11 @@ internal interface ICommand
     
     public static AdventureEvent GetAdventureEventWithoutPlayer(AdventureEvent adventureEvent)
     {
-        var adventureEventWithoutPlayer = new AdventureEvent();
-        adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-        adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+        var adventureEventWithoutPlayer = new AdventureEvent
+        {
+            Predicate = adventureEvent.Predicate,
+            AllObjects = adventureEvent.AllObjects.Skip(1).ToList()
+        };
         return adventureEventWithoutPlayer;
     }
 }

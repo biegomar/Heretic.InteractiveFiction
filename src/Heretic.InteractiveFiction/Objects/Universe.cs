@@ -10,7 +10,7 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class Universe
 { 
-    public int NumberOfSolvedQuests => this.SolvedQuests.Count;
+    public int NumberOfSolvedQuests => this.solvedQuests.Count;
     
     public readonly IDictionary<string, IEnumerable<string>> ItemResources;
     public readonly IDictionary<string, IEnumerable<string>> CharacterResources;
@@ -22,21 +22,20 @@ public sealed class Universe
     public Player ActivePlayer { get; set; }
     public AHereticObject? ActiveObject { get; set; }
     public bool IsPeriodicEventActivated { get => this.periodicEvent.Active; set => this.periodicEvent.Active = value; }
-    public ICollection<string> Quests { get; set; }
+    public ICollection<string>? Quests { get; set; }
 
-    public event EventHandler<PeriodicEventArgs> PeriodicEvents;
+    public event EventHandler<PeriodicEventArgs>? PeriodicEvents;
     
     private readonly IPrintingSubsystem printingSubsystem;
-    private readonly IList<string> SolvedQuests;
-    private int maxScore;
-    private PeriodicEvent periodicEvent;
-    private int score;
+    private readonly IList<string> solvedQuests;
+    
+    private PeriodicEvent? periodicEvent;
     private bool gameWon;
 
     public Universe(IPrintingSubsystem printingSubsystem, IResourceProvider resourceProvider)
     {
         this.printingSubsystem = printingSubsystem;
-        this.SolvedQuests = new List<string>();
+        this.solvedQuests = new List<string>();
         this.gameWon = false;
         this.ItemResources = resourceProvider.GetItemsFromResources();
         this.CharacterResources = resourceProvider.GetCharactersFromResources();
@@ -46,14 +45,11 @@ public sealed class Universe
         this.ActiveObject = null;
     }
 
-    public void SetPeriodicEvent(PeriodicEvent periodicEvent)
+    public void SetPeriodicEvent(PeriodicEvent periodicEventToSet)
     {
-        if (periodicEvent != null)
-        {
-            this.periodicEvent = periodicEvent;
-            this.periodicEvent.Active = false;
-            this.PeriodicEvents += this.periodicEvent.RaiseEvent;    
-        }
+        this.periodicEvent = periodicEventToSet;
+        this.periodicEvent.Active = false;
+        this.PeriodicEvents += this.periodicEvent.RaiseEvent;
     }
 
     public void RaisePeriodicEvents(PeriodicEventArgs eventArgs)
@@ -62,32 +58,16 @@ public sealed class Universe
         localEventHandler?.Invoke(this, eventArgs);
     }
 
-    public bool MoveCharacter(Character person, Location newLocation)
-    {
-        if (person != default && newLocation != default)
-        {
-            var oldLocation = this.LocationMap.Keys.SingleOrDefault(l => l.Characters.Contains(person));
-            if (oldLocation != default)
-            {
-                oldLocation.Characters.Remove(person);
-                newLocation.Characters.Add(person);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsQuestSolved(string quest)
     {
-        return this.SolvedQuests.Contains(quest);
+        return this.solvedQuests.Contains(quest);
     }
 
     public void SolveQuest(string quest)
     {
-        if (!this.SolvedQuests.Contains(quest))
+        if (!this.solvedQuests.Contains(quest))
         {
-            this.SolvedQuests.Add(quest);
+            this.solvedQuests.Add(quest);
             printingSubsystem.ForegroundColor = TextColor.Magenta;
             printingSubsystem.FormattedResource(BaseDescriptions.QUEST_SOLVED, quest);
             printingSubsystem.ResetColors();
@@ -96,7 +76,7 @@ public sealed class Universe
 
     public void DidYouWin()
     {
-        if (!this.gameWon && this.Quests.Count == this.NumberOfSolvedQuests)
+        if (!this.gameWon && this.Quests != null && this.Quests.Count == this.NumberOfSolvedQuests)
         {
             this.gameWon = true;
             throw new GameWonException(BaseDescriptions.QUIT_GAME);
@@ -105,100 +85,40 @@ public sealed class Universe
 
     public bool PickObject(Item item, bool suppressSuccessMessage = false)
     {
-        if (item != default)
+        var owner = this.ActiveLocation.GetOwnerOfUnhiddenItemByKey(item.Key);
+        if (owner == default)
         {
-            var owner = this.ActiveLocation.GetOwnerOfUnhiddenItemByKey(item.Key);
-            if (owner == default)
-            {
-                owner = this.ActivePlayer.GetOwnerOfUnhiddenItemByKey(item.Key);
-            }
+            owner = this.ActivePlayer.GetOwnerOfUnhiddenItemByKey(item.Key);
+        }
 
-            if (owner == default)
-            {
-                return !item.IsPickable && printingSubsystem.ImpossiblePickup(item);
-            }
+        if (owner == default)
+        {
+            return !item.IsPickable && printingSubsystem.ImpossiblePickup(item);
+        }
             
-            if (owner.Key == this.ActivePlayer.Key)
-            {
-                return printingSubsystem.ItemAlreadyOwned();
-            }
+        if (owner.Key == this.ActivePlayer.Key)
+        {
+            return printingSubsystem.ItemAlreadyOwned();
+        }
 
-            if (item.IsPickable)
+        if (item.IsPickable)
+        {
+            var result = this.ActivePlayer.PickItem(item);
+            if (result)
             {
-                var result = this.ActivePlayer.PickItem(item);
+                result = owner.Items.Remove(item);
                 if (result)
                 {
-                    result = owner.Items.Remove(item);
-                    if (result)
-                    {
-                        item.ContainmentDescription = string.Empty;
-                        return suppressSuccessMessage || printingSubsystem.ItemPickupSuccess(item);
-                    }
-
-                    return false;
+                    item.ContainmentDescription = string.Empty;
+                    return suppressSuccessMessage || printingSubsystem.ItemPickupSuccess(item);
                 }
 
-                return printingSubsystem.ItemToHeavy();
+                return false;
             }
 
-            return printingSubsystem.ImpossiblePickup(item);
+            return printingSubsystem.ItemToHeavy();
         }
 
-        return printingSubsystem.ItemNotVisible();
-    }
-
-    public void UnveilFirstLevelObjects(AHereticObject container)
-    {
-        if (container == default)
-        {
-            return;
-        }
-
-        var unveilAbleLinkedItems = container.LinkedTo.Where(i => i.IsUnveilable).ToList();
-        if (unveilAbleLinkedItems.Any())
-        {
-            foreach (var linkedItem in unveilAbleLinkedItems)
-            {
-                linkedItem.IsHidden = false;
-            }
-        }
-        
-        if (container.IsCloseable && container.IsClosed)
-        {
-            return;
-        }
-
-        var unveilAbleItems = container.Items.Where(i => i.IsUnveilable).ToList();
-        if (unveilAbleItems.Any())
-        {
-            foreach (var item in unveilAbleItems)
-            {
-                item.IsHidden = false;
-            }
-        }
-
-        var unveilAbleCharacters = container.Characters.Where(c => c.IsUnveilable).ToList();
-        if (unveilAbleCharacters.Any())
-        {
-            foreach (var character in unveilAbleCharacters)
-            {
-                character.IsHidden = false;
-            }
-        }
-    }
-
-    public DestinationNode GetDestinationNodeFromActiveLocationByDirection(Directions key)
-    {
-        if (this.LocationMap.ContainsKey(this.ActiveLocation))
-        {
-            return this.LocationMap[this.ActiveLocation].FirstOrDefault(l => l.Direction == key);
-        }
-
-        return default;
-    }
-    
-    public Location GetLocationByKey(string key)
-    {
-        return this.LocationMap.Keys.SingleOrDefault(l => l.Key == key);
+        return printingSubsystem.ImpossiblePickup(item);
     }
 }

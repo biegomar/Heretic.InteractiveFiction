@@ -19,7 +19,11 @@ internal sealed record TalkCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
                     try
                     {
                         var containerObjectEventArgs = new ContainerObjectEventArgs()
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
 
                         character.OnBeforeTalk(containerObjectEventArgs);
 

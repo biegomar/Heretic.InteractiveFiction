@@ -28,7 +28,11 @@ internal sealed record SleepCommand(Universe Universe, IPrintingSubsystem Printi
         try
         {
             var containerObjectEventArgs = new ContainerObjectEventArgs()
-                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+            {
+                OptionalErrorMessage = adventureEvent.Predicate != default
+                    ? adventureEvent.Predicate.ErrorMessage
+                    : string.Empty
+            };
 
             Universe.ActiveLocation.OnSleep(containerObjectEventArgs);
 
@@ -42,24 +46,32 @@ internal sealed record SleepCommand(Universe Universe, IPrintingSubsystem Printi
     
     private bool HandleSleepEventOnSingleObject(AdventureEvent adventureEvent)
     {
-        var item = adventureEvent.ObjectOne;
-        if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        if (adventureEvent.ObjectOne is { } item)
         {
-            this.ObjectHandler.StoreAsActiveObject(item);
+            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            {
+                this.ObjectHandler.StoreAsActiveObject(item);
                 
-            try
-            {
-                var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage};
+                try
+                {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs()
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
                     
-                item.OnSleep(containerObjectEventArgs);
+                    item.OnSleep(containerObjectEventArgs);
                     
-                return true;
-            }
-            catch (SleepException ex)
-            {
-                return PrintingSubsystem.Resource(ex.Message);
+                    return true;
+                }
+                catch (SleepException ex)
+                {
+                    return PrintingSubsystem.Resource(ex.Message);
+                }
             }
         }
+        
 
         return PrintingSubsystem.ItemNotVisible();
     }

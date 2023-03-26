@@ -26,17 +26,27 @@ internal sealed record ChangeLocationCommand(Universe Universe, IPrintingSubsyst
             var newMapping = Universe.LocationMap[Universe.ActiveLocation].ToList();
             var newLocationMap = newMapping.Where(i => !i.IsHidden).SingleOrDefault(x => x.Direction == Direction);
 
-            if (newLocationMap != default)
+            if (newLocationMap?.Location != default)
             {
                 try
                 {
                     var oldMapping = Universe.LocationMap[newLocationMap.Location].ToList();
                     var oldLocationMap = oldMapping.SingleOrDefault(i => i.Location == Universe.ActiveLocation);
 
-                    var leaveLocationEventArgs = new LeaveLocationEventArgs(newLocationMap)
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
-                    var enterLocationEventArgs = new EnterLocationEventArgs(oldLocationMap)
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    var leaveLocationEventArgs = new LeaveLocationEventArgs()
+                    {
+                        NewDestinationNode = newLocationMap,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
+                    var enterLocationEventArgs = new EnterLocationEventArgs()
+                    {
+                        OldDestinationNode = oldLocationMap,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
 
                     Universe.ActiveLocation.OnBeforeLeaveLocation(leaveLocationEventArgs);
                     newLocationMap.Location.OnBeforeEnterLocation(enterLocationEventArgs);

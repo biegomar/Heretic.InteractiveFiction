@@ -13,9 +13,11 @@ internal sealed record StandUpCommand(Universe Universe, IGrammar Grammar, IPrin
     {
         if (adventureEvent.ObjectOne is { } item && item.Key != Universe.ActivePlayer.Key)
         {
-            var playerAdventureEvent = new AdventureEvent();
-            playerAdventureEvent.Predicate = Grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.DROP);
-            playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects);
+            var playerAdventureEvent = new AdventureEvent
+            {
+                Predicate = Grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.DROP),
+                AllObjects = adventureEvent.AllObjects
+            };
             return DropCommand.Execute(playerAdventureEvent);
         }
 
@@ -32,7 +34,11 @@ internal sealed record StandUpCommand(Universe Universe, IGrammar Grammar, IPrin
                 ObjectHandler.StoreAsActiveObject(item);
 
                 var eventArgs = new ContainerObjectEventArgs()
-                    { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                {
+                    OptionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty
+                };
 
                 Universe.ActivePlayer.OnBeforeStandUp(eventArgs);
                 item.OnBeforeStandUp(eventArgs);

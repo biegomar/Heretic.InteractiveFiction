@@ -21,7 +21,9 @@ internal sealed record KindleCommand(IPrintingSubsystem PrintingSubsystem, Objec
                 {
                     var containerObjectEventArgs = new KindleItemEventArgs()
                     {
-                        OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty,
                         ItemToUse = adventureEvent.ObjectTwo
                     };
                     item.OnKindle(containerObjectEventArgs);

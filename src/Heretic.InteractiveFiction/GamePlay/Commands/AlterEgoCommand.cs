@@ -24,19 +24,14 @@ internal sealed record AlterEgoCommand(Universe Universe, IPrintingSubsystem Pri
     private bool HandleAlterEgoEventOnActiveLocation()
     {
         var item = Universe.ActiveObject ?? Universe.ActivePlayer;
-        if (item != default)
-        {
-            var result = PrintingSubsystem.AlterEgo(item);
-            return result;
-        }
-
-        return PrintingSubsystem.ItemNotVisible();
+        var result = PrintingSubsystem.AlterEgo(item);
+        return result;
     }
     
     private bool HandleAlterEgoEventOnSingleObject(AdventureEvent adventureEvent)
     {
         var item = adventureEvent.ObjectOne;
-        if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        if (item != null && ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
         {
             ObjectHandler.StoreAsActiveObject(item);
             var result = PrintingSubsystem.AlterEgo(item);

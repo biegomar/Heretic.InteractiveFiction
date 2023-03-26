@@ -44,7 +44,10 @@ internal sealed record UseCommand(Universe Universe, IPrintingSubsystem Printing
                     try
                     {
                         string optionalErrorMessage = string.Empty;
-                        var errorMessage = adventureEvent.Predicate.ErrorMessage;
+                        Description errorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty;
+                        
                         if (!string.IsNullOrEmpty(errorMessage))
                         {
                             var itemName =
@@ -95,7 +98,10 @@ internal sealed record UseCommand(Universe Universe, IPrintingSubsystem Printing
                 try
                 {
                     string optionalErrorMessage = string.Empty;
-                    var errorMessage = adventureEvent.Predicate.ErrorMessage;
+                    Description errorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty;
+                    
                     if (!string.IsNullOrEmpty(errorMessage))
                     {
                         var itemName =

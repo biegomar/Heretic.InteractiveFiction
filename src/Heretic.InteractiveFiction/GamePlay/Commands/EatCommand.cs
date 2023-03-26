@@ -61,7 +61,11 @@ internal sealed record EatCommand(Universe Universe, IPrintingSubsystem Printing
                     try
                     {
                         var itemEventArgs = new ContainerObjectEventArgs()
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
 
                         item.OnBeforeEat(itemEventArgs);
                         
@@ -96,9 +100,6 @@ internal sealed record EatCommand(Universe Universe, IPrintingSubsystem Printing
         }
 
         return PrintingSubsystem.Resource(BaseDescriptions.WHAT_TO_EAT);
-
-
-        return false;
     }
 
 }

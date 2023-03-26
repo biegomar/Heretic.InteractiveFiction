@@ -15,7 +15,7 @@ internal sealed record WriteCommand(Universe Universe, IPrintingSubsystem Printi
             var writeEventArgs = new WriteEventArgs()
             {
                 Text = string.Join(" ", adventureEvent.UnidentifiedSentenceParts),
-                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage
+                OptionalErrorMessage = adventureEvent.Predicate != default ? adventureEvent.Predicate.ErrorMessage : string.Empty
             };
                 
             Universe.ActiveLocation.OnWrite(writeEventArgs);

@@ -47,7 +47,7 @@ public sealed class InputProcessor
 
             return result;
         }
-        catch (NoVerbException ex)
+        catch (NoVerbException)
         {
             return printingSubsystem.Misconcept();
         }

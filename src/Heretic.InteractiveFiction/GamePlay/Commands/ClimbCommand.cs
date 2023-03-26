@@ -43,7 +43,11 @@ internal sealed record ClimbCommand(Universe Universe, IPrintingSubsystem Printi
                         try
                         {
                             var eventArgs = new ContainerObjectEventArgs()
-                                { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                            {
+                                OptionalErrorMessage = adventureEvent.Predicate != default
+                                    ? adventureEvent.Predicate.ErrorMessage
+                                    : string.Empty
+                            };
                             item.OnBeforeClimb(eventArgs);
 
                             Universe.ActivePlayer.HasClimbed = true;

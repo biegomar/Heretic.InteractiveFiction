@@ -143,7 +143,7 @@ internal class CommandExecutor
 
     internal bool Execute(AdventureEvent adventureEvent)
     {
-        if (commands.ContainsKey(adventureEvent.Predicate.Key))
+        if (adventureEvent.Predicate != null && commands.ContainsKey(adventureEvent.Predicate.Key))
         {
             var command = commands[adventureEvent.Predicate.Key];
 

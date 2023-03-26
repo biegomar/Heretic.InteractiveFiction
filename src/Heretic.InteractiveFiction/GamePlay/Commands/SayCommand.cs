@@ -25,7 +25,12 @@ internal sealed record SayCommand(IPrintingSubsystem PrintingSubsystem, ObjectHa
             try
             {
                 var conversationEventArgs = new ConversationEventArgs
-                    { Phrase = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                {
+                    Phrase = key,
+                    OptionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty
+                };
 
                 character.OnSay(conversationEventArgs);
             }

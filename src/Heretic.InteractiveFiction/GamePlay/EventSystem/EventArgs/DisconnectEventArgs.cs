@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class DisconnectEventArgs: UseItemEventArgs
+public sealed class DisconnectEventArgs: UseItemEventArgs
 {
     
 }

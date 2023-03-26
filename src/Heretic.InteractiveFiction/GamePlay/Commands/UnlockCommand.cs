@@ -29,7 +29,6 @@ internal sealed record UnlockCommand(Universe Universe, IPrintingSubsystem Print
                 if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
                     Universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
                 {
-                    var key = Universe.ActivePlayer.GetItem(item.UnlockWithKey);
                     if (item.IsLockable)
                     {
                         if (item.IsLocked)
@@ -38,23 +37,34 @@ internal sealed record UnlockCommand(Universe Universe, IPrintingSubsystem Print
                             {
                                 try
                                 {
-                                    var unlockContainerEventArgs = new LockContainerEventArgs
-                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                                    var key = Universe.ActivePlayer.GetItem(item.UnlockWithKey);
+                                    if (key != default)
+                                    {
+                                        var unlockContainerEventArgs = new LockContainerEventArgs
+                                        {
+                                            Key = key,
+                                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                                ? adventureEvent.Predicate.ErrorMessage
+                                                : string.Empty
+                                        };
 
-                                    item.OnBeforeUnlock(unlockContainerEventArgs);
+                                        item.OnBeforeUnlock(unlockContainerEventArgs);
 
-                                    item.IsLocked = false;
-                                    item.OnUnlock(unlockContainerEventArgs);
-                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key,
-                                        GrammarCase.Accusative, lowerFirstCharacter: true);
+                                        item.IsLocked = false;
+                                        item.OnUnlock(unlockContainerEventArgs);
+                                        var keyName = ArticleHandler.GetNameWithArticleForObject(key,
+                                            GrammarCase.Accusative, lowerFirstCharacter: true);
                                     
-                                    PrintingSubsystem.Resource(string.Format(
-                                        BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName,
-                                        item.Name));
+                                        PrintingSubsystem.Resource(string.Format(
+                                            BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName,
+                                            item.Name));
 
-                                    item.OnAfterUnlock(unlockContainerEventArgs);
+                                        item.OnAfterUnlock(unlockContainerEventArgs);
 
-                                    return true;
+                                        return true; 
+                                    }
+
+                                    return PrintingSubsystem.KeyNotVisible();
                                 }
                                 catch (UnlockException e)
                                 {
@@ -83,20 +93,26 @@ internal sealed record UnlockCommand(Universe Universe, IPrintingSubsystem Print
         if (adventureEvent.ObjectOne is Item item)
         {
             ObjectHandler.StoreAsActiveObject(item);
-            if (adventureEvent.ObjectTwo is Item key)
+
+            if (item.IsLockable)
             {
-                if (item.IsLockable)
+                if (item.IsLocked)
                 {
-                    if (item.IsLocked)
+                    if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
                     {
-                        if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                        if (adventureEvent.ObjectTwo is Item key)
                         {
                             if (Universe.ActivePlayer.OwnsObject(key))
                             {
                                 try
                                 {
                                     var unlockContainerEventArgs = new LockContainerEventArgs
-                                        { Key = key, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                                    {
+                                        Key = key,
+                                        OptionalErrorMessage = adventureEvent.Predicate != default
+                                            ? adventureEvent.Predicate.ErrorMessage
+                                            : string.Empty
+                                    };
 
                                     item.OnBeforeUnlock(unlockContainerEventArgs);
 
@@ -125,15 +141,15 @@ internal sealed record UnlockCommand(Universe Universe, IPrintingSubsystem Print
 
                             PrintingSubsystem.ItemNotOwned(key);
                         }
-                    }
 
-                    return PrintingSubsystem.ItemAlreadyUnlocked(item);
+                        return PrintingSubsystem.KeyNotVisible();
+                    }
                 }
 
-                return PrintingSubsystem.ItemNotLockAble(item);
+                return PrintingSubsystem.ItemAlreadyUnlocked(item);
             }
 
-            return PrintingSubsystem.KeyNotVisible();
+            return PrintingSubsystem.ItemNotLockAble(item);
         }
 
         return PrintingSubsystem.ItemNotVisible();

@@ -17,7 +17,7 @@ internal sealed record DisconnectCommand(IPrintingSubsystem PrintingSubsystem, O
 
         }
 
-        if (adventureEvent.AllObjects.Count == 1)
+        if (adventureEvent.AllObjects.Count == 1 && adventureEvent.ObjectOne != null)
         {
             return PrintingSubsystem.FormattedResource(BaseDescriptions.WHAT_TO_DISCONNECT_FROM,
                 ArticleHandler.GetNameWithArticleForObject(adventureEvent.ObjectOne, GrammarCase.Dative,
@@ -64,7 +64,10 @@ internal sealed record DisconnectCommand(IPrintingSubsystem PrintingSubsystem, O
                                 try
                                 {
                                     string optionalErrorMessage = string.Empty;
-                                    var errorMessage = adventureEvent.Predicate.ErrorMessage;
+                                    Description errorMessage = adventureEvent.Predicate != default
+                                        ? adventureEvent.Predicate.ErrorMessage
+                                        : string.Empty;
+                                    
                                     if (!string.IsNullOrEmpty(errorMessage))
                                     {
                                         var itemName =

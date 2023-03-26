@@ -50,11 +50,18 @@ internal sealed record SitDownCommand(Universe Universe, IPrintingSubsystem Prin
             try
             {
                 var sitDownEventArgs = new SitDownEventArgs
-                    { ItemToSitOn = onlySeat, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                {
+                    ItemToSitOn = onlySeat,
+                    OptionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty
+                };
                 var downEventArgs = new SitDownEventArgs
                 {
                     ItemToSitOn = Universe.ActivePlayer,
-                    OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage
+                    OptionalErrorMessage = adventureEvent.Predicate != default
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty
                 };
 
                 Universe.ActivePlayer.OnBeforeSitDown(sitDownEventArgs);
@@ -98,11 +105,18 @@ internal sealed record SitDownCommand(Universe Universe, IPrintingSubsystem Prin
                 try
                 {
                     var sitDownEventArgs = new SitDownEventArgs
-                        { ItemToSitOn = item, OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    {
+                        ItemToSitOn = item,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
                     var downEventArgs = new SitDownEventArgs
                     {
                         ItemToSitOn = Universe.ActivePlayer,
-                        OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
                     };
 
                     Universe.ActivePlayer.OnBeforeSitDown(sitDownEventArgs);

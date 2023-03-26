@@ -14,9 +14,12 @@ internal sealed record BreakCommand(Universe Universe, IPrintingSubsystem Printi
         {
             if (adventureEvent.ObjectOne is { } player && player.Key == Universe.ActivePlayer.Key)
             {
-                var adventureEventWithoutPlayer = new AdventureEvent();
-                adventureEventWithoutPlayer.Predicate = adventureEvent.Predicate;
-                adventureEventWithoutPlayer.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+                var adventureEventWithoutPlayer = new AdventureEvent
+                {
+                    Predicate = adventureEvent.Predicate,
+                    AllObjects = adventureEvent.AllObjects.Skip(1).ToList()
+                };
+                
                 return this.HandleBreakEventOnObjects(adventureEventWithoutPlayer);
             }
         }
@@ -40,7 +43,9 @@ internal sealed record BreakCommand(Universe Universe, IPrintingSubsystem Printi
                         {
                             var eventArgs = new BreakItemEventArgs()
                             {
-                                OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                                OptionalErrorMessage = adventureEvent.Predicate != default
+                                    ? adventureEvent.Predicate.ErrorMessage
+                                    : string.Empty,
                                 ItemToUse = adventureEvent.ObjectTwo
                             };
                             item.OnBeforeBreak(eventArgs);

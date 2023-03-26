@@ -24,7 +24,7 @@ public interface IResourceProvider
                      foreach (var prepositionPair in prepositionPairs)
                      {
                          var splitPair = prepositionPair.Split(':');
-                         prepositions.Add(new PrepositionVariant {Name = splitPair[0], Case = splitPair.Length > 1 ? splitPair[1] : string.Empty});
+                         prepositions.Add(new PrepositionVariant(Name: splitPair[0], Case: splitPair.Length > 1 ? splitPair[1] : string.Empty));
                      }
                  }
                  

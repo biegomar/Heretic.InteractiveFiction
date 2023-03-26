@@ -19,7 +19,11 @@ internal sealed record TurnCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
                 try
                 {
                     var turnItemEventArgs = new TurnItemEventArgs()
-                        { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                    {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty
+                    };
 
                     item.OnTurn(turnItemEventArgs);
 

@@ -1,6 +1,6 @@
 namespace Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 
-public class ConnectEventArgs: UseItemEventArgs
+public sealed class ConnectEventArgs: UseItemEventArgs
 {
     
 }

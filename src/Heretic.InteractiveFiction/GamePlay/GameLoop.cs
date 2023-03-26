@@ -70,11 +70,11 @@ public sealed class GameLoop
         {
             printingSubsystem.Resource(ex.Message);
         }
-        catch (GameWonException ex)
+        catch (GameWonException)
         {
             FinalizeGame();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             printingSubsystem.Resource(BaseDescriptions.SYSTEM_ERROR);
         }

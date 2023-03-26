@@ -62,7 +62,11 @@ internal sealed record TakeCommand(Universe Universe, IPrintingSubsystem Printin
                         ObjectHandler.StoreAsActiveObject(hereticObject);
 
                         var eventArgs = new ContainerObjectEventArgs()
-                            { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+                        {
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty
+                        };
                         hereticObject.OnBeforeTake(eventArgs);
                         Universe.PickObject(item);
                         hereticObject.OnTake(eventArgs);
@@ -92,7 +96,12 @@ internal sealed record TakeCommand(Universe Universe, IPrintingSubsystem Printin
         var subjects = Universe.ActiveLocation.GetAllPickableAndUnHiddenItems();
         if (subjects.Any())
         {
-            var eventArgs = new ContainerObjectEventArgs() { OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage };
+            var eventArgs = new ContainerObjectEventArgs()
+            {
+                OptionalErrorMessage = adventureEvent.Predicate != default
+                    ? adventureEvent.Predicate.ErrorMessage
+                    : string.Empty
+            };
             var result = true;
             foreach (var item in subjects)
             {

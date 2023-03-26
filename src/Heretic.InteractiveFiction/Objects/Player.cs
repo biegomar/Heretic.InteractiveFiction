@@ -53,7 +53,7 @@ public sealed class Player : AHereticObject
         return new StringBuilder();
     }
 
-    internal override AHereticObject GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
+    internal override AHereticObject? GetObject(string itemKey, ICollection<AHereticObject> visitedItems)
     {
         var result = base.GetObject(itemKey, visitedItems);
 

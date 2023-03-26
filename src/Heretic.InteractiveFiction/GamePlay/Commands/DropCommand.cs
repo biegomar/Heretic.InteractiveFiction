@@ -23,9 +23,11 @@ internal sealed record DropCommand(Universe Universe, IGrammar Grammar, IPrintin
 
         if (adventureEvent.ObjectOne is { } player && player.Key == Universe.ActivePlayer.Key)
         {
-            var playerAdventureEvent = new AdventureEvent();
-            playerAdventureEvent.Predicate = Grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.SLEEP);
-            playerAdventureEvent.AllObjects.AddRange(adventureEvent.AllObjects.Skip(1));
+            var playerAdventureEvent = new AdventureEvent
+            {
+                Predicate = Grammar.Verbs.SingleOrDefault(v => v.Key == VerbKey.SLEEP),
+                AllObjects = adventureEvent.AllObjects.Skip(1).ToList()
+            };
             return SleepCommand.Execute(playerAdventureEvent);
         }
 
@@ -35,8 +37,8 @@ internal sealed record DropCommand(Universe Universe, IGrammar Grammar, IPrintin
     private bool HandleDrop(AdventureEvent adventureEvent)
     {
         var processingObject = adventureEvent.ObjectOne;
-        var isPlayerItem = Universe.ActivePlayer.Items.Any(x => x.Key == processingObject.Key);
-        var isPlayerCloths = Universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject.Key);
+        var isPlayerItem = Universe.ActivePlayer.Items.Any(x => x.Key == processingObject?.Key);
+        var isPlayerCloths = Universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject?.Key);
         if (isPlayerItem || isPlayerCloths)
         {
             if (processingObject is Item { IsDropable: true } item)
@@ -45,7 +47,9 @@ internal sealed record DropCommand(Universe Universe, IGrammar Grammar, IPrintin
                 {
                     var dropItemEventArgs = new DropItemEventArgs()
                     {
-                        OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                        OptionalErrorMessage = adventureEvent.Predicate != default
+                            ? adventureEvent.Predicate.ErrorMessage
+                            : string.Empty,
                         ItemToUse = adventureEvent.ObjectTwo
                     };
 

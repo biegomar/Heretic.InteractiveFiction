@@ -22,7 +22,9 @@ internal sealed record PushCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
                     {
                         var pushItemEventArgs = new PushItemEventArgs()
                         {
-                            OptionalErrorMessage = adventureEvent.Predicate.ErrorMessage,
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty,
                             ItemToUse = adventureEvent.ObjectTwo
                         };
 
