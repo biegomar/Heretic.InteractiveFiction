@@ -1,10 +1,11 @@
 using Heretic.InteractiveFiction.Grammars;
+using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record HintCommand(IPrintingSubsystem PrintingSubsystem): ICommand
+internal sealed record HintCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem): ICommand
 {
     private bool isHintActive;
 
@@ -34,6 +35,18 @@ internal sealed record HintCommand(IPrintingSubsystem PrintingSubsystem): IComma
             {
                 isHintActive = false;
                 return PrintingSubsystem.Resource(BaseDescriptions.HINT_OFF);
+            }
+        }
+        else
+        {
+            if (adventureEvent.UnidentifiedSentenceParts.Count == 0)
+            {
+                if (isHintActive)
+                {
+                    return PrintingSubsystem.Hint(Universe.ActiveLocation);
+                }
+            
+                return PrintingSubsystem.Resource(BaseDescriptions.HINT_NOT_ACTIVE);
             }
         }
 

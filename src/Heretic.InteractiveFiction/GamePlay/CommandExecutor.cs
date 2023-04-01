@@ -49,11 +49,11 @@ internal class CommandExecutor
         result.Add(VerbKey.SCORE, new ScoreCommand(scoreBoard));
         
         result.Add(VerbKey.CREDITS, new CreditsCommand(printingSubsystem));
-        result.Add(VerbKey.HINT, new HintCommand(printingSubsystem));
 
         result.Add(VerbKey.HELP, new HelpCommand(grammar, printingSubsystem));
         
         result.Add(VerbKey.DESCEND, new DescendCommand(universe, printingSubsystem));
+        result.Add(VerbKey.HINT, new HintCommand(universe, printingSubsystem));
         result.Add(VerbKey.INV, new InventoryCommand(universe, printingSubsystem));
         result.Add(VerbKey.WAIT, new WaitCommand(universe, printingSubsystem));
         result.Add(VerbKey.WRITE, new WriteCommand(universe, printingSubsystem));
