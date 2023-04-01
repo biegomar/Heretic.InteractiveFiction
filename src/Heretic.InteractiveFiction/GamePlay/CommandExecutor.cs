@@ -16,8 +16,6 @@ internal class CommandExecutor
     private readonly HistoryAdministrator historyAdministrator;
     private readonly ScoreBoard scoreBoard;
     
-    private bool isHintActive;
-    
     internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, HistoryAdministrator historyAdministrator, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
@@ -26,7 +24,6 @@ internal class CommandExecutor
         this.historyAdministrator = historyAdministrator;
         this.scoreBoard = scoreBoard;
         objectHandler = new ObjectHandler(universe);
-        isHintActive = false;
 
         commands = InitCommands();
     }

@@ -78,21 +78,26 @@ public static class ArticleHandler
         };
     }
     
-    public static string GetNameWithArticleForObject(AHereticObject processingObject, GrammarCase grammarCase, ArticleState articleState = ArticleState.Definite, bool lowerFirstCharacter = false)
+    public static string GetNameWithArticleForObject(AHereticObject? processingObject, GrammarCase grammarCase, ArticleState articleState = ArticleState.Definite, bool lowerFirstCharacter = false)
     {
-        var article= GetArticleForObject(processingObject, grammarCase, articleState);
-        if (!string.IsNullOrWhiteSpace(article) && lowerFirstCharacter)
+        if (processingObject != default)
         {
-            article = article.LowerFirstChar();
+            var article= GetArticleForObject(processingObject, grammarCase, articleState);
+            if (!string.IsNullOrWhiteSpace(article) && lowerFirstCharacter)
+            {
+                article = article.LowerFirstChar();
+            }
+
+            var name = GetObjectName(processingObject);
+        
+            if (!string.IsNullOrEmpty(processingObject.Adjectives))
+            {
+                return string.Format($"{article} {GetJoinedDeclinedAdjectivesForObject(processingObject, grammarCase)} {name}").Trim();    
+            }
+            return string.Format($"{article} {name}").Trim();
         }
 
-        var name = GetObjectName(processingObject);
-        
-        if (!string.IsNullOrEmpty(processingObject.Adjectives))
-        {
-            return string.Format($"{article} {GetJoinedDeclinedAdjectivesForObject(processingObject, grammarCase)} {name}").Trim();    
-        }
-        return string.Format($"{article} {name}").Trim();
+        return string.Empty;
     }
 
     private static string GetJoinedDeclinedAdjectivesForObject(AHereticObject processingObject, GrammarCase grammarCase)

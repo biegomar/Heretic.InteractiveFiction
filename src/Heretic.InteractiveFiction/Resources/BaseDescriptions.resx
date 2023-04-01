@@ -532,10 +532,10 @@
     <value>OFF</value>
   </data>
   <data name="HINT_ON" xml:space="preserve">
-    <value>Das Tipp-System wurde aktiviert.</value>
+    <value>Die Hinweise wurden aktiviert.</value>
   </data>
   <data name="HINT_OFF" xml:space="preserve">
-    <value>Das Tipp-System wurde deaktiviert.</value>
+    <value>Die Hinweise wurden deaktiviert.</value>
   </data>
   <data name="IMPOSSIBLE_SINGLE_ITEM_PICKUP" xml:space="preserve">
     <value>Du kannst das nicht mitnehmen.</value>
@@ -864,5 +864,14 @@
   </data>
   <data name="PICK_AND_PULLON_WEARABLE" xml:space="preserve">
     <value>Du hast {0} genommen und {1} angezogen.</value>
+  </data>
+  <data name="HINT_NOT_ACTIVE" xml:space="preserve">
+    <value>Hinweise sind nicht aktiviert.</value>
+  </data>
+  <data name="HINT_NOT_AVAILABLE" xml:space="preserve">
+    <value>Für {0} gibt es keine weiteren Hinweise.</value>
+  </data>
+  <data name="HINT_FOR_WHAT" xml:space="preserve">
+    <value>Für was genau möchtest Du einen Hinweis bekommen?</value>
   </data>
 </root>

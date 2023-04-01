@@ -1538,5 +1538,23 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("PICK_AND_PULLON_WEARABLE", resourceCulture);
             }
         }
+        
+        public static string HINT_NOT_ACTIVE {
+            get {
+                return ResourceManager.GetString("HINT_NOT_ACTIVE", resourceCulture);
+            }
+        }
+        
+        public static string HINT_NOT_AVAILABLE {
+            get {
+                return ResourceManager.GetString("HINT_NOT_AVAILABLE", resourceCulture);
+            }
+        }
+        
+        public static string HINT_FOR_WHAT {
+            get {
+                return ResourceManager.GetString("HINT_FOR_WHAT", resourceCulture);
+            }
+        }
     }
 }

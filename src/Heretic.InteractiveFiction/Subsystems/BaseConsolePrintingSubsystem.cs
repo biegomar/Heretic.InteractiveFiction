@@ -53,20 +53,38 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.ResetColor();
     }
 
-    public virtual bool ActiveLocation(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap)
+    public virtual bool ActiveLocation(Location? activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap)
     {
-        Console.Write(WordWrap(activeLocation, this.ConsoleWidth));
-        DestinationNode(activeLocation, locationMap);
+        if (activeLocation == default)
+        {
+            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, this.ConsoleWidth));
+            Console.WriteLine();
+        }
+        else
+        {
+            Console.Write(WordWrap(activeLocation, this.ConsoleWidth));
+            DestinationNode(activeLocation, locationMap);    
+        }
+        
         return true;
     }
 
-    public virtual bool ActivePlayer(Player activePlayer)
+    public virtual bool ActivePlayer(Player? activePlayer)
     {
-        Console.Write(WordWrap(activePlayer, this.ConsoleWidth));
+        if (activePlayer == default)
+        {
+            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, this.ConsoleWidth));
+            Console.WriteLine();
+        }
+        else
+        {
+            Console.Write(WordWrap(activePlayer, this.ConsoleWidth));
+        }
+        
         return true;
     }
 
-    public virtual bool AlterEgo(AHereticObject item)
+    public virtual bool AlterEgo(AHereticObject? item)
     {
         if (item == default)
         {
@@ -77,25 +95,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         {
             Console.WriteLine(WordWrap(item.AlterEgo(), this.ConsoleWidth));
         }
-        return true;
-    }
-
-    public virtual bool AlterEgo(string itemName)
-    {
-        if (string.IsNullOrEmpty(itemName))
-        {
-            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, this.ConsoleWidth));
-            Console.WriteLine();
-
-        }
-        else
-        {
-            var result = new StringBuilder();
-            result.AppendFormat(BaseDescriptions.ALTER_EGO_DESCRIPTION, this.GetObjectName(itemName));
-            result.AppendLine(string.Join(", ", itemName.Split('|')));
-            Console.WriteLine(WordWrap(result.ToString(), this.ConsoleWidth));
-        }
-
         return true;
     }
 
@@ -112,7 +111,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         Console.Clear();
     }
 
-    public virtual bool PrintObject(AHereticObject item)
+    public virtual bool PrintObject(AHereticObject? item)
     {
         if (item == default)
         {
@@ -135,6 +134,27 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         VerbContainers(verbs);
         VerbMetaInfos(verbs);
         
+        return true;
+    }
+
+    public bool Hint(AHereticObject? item)
+    {
+        if (item == default)
+        {
+            Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_VISIBLE, this.ConsoleWidth));
+            Console.WriteLine();
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(item.Hint))
+            {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+                Console.Write(WordWrap(BaseDescriptions.HINT_NOT_AVAILABLE, this.ConsoleWidth), itemName);
+                Console.WriteLine();
+                return true;
+            }
+            Console.Write(WordWrap(item.Hint, this.ConsoleWidth));
+        }
         return true;
     }
 
@@ -470,8 +490,13 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.ITEM_NOT_VISIBLE);
     }
     
-    public virtual bool ItemNotVisible(AHereticObject item)
+    public virtual bool ItemNotVisible(AHereticObject? item)
     {
+        if (item == default)
+        {
+            return this.ItemNotVisible();
+        }
+        
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         return FormattedResource(BaseDescriptions.ITEM_NAME_NOT_VISIBLE, itemName);
     }
@@ -481,7 +506,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.KEY_NOT_VISIBLE);
     }
 
-    public virtual bool ImpossiblePickup(AHereticObject containerObject)
+    public virtual bool ImpossiblePickup(AHereticObject? containerObject)
     {
         if (containerObject != default)
         {
@@ -504,7 +529,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.TO_HEAVY);
     }
 
-    public virtual bool ItemPickupSuccess(AHereticObject item)
+    public virtual bool ItemPickupSuccess(AHereticObject? item)
     {
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_PICKUP, this.ConsoleWidth), itemName);
@@ -512,74 +537,79 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public virtual bool ImpossibleDrop(AHereticObject item)
+    public virtual bool ImpossibleDrop(AHereticObject? item)
     {
-        if (string.IsNullOrEmpty(item.UnDropAbleDescription))
+        if (item != default)
         {
-            var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
-            Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), itemName);
-            Console.WriteLine();
+            if (string.IsNullOrEmpty(item.UnDropAbleDescription))
+            {
+                var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
+                Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_DROP, this.ConsoleWidth), itemName);
+                Console.WriteLine();
             
-            return true;
+                return true;
+            }
+
+            return this.Resource(item.UnDropAbleDescription);    
         }
 
-        return this.Resource(item.UnDropAbleDescription);
+        return true;
     }
 
-    public virtual bool ItemAlreadyClosed(AHereticObject item)
+    public virtual bool ItemAlreadyClosed(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_CLOSED, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_CLOSED, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public virtual bool ItemClosed(AHereticObject item)
+    public virtual bool ItemClosed(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.NOW_CLOSED, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.NOW_CLOSED, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public bool ItemStillClosed(AHereticObject item)
+    public bool ItemStillClosed(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_STILL_CLOSED, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_STILL_CLOSED, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public bool ItemAlreadyBroken(AHereticObject item)
+    public bool ItemAlreadyBroken(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_BROKEN, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_BROKEN, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public virtual bool ItemAlreadyOpen(AHereticObject item)
+    public virtual bool ItemAlreadyOpen(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_OPEN, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_OPEN, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public virtual bool ItemAlreadyLocked(AHereticObject item)
+    public virtual bool ItemAlreadyLocked(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_LOCKED, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_LOCKED, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
     
-    public virtual bool ItemAlreadyUnlocked(AHereticObject item)
+    public virtual bool ItemAlreadyUnlocked(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ALREADY_UNLOCKED, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ALREADY_UNLOCKED, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public bool ItemUnbreakable(AHereticObject item)
+    public bool ItemUnbreakable(AHereticObject? item)
     {
-        if (string.IsNullOrEmpty(item.UnbreakableDescription))
+        if (item == default || string.IsNullOrEmpty(item.UnbreakableDescription))
         {
-            Console.Write(WordWrap(BaseDescriptions.ITEM_UNBREAKABLE, this.ConsoleWidth), item.Name);    
+            Console.Write(WordWrap(BaseDescriptions.ITEM_UNBREAKABLE, this.ConsoleWidth), item?.Name);    
         }
         else
         {
@@ -590,9 +620,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public bool ItemUnknown(AdventureEvent adventureEvent)
+    public bool ItemUnknown(AdventureEvent? adventureEvent)
     {
-        if (adventureEvent.UnidentifiedSentenceParts.Any())
+        if (adventureEvent != null && adventureEvent.UnidentifiedSentenceParts.Any())
         {
             return this.FormattedResource(BaseDescriptions.ITEM_UNKNOWN,
                 string.Join(BaseDescriptions.BINDING_OR, adventureEvent.UnidentifiedSentenceParts));
@@ -600,7 +630,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public bool ItemSeated(AHereticObject item)
+    public bool ItemSeated(AHereticObject? item)
     {
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_SEATED, this.ConsoleWidth), itemName);
@@ -608,7 +638,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public bool ItemNotSeatable(AHereticObject item)
+    public bool ItemNotSeatable(AHereticObject? item)
     {
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_SEATABLE, this.ConsoleWidth), itemName);
@@ -616,45 +646,50 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public virtual bool ItemStillLocked(AHereticObject item)
+    public virtual bool ItemStillLocked(AHereticObject? item)
     {
-        Console.Write(!string.IsNullOrEmpty(item.LockDescription)
-            ? WordWrap(item.LockDescription, this.ConsoleWidth)
-            : string.Format(WordWrap(BaseDescriptions.ITEM_STILL_LOCKED, this.ConsoleWidth), item.Name));
-
+        if (item != default && !string.IsNullOrEmpty(item.LockDescription))
+        {
+            Console.Write(WordWrap(item.LockDescription, this.ConsoleWidth));
+        }
+        else
+        {
+            Console.Write(WordWrap(BaseDescriptions.ITEM_STILL_LOCKED, this.ConsoleWidth), item?.Name);
+        }
+        
         Console.WriteLine();
         return true;
     }
 
-    public virtual bool ItemLocked(AHereticObject item)
+    public virtual bool ItemLocked(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_LOCKED, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_LOCKED, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
     
-    public virtual bool ItemUnlocked(AHereticObject item)
+    public virtual bool ItemUnlocked(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_UNLOCKED, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_UNLOCKED, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public virtual bool ItemNotLockAble(AHereticObject item)
+    public virtual bool ItemNotLockAble(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_LOCKABLE, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_LOCKABLE, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public virtual bool ItemOpen(AHereticObject item)
+    public virtual bool ItemOpen(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.NOW_OPEN, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.NOW_OPEN, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
 
-    public virtual bool ItemDropSuccess(AHereticObject item)
+    public virtual bool ItemDropSuccess(AHereticObject? item)
     {
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.ITEM_DROP, this.ConsoleWidth), itemName);
@@ -662,7 +697,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public bool ItemDropSuccess(AHereticObject itemToDrop, AHereticObject containerItem)
+    public bool ItemDropSuccess(AHereticObject? itemToDrop, AHereticObject? containerItem)
     {
         var itemToDropName = ArticleHandler.GetNameWithArticleForObject(itemToDrop, GrammarCase.Accusative, lowerFirstCharacter: true);
         var containerItemName = ArticleHandler.GetNameWithArticleForObject(containerItem, GrammarCase.Accusative, lowerFirstCharacter: true);
@@ -671,9 +706,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public bool ItemIsNotAContainer(AHereticObject item)
+    public bool ItemIsNotAContainer(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_A_CONTAINER, this.ConsoleWidth), item.Name);
+        Console.Write(WordWrap(BaseDescriptions.ITEM_NOT_A_CONTAINER, this.ConsoleWidth), item?.Name);
         Console.WriteLine();
         return true;
     }
@@ -683,8 +718,12 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.ITEM_NOT_OWNED);
     }
     
-    public virtual bool ItemNotOwned(AHereticObject item)
+    public virtual bool ItemNotOwned(AHereticObject? item)
     {
+        if (item == default)
+        {
+            return this.ItemNotOwned();
+        }
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative);
         return FormattedResource(BaseDescriptions.ITEM_NOT_OWNED_FORMATTED, itemName, true);
     }
@@ -694,9 +733,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.ITEM_ALREADY_OWNED);
     }
 
-    public virtual bool DestinationNode(Location activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap)
+    public virtual bool DestinationNode(Location? activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap)
     {
-        if (locationMap.ContainsKey(activeLocation))
+        if (activeLocation != default && locationMap.ContainsKey(activeLocation))
         {
             var unhiddenMappings = locationMap[activeLocation].Where(l => !l.IsHidden).ToList();
             if (unhiddenMappings.Any())
@@ -731,9 +770,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public virtual bool NoAnswerToInvisibleObject(Character character)
+    public virtual bool NoAnswerToInvisibleObject(Character? character)
     {
-        string genderSwitch = character.Grammar.Gender switch
+        string genderSwitch = character?.Grammar.Gender switch
         {
             Genders.Female => BaseDescriptions.GENDER_FEMALE,
             Genders.Male => BaseDescriptions.GENDER_MALE,
@@ -781,7 +820,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
     
-    public virtual bool Talk(Character character)
+    public virtual bool Talk(Character? character)
     {
         if (character != default)
         {
@@ -805,9 +844,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.TOOL_NOT_VISIBLE);
     }
 
-    public virtual bool WrongKey(AHereticObject item)
+    public virtual bool WrongKey(AHereticObject? item)
     {
-        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, this.ConsoleWidth), item.Name.LowerFirstChar());
+        Console.Write(WordWrap(BaseDescriptions.WRONG_KEY, this.ConsoleWidth), item?.Name.LowerFirstChar());
         Console.WriteLine();
         return true;
     }
@@ -833,9 +872,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.NO_EVENT);
     }
 
-    public virtual bool WayIsLocked(AHereticObject item)
+    public virtual bool WayIsLocked(AHereticObject? item)
     {
-        if (!string.IsNullOrEmpty(item.LockDescription))
+        if (item != default && !string.IsNullOrEmpty(item.LockDescription))
         {
             return Resource(item.LockDescription);
         }
@@ -843,9 +882,9 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.WAY_IS_LOCKED);
     }
 
-    public virtual bool WayIsClosed(AHereticObject item)
+    public virtual bool WayIsClosed(AHereticObject? item)
     {
-        if (!string.IsNullOrEmpty(item.CloseDescription))
+        if (item != default && !string.IsNullOrEmpty(item.CloseDescription))
         {
             return Resource(item.CloseDescription);
         }
@@ -853,7 +892,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return Resource(BaseDescriptions.WAY_IS_CLOSED);
     }
 
-    public virtual bool ImpossibleLock(AHereticObject item)
+    public virtual bool ImpossibleLock(AHereticObject? item)
     {
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_LOCK, this.ConsoleWidth), itemName);
@@ -861,7 +900,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
     
-    public virtual bool ImpossibleUnlock(AHereticObject item)
+    public virtual bool ImpossibleUnlock(AHereticObject? item)
     {
         var itemName = ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
         Console.Write(WordWrap(BaseDescriptions.IMPOSSIBLE_UNLOCK, this.ConsoleWidth), itemName);
