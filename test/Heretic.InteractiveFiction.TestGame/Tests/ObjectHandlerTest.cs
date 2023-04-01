@@ -24,7 +24,7 @@ public class ObjectHandlerTest: IClassFixture<TestFixture>
         var expected = item.Key;
 
         _sut.StoreAsActiveObject(item);
-        var actual = _universe.ActiveObject.Key;
+        var actual = _universe.ActiveObject?.Key;
         
         Assert.Equal(expected, actual);
     }

@@ -14,7 +14,7 @@ public sealed class ObjectHandler
         this.universe = universe;
     }
 
-    public string GetObjectKeyByNameAndAdjectives<T>(string objectName, IEnumerable<string>? adjectives = null) where T : AHereticObject
+    public string GetObjectKeyByNameAndAdjectives<T>(string objectName, IEnumerable<string>? adjectives = null) where T : AHereticObject?
     {
         var typeofT = typeof(T);
         var typeOfCharacter = typeof(Character);
@@ -74,7 +74,7 @@ public sealed class ObjectHandler
 
         return this.universe.ActivePlayer.GetObject(key);
     }
-    public T? GetObjectFromWorldByKey<T>(string key) where T: AHereticObject
+    public T? GetObjectFromWorldByKey<T>(string key) where T: AHereticObject?
     {
         if (key == this.universe.ActivePlayer.Key)
         {
@@ -362,7 +362,7 @@ public sealed class ObjectHandler
         if (this.universe.LocationMap.ContainsKey(this.universe.ActiveLocation))
         {
             var mappings = this.universe.LocationMap[this.universe.ActiveLocation].ToList();
-            var allLocationKeysFromMappings = mappings.Select(map => map.Location.Key);
+            var allLocationKeysFromMappings = mappings.Select(map => map.Location?.Key);
             var prioritizedLocationResources =
                 this.universe.LocationResources.Where(x => allLocationKeysFromMappings.Contains(x.Key)).ToList();
             var possibleDestinations =

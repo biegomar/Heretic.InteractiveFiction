@@ -34,7 +34,7 @@ internal class EventProvider
         this.scoreBoard.RegisterScore(key, value);
     }
     
-    internal void SetPlayersName(object sender, ContainerObjectEventArgs eventArgs)
+    internal void SetPlayersName(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Player)
         {
@@ -44,7 +44,7 @@ internal class EventProvider
         }
     }
 
-    internal void UnhideMainEntrance(object sender, ContainerObjectEventArgs eventArgs)
+    internal void UnhideMainEntrance(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Item {Key: Keys.DOOR})
         {
@@ -56,7 +56,7 @@ internal class EventProvider
         }
     }
     
-    internal void TakeCandle(object sender, ContainerObjectEventArgs eventArgs)
+    internal void TakeCandle(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Item { Key: Keys.CANDLE } candle)
         {
@@ -66,7 +66,7 @@ internal class EventProvider
         }
     }
     
-    internal void EnterRoomWithoutLight(object sender, EnterLocationEventArgs eventArgs)
+    internal void EnterRoomWithoutLight(object? sender, EnterLocationEventArgs eventArgs)
     {
         if (sender is Location)
         {
@@ -83,7 +83,7 @@ internal class EventProvider
         this.RegisterScore(nameof(WaitForCandleToMelt), 1);
     }
 
-    internal void WaitForCandleToMelt(object sender, PeriodicEventArgs eventArgs)
+    internal void WaitForCandleToMelt(object? sender, PeriodicEventArgs eventArgs)
     {
         if (sender is Universe)
         {
@@ -124,7 +124,7 @@ internal class EventProvider
         }
     }
     
-    internal void ReadNote(object sender, ContainerObjectEventArgs eventArgs)
+    internal void ReadNote(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Item { Key: Keys.NOTE } note)
         {
@@ -137,7 +137,7 @@ internal class EventProvider
         }
     }
     
-    internal void PutNoteInStove(object sender, ContainerObjectEventArgs eventArgs)
+    internal void PutNoteInStove(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Item { Key: Keys.NOTE })
         {
@@ -150,7 +150,7 @@ internal class EventProvider
         }
     }
 
-    internal void PoorPetroleumInStove(object sender, UseItemEventArgs eventArgs)
+    internal void PoorPetroleumInStove(object? sender, UseItemEventArgs eventArgs)
     {
         if (sender is Item itemOne && eventArgs.ItemToUse is Item itemTwo && itemOne.Key != itemTwo.Key)
         {
@@ -191,7 +191,7 @@ internal class EventProvider
         }
     }
 
-    internal void PoorPetroleumInPetroleumLamp(object sender, UseItemEventArgs eventArgs)
+    internal void PoorPetroleumInPetroleumLamp(object? sender, UseItemEventArgs eventArgs)
     {
         if (sender is Item itemOne && eventArgs.ItemToUse is Item itemTwo && itemOne.Key != itemTwo.Key)
         {
@@ -221,13 +221,15 @@ internal class EventProvider
 
     private void PreparePileOfWoodWithPetroleum()
     {
-        var pileOfWood = this.universe.ActiveLocation.GetItem(Keys.PILE_OF_WOOD);
-        pileOfWood.Description = Descriptions.PILE_OF_WOOD_WITH_PETROLEUM;
-        this.isPetroleumInStove = true;
-        printingSubsystem.Resource(Descriptions.POOR_PETROLEUM_OVER_WOOD);
+        if (this.universe.ActiveLocation.GetItem(Keys.PILE_OF_WOOD) is {} pileOfWood)
+        {
+            pileOfWood.Description = Descriptions.PILE_OF_WOOD_WITH_PETROLEUM;
+            this.isPetroleumInStove = true;
+            printingSubsystem.Resource(Descriptions.POOR_PETROLEUM_OVER_WOOD);    
+        }
     }
 
-    internal void UseLightersOnThings(object sender, KindleItemEventArgs eventArgs)
+    internal void UseLightersOnThings(object? sender, KindleItemEventArgs eventArgs)
     {
         if (sender is Item itemOne && eventArgs.ItemToUse is Item itemTwo && itemOne.Key != itemTwo.Key)
         {
@@ -368,7 +370,7 @@ internal class EventProvider
         }
     }
 
-    internal void CantDropCandleInStove(object sender, DropItemEventArgs eventArgs)
+    internal void CantDropCandleInStove(object? sender, DropItemEventArgs eventArgs)
     {
         if (sender is Item { Key: Keys.CANDLE } && eventArgs.ItemToUse is Item {Key: Keys.STOVE})
         {
@@ -376,7 +378,7 @@ internal class EventProvider
         }
     }
     
-    internal void CantTakePetroleum(object sender, ContainerObjectEventArgs eventArgs)
+    internal void CantTakePetroleum(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Item { Key: Keys.PETROLEUM})
         {
@@ -384,7 +386,7 @@ internal class EventProvider
         }
     }
 
-    internal void ReadBooks(object sender, ReadItemEventArgs eventArgs)
+    internal void ReadBooks(object? sender, ReadItemEventArgs eventArgs)
     {
         if (sender is Item {Key: Keys.BOOKS})
         {
@@ -406,7 +408,7 @@ internal class EventProvider
         return () => string.Format(Descriptions.BOOKS, bookList[rnd.Next(0, bookList.Count)]);
     }
 
-    private void CantOpenStoveOnFire(object sender, ContainerObjectEventArgs eventArgs)
+    private void CantOpenStoveOnFire(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Item { Key: Keys.STOVE or Keys.COMBUSTION_CHAMBER})
         {
@@ -414,7 +416,7 @@ internal class EventProvider
         }
     }
 
-    internal void SmellInLivingRoom(object sender, ContainerObjectEventArgs eventArgs)
+    internal void SmellInLivingRoom(object? sender, ContainerObjectEventArgs eventArgs)
     {
         if (sender is Location {Key: Keys.LIVINGROOM})
         {
@@ -452,21 +454,28 @@ internal class EventProvider
 
     private void AssignEventForCombustionChamber()
     {
-        var combustionChamber = this.objectHandler.GetObjectFromWorldByKey(Keys.COMBUSTION_CHAMBER);
-        combustionChamber.BeforeOpen += this.CantOpenStoveOnFire;
+        if (this.objectHandler.GetObjectFromWorldByKey(Keys.COMBUSTION_CHAMBER) is {} combustionChamber)
+        {
+            combustionChamber.BeforeOpen += this.CantOpenStoveOnFire;    
+        }
     }
 
     private void CloseStoveBecauseItIsToHot()
     {
-        var stove = this.universe.ActiveLocation.GetItem(Keys.STOVE);
-        stove.IsClosed = true;
-        stove.BeforeOpen += this.CantOpenStoveOnFire;
+        if (this.universe.ActiveLocation.GetItem(Keys.STOVE) is {} stove)
+        {
+            stove.IsClosed = true;
+            stove.BeforeOpen += this.CantOpenStoveOnFire;   
+        }
     }
 
     private void IndicateThatCookingTopIsHot()
     {
-        var cookTop = this.universe.ActiveLocation.GetItem(Keys.COOKTOP);
-        cookTop.IsLighterSwitchedOn = true;
+        if (this.universe.ActiveLocation.GetItem(Keys.COOKTOP) is {} cookTop)
+        {
+            cookTop.IsLighterSwitchedOn = true;    
+        }
+        
     }
 
     private void CheckForFireStarters()
@@ -479,8 +488,7 @@ internal class EventProvider
 
     private void CheckIfStoveIsOpen()
     {
-        var stove = this.universe.ActiveLocation.GetItem(Keys.STOVE);
-        if (stove is { IsClosed: true })
+        if (this.universe.ActiveLocation.GetItem(Keys.STOVE) is { IsClosed: true })
         {
             throw new KindleException(Descriptions.STOVE_MUST_BE_OPEN);
         }
@@ -488,9 +496,11 @@ internal class EventProvider
 
     private void RemovePaperFromStove()
     {
-        var stove = this.universe.ActiveLocation.GetItem(Keys.STOVE);
-        stove.Items.Remove(stove.Items.Single(i => i.Key is Keys.NOTE));
-        this.isPaperInStove = false;
+        if (this.universe.ActiveLocation.GetItem(Keys.STOVE) is {} stove)
+        {
+            stove.Items.Remove(stove.Items.Single(i => i.Key is Keys.NOTE));
+            this.isPaperInStove = false;   
+        }
     }
     
 }

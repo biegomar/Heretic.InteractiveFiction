@@ -36,70 +36,75 @@ internal sealed record DropCommand(Universe Universe, IGrammar Grammar, IPrintin
     
     private bool HandleDrop(AdventureEvent adventureEvent)
     {
-        var processingObject = adventureEvent.ObjectOne;
-        var isPlayerItem = Universe.ActivePlayer.Items.Any(x => x.Key == processingObject?.Key);
-        var isPlayerCloths = Universe.ActivePlayer.Clothes.Any(x => x.Key == processingObject?.Key);
-        if (isPlayerItem || isPlayerCloths)
+        if (adventureEvent.ObjectOne is Item item)
         {
-            if (processingObject is Item { IsDropable: true } item)
+            var isPlayerItem = Universe.ActivePlayer.Items.Any(x => x.Key == item.Key);
+            var isPlayerCloths = Universe.ActivePlayer.Clothes.Any(x => x.Key == item.Key);
+            if (isPlayerItem || isPlayerCloths)
             {
-                try
+                if (item.IsDropable)
                 {
-                    var dropItemEventArgs = new DropItemEventArgs()
+                    try
                     {
-                        OptionalErrorMessage = adventureEvent.Predicate != default
-                            ? adventureEvent.Predicate.ErrorMessage
-                            : string.Empty,
-                        ItemToUse = adventureEvent.ObjectTwo
-                    };
-
-                    item.OnBeforeDrop(dropItemEventArgs);
-                    
-                    if (adventureEvent.ObjectTwo is {} container)
-                    {
-                        if (container.IsContainer)
+                        var dropItemEventArgs = new DropItemEventArgs()
                         {
-                            if (!container.IsCloseable || container is { IsCloseable: true, IsClosed: false })
+                            OptionalErrorMessage = adventureEvent.Predicate != default
+                                ? adventureEvent.Predicate.ErrorMessage
+                                : string.Empty,
+                            ItemToUse = adventureEvent.ObjectTwo
+                        };
+
+                        item.OnBeforeDrop(dropItemEventArgs);
+
+                        if (adventureEvent.ObjectTwo is { } container)
+                        {
+                            if (container.IsContainer)
                             {
-                                Universe.ActivePlayer.RemoveItem(item);
-                                container.Items.Add(item);
-                            
-                                item.OnDrop(dropItemEventArgs);
-                                PrintingSubsystem.ItemDropSuccess(item, container);   
+                                if (!container.IsCloseable || container is { IsCloseable: true, IsClosed: false })
+                                {
+                                    Universe.ActivePlayer.RemoveItem(item);
+                                    container.Items.Add(item);
+
+                                    item.OnDrop(dropItemEventArgs);
+                                    PrintingSubsystem.ItemDropSuccess(item, container);
+                                }
+                                else
+                                {
+                                    PrintingSubsystem.ItemStillClosed(container);
+                                }
                             }
                             else
                             {
-                                PrintingSubsystem.ItemStillClosed(container);
+                                return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_A_DROPTARGET,
+                                    ArticleHandler.GetNameWithArticleForObject(container, GrammarCase.Accusative,
+                                        lowerFirstCharacter: true));
                             }
                         }
                         else
                         {
-                            return PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_NOT_A_DROPTARGET,
-                                ArticleHandler.GetNameWithArticleForObject(container, GrammarCase.Accusative, lowerFirstCharacter: true));
-                        }
-                    }
-                    else
-                    {
-                        Universe.ActivePlayer.RemoveItem(item);
-                        Universe.ActiveLocation.Items.Add(item);
-                        
-                        item.OnDrop(dropItemEventArgs);
-                        PrintingSubsystem.ItemDropSuccess(item);
-                    }
-                    
-                    item.OnAfterDrop(dropItemEventArgs);
+                            Universe.ActivePlayer.RemoveItem(item);
+                            Universe.ActiveLocation.Items.Add(item);
 
-                    return true;
+                            item.OnDrop(dropItemEventArgs);
+                            PrintingSubsystem.ItemDropSuccess(item);
+                        }
+
+                        item.OnAfterDrop(dropItemEventArgs);
+
+                        return true;
+                    }
+                    catch (DropException e)
+                    {
+                        return PrintingSubsystem.Resource(e.Message);
+                    }
                 }
-                catch (DropException e)
-                {
-                    return PrintingSubsystem.Resource(e.Message);
-                }
+
+                return PrintingSubsystem.ImpossibleDrop(item);
             }
-            
-            return PrintingSubsystem.ImpossibleDrop(processingObject);
+
+            return PrintingSubsystem.ItemNotOwned();
         }
         
-        return PrintingSubsystem.ItemNotOwned();
+        return PrintingSubsystem.Resource(BaseDescriptions.WHAT_TO_DROP);
     }
 }

@@ -292,7 +292,7 @@ public abstract partial class AHereticObject
         return default;
     }
     
-    protected virtual T? GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject
+    protected virtual T? GetObject<T>(string itemKey, ICollection<AHereticObject> visitedItems) where T: AHereticObject?
     {
         if (visitedItems.Contains(this))
         {
@@ -342,7 +342,7 @@ public abstract partial class AHereticObject
         return result ?? default;
     }
     
-    public T? GetObject<T>(string itemKey) where T: AHereticObject
+    public T? GetObject<T>(string itemKey) where T: AHereticObject?
     {
         var result = this.GetObject<T>(itemKey, new List<AHereticObject>());
         return result;

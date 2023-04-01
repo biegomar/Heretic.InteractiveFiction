@@ -396,8 +396,11 @@ internal sealed class InputAnalyzer
         {
             sentence.Remove(associatedWord);
         }
-        
-        AdjectiveDeclinationHandler.RemoveAdjectivesFromParts(discoveredObject, sentence);
+
+        if (discoveredObject != null)
+        {
+            AdjectiveDeclinationHandler.RemoveAdjectivesFromParts(discoveredObject, sentence);
+        }
         
         return new ObjectAndAssociatedWord
         {
@@ -417,7 +420,10 @@ internal sealed class InputAnalyzer
             }
             else if (PronounHandler.IsPronounRepresentingActiveObject(this.universe.ActiveObject, word))
             {
-                result.Add(GetFirstObjectNameWithoutWhitespace(this.universe.ActiveObject));
+                if (GetFirstObjectNameWithoutWhitespace(this.universe.ActiveObject) is {} objectName)
+                {
+                    result.Add(objectName);
+                }
             }
             else
             {
@@ -448,9 +454,14 @@ internal sealed class InputAnalyzer
         return result;
     }
 
-    private string GetFirstObjectNameWithoutWhitespace(AHereticObject item)
+    private string? GetFirstObjectNameWithoutWhitespace(AHereticObject? item)
     {
-        return item.GetNames().FirstOrDefault(i => !i.Contains(" "));
+        if (item != null)
+        {
+            return item.GetNames().FirstOrDefault(i => !i.Contains(" "));    
+        }
+
+        return string.Empty;
     }
     
     private List<Verb> ExtractPossibleVerbs(string word)

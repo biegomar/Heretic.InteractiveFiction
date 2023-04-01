@@ -21,21 +21,20 @@ internal sealed record LockCommand(Universe Universe, IPrintingSubsystem Printin
     
     private bool HandleLockWithoutKey(AdventureEvent adventureEvent)
     {
-        var item = adventureEvent.ObjectOne;
-        if (item != default)
+        if (adventureEvent.ObjectOne is Item item)
         {
             if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
                 ObjectHandler.StoreAsActiveObject(item);
                 if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
-                    Universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
+                    Universe.ActivePlayer.OwnsItem(item.UnlockWithKey) &&
+                    Universe.ActivePlayer.GetItem(item.UnlockWithKey) is { } key)
                 {
-                    var key = Universe.ActivePlayer.GetItem(item.UnlockWithKey);
                     if (item.IsLockable)
                     {
                         if (!item.IsLocked)
                         {
-                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                            if (!item.IsCloseable || item is { IsCloseable: true, IsClosed: true })
                             {
                                 try
                                 {

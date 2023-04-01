@@ -133,7 +133,10 @@ public interface IResourceProvider
             foreach (DictionaryEntry entry in resourceSet)
             {
                 var inputList = entry.Value?.ToString()?.Split('|').ToList();
-                result.Add(entry.Key.ToString()!, inputList);
+                if (inputList != null)
+                {
+                    result.Add(entry.Key.ToString()!, inputList);
+                }
             }
         }
 

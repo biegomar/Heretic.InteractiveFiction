@@ -5,7 +5,7 @@ namespace Heretic.InteractiveFiction.Grammars;
 
 public static class PronounHandler
 {
-    public static bool IsPronounRepresentingActiveObject(AHereticObject activeObject, string pronoun)
+    public static bool IsPronounRepresentingActiveObject(AHereticObject? activeObject, string pronoun)
     {
         var upperItemName = pronoun.ToUpperInvariant();
         

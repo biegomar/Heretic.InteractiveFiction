@@ -17,8 +17,8 @@ public sealed class TestFixture
     internal ObjectHandler ObjectHandler { get; }
     internal CommandExecutor CommandExecutor { get; }
 
-    public Item Table { get; }
-    public Item Lamp { get; }
+    public Item? Table { get; }
+    public Item? Lamp { get;  }
     
     public AHereticObject? ActiveObject => this.Universe.ActiveObject;
 
@@ -37,9 +37,10 @@ public sealed class TestFixture
     
     public void SetActiveObject(string itemKey)
     {
-        
-        var item = this.ObjectHandler.GetObjectFromWorldByKey(itemKey);
-        this.ObjectHandler.StoreAsActiveObject(item);
+        if (this.ObjectHandler.GetObjectFromWorldByKey(itemKey) is {} item)
+        {
+            this.ObjectHandler.StoreAsActiveObject(item);    
+        }
     }
 
     public void ClearActiveObject()
@@ -55,8 +56,6 @@ public sealed class TestFixture
     
     private Universe GetUniverse()
     {
-        var printingSubsystem = InitializePrintingSubsystem();
-
         var universe = new Universe(printingSubsystem, resourceProvider);
         
         var eventProvider = new EventProvider(universe, printingSubsystem, scoreBoard);

@@ -12,7 +12,7 @@ public class ResourceProvider: IResourceProvider
     {
         var result = new Dictionary<string, IEnumerable<string>>();
         
-        ResourceSet resourceSet =
+        var resourceSet =
             Items.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
         if (resourceSet != null)
         {
@@ -31,7 +31,7 @@ public class ResourceProvider: IResourceProvider
     {
         var result = new Dictionary<string, IEnumerable<string>>();
 
-        ResourceSet resourceSet =
+        var resourceSet =
             Characters.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
         if (resourceSet != null)
         {
@@ -50,7 +50,7 @@ public class ResourceProvider: IResourceProvider
     {
         var result = new Dictionary<string, IEnumerable<string>>();
 
-        ResourceSet resourceSet =
+        var resourceSet =
             Locations.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
         if (resourceSet != null)
         {
@@ -65,19 +65,22 @@ public class ResourceProvider: IResourceProvider
         return result;
     }
     
-    private IEnumerable<string> NormalizeResourceList(IEnumerable<string> inputList)
+    private IEnumerable<string> NormalizeResourceList(IEnumerable<string>? inputList)
     {
         var result = new List<string>();
-        foreach (var item in inputList)
+        if (inputList != null)
         {
-            result.Add(item);
-            var trimmedItem = string.Concat(item.Where(c => !char.IsWhiteSpace(c)));
-            if (item != trimmedItem)
+            foreach (var item in inputList)
             {
-                result.Add(trimmedItem);
-            }
+                result.Add(item);
+                var trimmedItem = string.Concat(item.Where(c => !char.IsWhiteSpace(c)));
+                if (item != trimmedItem)
+                {
+                    result.Add(trimmedItem);
+                }
+            }   
         }
-
+        
         return result;
     }
 }

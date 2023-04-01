@@ -21,7 +21,18 @@ public sealed class Universe
     public Location ActiveLocation { get; set; }
     public Player ActivePlayer { get; set; }
     public AHereticObject? ActiveObject { get; set; }
-    public bool IsPeriodicEventActivated { get => this.periodicEvent.Active; set => this.periodicEvent.Active = value; }
+    public bool IsPeriodicEventActivated
+    {
+        get => this.periodicEvent is {Active: true};
+        set
+        {
+            if (this.periodicEvent != null)
+            {
+                this.periodicEvent.Active = value;
+            }
+        }
+    }
+
     public ICollection<string>? Quests { get; set; }
 
     public event EventHandler<PeriodicEventArgs>? PeriodicEvents;
@@ -45,11 +56,14 @@ public sealed class Universe
         this.ActiveObject = null;
     }
 
-    public void SetPeriodicEvent(PeriodicEvent periodicEventToSet)
+    public void SetPeriodicEvent(PeriodicEvent? periodicEventToSet)
     {
         this.periodicEvent = periodicEventToSet;
-        this.periodicEvent.Active = false;
-        this.PeriodicEvents += this.periodicEvent.RaiseEvent;
+        if (this.periodicEvent != null)
+        {
+            this.periodicEvent.Active = false;
+            this.PeriodicEvents += this.periodicEvent.RaiseEvent;
+        }
     }
 
     public void RaisePeriodicEvents(PeriodicEventArgs eventArgs)

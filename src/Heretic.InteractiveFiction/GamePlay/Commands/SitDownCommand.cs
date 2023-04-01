@@ -91,13 +91,12 @@ internal sealed record SitDownCommand(Universe Universe, IPrintingSubsystem Prin
     
     private bool HandleSitDownEventOnSingleObject(AdventureEvent adventureEvent)
     {
-        if (adventureEvent.ObjectOne.Key == Universe.ActivePlayer.Key)
+        if (adventureEvent.ObjectOne?.Key == Universe.ActivePlayer.Key)
         {
             return this.HandleSitDownEventOnActiveLocation(adventureEvent);
         }
-
-        var item = adventureEvent.ObjectOne;
-        if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        
+        if (adventureEvent.ObjectOne is Item item && ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
         {
             ObjectHandler.StoreAsActiveObject(item);
             if (item.IsSeatable)
