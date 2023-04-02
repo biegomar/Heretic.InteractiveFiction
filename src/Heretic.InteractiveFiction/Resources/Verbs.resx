@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ASK" xml:space="preserve">
-    <value>Frag|Frage</value>
+    <value>Frag|Frage|Fragen</value>
   </data>
   <data name="CLOSE" xml:space="preserve">
-    <value>Schließe|Schließ</value>
+    <value>Schließe|Schließ|Schließen</value>
   </data>
   <data name="DOWN" xml:space="preserve">
-    <value>Runter|Hinunter|Herab|R|Hinab</value>
+    <value>Runter|Hinunter|Herab|R|Hinab|Unten</value>
   </data>
   <data name="DROP" xml:space="preserve">
-    <value>Leg:hin|Lege:hin|Leg:ab|Lege:ab|verliere|Drop|fallen:lassen|fallen:lass</value>
+    <value>Leg:hin|Lege:hin|Legen:hin|Leg:ab|Lege:ab|Legen:ab|verliere|Drop|fallen:lassen|fallen:lass|Ablegen|Hinlegen</value>
   </data>
   <data name="E" xml:space="preserve">
     <value>Osten|Ost|O|E</value>
@@ -145,13 +145,13 @@
     <value>Inventar|inv|i</value>
   </data>
   <data name="JUMP" xml:space="preserve">
-    <value>Spring|Springe</value>
+    <value>Spring|Springe|Springen</value>
   </data>
   <data name="LOCK" xml:space="preserve">
-    <value>Verriegel|Verriegeln|Sperre:zu|Verschließe|Verschließ|Lock|abschließen|zuschließen|Schließe:ab|Schließ:ab|Schließe:zu|Schließ:zu</value>
+    <value>Verriegel|Verriegeln|Sperre:zu|Zusperren|Verschließe|Verschließen|Verschließ|Lock|abschließen|zuschließen|Schließe:ab|Schließ:ab|Schließe:zu|Schließ:zu</value>
   </data>
   <data name="LOOK" xml:space="preserve">
-    <value>Schaue:an|Schau:an|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X</value>
+    <value>Schaue:an|Schau:an|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X|Anschauen</value>
   </data>
   <data name="N" xml:space="preserve">
     <value>Norden|Nord|N</value>
@@ -172,7 +172,7 @@
     <value>Süden|Süd|S</value>
   </data>
   <data name="SAY" xml:space="preserve">
-    <value>Sag|Sage|Antworte</value>
+    <value>Sag|Sage|Sagen|Antworte|Antworten</value>
   </data>
   <data name="SCORE" xml:space="preserve">
     <value>Score|Punkte</value>
@@ -184,22 +184,22 @@
     <value>Süd-Westen|Süd-West|SW</value>
   </data>
   <data name="TAKE" xml:space="preserve">
-    <value>Nimm|Nehme|Take|Hebe:auf|Heb:auf</value>
+    <value>Nimm|Nehme|Nehmen|Take|Hebe:auf|Heb:auf|Aufheben</value>
   </data>
   <data name="TALK" xml:space="preserve">
-    <value>Rede|Sprich</value>
+    <value>Rede|Reden|Sprich|Sprechen</value>
   </data>
   <data name="TURN" xml:space="preserve">
-    <value>Drehe|Dreh</value>
+    <value>Drehe|Dreh|Drehen</value>
   </data>
   <data name="UNLOCK" xml:space="preserve">
-    <value>Entriegel|Entriegeln|Sperre:auf|Entsperren|Entsperre|Entsperr|aufschließen|Unlock|Schließe:auf|Schließ:auf</value>
+    <value>Entriegel|Entriegeln|Sperre:auf|Entsperren|Entsperre|Entsperr|aufschließen|Unlock|Schließe:auf|Schließ:auf|Aufsperren</value>
   </data>
   <data name="UP" xml:space="preserve">
-    <value>Hoch|Rauf|Hinauf|H|Herauf</value>
+    <value>Hoch|Rauf|Hinauf|H|Herauf|Oben</value>
   </data>
   <data name="USE" xml:space="preserve">
-    <value>Benutze|Nutze</value>
+    <value>Benutze|Nutze|Benutzen|Nutzen</value>
   </data>
   <data name="W" xml:space="preserve">
     <value>Westen|West|W</value>
@@ -211,10 +211,10 @@
     <value>Alter|Alterego|Alternativ|Alternative|Alias</value>
   </data>
   <data name="BUY" xml:space="preserve">
-    <value>Bezahle|Bezahl|Zahle|Zahl|Kaufe|Kauf</value>
+    <value>Bezahle|Bezahl|Bezahlen|Zahle|Zahl|Zahlen|Kaufe|Kauf|Kaufen</value>
   </data>
   <data name="GIVE" xml:space="preserve">
-    <value>Gib|Gebe</value>
+    <value>Gib|Gebe|Geben</value>
   </data>
   <data name="CREDITS" xml:space="preserve">
     <value>Credits|Info|Contribute|Contrib</value>
@@ -223,25 +223,25 @@
     <value>Setze:hin|Setzen|Setz:hin|Hinsetzen|Sitze|Sitz</value>
   </data>
   <data name="STANDUP" xml:space="preserve">
-    <value>Aufstehen|stehe:auf|steh:auf|stell:hin|stelle:hin</value>
+    <value>Aufstehen|stehe:auf|steh:auf|stell:hin|stelle:hin|Hinstellen</value>
   </data>
   <data name="WRITE" xml:space="preserve">
     <value>Schreibe|Schreib|Schreiben|Tippen|Tip|Tippe|Tipp</value>
   </data>
   <data name="BREAK" xml:space="preserve">
-    <value>Zerbrich|Zerbreche|Brich|Breche|Brech|Zerstöre|Zerstör|Zerschlage|Zerschlag</value>
+    <value>Zerbrich|Zerbreche|Zerbrechen|Brich|Breche|Brechen|Brech|Zerstöre|Zerstör|Zerstören|Zerschlage|Zerschlag|Zerschlagen</value>
   </data>
   <data name="PULL" xml:space="preserve">
-    <value>Ziehe|Zieh</value>
+    <value>Ziehe|Zieh|Ziehen</value>
   </data>
   <data name="PUSH" xml:space="preserve">
-    <value>Drücke|Drück|Schiebe|Schieb|Stecke|Steck</value>
+    <value>Drücke|Drück|Drücken|Schiebe|Schieben|Schieb|Stecke|Stecken|Steck</value>
   </data>
   <data name="CLIMB" xml:space="preserve">
-    <value>Klettere|Kletter|Steige|Steig</value>
+    <value>Klettere|Kletter|Klettern|Steige|Steig|Steigen</value>
   </data>
   <data name="DESCEND" xml:space="preserve">
-    <value>Klettere:runter|Kletter:runter|Steige:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Steige:herunter|Steig:herunter|Steige:ab|Steig:ab|Steige:herab|Steig:herab</value>
+    <value>Klettere:runter|Kletter:runter|Klettern:runter|Steige:runter|Steigen:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Klettern:herunter|Steige:herunter|Steigen:herunter|Steig:herunter|Steige:ab|Steigen:ab|Steig:ab|Steige:herab|Steigen:herab|Steig:herab</value>
   </data>
   <data name="SAVE" xml:space="preserve">
     <value>Save|speichern</value>
@@ -253,75 +253,75 @@
     <value>Kommentar|Comment|Remark|REM</value>
   </data>
   <data name="READ" xml:space="preserve">
-    <value>Lies|Lese</value>
+    <value>Lies|Lese|Lesen</value>
   </data>
   <data name="WAIT" xml:space="preserve">
-    <value>Warte</value>
+    <value>Warte|Warten</value>
   </data>
   <data name="ANSWER" xml:space="preserve">
-    <value>Antworte|Antwort</value>
+    <value>Antworte|Antwort|Antworten</value>
   </data>
   <data name="KINDLE" xml:space="preserve">
-    <value>Verbrenn|Verbrenne|Zünde:an|Zünd:an|Entzünde|Entzünd</value>
+    <value>Verbrenn|Verbrenne|Zünde:an|Zünd:an|Entzünde|Entzünd|Entzünden|Anzünden</value>
   </data>
   <data name="CUT" xml:space="preserve">
-    <value>Schneide:auf|Schneid:auf|Zerschneide|Zerschneid</value>
+    <value>Schneide:auf|Schneid:auf|Zerschneide|Zerschneid|Zerschneiden|Aufschneiden</value>
   </data>
   <data name="DRINK" xml:space="preserve">
-    <value>Trink|Trinke</value>
+    <value>Trink|Trinke|Trinken</value>
   </data>
   <data name="EAT" xml:space="preserve">
-    <value>Iss|Ess|Esse</value>
+    <value>Iss|Ess|Esse|Essen</value>
   </data>
   <data name="INSERT" xml:space="preserve">
-    <value>Einfügen</value>
+    <value>Füg:ein|Füge:ein|Einfügen</value>
   </data>
   <data name="LISTEN" xml:space="preserve">
     <value>Zuhören|Höre:zu|Lausche</value>
   </data>
   <data name="PUTON" xml:space="preserve">
-    <value>Leg|Lege|Stell|Stelle</value>
+    <value>Leg|Lege|Legen|Stell|Stelle|Stellen</value>
   </data>
   <data name="SHOW" xml:space="preserve">
-    <value>Zeig|Zeige</value>
+    <value>Zeig|Zeige|Zeigen</value>
   </data>
   <data name="SLEEP" xml:space="preserve">
-    <value>Schlaf|Schlafe</value>
+    <value>Schlaf|Schlafe|Schlafen</value>
   </data>
   <data name="SMELL" xml:space="preserve">
-    <value>Riech|Rieche</value>
+    <value>Riech|Rieche|Riechen</value>
   </data>
   <data name="SWITCHON" xml:space="preserve">
-    <value>Anschalten|Schalte:an|Schalt:an|Schalte:ein|Schalt:ein</value>
+    <value>Anschalten|Schalte:an|Schalt:an|Schalte:ein|Schalt:ein|Einschalten</value>
   </data>
   <data name="TAKEOFF" xml:space="preserve">
     <value>Ausziehen|Ziehe:aus|Zieh:aus</value>
   </data>
   <data name="TASTE" xml:space="preserve">
-    <value>Schmecke|Schmeck|Probier|Probiere|Koste</value>
+    <value>Schmecke|Schmeck|Schmecken|Probier|Probiere|Probieren|Koste|Kosten</value>
   </data>
   <data name="TELL" xml:space="preserve">
-    <value>Erzähl|Erzähle|Berichte</value>
+    <value>Erzähl|Erzähle|Berichte|Erzählen|Berichten</value>
   </data>
   <data name="THROW" xml:space="preserve">
-    <value>Wirf|Werf|Werfe</value>
+    <value>Wirf|Werf|Werfe|Werfen</value>
   </data>
   <data name="WAKEUP" xml:space="preserve">
-    <value>Aufwachen</value>
+    <value>Aufwachen|Wach:auf|Wache:auf</value>
   </data>
   <data name="WEAR" xml:space="preserve">
-    <value>Ziehe:an|Zieh:an</value>
+    <value>Ziehe:an|Zieh:an|Anziehen</value>
   </data>
   <data name="TOBE" xml:space="preserve">
     <value>Sein|Bin|Ist</value>
   </data>
   <data name="SWITCHOFF" xml:space="preserve">
-    <value>Ausschalten|Schalte:aus|Schalt:aus|Schalte:ab|Schalt:ab</value>
+    <value>Ausschalten|Schalte:aus|Schalt:aus|Schalte:ab|Schalt:ab|Abschalten</value>
   </data>
   <data name="CONNECT" xml:space="preserve">
     <value>Verbinde|Verbind|Verzurr|Verzurre|Binde|Bind|Fixiere|Fixier|Befestige|Befestig|Montiere|Montier</value>
   </data>
   <data name="DISCONNECT" xml:space="preserve">
-    <value>Trenne|Trenn|Lös|Löse|Ziehe:ab|Zieh:ab|Entferne|Entfern</value>
+    <value>Trenne|Trennen|Trenn|Lös|Löse|Lösen|Ziehe:ab|Ziehen:ab|Zieh:ab|Entferne|Entfernen|Entfern</value>
   </data>
 </root>
