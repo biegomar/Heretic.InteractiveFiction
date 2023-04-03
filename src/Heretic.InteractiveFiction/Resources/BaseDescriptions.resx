@@ -300,7 +300,7 @@
   <data name="SAY" xml:space="preserve">
     <value>Sprich mit einer Person</value>
   </data>
-  <data name="SCORE" xml:space="preserve">
+  <data name="ACTUAL_SCORE" xml:space="preserve">
     <value>erreichte Wertung {0}/{1}</value>
   </data>
   <data name="SE" xml:space="preserve">
@@ -873,5 +873,8 @@
   </data>
   <data name="HINT_FOR_WHAT" xml:space="preserve">
     <value>Für was genau möchtest Du einen Hinweis bekommen?</value>
+  </data>
+  <data name="SCORE" xml:space="preserve">
+    <value>Zeigt Dir den aktuellen Punktestand</value>
   </data>
 </root>

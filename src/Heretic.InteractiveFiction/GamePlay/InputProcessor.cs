@@ -15,13 +15,13 @@ public sealed class InputProcessor
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly ScoreBoard scoreBoard;
 
-    public InputProcessor(IPrintingSubsystem printingSubsystem, Universe universe, IGrammar grammar, ScoreBoard scoreBoard)
+    public InputProcessor(IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, Universe universe, IGrammar grammar, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
         this.historyAdministrator = new HistoryAdministrator();
         this.scoreBoard = scoreBoard;
-        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, this.historyAdministrator, this.scoreBoard);
+        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, helpSubsystem, this.historyAdministrator, this.scoreBoard);
         this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
     }
 

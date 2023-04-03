@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Heretic.InteractiveFiction.GamePlay;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
@@ -11,6 +12,7 @@ public sealed class TestFixture
 {
     private readonly IResourceProvider resourceProvider;
     private readonly IPrintingSubsystem printingSubsystem;
+    private readonly IHelpSubsystem helpSubsystem;
     private readonly HistoryAdministrator historyAdministrator;
     private readonly ScoreBoard scoreBoard;
     internal Universe Universe { get; }
@@ -26,6 +28,7 @@ public sealed class TestFixture
     {
         this.resourceProvider = new ResourceProvider();
         this.printingSubsystem = InitializePrintingSubsystem();
+        this.helpSubsystem = initializeHelpSubsystem();
         this.Universe = this.GetUniverse();
         this.ObjectHandler = new ObjectHandler(this.Universe);
         this.historyAdministrator = new HistoryAdministrator();
@@ -51,7 +54,7 @@ public sealed class TestFixture
     private CommandExecutor GetCommandExecutor()
     {
         return new CommandExecutor(this.Universe, new GermanGrammar(this.resourceProvider), this.printingSubsystem,
-            this.historyAdministrator, this.scoreBoard);
+            this.helpSubsystem, this.historyAdministrator, this.scoreBoard);
     }
     
     private Universe GetUniverse()
@@ -78,5 +81,13 @@ public sealed class TestFixture
         printingSubsystemMock.SetReturnsDefault(true);
         var printingSubsystem = printingSubsystemMock.Object;
         return printingSubsystem;
+    }
+
+    private static IHelpSubsystem initializeHelpSubsystem()
+    {
+        var helpSubsystemMock = new Mock<IHelpSubsystem>();
+        helpSubsystemMock.SetReturnsDefault(true);
+        var helpSubsystem = helpSubsystemMock.Object;
+        return helpSubsystem;
     }
 }

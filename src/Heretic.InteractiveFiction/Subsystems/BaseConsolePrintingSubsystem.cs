@@ -125,18 +125,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return true;
     }
 
-    public virtual bool Help(IList<Verb> verbs)
-    {
-        GeneralHelp();
-        VerbGroupDirections(verbs);
-        VerbTalks(verbs);
-        VerbInteractItems(verbs);
-        VerbContainers(verbs);
-        VerbMetaInfos(verbs);
-        
-        return true;
-    }
-
     public bool Hint(AHereticObject? item)
     {
         if (item == default)
@@ -157,324 +145,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         }
         return true;
     }
-
-    private void VerbHelp(IDictionary<VerbKey, IEnumerable<string>> verbResource)
-    {
-        foreach (var verbs in verbResource)
-        {
-            Console.Write(BaseDescriptions.ResourceManager.GetString(verbs.Key.ToString()));
-            var index = 0;
-            this.ForegroundColor = TextColor.Magenta;
-            foreach (var value in verbs.Value)
-            {
-                Console.Write(index != 0 ? ", " : "...");
-
-                Console.Write(value);
-                index++;
-            }
-
-            this.ResetColors();
-
-            Console.WriteLine();
-        }
-    }
-
-    private IDictionary<VerbKey, IEnumerable<string>> GetDirectionVerbs(IList<Verb> verbs)
-    {
-        var directionVerbKeys = new Collection<VerbKey>()
-        {
-            VerbKey.N,
-            VerbKey.S,
-            VerbKey.E,
-            VerbKey.W,
-            VerbKey.NE,
-            VerbKey.NW,
-            VerbKey.SE,
-            VerbKey.SW,
-            VerbKey.UP,
-            VerbKey.DOWN,
-            VerbKey.GO,
-            VerbKey.WAYS
-        };
-            
-        var result = FilterVerbs(verbs, directionVerbKeys);
-        
-        return result;
-    }
-
-    private static Dictionary<VerbKey, IEnumerable<string>> FilterVerbs(IList<Verb> verbs, Collection<VerbKey> verbKeys)
-    {
-        var result = verbs.Where(x => verbKeys.Contains(x.Key)).OrderBy(x => x.Key)
-            .ToDictionary(x => x.Key, x => x.Variants.Select(v => v.Name));
-        return result;
-    }
-
-
-    protected void VerbGroupDirections(IList<Verb> verbs)
-    {
-        Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS);
-        Console.WriteLine(new string('-', HelpDescriptions.VERBS_DIRECTIONS.Length));
-        VerbHelp(GetDirectionVerbs(verbs));
-        VerbGroupDirectionsExamples();
-    }
-
-    private void VerbGroupDirectionsExamples()
-    {
-        Console.WriteLine(HelpDescriptions.EXAMPLES);
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS_EXAMPLE_I);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS_EXAMPLE_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS_EXAMPLE_II);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_DIRECTIONS_EXAMPLE_DESCRIPTION);
-        Console.WriteLine();
-    }
-
-    private IDictionary<VerbKey, IEnumerable<string>> GetMetaInfoVerbs(IList<Verb> verbs)
-    {
-        var directionVerbKeys = new Collection<VerbKey>()
-        {
-            VerbKey.INV,
-            VerbKey.CREDITS,
-            VerbKey.SCORE,
-            VerbKey.ALTER_EGO,
-            VerbKey.HISTORY,
-            VerbKey.HELP,
-            VerbKey.HINT,
-            VerbKey.REM,
-            VerbKey.SAVE,
-            VerbKey.QUIT,
-        };
-            
-        var result = FilterVerbs(verbs, directionVerbKeys);
-        
-        return result;
-    } 
     
-    protected void VerbMetaInfos(IList<Verb> verbs)
-    {
-        Console.WriteLine(HelpDescriptions.VERBS_METAINFO);
-        Console.WriteLine(new string('-', HelpDescriptions.VERBS_METAINFO.Length));
-        VerbHelp(GetMetaInfoVerbs(verbs));
-        VerbMetaInfosExamples();
-    }
-
-    private void VerbMetaInfosExamples()
-    {
-        Console.WriteLine(HelpDescriptions.EXAMPLES);
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_METAINFO_EXAMPLE_I);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_METAINFO_EXAMPLE_I_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_METAINFO_EXAMPLE_II);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_METAINFO_EXAMPLE_II_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_METAINFO_EXAMPLE_III);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_METAINFO_EXAMPLE_II_DESCRIPTION);
-        Console.WriteLine();
-    }
-
-    private IDictionary<VerbKey, IEnumerable<string>> GetInteractVerbs(IList<Verb> verbs)
-    {
-        var directionVerbKeys = new Collection<VerbKey>()
-        {
-            VerbKey.TAKE,
-            VerbKey.DROP,
-            VerbKey.PULL,
-            VerbKey.PUSH,
-            VerbKey.BUY,
-            VerbKey.BREAK,
-            VerbKey.USE,
-            VerbKey.LOOK,
-            VerbKey.SIT,
-            VerbKey.STANDUP,
-            VerbKey.JUMP,
-            VerbKey.CLIMB,
-            VerbKey.DESCEND,
-            VerbKey.WAIT,
-            VerbKey.WRITE,
-        };
-
-        var result = FilterVerbs(verbs, directionVerbKeys);
-        
-        return result;
-    } 
-    
-    protected void VerbInteractItems(IList<Verb> verbs)
-    {
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS);
-        Console.WriteLine(new string('-', HelpDescriptions.VERBS_INTERACT_ITEMS.Length));
-        VerbHelp(GetInteractVerbs(verbs));
-        VerbInteractItemsExamples();
-    }
-
-    private void VerbInteractItemsExamples()
-    {
-        Console.WriteLine(HelpDescriptions.EXAMPLES);
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_I);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_I_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_II);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_II_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_III);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_III_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_IV);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_IV_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_V);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_V_DESCRIPTION);
-        Console.WriteLine();
-    }
-
-    private IDictionary<VerbKey, IEnumerable<string>> GetTalkVerbs(IList<Verb> verbs)
-    {
-        var directionVerbKeys = new Collection<VerbKey>()
-        {
-            VerbKey.TALK,
-            VerbKey.SAY,
-            VerbKey.ASK,
-            VerbKey.GIVE,
-        };
-
-        var result = FilterVerbs(verbs, directionVerbKeys);
-        
-        return result;
-    }
-    
-    protected void VerbTalks(IList<Verb> verbs)
-    {
-        Console.WriteLine(HelpDescriptions.VERBS_TALKS);
-        Console.WriteLine(new string('-', HelpDescriptions.VERBS_TALKS.Length));
-        VerbHelp(GetTalkVerbs(verbs));
-        VerbTalksExamples();
-    }
-
-    private void VerbTalksExamples()
-    {
-        Console.WriteLine(HelpDescriptions.EXAMPLES);
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_I);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_I_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_II);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_II_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_III);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_TALK_EXAMPLE_III_DESCRIPTION);
-        Console.WriteLine();
-    }
-
-    private IDictionary<VerbKey, IEnumerable<string>> GetContainerVerbs(IList<Verb> verbs)
-    {
-        var directionVerbKeys = new Collection<VerbKey>()
-        {
-            VerbKey.CLOSE,
-            VerbKey.OPEN,
-            VerbKey.UNLOCK,
-            VerbKey.LOCK,
-            VerbKey.TURN,
-        };
-
-        var result = FilterVerbs(verbs, directionVerbKeys);
-        
-        return result;
-    } 
-   
-    protected void VerbContainers(IList<Verb> verbs)
-    {
-        Console.WriteLine(HelpDescriptions.VERBS_CONTAINER);
-        Console.WriteLine(new string('-', HelpDescriptions.VERBS_CONTAINER.Length));
-        VerbHelp(GetContainerVerbs(verbs));
-        VerbContainersExamples();
-    }
-
-    private void VerbContainersExamples()
-    {
-        Console.WriteLine(HelpDescriptions.EXAMPLES);
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_CONTAINER_EXAMPLE_I);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_CONTAINER_EXAMPLE_I_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.VERBS_CONTAINER_EXAMPLE_II);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.VERBS_CONTAINER_EXAMPLE_II_DESCRIPTION);
-        Console.WriteLine();
-    }
-
-    protected void GeneralHelp()
-    {
-        Console.WriteLine(HelpDescriptions.HELP_DESCRIPTION);
-        Console.WriteLine(new string('-', HelpDescriptions.HELP_DESCRIPTION.Length));
-        Console.Write(HelpDescriptions.HELP_GENERAL_INSTRUCTION_PART_I);
-        this.ForegroundColor = TextColor.Green;
-        Console.Write($@" {this.GetObjectName(Verbs.LOOK).ToLower()}");
-        this.ResetColors();
-        Console.WriteLine(".");
-        Console.WriteLine(HelpDescriptions.EXAMPLES);
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.ROOM_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK_II);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.ITEM_DESCRIPTION);
-        Console.WriteLine();
-        Console.Write(HelpDescriptions.PROMPT);
-        this.ForegroundColor = TextColor.Green;
-        Console.WriteLine(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK_III);
-        this.ResetColors();
-        Console.WriteLine(HelpDescriptions.ITEM_DESCRIPTION_SHORT);
-        Console.WriteLine();
-        Console.WriteLine(HelpDescriptions.VERBS);
-        Console.WriteLine(new string('-', HelpDescriptions.VERBS.Length));
-    }
-
     public virtual bool History(ICollection<string> historyCollection)
     {
         var history = new StringBuilder(historyCollection.Count);
@@ -793,12 +464,23 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     
     public abstract bool Closing();
 
-    public virtual bool Resource(string resource)
+    public virtual bool Resource(string resource, bool endWithLineBreak = true, bool wordWrap = true)
     {
         if (!string.IsNullOrEmpty(resource))
         {
-            Console.Write(WordWrap(resource, this.ConsoleWidth));
-            Console.WriteLine();
+            if (wordWrap)
+            {
+                Console.Write(WordWrap(resource, this.ConsoleWidth));    
+            }
+            else
+            {
+                Console.Write(resource, this.ConsoleWidth);
+            }
+            
+            if (endWithLineBreak)
+            {
+                Console.WriteLine();    
+            }
         }
         return true;
     }
@@ -816,7 +498,7 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool Score(int score, int maxScore)
     {
-        Console.WriteLine($@"{string.Format(BaseDescriptions.SCORE, score, maxScore)}");
+        Console.WriteLine($@"{string.Format(BaseDescriptions.ACTUAL_SCORE, score, maxScore)}");
         return true;
     }
     
@@ -942,12 +624,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         return WordWrap(message.ToString(), width);
     }
 
-    private string GetObjectName(string itemName)
-    {
-        var sentence = itemName.Split('|');
-        return sentence[0].Trim();
-    }
-    
     private string GetRandomPhrase(string message)
     {
         var phrases = message.Split("|");

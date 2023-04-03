@@ -12,6 +12,7 @@ var scoreBoard = new ScoreBoard(printingSubsystem);
 var eventProvider = new EventProvider(universe, printingSubsystem, scoreBoard);
 IGamePrerequisitesAssembler gamePrerequisitesAssembler = new GamePrerequisitesAssembler(eventProvider);
 IGrammar grammar = new GermanGrammar(resourceProvider);
-var gameLoop = new GameLoop(printingSubsystem, universe, gamePrerequisitesAssembler, grammar, scoreBoard);
+IHelpSubsystem helpSubsystem = new BaseHelpSubsystem(grammar, printingSubsystem);
+var gameLoop = new GameLoop(printingSubsystem, helpSubsystem, universe, gamePrerequisitesAssembler, grammar, scoreBoard);
 
 gameLoop.Run();

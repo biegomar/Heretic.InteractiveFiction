@@ -16,7 +16,8 @@ public sealed class GameLoop
     private const string SAVE = "SAVE";
 
     public GameLoop(
-        IPrintingSubsystem printingSubsystem, 
+        IPrintingSubsystem printingSubsystem,
+        IHelpSubsystem helpSubsystem,
         Universe universe, 
         IGamePrerequisitesAssembler gamePrerequisitesAssembler, 
         IGrammar grammar, 
@@ -29,7 +30,7 @@ public sealed class GameLoop
 
         this.universe = universe;
         
-        this.processor = new InputProcessor(printingSubsystem, this.universe, grammar, this.scoreBoard);
+        this.processor = new InputProcessor(printingSubsystem, helpSubsystem, this.universe, grammar, this.scoreBoard);
         this.commands = new Queue<string>();
         
         AssemblyGame(gamePrerequisitesAssembler);

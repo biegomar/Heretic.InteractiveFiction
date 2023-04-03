@@ -16,7 +16,6 @@ public interface IPrintingSubsystem
     void ClearScreen();
     bool Credits();
     bool PrintObject(AHereticObject? item);
-    bool Help(IList<Verb> verbs);
     bool Hint(AHereticObject? item);
     bool History(ICollection<string> historyCollection);
     bool ItemNotVisible();
@@ -58,7 +57,7 @@ public interface IPrintingSubsystem
     bool NoAnswerToQuestion(string phrase);
     bool Opening();
     bool Closing();
-    bool Resource(string resource);
+    bool Resource(string resource, bool endWithLineBreak = true, bool wordWrap = true);
     bool FormattedResource(string resource, string text, bool lowerFirstLetter = false);
     bool Score(int score, int maxScore);
     bool Talk(Character? character);

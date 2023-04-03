@@ -12,13 +12,15 @@ internal class CommandExecutor
     private readonly Universe universe;
     private readonly IGrammar grammar;
     private readonly IPrintingSubsystem printingSubsystem;
+    private readonly IHelpSubsystem helpSubsystem;
     private readonly ObjectHandler objectHandler;
     private readonly HistoryAdministrator historyAdministrator;
     private readonly ScoreBoard scoreBoard;
     
-    internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, HistoryAdministrator historyAdministrator, ScoreBoard scoreBoard)
+    internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, HistoryAdministrator historyAdministrator, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
+        this.helpSubsystem = helpSubsystem;
         this.universe = universe;
         this.grammar = grammar;
         this.historyAdministrator = historyAdministrator;
@@ -50,7 +52,7 @@ internal class CommandExecutor
         
         result.Add(VerbKey.CREDITS, new CreditsCommand(printingSubsystem));
 
-        result.Add(VerbKey.HELP, new HelpCommand(grammar, printingSubsystem));
+        result.Add(VerbKey.HELP, new HelpCommand(helpSubsystem));
         
         result.Add(VerbKey.DESCEND, new DescendCommand(universe, printingSubsystem));
         result.Add(VerbKey.HINT, new HintCommand(universe, printingSubsystem));

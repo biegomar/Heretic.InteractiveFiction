@@ -3,10 +3,10 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record HelpCommand(IGrammar Grammar, IPrintingSubsystem PrintingSubsystem) : ICommand
+internal sealed record HelpCommand(IHelpSubsystem HelpSubsystem) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
-        return PrintingSubsystem.Help(Grammar.Verbs);
+        return HelpSubsystem.Help();
     }
 }

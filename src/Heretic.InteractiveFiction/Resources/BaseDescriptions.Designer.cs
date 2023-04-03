@@ -411,9 +411,9 @@ namespace Heretic.InteractiveFiction.Resources {
             }
         }
         
-        public static string SCORE {
+        public static string ACTUAL_SCORE {
             get {
-                return ResourceManager.GetString("SCORE", resourceCulture);
+                return ResourceManager.GetString("ACTUAL_SCORE", resourceCulture);
             }
         }
         
@@ -1554,6 +1554,12 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string HINT_FOR_WHAT {
             get {
                 return ResourceManager.GetString("HINT_FOR_WHAT", resourceCulture);
+            }
+        }
+        
+        public static string SCORE {
+            get {
+                return ResourceManager.GetString("SCORE", resourceCulture);
             }
         }
     }

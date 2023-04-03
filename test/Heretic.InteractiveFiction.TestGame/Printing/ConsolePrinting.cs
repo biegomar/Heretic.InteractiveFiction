@@ -32,7 +32,7 @@ internal sealed class ConsolePrinting: BaseConsolePrintingSubsystem
 
     public override bool TitleAndScore(int score, int maxScore)
     {
-        Console.Title = $"{string.Format(BaseDescriptions.SCORE, score, maxScore)}";
+        Console.Title = $"{string.Format(BaseDescriptions.ACTUAL_SCORE, score, maxScore)}";
         return true;
     }
 
