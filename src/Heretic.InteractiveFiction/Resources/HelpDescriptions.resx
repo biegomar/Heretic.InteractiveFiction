@@ -156,7 +156,7 @@
     <data name="ITEM_DESCRIPTION_ALTERNATIVE" xml:space="preserve">
         <value>[das ist eine Variante, die auch funktioniert. Probiere einfach ein wenig herum.]</value>
     </data>
-    <data name="SINGLE_VERB" xml:space="preserve">
-        <value>Erläuterungen zum Verb {0}</value>
+    <data name="VERBS_INDIVIDUAL" xml:space="preserve">
+        <value>Individuelle Auswahl:</value>
     </data>
 </root>

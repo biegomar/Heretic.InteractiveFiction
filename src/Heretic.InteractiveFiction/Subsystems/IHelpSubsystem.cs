@@ -12,5 +12,5 @@ public interface IHelpSubsystem
     bool Help(HelpCategory helpCategory);
     
     /// <summary>Get help for a specific verb.</summary>
-    bool Help(Verb verb);
+    bool Help(IList<Verb> verbs);
 }

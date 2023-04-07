@@ -38,15 +38,18 @@ public class BaseHelpSubsystem: IHelpSubsystem
         };
     }
 
-    public virtual bool Help(Verb verb)
+    public virtual bool Help(IList<Verb> verbs)
     {
-        var verbName = verb.Variants.First().Name.ToLower();
-        var headLine = string.Format(HelpDescriptions.SINGLE_VERB, verbName);
-        printingSubsystem.Resource(headLine, wordWrap: false);
-        printingSubsystem.Resource(new string('-', headLine.Length));
-        VerbHelp(verb);
+        if (verbs.Any())
+        {
+            printingSubsystem.Resource(HelpDescriptions.VERBS_INDIVIDUAL, wordWrap: false);
+            printingSubsystem.Resource(new string('-', HelpDescriptions.VERBS_INDIVIDUAL.Length));
+            VerbHelp(verbs);
+            
+            return true;
+        }
 
-        return true;
+        return printingSubsystem.Misconcept();
     }
     
     protected virtual bool General()
@@ -368,11 +371,6 @@ public class BaseHelpSubsystem: IHelpSubsystem
         return result;
     }
 
-    private void VerbHelp(Verb verb)
-    {
-        VerbHelp(new List<Verb> { verb });
-    }
-    
     private void VerbHelp(IEnumerable<Verb> verbs)
     {
         foreach (var verb in verbs)

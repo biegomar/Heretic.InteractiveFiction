@@ -321,9 +321,9 @@ namespace Heretic.InteractiveFiction.Resources {
             }
         }
         
-        internal static string SINGLE_VERB {
+        internal static string VERBS_INDIVIDUAL {
             get {
-                return ResourceManager.GetString("SINGLE_VERB", resourceCulture);
+                return ResourceManager.GetString("VERBS_INDIVIDUAL", resourceCulture);
             }
         }
     }

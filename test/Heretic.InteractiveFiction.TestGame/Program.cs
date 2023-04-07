@@ -14,6 +14,6 @@ IGamePrerequisitesAssembler gamePrerequisitesAssembler = new GamePrerequisitesAs
 IVerbHandler verbHandler = new GermanVerbHandler(universe, resourceProvider);
 IGrammar grammar = new GermanGrammar(resourceProvider, verbHandler);
 IHelpSubsystem helpSubsystem = new BaseHelpSubsystem(grammar, printingSubsystem);
-var gameLoop = new GameLoop(printingSubsystem, helpSubsystem, universe, gamePrerequisitesAssembler, grammar, scoreBoard);
+var gameLoop = new GameLoop(printingSubsystem, helpSubsystem, universe, gamePrerequisitesAssembler, grammar, verbHandler, scoreBoard);
 
 gameLoop.Run();

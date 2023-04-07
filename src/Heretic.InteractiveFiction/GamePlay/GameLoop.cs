@@ -21,6 +21,7 @@ public sealed class GameLoop
         Universe universe, 
         IGamePrerequisitesAssembler gamePrerequisitesAssembler, 
         IGrammar grammar, 
+        IVerbHandler verbHandler,
         ScoreBoard scoreBoard, 
         int consoleWidth = 0)
     {
@@ -30,7 +31,7 @@ public sealed class GameLoop
 
         this.universe = universe;
         
-        this.processor = new InputProcessor(printingSubsystem, helpSubsystem, this.universe, grammar, this.scoreBoard);
+        this.processor = new InputProcessor(printingSubsystem, helpSubsystem, this.universe, grammar, verbHandler, this.scoreBoard);
         this.commands = new Queue<string>();
         
         AssemblyGame(gamePrerequisitesAssembler);
