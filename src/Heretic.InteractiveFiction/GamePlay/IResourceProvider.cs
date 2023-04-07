@@ -35,7 +35,6 @@ public interface IResourceProvider
                  {
                      var verb = new Verb
                      {
-                         //Key = entry.Key.ToString(),
                          Key = Enum.Parse<VerbKey>(entry.Key.ToString(), true),
                          Prepositions = prepositions
                      };
@@ -58,7 +57,8 @@ public interface IResourceProvider
                              var umlautVariant = new VerbVariant
                              {
                                  Name = normalizedVerbName,
-                                 Prefix = verbAndPrefix.Count > 1 ? verbAndPrefix[1] : string.Empty
+                                 Prefix = verbAndPrefix.Count > 1 ? verbAndPrefix[1] : string.Empty,
+                                 IsUmlautVariant = true
                              };
                              variantList.Add(umlautVariant);
                          }

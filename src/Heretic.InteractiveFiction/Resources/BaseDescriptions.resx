@@ -877,4 +877,46 @@
   <data name="SCORE" xml:space="preserve">
     <value>Zeigt Dir den aktuellen Punktestand</value>
   </data>
+  <data name="CUT" xml:space="preserve">
+    <value>Zerschneide einen Gegenstand, bzw. schneide einen Gegenstand auf</value>
+  </data>
+  <data name="EAT" xml:space="preserve">
+    <value>Iss etwas</value>
+  </data>
+  <data name="DRINK" xml:space="preserve">
+    <value>Trink etwas</value>
+  </data>
+  <data name="KINDLE" xml:space="preserve">
+    <value>Verbrenne, bzw. zünde einen Gegenstand an</value>
+  </data>
+  <data name="PUTON" xml:space="preserve">
+    <value>Lege, bzw. stelle einen Gegenstand auf einen anderen</value>
+  </data>
+  <data name="READ" xml:space="preserve">
+    <value>Lies, was auf einem Gegenstand geschrieben steht</value>
+  </data>
+  <data name="SLEEP" xml:space="preserve">
+    <value>Lege Dich zum Schlafen auf eine entsprechende Schlafgelegenheit</value>
+  </data>
+  <data name="SMELL" xml:space="preserve">
+    <value>Rieche an einem Gegenstand</value>
+  </data>
+  <data name="SWITCHOFF" xml:space="preserve">
+    <value>Schalte ein Gerät aus</value>
+  </data>
+  <data name="SWITCHON" xml:space="preserve">
+    <value>Schalte ein Gerät an</value>
+  </data>
+  <data name="TAKEOFF" xml:space="preserve">
+    <value>Ziehe ein Kleidungsstück aus</value>
+  </data>
+  <data name="WEAR" xml:space="preserve">
+    <value>Ziehe ein Kleidungsstück an</value>
+  </data>
+  <data name="TASTE" xml:space="preserve">
+    <value>Schmecke an einem Gegenstand</value>
+  </data>
+  <data name="THROW" xml:space="preserve">
+    <value>Wirf einen Gegenstand</value>
+  </data>
 </root>

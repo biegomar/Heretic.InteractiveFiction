@@ -151,7 +151,7 @@
     <value>Verriegel|Verriegeln|Sperre:zu|Zusperren|Verschließe|Verschließen|Verschließ|Lock|abschließen|zuschließen|Schließe:ab|Schließ:ab|Schließe:zu|Schließ:zu</value>
   </data>
   <data name="LOOK" xml:space="preserve">
-    <value>Schaue:an|Schau:an|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X|Anschauen</value>
+    <value>Schaue:an|Schau:an|Untersuch|Untersuche|Untersuchen|U|Look|L|Show|examine|X|Anschauen|Betrachte|Betrachten</value>
   </data>
   <data name="N" xml:space="preserve">
     <value>Norden|Nord|N</value>
@@ -305,9 +305,6 @@
   </data>
   <data name="THROW" xml:space="preserve">
     <value>Wirf|Werf|Werfe|Werfen</value>
-  </data>
-  <data name="WAKEUP" xml:space="preserve">
-    <value>Aufwachen|Wach:auf|Wache:auf</value>
   </data>
   <data name="WEAR" xml:space="preserve">
     <value>Ziehe:an|Zieh:an|Anziehen</value>

@@ -1562,5 +1562,89 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("SCORE", resourceCulture);
             }
         }
+        
+        public static string CUT {
+            get {
+                return ResourceManager.GetString("CUT", resourceCulture);
+            }
+        }
+        
+        public static string EAT {
+            get {
+                return ResourceManager.GetString("EAT", resourceCulture);
+            }
+        }
+        
+        public static string DRINK {
+            get {
+                return ResourceManager.GetString("DRINK", resourceCulture);
+            }
+        }
+        
+        public static string KINDLE {
+            get {
+                return ResourceManager.GetString("KINDLE", resourceCulture);
+            }
+        }
+        
+        public static string PUTON {
+            get {
+                return ResourceManager.GetString("PUTON", resourceCulture);
+            }
+        }
+        
+        public static string READ {
+            get {
+                return ResourceManager.GetString("READ", resourceCulture);
+            }
+        }
+        
+        public static string SLEEP {
+            get {
+                return ResourceManager.GetString("SLEEP", resourceCulture);
+            }
+        }
+        
+        public static string SMELL {
+            get {
+                return ResourceManager.GetString("SMELL", resourceCulture);
+            }
+        }
+        
+        public static string SWITCHOFF {
+            get {
+                return ResourceManager.GetString("SWITCHOFF", resourceCulture);
+            }
+        }
+        
+        public static string SWITCHON {
+            get {
+                return ResourceManager.GetString("SWITCHON", resourceCulture);
+            }
+        }
+        
+        public static string TAKEOFF {
+            get {
+                return ResourceManager.GetString("TAKEOFF", resourceCulture);
+            }
+        }
+        
+        public static string WEAR {
+            get {
+                return ResourceManager.GetString("WEAR", resourceCulture);
+            }
+        }
+        
+        public static string TASTE {
+            get {
+                return ResourceManager.GetString("TASTE", resourceCulture);
+            }
+        }
+        
+        public static string THROW {
+            get {
+                return ResourceManager.GetString("THROW", resourceCulture);
+            }
+        }
     }
 }

@@ -40,18 +40,26 @@ public class BaseHelpSubsystem: IHelpSubsystem
 
     public virtual bool Help(Verb verb)
     {
-        throw new NotImplementedException();
+        var verbName = verb.Variants.First().Name.ToLower();
+        var headLine = string.Format(HelpDescriptions.SINGLE_VERB, verbName);
+        printingSubsystem.Resource(headLine, wordWrap: false);
+        printingSubsystem.Resource(new string('-', headLine.Length));
+        VerbHelp(verb);
+
+        return true;
     }
     
     protected virtual bool General()
     {
+        var look = this.grammar.Verbs.Single(x => x.Key == VerbKey.LOOK).Variants.First().Name.ToLower();
+        
         printingSubsystem.Resource(HelpDescriptions.HELP_DESCRIPTION, wordWrap: false);
-        printingSubsystem.Resource(new string('-', HelpDescriptions.HELP_DESCRIPTION.Length), wordWrap: false);
+        printingSubsystem.Resource(new string('-', HelpDescriptions.HELP_DESCRIPTION.Length));
         printingSubsystem.Resource(HelpDescriptions.HELP_GENERAL_INSTRUCTION_PART_I, false, false);
         printingSubsystem.ForegroundColor = TextColor.Green;
-        printingSubsystem.Resource($@" {this.GetObjectName(Verbs.LOOK).ToLower()}", false, false);
+        printingSubsystem.Resource(look, false, false);
         printingSubsystem.ResetColors();
-        printingSubsystem.Resource(".", wordWrap: false);
+        printingSubsystem.Resource(".");
         printingSubsystem.Resource(HelpDescriptions.EXAMPLES, false);
         printingSubsystem.Resource(HelpDescriptions.PROMPT, false, false);
         printingSubsystem.ForegroundColor = TextColor.Green;
@@ -68,6 +76,11 @@ public class BaseHelpSubsystem: IHelpSubsystem
         printingSubsystem.Resource(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK_III, wordWrap: false);
         printingSubsystem.ResetColors();
         printingSubsystem.Resource(HelpDescriptions.ITEM_DESCRIPTION_SHORT);
+        printingSubsystem.Resource(HelpDescriptions.PROMPT, false, false);
+        printingSubsystem.ForegroundColor = TextColor.Green;
+        printingSubsystem.Resource(HelpDescriptions.HELP_GENERAL_INSTRUCTION_LOOK_IV, wordWrap: false);
+        printingSubsystem.ResetColors();
+        printingSubsystem.Resource(HelpDescriptions.ITEM_DESCRIPTION_ALTERNATIVE);
         printingSubsystem.Resource(HelpDescriptions.VERBS, wordWrap: false);
         printingSubsystem.Resource(new string('-', HelpDescriptions.VERBS.Length));
 
@@ -124,7 +137,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
         return true;
     }
     
-    private IDictionary<VerbKey, IEnumerable<string>> GetDirectionVerbs()
+    private IEnumerable<Verb> GetDirectionVerbs()
     {
         var verbKeys = new List<VerbKey>()
         {
@@ -149,6 +162,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
     
     private void DirectionExamples()
     {
+        printingSubsystem.Resource(" ", false);
         printingSubsystem.Resource(HelpDescriptions.EXAMPLES, false);
         printingSubsystem.Resource(HelpDescriptions.PROMPT, false, false);
         printingSubsystem.ForegroundColor = TextColor.Green;
@@ -162,7 +176,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
         printingSubsystem.Resource(HelpDescriptions.VERBS_DIRECTIONS_EXAMPLE_DESCRIPTION);
     }
     
-    private IDictionary<VerbKey, IEnumerable<string>> GetTalkVerbs()
+    private IEnumerable<Verb> GetTalkVerbs()
     {
         var verbKeys = new List<VerbKey>()
         {
@@ -182,6 +196,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
     
     private void TalkExamples()
     {
+        printingSubsystem.Resource(" ", false);
         printingSubsystem.Resource(HelpDescriptions.EXAMPLES, false);
         printingSubsystem.Resource(HelpDescriptions.PROMPT, false, false);
         printingSubsystem.ForegroundColor = TextColor.Green;
@@ -200,7 +215,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
         printingSubsystem.Resource(HelpDescriptions.VERBS_TALK_EXAMPLE_III_DESCRIPTION);
     }
     
-    private IDictionary<VerbKey, IEnumerable<string>> GetInteractionVerbs()
+    private IEnumerable<Verb> GetInteractionVerbs()
     {
         var verbKeys = new List<VerbKey>()
         {
@@ -225,13 +240,10 @@ public class BaseHelpSubsystem: IHelpSubsystem
             VerbKey.THROW,
             VerbKey.DRINK,
             VerbKey.EAT,
-            VerbKey.INSERT,
             VerbKey.KINDLE,
             VerbKey.PUTON,
             VerbKey.READ,
-            VerbKey.SHOW,
             VerbKey.SLEEP,
-            VerbKey.WAKEUP,
             VerbKey.SMELL,
             VerbKey.TASTE,
             VerbKey.SWITCHOFF,
@@ -247,6 +259,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
     
     private void InteractionExamples()
     {
+        printingSubsystem.Resource(" ", false);
         printingSubsystem.Resource(HelpDescriptions.EXAMPLES, false);
         printingSubsystem.Resource(HelpDescriptions.PROMPT, false, false);
         printingSubsystem.ForegroundColor = TextColor.Green;
@@ -275,7 +288,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
         printingSubsystem.Resource(HelpDescriptions.VERBS_INTERACT_ITEMS_EXAMPLE_V_DESCRIPTION);
     }
     
-    private IDictionary<VerbKey, IEnumerable<string>> GetContainerVerbs()
+    private IEnumerable<Verb> GetContainerVerbs()
     {
         var verbKeys = new List<VerbKey>()
         {
@@ -293,6 +306,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
     
     private void ContainerExamples()
     {
+        printingSubsystem.Resource(" ", false);
         printingSubsystem.Resource(HelpDescriptions.EXAMPLES, false);
         printingSubsystem.Resource(HelpDescriptions.PROMPT, false, false);
         printingSubsystem.ForegroundColor = TextColor.Green;
@@ -306,7 +320,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
         printingSubsystem.Resource(HelpDescriptions.VERBS_CONTAINER_EXAMPLE_II_DESCRIPTION);
     }
     
-    private IDictionary<VerbKey, IEnumerable<string>> GetMetaInformationVerbs()
+    private IEnumerable<Verb> GetMetaInformationVerbs()
     {
         var verbKeys = new List<VerbKey>()
         {
@@ -319,8 +333,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
             VerbKey.HINT,
             VerbKey.REM,
             VerbKey.SAVE,
-            VerbKey.QUIT,
-            VerbKey.TOBE
+            VerbKey.QUIT
         };
             
         var result = FilterVerbs(verbKeys);
@@ -330,6 +343,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
     
     private void MetaInformationExamples()
     {
+        printingSubsystem.Resource(" ", false);
         printingSubsystem.Resource(HelpDescriptions.EXAMPLES, false);
         printingSubsystem.Resource(HelpDescriptions.PROMPT, false, false);
         printingSubsystem.ForegroundColor = TextColor.Green;
@@ -347,37 +361,38 @@ public class BaseHelpSubsystem: IHelpSubsystem
         printingSubsystem.ResetColors();
         printingSubsystem.Resource(HelpDescriptions.VERBS_METAINFO_EXAMPLE_II_DESCRIPTION);
     }
-    
-    private string GetObjectName(string itemName)
+
+    private IEnumerable<Verb> FilterVerbs(IList<VerbKey> verbKeys)
     {
-        var sentence = itemName.Split('|');
-        return sentence[0].Trim();
-    }
-    
-    private Dictionary<VerbKey, IEnumerable<string>> FilterVerbs(IEnumerable<VerbKey> verbKeys)
-    {
-        var result = grammar.Verbs.Where(x => verbKeys.Contains(x.Key)).OrderBy(x => x.Key)
-            .ToDictionary(x => x.Key, x => x.Variants.Select(v => v.Name));
+        var result = grammar.Verbs.Where(x => verbKeys.Contains(x.Key)).OrderBy(x => verbKeys.IndexOf(x.Key));
         return result;
     }
-    
-    private void VerbHelp(IDictionary<VerbKey, IEnumerable<string>> verbResource)
+
+    private void VerbHelp(Verb verb)
     {
-        foreach (var verbs in verbResource)
+        VerbHelp(new List<Verb> { verb });
+    }
+    
+    private void VerbHelp(IEnumerable<Verb> verbs)
+    {
+        foreach (var verb in verbs)
         {
-            printingSubsystem.Resource(BaseDescriptions.ResourceManager.GetString(verbs.Key.ToString())!, false, false);
+            printingSubsystem.Resource(BaseDescriptions.ResourceManager.GetString(verb.Key.ToString())!, false, false);
             var index = 0;
             printingSubsystem.ForegroundColor = TextColor.Magenta;
-            foreach (var value in verbs.Value)
+            var verbVariantsWithoutUmlauts = verb.Variants.Where(v => !v.IsUmlautVariant).ToList();
+            foreach (var variant in verbVariantsWithoutUmlauts)
             {
                 printingSubsystem.Resource(index != 0 ? ", " : "...", false, false);
-
-                printingSubsystem.Resource(value, false, false);
+                printingSubsystem.Resource(variant.Name, false, false);
+                if (!string.IsNullOrEmpty(variant.Prefix))
+                {
+                    printingSubsystem.Resource($" [{variant.Prefix}]", false, false);    
+                }
                 index++;
             }
 
             printingSubsystem.ResetColors();
-
             printingSubsystem.Resource(" ", false);
         }
     }

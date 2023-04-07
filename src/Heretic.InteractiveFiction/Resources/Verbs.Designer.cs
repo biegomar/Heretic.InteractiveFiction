@@ -423,12 +423,6 @@ namespace Heretic.InteractiveFiction.Resources {
             }
         }
         
-        internal static string WAKEUP {
-            get {
-                return ResourceManager.GetString("WAKEUP", resourceCulture);
-            }
-        }
-        
         internal static string WEAR {
             get {
                 return ResourceManager.GetString("WEAR", resourceCulture);

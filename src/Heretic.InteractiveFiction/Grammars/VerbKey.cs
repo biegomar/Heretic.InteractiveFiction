@@ -67,7 +67,6 @@ public enum VerbKey
     USE,
     W,
     WAIT,
-    WAKEUP,
     WAYS,
     WEAR,
     WRITE,

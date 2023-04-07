@@ -22,7 +22,7 @@
         <value>Einige generelle Hinweise:</value>
     </data>
     <data name="HELP_GENERAL_INSTRUCTION_PART_I" xml:space="preserve">
-        <value>Es ist sehr wichtig, dass Du Dir Deine Umgebung ganz genau anschaust. Jeder noch so kleine Hinweis kann von Bedeutung sein. Um das zu tun, benutzt Du das Kommando</value>
+        <value>Es ist sehr wichtig, dass Du Dir Deine Umgebung ganz genau anschaust. Jeder noch so kleine Hinweis kann von Bedeutung sein. Um das zu tun, benutzt Du das Kommando </value>
     </data>
     <data name="HELP_GENERAL_INSTRUCTION_LOOK" xml:space="preserve">
         <value>schaue</value>
@@ -149,5 +149,14 @@
     </data>
     <data name="VERBS_INTERACT_ITEMS_EXAMPLE_V_DESCRIPTION" xml:space="preserve">
         <value>[zieht dem Spieler die Jacke an. (im Sinne von bekleiden)]</value>
+    </data>
+    <data name="HELP_GENERAL_INSTRUCTION_LOOK_IV" xml:space="preserve">
+        <value>schaue dir den teppich an</value>
+    </data>
+    <data name="ITEM_DESCRIPTION_ALTERNATIVE" xml:space="preserve">
+        <value>[das ist eine Variante, die auch funktioniert. Probiere einfach ein wenig herum.]</value>
+    </data>
+    <data name="SINGLE_VERB" xml:space="preserve">
+        <value>Erläuterungen zum Verb {0}</value>
     </data>
 </root>

@@ -127,7 +127,7 @@
         <value>am:an dem|ans:an das|beim:bei dem|im:in dem|ins:in das|vom:von dem|zum:zu dem|zur:zu der|aufs:auf das</value>
     </data>
     <data name="UMLAUTS" xml:space="preserve">
-        <value>ä:ae|ö:oe|ü:ue|ß:ss</value>
+        <value>ä:ae|ö:oe|ü:ue|ß:ss|Ä:Ae|Ö:Oe|Ü:Ue</value>
     </data>
     <data name="NOMINATIVE_ARTICLE_PLURAL" xml:space="preserve">
         <value>Die</value>
