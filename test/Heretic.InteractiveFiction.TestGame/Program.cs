@@ -11,7 +11,8 @@ var universe = new Universe(printingSubsystem, resourceProvider);
 var scoreBoard = new ScoreBoard(printingSubsystem);
 var eventProvider = new EventProvider(universe, printingSubsystem, scoreBoard);
 IGamePrerequisitesAssembler gamePrerequisitesAssembler = new GamePrerequisitesAssembler(eventProvider);
-IGrammar grammar = new GermanGrammar(resourceProvider);
+IVerbHandler verbHandler = new GermanVerbHandler(universe, resourceProvider);
+IGrammar grammar = new GermanGrammar(resourceProvider, verbHandler);
 IHelpSubsystem helpSubsystem = new BaseHelpSubsystem(grammar, printingSubsystem);
 var gameLoop = new GameLoop(printingSubsystem, helpSubsystem, universe, gamePrerequisitesAssembler, grammar, scoreBoard);
 

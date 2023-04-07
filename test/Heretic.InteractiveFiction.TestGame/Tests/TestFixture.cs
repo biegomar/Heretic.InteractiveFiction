@@ -11,6 +11,7 @@ namespace Heretic.InteractiveFiction.TestGame.Tests;
 public sealed class TestFixture
 {
     private readonly IResourceProvider resourceProvider;
+    private readonly IVerbHandler verbHandler;
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly IHelpSubsystem helpSubsystem;
     private readonly HistoryAdministrator historyAdministrator;
@@ -30,6 +31,7 @@ public sealed class TestFixture
         this.printingSubsystem = InitializePrintingSubsystem();
         this.helpSubsystem = initializeHelpSubsystem();
         this.Universe = this.GetUniverse();
+        this.verbHandler = this.GetVerbHandler();
         this.ObjectHandler = new ObjectHandler(this.Universe);
         this.historyAdministrator = new HistoryAdministrator();
         this.scoreBoard = new ScoreBoard(this.printingSubsystem);
@@ -53,8 +55,13 @@ public sealed class TestFixture
 
     private CommandExecutor GetCommandExecutor()
     {
-        return new CommandExecutor(this.Universe, new GermanGrammar(this.resourceProvider), this.printingSubsystem,
+        return new CommandExecutor(this.Universe, new GermanGrammar(this.resourceProvider, this.verbHandler), this.printingSubsystem,
             this.helpSubsystem, this.historyAdministrator, this.scoreBoard);
+    }
+
+    private IVerbHandler GetVerbHandler()
+    {
+        return new GermanVerbHandler(this.Universe, this.resourceProvider);
     }
     
     private Universe GetUniverse()

@@ -175,7 +175,7 @@ internal sealed class InputAnalyzer
 
         foreach (var word in parts)
         {
-            var possibleVerbsAndVariants = ExtractPossibleVerbs(word);
+            var possibleVerbsAndVariants = this.grammar.ExtractPossibleVerbs(word);
             
             if (possibleVerbsAndVariants.Any())
             {
@@ -462,27 +462,5 @@ internal sealed class InputAnalyzer
         }
 
         return string.Empty;
-    }
-    
-    private List<Verb> ExtractPossibleVerbs(string word)
-    {
-        var verbList = this.universe.ActiveLocation.OptionalVerbs.SelectMany(x => x.Value).ToList();
-        
-        return ExtractPossibleVerbsFromList(word, this.grammar.Verbs.ToList()).Union(ExtractPossibleVerbsFromList(word, verbList)).ToList();
-    }
-
-    private static List<Verb> ExtractPossibleVerbsFromList(string word, List<Verb> verbList)
-    {
-        var optionalVerbs = verbList
-            .Where(v => v.Variants.Select(v => v.Name).Contains(word, StringComparer.InvariantCultureIgnoreCase)).Select(
-                v => new Verb()
-                {
-                    Key = v.Key,
-                    ErrorMessage = v.ErrorMessage,
-                    Prepositions = v.Prepositions,
-                    Variants = v.Variants.Where(vi => vi.Name.Equals(word, StringComparison.InvariantCultureIgnoreCase))
-                        .ToList()
-                }).ToList();
-        return optionalVerbs;
     }
 }

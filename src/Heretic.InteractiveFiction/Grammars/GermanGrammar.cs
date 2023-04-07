@@ -6,14 +6,15 @@ namespace Heretic.InteractiveFiction.Grammars;
 public class GermanGrammar: IGrammar
 {
     private IDictionary<string, (string, string)> CombinedPrepositionsAndArticles { get; }
+    private readonly IVerbHandler verbHandler;
 
-    public IList<Verb> Verbs { get; }
-    
+    public IList<Verb> Verbs => this.verbHandler.Verbs;
+
     public IDictionary<string, IEnumerable<string>> Prepositions { get; }
 
-    public GermanGrammar(IResourceProvider resourceProvider)
+    public GermanGrammar(IResourceProvider resourceProvider, IVerbHandler verbHandler)
     {
-        this.Verbs = resourceProvider.GetVerbsFromResources();
+        this.verbHandler = verbHandler;
         this.Prepositions = resourceProvider.GetPrepositionsFromResources();
         this.CombinedPrepositionsAndArticles = resourceProvider.PreparePrepositionsAndArticlesFromResource();
     }
@@ -29,5 +30,10 @@ public class GermanGrammar: IGrammar
         var allPrepositions = this.Prepositions.Values.SelectMany(x => x);
         
         return sentence.Intersect(allPrefixes.Union(allPrepositions)).Any();
+    }
+
+    public List<Verb> ExtractPossibleVerbs(string word)
+    {
+        return this.verbHandler.ExtractPossibleVerbs(word);
     }
 }
