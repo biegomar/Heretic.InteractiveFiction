@@ -1,6 +1,9 @@
 using Heretic.InteractiveFiction.Comparer;
 using Heretic.InteractiveFiction.GamePlay;
+using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Subsystems;
+using Heretic.InteractiveFiction.TestGame.Printing;
 using Heretic.InteractiveFiction.TestGame.Resources;
 
 namespace Heretic.InteractiveFiction.TestGame.GamePlay;
@@ -8,13 +11,71 @@ namespace Heretic.InteractiveFiction.TestGame.GamePlay;
 internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
 {
     private EventProvider eventProvider;
+    private IPrintingSubsystem printingSubsystem;
+    private IResourceProvider resourceProvider;
+    private IHelpSubsystem helpSubsystem;
+    private IGrammar grammar;
+    private IVerbHandler verbHandler;
+    private ScoreBoard scoreBoard;
+    private Universe universe;
 
-    public GamePrerequisitesAssembler(EventProvider eventProvider)
+    public GamePrerequisitesAssembler()
     {
-        this.eventProvider = eventProvider;
+        this.resourceProvider = new ResourceProvider();
+        this.printingSubsystem = new ConsolePrinting();
+
+        this.universe = new Universe(printingSubsystem, resourceProvider);
+        this.scoreBoard = new ScoreBoard(printingSubsystem);
+        this.eventProvider = new EventProvider(universe, printingSubsystem, scoreBoard);
+
+        this.verbHandler = new GermanVerbHandler(universe, resourceProvider);
+        this.grammar = new GermanGrammar(resourceProvider, verbHandler);
+        this.helpSubsystem = new BaseHelpSubsystem(grammar, printingSubsystem);
     }
-    
-    public GamePrerequisites AssembleGame()
+
+    public IPrintingSubsystem PrintingSubsystem
+    {
+        get => printingSubsystem;
+        set => printingSubsystem = value;
+    }
+
+    public IResourceProvider ResourceProvider
+    {
+        get => resourceProvider;
+        set => resourceProvider = value;
+    }
+
+    public IHelpSubsystem HelpSubsystem
+    {
+        get => helpSubsystem;
+        set => helpSubsystem = value;
+    }
+
+    public IGrammar Grammar
+    {
+        get => grammar;
+        set => grammar = value;
+    }
+
+    public IVerbHandler VerbHandler
+    {
+        get => verbHandler;
+        set => verbHandler = value;
+    }
+
+    public ScoreBoard ScoreBoard
+    {
+        get => scoreBoard;
+        set => scoreBoard = value;
+    }
+
+    public Universe Universe
+    {
+        get => universe;
+        set => universe = value;
+    }
+
+    public void AssembleGame()
     {
         var livingRoom = LivingRoomPrerequisites.Get(this.eventProvider);
         var bedRoom = BedRoomPrerequisites.Get(this.eventProvider);
@@ -24,7 +85,7 @@ internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
         
         this.eventProvider.AddEventsForUniverse();
         
-        var map = new LocationMap(new LocationComparer())
+        var locationMap = new LocationMap(new LocationComparer())
         {
             { livingRoom, LivingRoomLocationMap(bedRoom, cellar, freedom) },
             { bedRoom, BedRoomLocationMap(livingRoom, attic) },
@@ -36,7 +97,10 @@ internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
         var activePlayer = PlayerPrerequisites.Get(this.eventProvider);
         var actualQuests = GetQuests();
         
-        return new GamePrerequisites(map, activeLocation, activePlayer, null, actualQuests);
+        this.universe.LocationMap = locationMap;
+        this.universe.ActiveLocation = activeLocation;
+        this.universe.ActivePlayer = activePlayer;
+        this.universe.Quests = actualQuests;
     }
 
     private static ICollection<string> GetQuests()

@@ -27,6 +27,9 @@ internal class EventProvider
         this.scoreBoard = scoreBoard;
         this.objectHandler = new ObjectHandler(this.universe);
         this.waitCounter = 0;
+        this.isPaperInStove = false;
+        this.isPetroleumInStove= false;
+        this.isPetroleumInLamp= false;
     }
     
     internal void RegisterScore(string key, int value)
@@ -502,5 +505,4 @@ internal class EventProvider
             this.isPaperInStove = false;   
         }
     }
-    
 }

@@ -1,6 +1,4 @@
 using Heretic.InteractiveFiction.Exceptions;
-using Heretic.InteractiveFiction.Grammars;
-using Heretic.InteractiveFiction.Objects;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
@@ -8,52 +6,34 @@ namespace Heretic.InteractiveFiction.GamePlay;
 
 public sealed class GameLoop
 {
-    private readonly Universe universe;
+    private readonly IGamePrerequisitesAssembler gamePrerequisitesAssembler;
+    private readonly IPrintingSubsystem printingSubsystem;
     private readonly InputProcessor processor;
     private Queue<string> commands;
-    private readonly IPrintingSubsystem printingSubsystem;
-    private readonly ScoreBoard scoreBoard;
     private const string SAVE = "SAVE";
 
-    public GameLoop(
-        IPrintingSubsystem printingSubsystem,
-        IHelpSubsystem helpSubsystem,
-        Universe universe, 
-        IGamePrerequisitesAssembler gamePrerequisitesAssembler, 
-        IGrammar grammar, 
-        IVerbHandler verbHandler,
-        ScoreBoard scoreBoard, 
-        int consoleWidth = 0)
+    public GameLoop(IGamePrerequisitesAssembler gamePrerequisitesAssembler, int consoleWidth = 0)
     {
-        this.printingSubsystem = printingSubsystem;
-        this.printingSubsystem.ConsoleWidth = consoleWidth;
-        this.scoreBoard = scoreBoard;
+        this.gamePrerequisitesAssembler = gamePrerequisitesAssembler;
+        printingSubsystem = this.gamePrerequisitesAssembler.PrintingSubsystem;
+        printingSubsystem.ConsoleWidth = consoleWidth;
 
-        this.universe = universe;
+        processor = new InputProcessor(printingSubsystem, this.gamePrerequisitesAssembler.HelpSubsystem,
+            this.gamePrerequisitesAssembler.Universe, this.gamePrerequisitesAssembler.Grammar,
+            this.gamePrerequisitesAssembler.VerbHandler, this.gamePrerequisitesAssembler.ScoreBoard);
         
-        this.processor = new InputProcessor(printingSubsystem, helpSubsystem, this.universe, grammar, verbHandler, this.scoreBoard);
-        this.commands = new Queue<string>();
+        commands = new Queue<string>();
         
-        AssemblyGame(gamePrerequisitesAssembler);
+        gamePrerequisitesAssembler.AssembleGame();
         
         InitializeScreen();
-    }
-    
-    private void AssemblyGame(IGamePrerequisitesAssembler gamePrerequisitesAssembler)
-    {
-        var gamePrerequisites = gamePrerequisitesAssembler.AssembleGame();
-        this.universe.LocationMap = gamePrerequisites.LocationMap;
-        this.universe.ActiveLocation = gamePrerequisites.ActiveLocation;
-        this.universe.ActivePlayer = gamePrerequisites.ActivePlayer;
-        this.universe.Quests = gamePrerequisites.Quests;
-        this.universe.SetPeriodicEvent(gamePrerequisites.PeriodicEvent);
     }
 
     public void Run(string fileName = "")
     {
         if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
         {
-            this.commands = GetCommandList(fileName);
+            commands = GetCommandList(fileName);
         }
         
         try
@@ -65,7 +45,7 @@ public sealed class GameLoop
                 printingSubsystem.ForegroundColor = TextColor.Green;
                 var input = GetInput();
                 printingSubsystem.ResetColors();
-                unfinished = this.processor.Process(input);
+                unfinished = processor.Process(input);
             } while (unfinished);
         }
         catch (QuitGameException ex)
@@ -95,19 +75,21 @@ public sealed class GameLoop
             Console.WriteLine(result);
             return result;
         }
-        return Console.ReadLine();
+        return Console.ReadLine()!;
     }
 
     private void InitializeScreen()
     {
         printingSubsystem.ClearScreen();
-        printingSubsystem.TitleAndScore(this.scoreBoard.Score, this.scoreBoard.MaxScore);
+        printingSubsystem.TitleAndScore(gamePrerequisitesAssembler.ScoreBoard.Score,
+            gamePrerequisitesAssembler.ScoreBoard.MaxScore);
         printingSubsystem.Opening();
         printingSubsystem.ForegroundColor = TextColor.DarkCyan;
         printingSubsystem.Resource(BaseDescriptions.START_THE_GAME);
         printingSubsystem.ResetColors();
         Console.ReadKey();
-        printingSubsystem.ActiveLocation(this.universe.ActiveLocation, this.universe.LocationMap);
+        printingSubsystem.ActiveLocation(gamePrerequisitesAssembler.Universe.ActiveLocation,
+            gamePrerequisitesAssembler.Universe.LocationMap);
         printingSubsystem.ForegroundColor = TextColor.DarkCyan;
         printingSubsystem.Resource(BaseDescriptions.HELP_WANTED);
         printingSubsystem.ResetColors();
@@ -117,7 +99,7 @@ public sealed class GameLoop
     {
         printingSubsystem.Closing();
         printingSubsystem.Credits();
-        this.processor.Process(SAVE);
+        processor.Process(SAVE);
         Console.WriteLine();
         printingSubsystem.ForegroundColor = TextColor.DarkCyan;
         printingSubsystem.Resource(BaseDescriptions.END_THE_GAME);

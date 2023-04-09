@@ -70,14 +70,9 @@ public sealed class TestFixture
         
         var eventProvider = new EventProvider(universe, printingSubsystem, scoreBoard);
         
-        IGamePrerequisitesAssembler gamePrerequisitesAssembler = new GamePrerequisitesAssembler(eventProvider);
-        var gamePrerequisites = gamePrerequisitesAssembler.AssembleGame();
-
-        universe.LocationMap = gamePrerequisites.LocationMap;
-        universe.ActiveLocation = gamePrerequisites.ActiveLocation;
-        universe.ActivePlayer = gamePrerequisites.ActivePlayer;
-        universe.Quests = gamePrerequisites.Quests;
-        universe.SetPeriodicEvent(gamePrerequisites.PeriodicEvent);
+        IGamePrerequisitesAssembler gamePrerequisitesAssembler = new GamePrerequisitesAssembler();
+        gamePrerequisitesAssembler.AssembleGame();
+        universe = gamePrerequisitesAssembler.Universe;
 
         return universe;
     }
