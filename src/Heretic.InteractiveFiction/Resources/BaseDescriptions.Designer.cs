@@ -1646,5 +1646,17 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("THROW", resourceCulture);
             }
         }
+        
+        public static string RESTART {
+            get {
+                return ResourceManager.GetString("RESTART", resourceCulture);
+            }
+        }
+        
+        public static string RESTART_GAME {
+            get {
+                return ResourceManager.GetString("RESTART_GAME", resourceCulture);
+            }
+        }
     }
 }

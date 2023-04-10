@@ -321,4 +321,7 @@
   <data name="DISCONNECT" xml:space="preserve">
     <value>Trenne|Trennen|Trenn|Lös|Löse|Lösen|Ziehe:ab|Ziehen:ab|Zieh:ab|Entferne|Entfernen|Entfern</value>
   </data>
+  <data name="RESTART" xml:space="preserve">
+    <value>Neustart|Restart</value>
+  </data>
 </root>

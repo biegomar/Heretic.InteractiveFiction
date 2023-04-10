@@ -14,4 +14,6 @@ public interface IGamePrerequisitesAssembler
     public ScoreBoard ScoreBoard { get; set; }
     public Universe Universe { get; set; }
     public void AssembleGame();
+
+    public void Restart();
 }

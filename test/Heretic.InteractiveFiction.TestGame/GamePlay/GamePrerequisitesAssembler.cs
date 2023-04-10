@@ -21,6 +21,11 @@ internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
 
     public GamePrerequisitesAssembler()
     {
+        InitializeSystem();
+    }
+
+    private void InitializeSystem()
+    {
         this.resourceProvider = new ResourceProvider();
         this.printingSubsystem = new ConsolePrinting();
 
@@ -101,6 +106,11 @@ internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
         this.universe.ActiveLocation = activeLocation;
         this.universe.ActivePlayer = activePlayer;
         this.universe.Quests = actualQuests;
+    }
+
+    public void Restart()
+    {
+        InitializeSystem();
     }
 
     private static ICollection<string> GetQuests()

@@ -919,4 +919,10 @@
   <data name="THROW" xml:space="preserve">
     <value>Wirf einen Gegenstand</value>
   </data>
+  <data name="RESTART" xml:space="preserve">
+    <value>Starte das Spiel neu</value>
+  </data>
+  <data name="RESTART_GAME" xml:space="preserve">
+    <value>Das Spiel wird neu gestartet</value>
+  </data>
 </root>

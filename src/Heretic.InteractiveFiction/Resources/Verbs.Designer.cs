@@ -452,5 +452,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("DISCONNECT", resourceCulture);
             }
         }
+        
+        internal static string RESTART {
+            get {
+                return ResourceManager.GetString("RESTART", resourceCulture);
+            }
+        }
     }
 }

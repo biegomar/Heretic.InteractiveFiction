@@ -41,6 +41,7 @@ public enum VerbKey
     QUIT,
     READ,
     REM,
+    RESTART,
     S,
     SAVE,
     SAY,

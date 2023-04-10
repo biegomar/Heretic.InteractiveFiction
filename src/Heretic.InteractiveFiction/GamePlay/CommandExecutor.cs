@@ -48,6 +48,7 @@ internal class CommandExecutor
         result.Add(VerbKey.PUTON, putOnCommand);
         
         result.Add(VerbKey.REM, new RemarkCommand());
+        result.Add(VerbKey.RESTART, new RestartCommand());
         result.Add(VerbKey.QUIT, new QuitCommand());
         
         result.Add(VerbKey.SCORE, new ScoreCommand(scoreBoard));

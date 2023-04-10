@@ -7,25 +7,30 @@ namespace Heretic.InteractiveFiction.GamePlay;
 public sealed class GameLoop
 {
     private readonly IGamePrerequisitesAssembler gamePrerequisitesAssembler;
-    private readonly IPrintingSubsystem printingSubsystem;
-    private readonly InputProcessor processor;
+    private IPrintingSubsystem printingSubsystem;
+    private InputProcessor processor;
     private Queue<string> commands;
     private const string SAVE = "SAVE";
 
     public GameLoop(IGamePrerequisitesAssembler gamePrerequisitesAssembler, int consoleWidth = 0)
     {
         this.gamePrerequisitesAssembler = gamePrerequisitesAssembler;
+        InitializeSystem(consoleWidth);
+    }
+
+    private void InitializeSystem(int consoleWidth)
+    {
         printingSubsystem = this.gamePrerequisitesAssembler.PrintingSubsystem;
         printingSubsystem.ConsoleWidth = consoleWidth;
 
         processor = new InputProcessor(printingSubsystem, this.gamePrerequisitesAssembler.HelpSubsystem,
             this.gamePrerequisitesAssembler.Universe, this.gamePrerequisitesAssembler.Grammar,
             this.gamePrerequisitesAssembler.VerbHandler, this.gamePrerequisitesAssembler.ScoreBoard);
-        
+
         commands = new Queue<string>();
-        
+
         gamePrerequisitesAssembler.AssembleGame();
-        
+
         InitializeScreen();
     }
 
@@ -35,7 +40,7 @@ public sealed class GameLoop
         {
             commands = GetCommandList(fileName);
         }
-        
+
         try
         {
             bool unfinished;
@@ -56,10 +61,21 @@ public sealed class GameLoop
         {
             FinalizeGame();
         }
+        catch (RestartException)
+        {
+            RestartSystem();
+        }
         catch (Exception)
         {
             printingSubsystem.Resource(BaseDescriptions.SYSTEM_ERROR);
         }
+    }
+
+    private void RestartSystem()
+    {
+        this.gamePrerequisitesAssembler.Restart();
+        InitializeSystem(printingSubsystem.ConsoleWidth);
+        Run(); 
     }
 
     private Queue<string> GetCommandList(string fileName)
