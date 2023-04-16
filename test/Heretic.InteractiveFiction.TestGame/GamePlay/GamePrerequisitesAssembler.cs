@@ -10,14 +10,14 @@ namespace Heretic.InteractiveFiction.TestGame.GamePlay;
 
 internal sealed class GamePrerequisitesAssembler: IGamePrerequisitesAssembler
 {
-    private EventProvider eventProvider;
-    private IPrintingSubsystem printingSubsystem;
-    private IResourceProvider resourceProvider;
-    private IHelpSubsystem helpSubsystem;
-    private IGrammar grammar;
-    private IVerbHandler verbHandler;
-    private ScoreBoard scoreBoard;
-    private Universe universe;
+    private EventProvider eventProvider = default!;
+    private IPrintingSubsystem printingSubsystem = default!;
+    private IResourceProvider resourceProvider = default!;
+    private IHelpSubsystem helpSubsystem = default!;
+    private IGrammar grammar = default!;
+    private IVerbHandler verbHandler = default!;
+    private ScoreBoard scoreBoard = default!;
+    private Universe universe = default!;
 
     public GamePrerequisitesAssembler()
     {
