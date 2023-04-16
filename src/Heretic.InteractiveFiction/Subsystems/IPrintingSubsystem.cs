@@ -8,6 +8,8 @@ public interface IPrintingSubsystem
     int ConsoleWidth { get; set; }
     TextColor ForegroundColor { get; set; }
     TextColor BackgroundColor { get; set; }
+    string ReadInput();
+    void WaitForUserAction();
     void ResetColors();
     bool ActiveLocation(Location? activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap);
     bool ActivePlayer(Player? activePlayer);

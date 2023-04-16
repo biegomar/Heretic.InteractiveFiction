@@ -48,6 +48,16 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
         set => Console.BackgroundColor = (ConsoleColor)value;
     }
 
+    public string ReadInput()
+    {
+        return Console.ReadLine() ?? string.Empty;
+    }
+
+    public void WaitForUserAction()
+    {
+        Console.ReadKey();
+    }
+
     public void ResetColors()
     {
         Console.ResetColor();

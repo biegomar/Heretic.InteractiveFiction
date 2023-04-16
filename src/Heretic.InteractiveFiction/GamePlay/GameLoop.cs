@@ -88,10 +88,11 @@ public sealed class GameLoop
         if (commands.Any())
         {
             var result = commands.Dequeue();
-            Console.WriteLine(result);
+            printingSubsystem.Resource(result, wordWrap: false);
             return result;
         }
-        return Console.ReadLine()!;
+
+        return printingSubsystem.ReadInput();
     }
 
     private void InitializeScreen()
@@ -103,7 +104,7 @@ public sealed class GameLoop
         printingSubsystem.ForegroundColor = TextColor.DarkCyan;
         printingSubsystem.Resource(BaseDescriptions.START_THE_GAME);
         printingSubsystem.ResetColors();
-        Console.ReadKey();
+        printingSubsystem.WaitForUserAction();
         printingSubsystem.ActiveLocation(gamePrerequisitesAssembler.Universe.ActiveLocation,
             gamePrerequisitesAssembler.Universe.LocationMap);
         printingSubsystem.ForegroundColor = TextColor.DarkCyan;
@@ -116,10 +117,9 @@ public sealed class GameLoop
         printingSubsystem.Closing();
         printingSubsystem.Credits();
         processor.Process(SAVE);
-        Console.WriteLine();
         printingSubsystem.ForegroundColor = TextColor.DarkCyan;
         printingSubsystem.Resource(BaseDescriptions.END_THE_GAME);
         printingSubsystem.ResetColors();
-        Console.ReadKey();
+        printingSubsystem.WaitForUserAction();
     }
 }
