@@ -16,22 +16,21 @@ public sealed class GameLoop
     {
         this.gamePrerequisitesAssembler = gamePrerequisitesAssembler;
         InitializeSystem(consoleWidth);
+        InitializeScreen();
     }
 
     private void InitializeSystem(int consoleWidth)
     {
-        printingSubsystem = this.gamePrerequisitesAssembler.PrintingSubsystem;
+        printingSubsystem = gamePrerequisitesAssembler.PrintingSubsystem;
         printingSubsystem.ConsoleWidth = consoleWidth;
 
-        processor = new InputProcessor(printingSubsystem, this.gamePrerequisitesAssembler.HelpSubsystem,
-            this.gamePrerequisitesAssembler.Universe, this.gamePrerequisitesAssembler.Grammar,
-            this.gamePrerequisitesAssembler.VerbHandler, this.gamePrerequisitesAssembler.ScoreBoard);
+        processor = new InputProcessor(printingSubsystem, gamePrerequisitesAssembler.HelpSubsystem,
+            gamePrerequisitesAssembler.Universe, gamePrerequisitesAssembler.Grammar,
+            gamePrerequisitesAssembler.VerbHandler, gamePrerequisitesAssembler.ScoreBoard);
 
         commands = new Queue<string>();
 
         gamePrerequisitesAssembler.AssembleGame();
-
-        InitializeScreen();
     }
 
     public void Run(string fileName = "")
@@ -65,6 +64,10 @@ public sealed class GameLoop
         {
             RestartSystem();
         }
+        catch (RevertException)
+        {
+            RevertCommand();
+        }
         catch (Exception)
         {
             printingSubsystem.Resource(BaseDescriptions.SYSTEM_ERROR);
@@ -73,8 +76,18 @@ public sealed class GameLoop
 
     private void RestartSystem()
     {
-        this.gamePrerequisitesAssembler.Restart();
+        gamePrerequisitesAssembler.Restart();
         InitializeSystem(printingSubsystem.ConsoleWidth);
+        InitializeScreen();
+        Run(); 
+    }
+    
+    private void RevertCommand()
+    {
+        var oldCommands = processor.HistoryAdministrator.All.Take(processor.HistoryAdministrator.All.Count - 2);
+        gamePrerequisitesAssembler.Restart();
+        InitializeSystem(printingSubsystem.ConsoleWidth);
+        commands = new Queue<string>(oldCommands);
         Run(); 
     }
 

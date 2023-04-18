@@ -49,6 +49,7 @@ internal class CommandExecutor
         
         result.Add(VerbKey.REM, new RemarkCommand());
         result.Add(VerbKey.RESTART, new RestartCommand());
+        result.Add(VerbKey.REVERT, new RevertCommand());
         result.Add(VerbKey.QUIT, new QuitCommand());
         
         result.Add(VerbKey.SCORE, new ScoreCommand(scoreBoard));
@@ -145,10 +146,8 @@ internal class CommandExecutor
 
     internal bool Execute(AdventureEvent adventureEvent)
     {
-        if (adventureEvent.Predicate != null && commands.ContainsKey(adventureEvent.Predicate.Key))
+        if (adventureEvent.Predicate != null && commands.TryGetValue(adventureEvent.Predicate.Key, out var command))
         {
-            var command = commands[adventureEvent.Predicate.Key];
-
             return command.Execute(adventureEvent);
         }
 

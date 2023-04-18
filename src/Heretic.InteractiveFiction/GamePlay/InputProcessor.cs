@@ -6,22 +6,23 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay;
 
-public sealed class InputProcessor
+internal sealed class InputProcessor
 {
     private readonly Universe universe;
     private readonly CommandExecutor commandExecutor;
-    private readonly HistoryAdministrator historyAdministrator;
     private readonly InputAnalyzer inputAnalyzer;
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly ScoreBoard scoreBoard;
+    
+    public HistoryAdministrator HistoryAdministrator { get; }
 
     public InputProcessor(IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, Universe universe, IGrammar grammar, IVerbHandler verbHandler, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
-        this.historyAdministrator = new HistoryAdministrator();
+        this.HistoryAdministrator = new HistoryAdministrator();
         this.scoreBoard = scoreBoard;
-        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, helpSubsystem, verbHandler, this.historyAdministrator, this.scoreBoard);
+        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, helpSubsystem, verbHandler, this.HistoryAdministrator, this.scoreBoard);
         this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
     }
 
@@ -34,7 +35,7 @@ public sealed class InputProcessor
                 return true;
             }
 
-            this.historyAdministrator.Add(input);
+            this.HistoryAdministrator.Add(input);
 
             var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
             var result = ProcessAdventureEvent(adventureEvent);
@@ -47,9 +48,9 @@ public sealed class InputProcessor
 
             return result;
         }
-        catch (NoVerbException)
+        catch (NoVerbException ex)
         {
-            return printingSubsystem.Misconcept();
+            return printingSubsystem.Resource(ex.Message);
         }
         catch (AmbiguousHereticObjectException ex)
         {

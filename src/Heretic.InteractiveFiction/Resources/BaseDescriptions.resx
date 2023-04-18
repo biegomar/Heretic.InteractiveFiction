@@ -375,9 +375,6 @@
   <data name="WRONG_KEY" xml:space="preserve">
     <value>Du kannst {0} damit nicht aufschließen. Vielleicht probierst Du besser einen anderen Schlüssel?</value>
   </data>
-  <data name="SAME_ACTION_AGAIN" xml:space="preserve">
-    <value>Dasselbe wolltest Du doch gerade schon machen?! Aber bitte...</value>
-  </data>
   <data name="NO_EVENT" xml:space="preserve">
     <value>Irgendwie passiert nichts. Hattest Du vielleicht etwas anderes vor?</value>
   </data>
@@ -923,6 +920,12 @@
     <value>Starte das Spiel neu</value>
   </data>
   <data name="RESTART_GAME" xml:space="preserve">
-    <value>Das Spiel wird neu gestartet</value>
+    <value>Das Spiel wird neu gestartet.</value>
+  </data>
+  <data name="REVERT" xml:space="preserve">
+    <value>Mache den letzten Befehl rückgängig</value>
+  </data>
+  <data name="REVERT_COMMAND" xml:space="preserve">
+    <value>Der letzte Befehl wurde rückgängig gemacht.</value>
   </data>
 </root>

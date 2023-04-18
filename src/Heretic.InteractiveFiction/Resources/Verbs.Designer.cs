@@ -458,5 +458,11 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("RESTART", resourceCulture);
             }
         }
+        
+        internal static string REVERT {
+            get {
+                return ResourceManager.GetString("REVERT", resourceCulture);
+            }
+        }
     }
 }

@@ -561,12 +561,6 @@ namespace Heretic.InteractiveFiction.Resources {
             }
         }
         
-        public static string SAME_ACTION_AGAIN {
-            get {
-                return ResourceManager.GetString("SAME_ACTION_AGAIN", resourceCulture);
-            }
-        }
-        
         public static string NO_EVENT {
             get {
                 return ResourceManager.GetString("NO_EVENT", resourceCulture);
@@ -1656,6 +1650,18 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string RESTART_GAME {
             get {
                 return ResourceManager.GetString("RESTART_GAME", resourceCulture);
+            }
+        }
+        
+        public static string REVERT {
+            get {
+                return ResourceManager.GetString("REVERT", resourceCulture);
+            }
+        }
+        
+        public static string REVERT_COMMAND {
+            get {
+                return ResourceManager.GetString("REVERT_COMMAND", resourceCulture);
             }
         }
     }

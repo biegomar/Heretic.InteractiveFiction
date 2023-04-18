@@ -1,6 +1,7 @@
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.GamePlay;
 
@@ -121,7 +122,7 @@ internal sealed class InputAnalyzer
             }
             else
             {
-                throw new NoVerbException();
+                throw new NoVerbException(BaseDescriptions.MISCONCEPTION);
             }
         }
 
@@ -284,7 +285,7 @@ internal sealed class InputAnalyzer
         }
         else
         {
-            throw new NoVerbException();
+            throw new NoVerbException(BaseDescriptions.MISCONCEPTION);
         }
 
         return (verb, result);

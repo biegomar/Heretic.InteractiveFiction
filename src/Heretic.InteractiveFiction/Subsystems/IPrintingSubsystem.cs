@@ -5,6 +5,7 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public interface IPrintingSubsystem
 {
+    bool IsInSilentMode { get; set; }
     int ConsoleWidth { get; set; }
     TextColor ForegroundColor { get; set; }
     TextColor BackgroundColor { get; set; }
@@ -59,8 +60,9 @@ public interface IPrintingSubsystem
     bool NoAnswerToQuestion(string phrase);
     bool Opening();
     bool Closing();
-    bool Resource(string resource, bool endWithLineBreak = true, bool wordWrap = true);
-    bool FormattedResource(string resource, string text, bool lowerFirstLetter = false);
+    bool Resource(string? resource, bool endWithLineBreak = true, bool wordWrap = true);
+    bool Resource(object? resource, bool endWithLineBreak = true, bool wordWrap = true);
+    bool FormattedResource(string? resource, string? text, bool lowerFirstLetter = false, bool endWithLineBreak = true, bool wordWrap = true);
     bool Score(int score, int maxScore);
     bool Talk(Character? character);
     bool TitleAndScore(int score, int maxScore);
@@ -68,7 +70,6 @@ public interface IPrintingSubsystem
     bool WrongKey(AHereticObject? item);
     bool Prompt();
     bool PayWithWhat();
-    bool SameActionAgain();
     bool NoEvent();
     bool WayIsLocked(AHereticObject? item);
     bool WayIsClosed(AHereticObject? item);

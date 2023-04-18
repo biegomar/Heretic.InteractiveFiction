@@ -18,8 +18,8 @@ public sealed class Universe
     public readonly IDictionary<string, IEnumerable<string>> ConversationAnswersResources;
 
     public LocationMap LocationMap { get; set; }
-    public Location ActiveLocation { get; set; }
-    public Player ActivePlayer { get; set; }
+    public Location ActiveLocation { get; set; } = default!;
+    public Player ActivePlayer { get; set; } = default!;
     public AHereticObject? ActiveObject { get; set; }
     public bool IsPeriodicEventActivated
     {

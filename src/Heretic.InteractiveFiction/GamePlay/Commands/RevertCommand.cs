@@ -4,10 +4,10 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record RestartCommand : ICommand
+internal sealed record RevertCommand : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
-        throw new RestartException(BaseDescriptions.RESTART_GAME);
+        throw new RevertException(BaseDescriptions.REVERT_COMMAND);
     }
 }

@@ -322,6 +322,9 @@
     <value>Trenne|Trennen|Trenn|Lös|Löse|Lösen|Ziehe:ab|Ziehen:ab|Zieh:ab|Entferne|Entfernen|Entfern</value>
   </data>
   <data name="RESTART" xml:space="preserve">
-    <value>Neustart|Restart</value>
+    <value>Neustart|Restart|Reset</value>
+  </data>
+  <data name="REVERT" xml:space="preserve">
+    <value>Rückgängig|Revert</value>
   </data>
 </root>
