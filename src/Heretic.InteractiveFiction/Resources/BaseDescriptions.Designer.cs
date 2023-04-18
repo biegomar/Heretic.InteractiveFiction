@@ -1664,5 +1664,29 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("REVERT_COMMAND", resourceCulture);
             }
         }
+        
+        public static string LOAD {
+            get {
+                return ResourceManager.GetString("LOAD", resourceCulture);
+            }
+        }
+        
+        public static string LOAD_GAME {
+            get {
+                return ResourceManager.GetString("LOAD_GAME", resourceCulture);
+            }
+        }
+        
+        public static string FILE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("FILE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        public static string INSERT_FILENAME {
+            get {
+                return ResourceManager.GetString("INSERT_FILENAME", resourceCulture);
+            }
+        }
     }
 }

@@ -502,7 +502,7 @@
     <value>Du bist heruntergestiegen.</value>
   </data>
   <data name="SAVE" xml:space="preserve">
-    <value>Speichert Deinen aktuellen Spielstand.</value>
+    <value>Speichert Deinen aktuellen Spielstand</value>
   </data>
   <data name="GAME_SAVED" xml:space="preserve">
     <value>Dein Spiel wurde gespeichert unter: {0}</value>
@@ -927,5 +927,17 @@
   </data>
   <data name="REVERT_COMMAND" xml:space="preserve">
     <value>Das Kommando '{0}' wird rückgängig gemacht...</value>
+  </data>
+  <data name="LOAD" xml:space="preserve">
+    <value>Lädt einen Spielstand aus einer Datei</value>
+  </data>
+  <data name="LOAD_GAME" xml:space="preserve">
+    <value>Spielstand wird geladen...</value>
+  </data>
+  <data name="FILE_NOT_FOUND" xml:space="preserve">
+    <value>Die angegebene Datei scheint nicht zu existieren.</value>
+  </data>
+  <data name="INSERT_FILENAME" xml:space="preserve">
+    <value>Gib bitte einen Dateinamen an.</value>
   </data>
 </root>

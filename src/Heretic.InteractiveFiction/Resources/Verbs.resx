@@ -244,7 +244,7 @@
     <value>Klettere:runter|Kletter:runter|Klettern:runter|Steige:runter|Steigen:runter|Steig:runter|Klettere:herunter|Kletter:herunter|Klettern:herunter|Steige:herunter|Steigen:herunter|Steig:herunter|Steige:ab|Steigen:ab|Steig:ab|Steige:herab|Steigen:herab|Steig:herab</value>
   </data>
   <data name="SAVE" xml:space="preserve">
-    <value>Save|speichern</value>
+    <value>Save|Speichern|Speichere</value>
   </data>
   <data name="HINT" xml:space="preserve">
     <value>Hint|Hinweis</value>
@@ -326,5 +326,8 @@
   </data>
   <data name="REVERT" xml:space="preserve">
     <value>Rückgängig|Revert</value>
+  </data>
+  <data name="LOAD" xml:space="preserve">
+    <value>Load|Laden|Lade</value>
   </data>
 </root>

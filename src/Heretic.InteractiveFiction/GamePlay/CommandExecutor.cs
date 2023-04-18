@@ -54,6 +54,7 @@ internal class CommandExecutor
         result.Add(VerbKey.SCORE, new ScoreCommand(scoreBoard));
         
         result.Add(VerbKey.CREDITS, new CreditsCommand(printingSubsystem));
+        result.Add(VerbKey.LOAD, new LoadCommand(printingSubsystem));
         
         result.Add(VerbKey.REVERT, new RevertCommand(historyAdministrator));
 

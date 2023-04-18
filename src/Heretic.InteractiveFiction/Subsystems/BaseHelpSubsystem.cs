@@ -338,6 +338,7 @@ public class BaseHelpSubsystem: IHelpSubsystem
             VerbKey.RESTART,
             VerbKey.REVERT,
             VerbKey.SAVE,
+            VerbKey.LOAD,
             VerbKey.QUIT
         };
             

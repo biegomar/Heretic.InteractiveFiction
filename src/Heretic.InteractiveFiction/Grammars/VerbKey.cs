@@ -31,6 +31,7 @@ public enum VerbKey
     LISTEN,
     LOCK,
     LOOK,
+    LOAD,
     N,
     NE,
     NW,

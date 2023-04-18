@@ -1,3 +1,4 @@
+using System.Threading;
 using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
@@ -49,12 +50,13 @@ public sealed class GameLoop
                 {
                     printingSubsystem.IsInSilentMode = commands.Any();
                 }
+
                 printingSubsystem.Prompt();
                 printingSubsystem.ForegroundColor = TextColor.Green;
                 var input = GetInput();
                 printingSubsystem.ResetColors();
                 unfinished = processor.Process(input);
-                
+
             } while (unfinished);
         }
         catch (QuitGameException ex)
@@ -73,6 +75,10 @@ public sealed class GameLoop
         {
             printingSubsystem.Resource(ex.Message);
             RevertCommand();
+        }
+        catch (LoadException ex)
+        {
+            LoadFile(ex.Message);
         }
         catch (Exception)
         {
@@ -94,6 +100,15 @@ public sealed class GameLoop
         gamePrerequisitesAssembler.Restart();
         InitializeSystem(printingSubsystem.ConsoleWidth);
         commands = new Queue<string>(oldCommands);
+        Run(EnableSilentModeOnCommandsInList: true); 
+    }
+
+    private void LoadFile(string fileName)
+    {
+        Thread.Sleep(500);
+        gamePrerequisitesAssembler.Restart();
+        InitializeSystem(printingSubsystem.ConsoleWidth);
+        commands = GetCommandList(fileName);
         Run(EnableSilentModeOnCommandsInList: true); 
     }
 
