@@ -11,7 +11,7 @@ internal sealed record SaveCommand(IPrintingSubsystem PrintingSubsystem, History
         try
         {
             var history = new StringBuilder(HistoryAdministrator.All.Count);
-            history.AppendJoin(Environment.NewLine, HistoryAdministrator.All);
+            history.AppendJoin(Environment.NewLine, HistoryAdministrator.All.Take(HistoryAdministrator.All.Count - 1));
 
             var docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
