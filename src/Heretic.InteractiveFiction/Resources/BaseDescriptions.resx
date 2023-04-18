@@ -926,6 +926,6 @@
     <value>Mache den letzten Befehl rückgängig</value>
   </data>
   <data name="REVERT_COMMAND" xml:space="preserve">
-    <value>Der letzte Befehl wurde rückgängig gemacht.</value>
+    <value>Das Kommando '{0}' wird rückgängig gemacht...</value>
   </data>
 </root>

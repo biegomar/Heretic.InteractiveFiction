@@ -33,7 +33,7 @@ public sealed class GameLoop
         gamePrerequisitesAssembler.AssembleGame();
     }
 
-    public void Run(string fileName = "")
+    public void Run(string fileName = "", bool EnableSilentModeOnCommandsInList = false)
     {
         if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
         {
@@ -45,11 +45,16 @@ public sealed class GameLoop
             bool unfinished;
             do
             {
+                if (EnableSilentModeOnCommandsInList)
+                {
+                    printingSubsystem.IsInSilentMode = commands.Any();
+                }
                 printingSubsystem.Prompt();
                 printingSubsystem.ForegroundColor = TextColor.Green;
                 var input = GetInput();
                 printingSubsystem.ResetColors();
                 unfinished = processor.Process(input);
+                
             } while (unfinished);
         }
         catch (QuitGameException ex)
@@ -64,8 +69,9 @@ public sealed class GameLoop
         {
             RestartSystem();
         }
-        catch (RevertException)
+        catch (RevertException ex)
         {
+            printingSubsystem.Resource(ex.Message);
             RevertCommand();
         }
         catch (Exception)
@@ -88,7 +94,7 @@ public sealed class GameLoop
         gamePrerequisitesAssembler.Restart();
         InitializeSystem(printingSubsystem.ConsoleWidth);
         commands = new Queue<string>(oldCommands);
-        Run(); 
+        Run(EnableSilentModeOnCommandsInList: true); 
     }
 
     private Queue<string> GetCommandList(string fileName)

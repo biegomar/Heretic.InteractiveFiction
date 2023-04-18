@@ -4,10 +4,14 @@ using Heretic.InteractiveFiction.Resources;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record RevertCommand : ICommand
+internal sealed record RevertCommand(HistoryAdministrator HistoryAdministrator) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
-        throw new RevertException(BaseDescriptions.REVERT_COMMAND);
+        var revertedCommand = HistoryAdministrator.All.Count >= 2
+            ? HistoryAdministrator.All.Skip(HistoryAdministrator.All.Count - 2).First()
+            : string.Empty;
+
+        throw new RevertException(string.Format(BaseDescriptions.REVERT_COMMAND, revertedCommand));
     }
 }
