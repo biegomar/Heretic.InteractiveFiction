@@ -7,6 +7,8 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 {
+    private readonly TextWriter originalOut = Console.Out;
+    
     private int consoleWidth;
 
     protected virtual string GetVersionNumber()
@@ -20,8 +22,6 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
             return string.Empty;
         }
     }
-
-    public bool IsInSilentMode { get; set; }
 
     public int ConsoleWidth
     {
@@ -62,6 +62,17 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
     public void ResetColors()
     {
         Console.ResetColor();
+    }
+
+    public void DeactivateOutput()
+    {
+        var writer = TextWriter.Null;
+        Console.SetOut(writer);
+    }
+
+    public void ActivateOutput()
+    {
+        Console.SetOut(originalOut);
     }
 
     public virtual bool ActiveLocation(Location? activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap)
@@ -389,23 +400,20 @@ public abstract class BaseConsolePrintingSubsystem: IPrintingSubsystem
 
     public virtual bool Resource(string? resource, bool endWithLineBreak = true, bool wordWrap = true)
     {
-        if (!IsInSilentMode)
+        if (!string.IsNullOrEmpty(resource))
         {
-            if (!string.IsNullOrEmpty(resource))
+            if (wordWrap)
             {
-                if (wordWrap)
-                {
-                    Console.Write(WordWrap(resource, this.ConsoleWidth));    
-                }
-                else
-                {
-                    Console.Write(resource, this.ConsoleWidth);
-                }
+                Console.Write(WordWrap(resource, this.ConsoleWidth));    
+            }
+            else
+            {
+                Console.Write(resource, this.ConsoleWidth);
+            }
             
-                if (endWithLineBreak)
-                {
-                    Console.WriteLine();    
-                }
+            if (endWithLineBreak)
+            {
+                Console.WriteLine();    
             }
         }
         

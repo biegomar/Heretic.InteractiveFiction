@@ -5,13 +5,14 @@ namespace Heretic.InteractiveFiction.Subsystems;
 
 public interface IPrintingSubsystem
 {
-    bool IsInSilentMode { get; set; }
     int ConsoleWidth { get; set; }
     TextColor ForegroundColor { get; set; }
     TextColor BackgroundColor { get; set; }
     string ReadInput();
     void WaitForUserAction();
     void ResetColors();
+    void DeactivateOutput();
+    void ActivateOutput();
     bool ActiveLocation(Location? activeLocation, IDictionary<Location, IEnumerable<DestinationNode>> locationMap);
     bool ActivePlayer(Player? activePlayer);
     bool AlterEgo(AHereticObject? item);

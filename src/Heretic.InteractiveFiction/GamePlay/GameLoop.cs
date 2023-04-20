@@ -34,8 +34,11 @@ public sealed class GameLoop
         gamePrerequisitesAssembler.AssembleGame();
     }
 
-    public void Run(string fileName = "", bool EnableSilentModeOnCommandsInList = false)
+    public void Run(string fileName = "", bool enableSilentModeOnCommandsInList = false)
     {
+        var isInSilentMode = false;
+        var localEnableSilentModeOnCommandsInList = enableSilentModeOnCommandsInList;
+        
         if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
         {
             commands = GetCommandList(fileName);
@@ -46,9 +49,19 @@ public sealed class GameLoop
             bool unfinished;
             do
             {
-                if (EnableSilentModeOnCommandsInList)
+                if (localEnableSilentModeOnCommandsInList)
                 {
-                    printingSubsystem.IsInSilentMode = commands.Any();
+                    if (!isInSilentMode)
+                    {
+                        printingSubsystem.DeactivateOutput();
+                        isInSilentMode = true;
+                    }
+                    
+                    if (!commands.Any())
+                    {
+                        printingSubsystem.ActivateOutput();
+                        localEnableSilentModeOnCommandsInList = false;
+                    }
                 }
 
                 printingSubsystem.Prompt();
@@ -100,7 +113,7 @@ public sealed class GameLoop
         gamePrerequisitesAssembler.Restart();
         InitializeSystem(printingSubsystem.ConsoleWidth);
         commands = new Queue<string>(oldCommands);
-        Run(EnableSilentModeOnCommandsInList: true); 
+        Run(enableSilentModeOnCommandsInList: true); 
     }
 
     private void LoadFile(string fileName)
@@ -109,7 +122,7 @@ public sealed class GameLoop
         gamePrerequisitesAssembler.Restart();
         InitializeSystem(printingSubsystem.ConsoleWidth);
         commands = GetCommandList(fileName);
-        Run(EnableSilentModeOnCommandsInList: true); 
+        Run(enableSilentModeOnCommandsInList: true); 
     }
 
     private Queue<string> GetCommandList(string fileName)
