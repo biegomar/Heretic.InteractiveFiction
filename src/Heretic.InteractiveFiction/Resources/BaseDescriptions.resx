@@ -940,4 +940,10 @@
   <data name="INSERT_FILENAME" xml:space="preserve">
     <value>Gib bitte einen Dateinamen an.</value>
   </data>
+  <data name="CANT_SWITCHOFF_ITEM" xml:space="preserve">
+    <value>Du kannst {0} nicht ausschalten.</value>
+  </data>
+  <data name="CANT_SWITCHOFF_LIGHTER" xml:space="preserve">
+    <value>Du kannst das Licht {0} nicht löschen.</value>
+  </data>
 </root>

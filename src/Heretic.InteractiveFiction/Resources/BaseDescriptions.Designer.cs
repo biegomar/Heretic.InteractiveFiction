@@ -1688,5 +1688,17 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("INSERT_FILENAME", resourceCulture);
             }
         }
+        
+        public static string CANT_SWITCHOFF_ITEM {
+            get {
+                return ResourceManager.GetString("CANT_SWITCHOFF_ITEM", resourceCulture);
+            }
+        }
+        
+        public static string CANT_SWITCHOFF_LIGHTER {
+            get {
+                return ResourceManager.GetString("CANT_SWITCHOFF_LIGHTER", resourceCulture);
+            }
+        }
     }
 }

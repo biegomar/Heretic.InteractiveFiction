@@ -32,6 +32,10 @@ internal sealed record SwitchOffCommand(Universe Universe, IPrintingSubsystem Pr
                 var itemName =
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
                         lowerFirstCharacter: true);
+                
+                var itemNameGenitive =
+                    ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Genitive,
+                        lowerFirstCharacter: true);
 
                 ObjectHandler.StoreAsActiveObject(item);
 
@@ -67,8 +71,17 @@ internal sealed record SwitchOffCommand(Universe Universe, IPrintingSubsystem Pr
                     return PrintingSubsystem.FormattedResource(BaseDescriptions.ALREADY_SWITCHEDOFF, itemName,
                         true);
                 }
-
-                return PrintingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHOFF, itemName, true);
+                
+                if (item.IsSwitchedOn || item.IsLighterSwitchedOn)
+                {
+                    return item.IsLighter
+                        ? PrintingSubsystem.FormattedResource(BaseDescriptions.CANT_SWITCHOFF_LIGHTER, itemNameGenitive,
+                            true)
+                        : PrintingSubsystem.FormattedResource(BaseDescriptions.CANT_SWITCHOFF_ITEM, itemName,
+                            true);
+                }
+                    
+                return PrintingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_SWITCHOFF, itemName, true); 
             }
 
             return PrintingSubsystem.ItemNotVisible();
