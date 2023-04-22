@@ -26,13 +26,13 @@ A documentation based on a manageable, but constantly growing text adventure, wh
 
 # Roadmap
 ## v1.0
-* English translation of the basic texts and descriptions.
 * Completion of all event handlers.
 * Completion of grammar.
 * Refactoring.
 * A small sample adventure to demonstrate the capabilities and their implementation.
 
 ## v2.0
+* English translation of the basic texts and descriptions.
 * MAUI frame.
 * Blazor implementation.
 

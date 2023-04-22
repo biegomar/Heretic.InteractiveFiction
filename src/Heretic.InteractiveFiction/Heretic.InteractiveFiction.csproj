@@ -21,7 +21,13 @@ Heretic.InteractiveFiction intends to return to the old text adventure days of t
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageVersion>$(VersionPrefix)</PackageVersion>
         <PackageProjectUrl>https://github.com/biegomar/Heretic.InteractiveFiction</PackageProjectUrl>
-        <PackageReleaseNotes>fix a bug on empty input string.
+        <PackageReleaseNotes>
+            *** Breaking Changes ***
+            Huge refactoring on nearly all areas:
+            * many new verbs (e.g. LOAD, RESTART, REVERT, ...)
+            * better help subsystem
+            * reduced effort in creating and initialising a new game
+            * ...
         </PackageReleaseNotes>
         <Nullable>enable</Nullable>
         <TargetFramework>netstandard2.1</TargetFramework>
