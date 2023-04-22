@@ -50,6 +50,8 @@ public class ObjectHandlerTest: IClassFixture<TestFixture>
         _sut.ClearActiveObjectIfNotInInventory();
         var actual = _universe.ActiveObject == default;
         
+        _universe.ActivePlayer.Items.Remove(table);
+        
         Assert.False(actual);
     }
     
