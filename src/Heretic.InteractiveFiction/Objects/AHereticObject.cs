@@ -245,7 +245,7 @@ public abstract partial class AHereticObject
     public bool OwnsItem(string itemKey)
     {
         var item = this.GetItem(itemKey);
-        return item != default;
+        return item is { IsHidden: false };
     }
 
     internal virtual AHereticObject? GetObject(string itemKey, ICollection<AHereticObject> visitedItems)

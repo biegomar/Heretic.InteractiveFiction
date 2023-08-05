@@ -27,44 +27,39 @@ internal sealed record UnlockCommand(Universe Universe, IPrintingSubsystem Print
             {
                 ObjectHandler.StoreAsActiveObject(item);
                 if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
-                    Universe.ActivePlayer.OwnsItem(item.UnlockWithKey))
+                    Universe.ActivePlayer.OwnsItem(item.UnlockWithKey)&&
+                    Universe.ActivePlayer.GetItem(item.UnlockWithKey) is { } key)
                 {
                     if (item.IsLockable)
                     {
                         if (item.IsLocked)
                         {
-                            if (!item.IsCloseable || item.IsCloseable && item.IsClosed)
+                            if (!item.IsCloseable || item is { IsCloseable: true, IsClosed: true })
                             {
                                 try
                                 {
-                                    var key = Universe.ActivePlayer.GetItem(item.UnlockWithKey);
-                                    if (key != default)
+                                    var unlockContainerEventArgs = new LockContainerEventArgs
                                     {
-                                        var unlockContainerEventArgs = new LockContainerEventArgs
-                                        {
-                                            Key = key,
-                                            OptionalErrorMessage = adventureEvent.Predicate != default
-                                                ? adventureEvent.Predicate.ErrorMessage
-                                                : string.Empty
-                                        };
+                                        Key = key,
+                                        OptionalErrorMessage = adventureEvent.Predicate != default
+                                            ? adventureEvent.Predicate.ErrorMessage
+                                            : string.Empty
+                                    };
 
-                                        item.OnBeforeUnlock(unlockContainerEventArgs);
+                                    item.OnBeforeUnlock(unlockContainerEventArgs);
 
-                                        item.IsLocked = false;
-                                        item.OnUnlock(unlockContainerEventArgs);
-                                        var keyName = ArticleHandler.GetNameWithArticleForObject(key,
-                                            GrammarCase.Accusative, lowerFirstCharacter: true);
+                                    item.IsLocked = false;
+                                    item.OnUnlock(unlockContainerEventArgs);
+                                    var keyName = ArticleHandler.GetNameWithArticleForObject(key,
+                                        GrammarCase.Accusative, lowerFirstCharacter: true);
                                     
-                                        PrintingSubsystem.Resource(string.Format(
-                                            BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName,
-                                            item.Name));
+                                    PrintingSubsystem.Resource(string.Format(
+                                        BaseDescriptions.ITEM_UNLOCKED_WITH_KEY_FROM_INVENTORY, keyName,
+                                        item.Name));
 
-                                        item.OnAfterUnlock(unlockContainerEventArgs);
+                                    item.OnAfterUnlock(unlockContainerEventArgs);
 
-                                        return true; 
-                                    }
-
-                                    return PrintingSubsystem.KeyNotVisible();
+                                    return true;
                                 }
                                 catch (UnlockException e)
                                 {
