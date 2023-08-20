@@ -637,23 +637,30 @@ public abstract partial class AHereticObject
 
         if (!this.IsCloseable || this.IsCloseable && !this.IsClosed)
         {
-            if (this.Items.Any(i => !i.IsHidden) || this.Characters.Any(c => !c.IsHidden))
+            if (this.Items.Any(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true }) ||
+                this.Characters.Any(c => c is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true }))
             {
                 description.AppendLine();
+                description.Append(this.PrintCharacters());
+                description.Append(this.PrintItems());
             }
-
-            description.Append(this.PrintCharacters());
-            description.Append(this.PrintItems());
+            else if (this.IsContainer && !string.IsNullOrEmpty(this.ContainerEmptyDescription))
+            {
+                description.AppendLine().AppendLine(this.ContainerEmptyDescription);
+            }
         } else if (this.IsSurfaceContainer)
         {
-            if (this.Items.Any(i => i is { IsHidden: false, IsOnSurface: true }) ||
-                this.Characters.Any(i => i is { IsHidden: false, IsOnSurface: true }))
+            if (this.Items.Any(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true, IsOnSurface: true }) ||
+                this.Characters.Any(c => c is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true, IsOnSurface: true }))
             {
                 description.AppendLine();
+                description.Append(this.PrintCharactersOnSurface());
+                description.Append(this.PrintItemsOnSurface());
             }
-
-            description.Append(this.PrintCharactersOnSurface());
-            description.Append(this.PrintItemsOnSurface());
+            else if (!string.IsNullOrEmpty(this.SurfaceContainerEmptyDescription))
+            {
+                description.AppendLine().AppendLine(this.SurfaceContainerEmptyDescription);
+            }
         }
         
         description.Append(GetLinkedObjectsDescription(this, false));

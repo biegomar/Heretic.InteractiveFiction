@@ -74,5 +74,14 @@ public abstract partial class AHereticObject
     /// </summary>
     public Description LetterContentDescription { get; set; } = string.Empty;
 
+    /// <summary>
+    /// This description can be used if the object as a container is empty.
+    /// </summary>
+    public Description ContainerEmptyDescription { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// This description can be used if the object as a surface container is empty.
+    /// </summary>
+    public Description SurfaceContainerEmptyDescription { get; set; } = string.Empty;
 
 }
