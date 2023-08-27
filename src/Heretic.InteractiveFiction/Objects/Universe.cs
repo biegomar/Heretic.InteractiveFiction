@@ -21,6 +21,8 @@ public sealed class Universe
     public Location ActiveLocation { get; set; } = default!;
     public Player ActivePlayer { get; set; } = default!;
     public AHereticObject? ActiveObject { get; set; }
+    public ICollection<string>? Quests { get; set; }
+    
     public bool IsPeriodicEventActivated
     {
         get => this.periodicEvent is {Active: true};
@@ -32,8 +34,6 @@ public sealed class Universe
             }
         }
     }
-
-    public ICollection<string>? Quests { get; set; }
 
     public event EventHandler<PeriodicEventArgs>? PeriodicEvents;
     
