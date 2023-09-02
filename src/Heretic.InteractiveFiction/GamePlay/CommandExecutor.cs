@@ -17,6 +17,9 @@ internal class CommandExecutor
     private readonly ObjectHandler objectHandler;
     private readonly HistoryAdministrator historyAdministrator;
     private readonly ScoreBoard scoreBoard;
+
+    public int Score => this.scoreBoard.Score;
+    public int MaxScore => this.scoreBoard.MaxScore;
     
     internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, IVerbHandler verbHandler, HistoryAdministrator historyAdministrator, ScoreBoard scoreBoard)
     {

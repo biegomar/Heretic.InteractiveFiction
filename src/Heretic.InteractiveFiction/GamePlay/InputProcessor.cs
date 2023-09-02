@@ -12,7 +12,6 @@ internal sealed class InputProcessor
     private readonly CommandExecutor commandExecutor;
     private readonly InputAnalyzer inputAnalyzer;
     private readonly IPrintingSubsystem printingSubsystem;
-    private readonly ScoreBoard scoreBoard;
     
     public HistoryAdministrator HistoryAdministrator { get; }
 
@@ -21,8 +20,7 @@ internal sealed class InputProcessor
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
         this.HistoryAdministrator = new HistoryAdministrator();
-        this.scoreBoard = scoreBoard;
-        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, helpSubsystem, verbHandler, this.HistoryAdministrator, this.scoreBoard);
+        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, helpSubsystem, verbHandler, this.HistoryAdministrator, scoreBoard);
         this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
     }
 
@@ -42,7 +40,7 @@ internal sealed class InputProcessor
 
             FirePeriodicEvent();
 
-            printingSubsystem.TitleAndScore(scoreBoard.Score, scoreBoard.MaxScore);
+            printingSubsystem.TitleAndScore(this.commandExecutor.Score, this.commandExecutor.MaxScore);
             
             this.universe.DidYouWin();
 
