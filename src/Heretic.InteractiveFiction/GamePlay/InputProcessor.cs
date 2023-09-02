@@ -12,15 +12,14 @@ internal sealed class InputProcessor
     private readonly CommandExecutor commandExecutor;
     private readonly InputAnalyzer inputAnalyzer;
     private readonly IPrintingSubsystem printingSubsystem;
-    
-    public HistoryAdministrator HistoryAdministrator { get; }
 
+    public IReadOnlyCollection<string> CommandHistory => commandExecutor.CommandHistory;
+    
     public InputProcessor(IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, Universe universe, IGrammar grammar, IVerbHandler verbHandler, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
         this.universe = universe;
-        this.HistoryAdministrator = new HistoryAdministrator();
-        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, helpSubsystem, verbHandler, this.HistoryAdministrator, scoreBoard);
+        this.commandExecutor = new CommandExecutor(this.universe, grammar, printingSubsystem, helpSubsystem, verbHandler, scoreBoard);
         this.inputAnalyzer = new InputAnalyzer(this.universe, grammar);
     }
 
@@ -33,7 +32,7 @@ internal sealed class InputProcessor
                 return true;
             }
 
-            this.HistoryAdministrator.Add(input);
+            this.commandExecutor.AddCommandToHistory(input);
 
             var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
             var result = ProcessAdventureEvent(adventureEvent);

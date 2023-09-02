@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Heretic.InteractiveFiction.GamePlay.Commands;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
@@ -18,22 +19,29 @@ internal class CommandExecutor
     private readonly HistoryAdministrator historyAdministrator;
     private readonly ScoreBoard scoreBoard;
 
-    public int Score => this.scoreBoard.Score;
-    public int MaxScore => this.scoreBoard.MaxScore;
+    internal int Score => this.scoreBoard.Score;
+    internal int MaxScore => this.scoreBoard.MaxScore;
     
-    internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, IVerbHandler verbHandler, HistoryAdministrator historyAdministrator, ScoreBoard scoreBoard)
+    internal CommandExecutor(Universe universe, IGrammar grammar, IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, IVerbHandler verbHandler, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
         this.helpSubsystem = helpSubsystem;
         this.universe = universe;
         this.grammar = grammar;
         this.verbHandler = verbHandler;
-        this.historyAdministrator = historyAdministrator;
         this.scoreBoard = scoreBoard;
-        objectHandler = new ObjectHandler(universe);
+        this.historyAdministrator = new HistoryAdministrator();
+        this.objectHandler = new ObjectHandler(universe);
 
         commands = InitCommands();
     }
+
+    internal void AddCommandToHistory(string command)
+    {
+        this.historyAdministrator.Add(command);
+    }
+
+    internal ReadOnlyCollection<string> CommandHistory => new(this.historyAdministrator.All);
 
     private IDictionary<VerbKey, ICommand> InitCommands()
     {

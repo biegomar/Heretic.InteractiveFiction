@@ -109,7 +109,7 @@ public sealed class GameLoop
     
     private void RevertCommand()
     {
-        var oldCommands = processor.HistoryAdministrator.All.Take(processor.HistoryAdministrator.All.Count - 2);
+        var oldCommands = processor.CommandHistory.Take(processor.CommandHistory.Count - 2);
         gamePrerequisitesAssembler.Restart();
         InitializeSystem(printingSubsystem.ConsoleWidth);
         commands = new Queue<string>(oldCommands);

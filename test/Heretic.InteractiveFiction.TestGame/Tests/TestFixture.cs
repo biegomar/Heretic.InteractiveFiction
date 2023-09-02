@@ -56,7 +56,7 @@ public sealed class TestFixture
     private CommandExecutor GetCommandExecutor()
     {
         return new CommandExecutor(this.Universe, new GermanGrammar(this.resourceProvider, this.verbHandler), this.printingSubsystem,
-            this.helpSubsystem, this.verbHandler, this.historyAdministrator, this.scoreBoard);
+            this.helpSubsystem, this.verbHandler, this.scoreBoard);
     }
 
     private IVerbHandler GetVerbHandler()
