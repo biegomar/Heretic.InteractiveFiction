@@ -14,7 +14,7 @@ public sealed class ObjectHandler
         this.universe = universe;
     }
 
-    public string GetObjectKeyByNameAndAdjectives<T>(string objectName, IEnumerable<string>? adjectives = null) where T : AHereticObject?
+    public string GetObjectKeyByNameAndAdjectives<T>(string objectName, IEnumerable<string>? adjectives = null) where T : AHereticObject
     {
         var typeofT = typeof(T);
         var typeOfCharacter = typeof(Character);
@@ -74,7 +74,7 @@ public sealed class ObjectHandler
 
         return this.universe.ActivePlayer.GetObject(key);
     }
-    public T? GetObjectFromWorldByKey<T>(string key) where T: AHereticObject?
+    public T? GetObjectFromWorldByKey<T>(string key) where T: AHereticObject
     {
         if (key == this.universe.ActivePlayer.Key)
         {

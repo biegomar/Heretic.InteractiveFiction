@@ -374,7 +374,7 @@ internal sealed class InputAnalyzer
         return onlyPossiblePreposition ?? string.Empty;
     }
 
-    private ObjectAndAssociatedWord GetObjectForRequestAndRemoveFromParts<T>(ICollection<string> sentence) where T: AHereticObject?
+    private ObjectAndAssociatedWord GetObjectForRequestAndRemoveFromParts<T>(ICollection<string> sentence) where T: AHereticObject
     {
         T? discoveredObject = default;
         string associatedWord = string.Empty;
