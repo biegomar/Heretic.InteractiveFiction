@@ -414,7 +414,7 @@ public abstract partial class AHereticObject
 
         var unhiddenNonSurroundingItems = this.Items.Where(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true }).ToList<AHereticObject>();
 
-        return this.PrintUnhiddenObjects(unhiddenNonSurroundingItems);
+        return this.PrintUnhiddenObjects(unhiddenNonSurroundingItems, subItems);
     }
     
     protected virtual string PrintItemsOnSurface(bool subItems = false)
@@ -422,7 +422,7 @@ public abstract partial class AHereticObject
 
         var unhiddenNonSurroundingSurfaceItems = this.Items.Where(i => i is { IsHidden: false, IsSurrounding: false, IsShownInObjectList: true, IsOnSurface: true }).ToList<AHereticObject>();
 
-        return this.PrintUnhiddenObjects(unhiddenNonSurroundingSurfaceItems);
+        return this.PrintUnhiddenObjects(unhiddenNonSurroundingSurfaceItems, subItems);
     }
 
     public Item? GetVirtualItem(string key)
@@ -680,7 +680,7 @@ public abstract partial class AHereticObject
         return string.Join(", ", characterNames);
     }
 
-    private string PrintUnhiddenObjects(ICollection<AHereticObject> unhiddenObjects, bool subItems = false)
+    protected string PrintUnhiddenObjects(ICollection<AHereticObject> unhiddenObjects, bool subItems = false)
     {
         var unhiddenObjectDescription = new StringBuilder();
 

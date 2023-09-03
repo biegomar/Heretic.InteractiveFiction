@@ -350,7 +350,9 @@ public sealed class Player : AHereticObject
 
     protected override string PrintItems(bool subItems = false)
     {
-        var baseResult = base.PrintItems(subItems);
+        var unhiddenNonSurroundingItems = this.Items.Where(i => i is { IsHidden: false }).ToList<AHereticObject>();
+
+        var baseResult = base.PrintUnhiddenObjects(unhiddenNonSurroundingItems, subItems);
 
         var result = baseResult.Replace(BaseDescriptions.HERE, BaseDescriptions.INVENTORY);
         
