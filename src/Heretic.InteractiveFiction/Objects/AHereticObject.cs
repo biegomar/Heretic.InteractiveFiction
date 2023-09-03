@@ -164,6 +164,11 @@ public abstract partial class AHereticObject
     /// The list of additional adjectives for the object.
     /// </summary>
     public string Adjectives { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// This spare dictionary can be used to add your own values.
+    /// </summary>
+    public IDictionary<string, object> Spare { get; set; }
 
     protected AHereticObject()
     {
@@ -172,6 +177,7 @@ public abstract partial class AHereticObject
         this.Items = new List<Item>();
         this.Characters = new List<Character>();
         this.LinkedTo = new List<Item>();
+        this.Spare = new Dictionary<string, object>();
         
         InitializeStates();
     }
