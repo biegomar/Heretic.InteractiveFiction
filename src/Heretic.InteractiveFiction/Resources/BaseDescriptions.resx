@@ -946,4 +946,7 @@
   <data name="CANT_SWITCHOFF_LIGHTER" xml:space="preserve">
     <value>Du kannst das Licht {0} nicht löschen.</value>
   </data>
+  <data name="HOW_TO_KINDLE" xml:space="preserve">
+    <value>Wie oder womit möchtest Du das anzünden?</value>
+  </data>
 </root>
