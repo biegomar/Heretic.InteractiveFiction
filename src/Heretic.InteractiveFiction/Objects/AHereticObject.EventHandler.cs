@@ -7,6 +7,8 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public abstract partial class AHereticObject
 {
+    public event EventHandler<ContainerObjectEventArgs>? NextGameLoop;
+    
     public event EventHandler<BreakItemEventArgs>? BeforeBreak;
     public event EventHandler<BreakItemEventArgs>? Break;
     public event EventHandler<BreakItemEventArgs>? AfterBreak;
@@ -106,6 +108,24 @@ public abstract partial class AHereticObject
     public event EventHandler<ContainerObjectEventArgs>? Wait;
     public event EventHandler<WriteEventArgs>? Write;
 
+    public virtual void OnNextGameLoop(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.NextGameLoop;
+        localEventHandler?.Invoke(this, eventArgs);
+    }
+
+    public void HandleNextGameLoop(object? sender, EventArgs eventArgs)
+    {
+        var externalItemKey = (sender as AHereticObject)?.Key;
+        var containerObjectEventArgs = new ContainerObjectEventArgs()
+        {
+            ExternalItemKey = externalItemKey ?? string.Empty,
+            OptionalErrorMessage = string.Empty
+        };
+        
+        this.OnNextGameLoop(containerObjectEventArgs);
+    }
+    
     public virtual void OnUse(UseItemEventArgs eventArgs)
     {
         var localEventHandler = this.Use;

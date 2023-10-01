@@ -7,7 +7,6 @@ public class PeriodicEvent
     private int activeCounter = 0;
 
     public bool Active { get; set; }
-
     public int MinDistanceBetweenEvents { get; init; }
     public int MaxDistanceBetweenEvents { get; init; }
     public int AverageDistanceBetweenEvents { get; init; }

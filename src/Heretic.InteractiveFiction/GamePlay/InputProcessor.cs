@@ -38,6 +38,8 @@ internal sealed class InputProcessor
             var result = ProcessAdventureEvent(adventureEvent);
 
             FirePeriodicEvent();
+            
+            FireNextGameLoopEventsOnRegisteredItems();
 
             printingSubsystem.TitleAndScore(this.commandExecutor.Score, this.commandExecutor.MaxScore);
             
@@ -74,6 +76,11 @@ internal sealed class InputProcessor
             printingSubsystem.Resource(ex.Message);
             printingSubsystem.ResetColors();
         }
+    }
+
+    private void FireNextGameLoopEventsOnRegisteredItems()
+    {
+        this.universe.OnNextGameLoop(new ContainerObjectEventArgs());
     }
 
     private bool ProcessAdventureEvent(AdventureEvent adventureEvent)

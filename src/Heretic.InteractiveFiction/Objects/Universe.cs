@@ -10,6 +10,10 @@ namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class Universe
 { 
+    public event EventHandler<ContainerObjectEventArgs>? NextGameLoop;
+    
+    public event EventHandler<PeriodicEventArgs>? PeriodicEvents;
+    
     public int NumberOfSolvedQuests => this.solvedQuests.Count;
     
     public readonly IDictionary<string, IEnumerable<string>> ItemResources;
@@ -34,8 +38,6 @@ public sealed class Universe
             }
         }
     }
-
-    public event EventHandler<PeriodicEventArgs>? PeriodicEvents;
     
     private readonly IPrintingSubsystem printingSubsystem;
     private readonly IList<string> solvedQuests;
@@ -54,6 +56,12 @@ public sealed class Universe
         this.ConversationAnswersResources = resourceProvider.GetConversationsAnswersFromResources();
         this.LocationMap = new LocationMap(new LocationComparer());
         this.ActiveObject = null;
+    }
+    
+    public void OnNextGameLoop(ContainerObjectEventArgs eventArgs)
+    {
+        var localEventHandler = this.NextGameLoop;
+        localEventHandler?.Invoke(this, eventArgs);
     }
 
     public void SetPeriodicEvent(PeriodicEvent? periodicEventToSet)
