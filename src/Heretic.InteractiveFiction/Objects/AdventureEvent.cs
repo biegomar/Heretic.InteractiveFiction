@@ -1,6 +1,6 @@
-using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Grammars;
 
-namespace Heretic.InteractiveFiction.Grammars;
+namespace Heretic.InteractiveFiction.Objects;
 
 public sealed class AdventureEvent
 {
