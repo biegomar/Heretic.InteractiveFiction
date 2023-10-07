@@ -37,7 +37,11 @@ internal sealed record SmellCommand(Universe Universe, IPrintingSubsystem Printi
 
             Universe.ActiveLocation.OnSmell(containerObjectEventArgs);
 
-            return true;
+            var result = string.IsNullOrWhiteSpace(Universe.ActiveLocation.SmellDescription)
+                ? PrintingSubsystem.Resource(BaseDescriptions.NOTHING_TO_SMELL)
+                : PrintingSubsystem.Resource(Universe.ActiveLocation.SmellDescription);
+                    
+            return result;
         }
         catch (SmellException ex)
         {
@@ -47,11 +51,11 @@ internal sealed record SmellCommand(Universe Universe, IPrintingSubsystem Printi
     
     private bool HandleSmellEventOnSingleObject(AdventureEvent adventureEvent)
     {
-        if (adventureEvent.ObjectOne is {} activeObject)
+        if (adventureEvent.ObjectOne is {} item)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(activeObject))
+            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(activeObject);
+                ObjectHandler.StoreAsActiveObject(item);
                 
                 try
                 {
@@ -59,15 +63,20 @@ internal sealed record SmellCommand(Universe Universe, IPrintingSubsystem Printi
                         ? adventureEvent.Predicate.ErrorMessage
                         : string.Empty;
                 
-                    if (activeObject is Character && string.IsNullOrEmpty(optionalErrorMessage))
+                    if (item is Character && string.IsNullOrEmpty(optionalErrorMessage))
                     {
                         optionalErrorMessage = BaseDescriptions.DONT_SMELL_ON_PERSON;
                     }
                     var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = optionalErrorMessage};
                     
-                    activeObject.OnSmell(containerObjectEventArgs);
+                    item.OnSmell(containerObjectEventArgs);
                     
-                    return true;
+                    var result = string.IsNullOrWhiteSpace(item.SmellDescription)
+                        ? PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_DOES_NOT_SMELL,
+                            ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true))
+                        : PrintingSubsystem.Resource(item.SmellDescription);
+                    
+                    return result;
                 }
                 catch (SmellException ex)
                 {

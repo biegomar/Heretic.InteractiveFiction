@@ -208,7 +208,11 @@ public abstract partial class AHereticObject
         var localEventHandler = this.Kindle;
         if (localEventHandler != null)
         {
-            localEventHandler.Invoke(this, eventArgs);
+            foreach (var invoker in localEventHandler.GetInvocationList())
+            {
+                var handler = (EventHandler<KindleItemEventArgs>)invoker;
+                handler.Invoke(this, eventArgs);
+            }
         }
         else
         {
@@ -487,24 +491,7 @@ public abstract partial class AHereticObject
     public virtual void OnSmell(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.Smell;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
-            {
-                throw new SmellException(eventArgs.OptionalErrorMessage);    
-            }
-
-            if (this is Item)
-            {
-                throw new SmellException(string.Format(BaseDescriptions.ITEM_DOES_NOT_SMELL, ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Dative, lowerFirstCharacter: true)));    
-            }
-            
-            throw new SmellException(BaseDescriptions.NOTHING_TO_SMELL);
-        }
+        localEventHandler?.Invoke(this, eventArgs);
     }
     
     public virtual void OnTaste(ContainerObjectEventArgs eventArgs)
