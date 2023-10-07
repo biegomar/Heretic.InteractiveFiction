@@ -88,4 +88,9 @@ public abstract partial class AHereticObject
     /// This description can be used if the object has a specific smell.
     /// </summary>
     public Description SmellDescription { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// This description can be used if the object has a specific taste.
+    /// </summary>
+    public Description TasteDescription { get; set; } = string.Empty;
 }

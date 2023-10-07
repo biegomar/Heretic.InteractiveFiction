@@ -497,18 +497,7 @@ public abstract partial class AHereticObject
     public virtual void OnTaste(ContainerObjectEventArgs eventArgs)
     {
         var localEventHandler = this.Taste;
-        if (localEventHandler != null)
-        {
-            localEventHandler.Invoke(this, eventArgs);
-        }
-        else
-        {
-            if (!string.IsNullOrWhiteSpace(eventArgs.OptionalErrorMessage))
-            {
-                throw new TasteException(eventArgs.OptionalErrorMessage);    
-            }
-            throw new TasteException(BaseDescriptions.NOTHING_TO_TASTE);
-        }
+        localEventHandler?.Invoke(this, eventArgs);
     }
 
     public virtual void OnTurn(TurnItemEventArgs eventArgs)

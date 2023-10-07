@@ -28,20 +28,20 @@ internal sealed record TasteCommand(Universe Universe, IPrintingSubsystem Printi
     {
         try
         {
-            Description optionalErrorMessage = adventureEvent.Predicate != default
-                ? adventureEvent.Predicate.ErrorMessage
-                : string.Empty;
-            
-            var containerObjectEventArgs = new ContainerObjectEventArgs
+            var containerObjectEventArgs = new ContainerObjectEventArgs()
             {
-                OptionalErrorMessage = !string.IsNullOrEmpty(optionalErrorMessage)
-                    ? optionalErrorMessage
-                    : BaseDescriptions.WHAT_TO_TASTE
+                OptionalErrorMessage = adventureEvent.Predicate != default
+                    ? adventureEvent.Predicate.ErrorMessage
+                    : string.Empty
             };
 
             Universe.ActiveLocation.OnTaste(containerObjectEventArgs);
 
-            return true;
+            var result = string.IsNullOrWhiteSpace(Universe.ActiveLocation.TasteDescription)
+                ? PrintingSubsystem.Resource(BaseDescriptions.NOTHING_TO_TASTE)
+                : PrintingSubsystem.Resource(Universe.ActiveLocation.TasteDescription);
+                    
+            return result;
         }
         catch (TasteException ex)
         {
@@ -59,16 +59,23 @@ internal sealed record TasteCommand(Universe Universe, IPrintingSubsystem Printi
                 
                 try
                 {
-                    var containerObjectEventArgs = new ContainerObjectEventArgs()
-                    {
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {
                         OptionalErrorMessage = adventureEvent.Predicate != default
-                            ? adventureEvent.Predicate.ErrorMessage
-                            : string.Empty
-                    };
+                        ? adventureEvent.Predicate.ErrorMessage
+                        : string.Empty};
                     
                     item.OnTaste(containerObjectEventArgs);
                     
-                    return true;
+                    if (item is Character)
+                    {
+                        return PrintingSubsystem.Resource(BaseDescriptions.DONT_TASTE_A_PERSON);
+                    }
+                    
+                    return string.IsNullOrWhiteSpace(item.TasteDescription)
+                        ? PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_DOES_NOT_TASTE,
+                            ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true))
+                        : PrintingSubsystem.Resource(item.TasteDescription);
+                    
                 }
                 catch (TasteException ex)
                 {

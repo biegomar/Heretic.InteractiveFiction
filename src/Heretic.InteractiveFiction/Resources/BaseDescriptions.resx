@@ -949,4 +949,10 @@
   <data name="HOW_TO_KINDLE" xml:space="preserve">
     <value>Wie oder womit möchtest Du das anzünden?</value>
   </data>
+  <data name="DONT_TASTE_A_PERSON" xml:space="preserve">
+    <value>Es ist vielleicht etwas unhöflich einfach so an einer Person zu knabbern.</value>
+  </data>
+  <data name="ITEM_DOES_NOT_TASTE" xml:space="preserve">
+    <value>Du nimmst an {0} keinen außergewöhnlichen Geschmack wahr.</value>
+  </data>
 </root>

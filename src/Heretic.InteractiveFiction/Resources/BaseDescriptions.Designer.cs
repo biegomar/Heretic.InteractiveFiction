@@ -447,6 +447,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Es ist vielleicht etwas unhöflich einfach so an einer Person zu knabbern..
+        /// </summary>
+        public static string DONT_TASTE_A_PERSON {
+            get {
+                return ResourceManager.GetString("DONT_TASTE_A_PERSON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bewegungsrichtung &quot;Runter&quot;.
         /// </summary>
         public static string DOWN {
@@ -929,6 +938,15 @@ namespace Heretic.InteractiveFiction.Resources {
         public static string ITEM_DOES_NOT_SMELL {
             get {
                 return ResourceManager.GetString("ITEM_DOES_NOT_SMELL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du nimmst an {0} keinen außergewöhnlichen Geschmack wahr..
+        /// </summary>
+        public static string ITEM_DOES_NOT_TASTE {
+            get {
+                return ResourceManager.GetString("ITEM_DOES_NOT_TASTE", resourceCulture);
             }
         }
         
