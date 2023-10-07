@@ -59,24 +59,22 @@ internal sealed record SmellCommand(Universe Universe, IPrintingSubsystem Printi
                 
                 try
                 {
-                    Description optionalErrorMessage = adventureEvent.Predicate != default
+                    var containerObjectEventArgs = new ContainerObjectEventArgs() {
+                        OptionalErrorMessage = adventureEvent.Predicate != default
                         ? adventureEvent.Predicate.ErrorMessage
-                        : string.Empty;
-                
-                    if (item is Character && string.IsNullOrEmpty(optionalErrorMessage))
-                    {
-                        optionalErrorMessage = BaseDescriptions.DONT_SMELL_ON_PERSON;
-                    }
-                    var containerObjectEventArgs = new ContainerObjectEventArgs() {OptionalErrorMessage = optionalErrorMessage};
+                        : string.Empty};
                     
                     item.OnSmell(containerObjectEventArgs);
                     
-                    var result = string.IsNullOrWhiteSpace(item.SmellDescription)
+                    if (item is Character)
+                    {
+                        return PrintingSubsystem.Resource(BaseDescriptions.DONT_SMELL_ON_PERSON);
+                    }
+                    
+                    return string.IsNullOrWhiteSpace(item.SmellDescription)
                         ? PrintingSubsystem.FormattedResource(BaseDescriptions.ITEM_DOES_NOT_SMELL,
                             ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Dative, lowerFirstCharacter: true))
                         : PrintingSubsystem.Resource(item.SmellDescription);
-                    
-                    return result;
                 }
                 catch (SmellException ex)
                 {
