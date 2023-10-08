@@ -955,4 +955,7 @@
   <data name="ITEM_DOES_NOT_TASTE" xml:space="preserve">
     <value>Du nimmst an {0} keinen außergewöhnlichen Geschmack wahr.</value>
   </data>
+  <data name="CANT_KINDLE_ITEM" xml:space="preserve">
+    <value>Du kannst {0} nicht anzünden.</value>
+  </data>
 </root>

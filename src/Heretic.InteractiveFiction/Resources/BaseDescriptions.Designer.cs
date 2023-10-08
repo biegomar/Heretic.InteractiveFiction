@@ -285,6 +285,15 @@ namespace Heretic.InteractiveFiction.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du kannst {0} nicht anzünden..
+        /// </summary>
+        public static string CANT_KINDLE_ITEM {
+            get {
+                return ResourceManager.GetString("CANT_KINDLE_ITEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Du kannst {0} nicht öffnen, während Du noch darauf sitzt..
         /// </summary>
         public static string CANT_OPEN_ITEM_WHILE_SITTING_ON_IT {

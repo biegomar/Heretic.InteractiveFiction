@@ -220,7 +220,9 @@ public abstract partial class AHereticObject
             {
                 throw new KindleException(eventArgs.OptionalErrorMessage);
             }
-            throw new KindleException(BaseDescriptions.DOES_NOT_WORK);
+            
+            var itemName = ArticleHandler.GetNameWithArticleForObject(this, GrammarCase.Accusative, lowerFirstCharacter: true);
+            throw new KindleException(string.Format(BaseDescriptions.CANT_KINDLE_ITEM, itemName));
         }
     }
     
