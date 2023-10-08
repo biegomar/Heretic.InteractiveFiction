@@ -37,11 +37,9 @@ internal sealed record SmellCommand(Universe Universe, IPrintingSubsystem Printi
 
             Universe.ActiveLocation.OnSmell(containerObjectEventArgs);
 
-            var result = string.IsNullOrWhiteSpace(Universe.ActiveLocation.SmellDescription)
+            return string.IsNullOrWhiteSpace(Universe.ActiveLocation.SmellDescription)
                 ? PrintingSubsystem.Resource(BaseDescriptions.NOTHING_TO_SMELL)
                 : PrintingSubsystem.Resource(Universe.ActiveLocation.SmellDescription);
-                    
-            return result;
         }
         catch (SmellException ex)
         {
