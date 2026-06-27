@@ -202,7 +202,16 @@ namespace Heretic.InteractiveFiction.Resources {
                 return ResourceManager.GetString("AMBIGUOUS_HERETICOBJECT", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Was meinst Du — {0}?.
+        /// </summary>
+        public static string AMBIGUOUS_HERETICOBJECT_QUESTION {
+            get {
+                return ResourceManager.GetString("AMBIGUOUS_HERETICOBJECT_QUESTION", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Oh, scheinbar gibt es hier mehrere Orte mit einer ähnlichen Bezeichnung. Könntest Du etwas genauer beschreiben, welchen Ort Du meinst?.
         /// </summary>

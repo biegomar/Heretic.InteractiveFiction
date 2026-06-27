@@ -1,7 +1,8 @@
-﻿using Heretic.InteractiveFiction.Exceptions;
+using Heretic.InteractiveFiction.Exceptions;
 using Heretic.InteractiveFiction.GamePlay.EventSystem.EventArgs;
 using Heretic.InteractiveFiction.Grammars;
 using Heretic.InteractiveFiction.Objects;
+using Heretic.InteractiveFiction.Resources;
 using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay;
@@ -14,7 +15,7 @@ internal sealed class InputProcessor
     private readonly IPrintingSubsystem printingSubsystem;
 
     public IReadOnlyCollection<string> CommandHistory => commandExecutor.CommandHistory;
-    
+
     public InputProcessor(IPrintingSubsystem printingSubsystem, IHelpSubsystem helpSubsystem, Universe universe, IGrammar grammar, IVerbHandler verbHandler, ScoreBoard scoreBoard)
     {
         this.printingSubsystem = printingSubsystem;
@@ -28,24 +29,28 @@ internal sealed class InputProcessor
         try
         {
             if (string.IsNullOrEmpty(input))
-            {
                 return true;
-            }
 
             this.commandExecutor.AddCommandToHistory(input);
 
-            var adventureEvent = this.inputAnalyzer.AnalyzeInput(input);
-            var result = ProcessAdventureEvent(adventureEvent);
+            var analysisResult = this.inputAnalyzer.AnalyzeInput(input);
 
-            FirePeriodicEvent();
-            
-            FireNextGameLoopEventsOnRegisteredItems();
+            switch (analysisResult)
+            {
+                case AnalysisResult.Ambiguous(var candidates):
+                    return PrintAmbiguityQuestion(candidates);
 
-            printingSubsystem.TitleAndScore(this.commandExecutor.Score, this.commandExecutor.MaxScore);
-            
-            this.universe.DidYouWin();
+                case AnalysisResult.Success(var adventureEvent):
+                    var result = ProcessAdventureEvent(adventureEvent);
+                    FirePeriodicEvent();
+                    FireNextGameLoopEventsOnRegisteredItems();
+                    printingSubsystem.TitleAndScore(this.commandExecutor.Score, this.commandExecutor.MaxScore);
+                    this.universe.DidYouWin();
+                    return result;
 
-            return result;
+                default:
+                    return true;
+            }
         }
         catch (NoVerbException ex)
         {
@@ -55,6 +60,22 @@ internal sealed class InputProcessor
         {
             return printingSubsystem.Resource(ex.Message);
         }
+    }
+
+    private bool PrintAmbiguityQuestion(IReadOnlyList<AHereticObject> candidates)
+    {
+        var names = candidates
+            .Select(c => ArticleHandler.GetNameWithArticleForObject(c, GrammarCase.Accusative, lowerFirstCharacter: true))
+            .ToList();
+
+        var joined = names.Count switch
+        {
+            0 => string.Empty,
+            1 => names[0],
+            _ => string.Join(BaseDescriptions.BINDING_OR, names)
+        };
+
+        return printingSubsystem.Resource(string.Format(BaseDescriptions.AMBIGUOUS_HERETICOBJECT_QUESTION, joined));
     }
 
     private void FirePeriodicEvent()
