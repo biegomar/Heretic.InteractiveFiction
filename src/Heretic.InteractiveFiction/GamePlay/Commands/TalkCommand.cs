@@ -6,7 +6,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record TalkCommand(IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record TalkCommand(IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -14,7 +14,7 @@ internal sealed record TalkCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
         {
             if (adventureEvent.ObjectOne is Character character)
             {
-                if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
+                if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
                 {
                     try
                     {

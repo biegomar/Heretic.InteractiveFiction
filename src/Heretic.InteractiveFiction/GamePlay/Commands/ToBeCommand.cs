@@ -6,7 +6,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record ToBeCommand(IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record ToBeCommand(IPrintingSubsystem PrintingSubsystem, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -14,7 +14,7 @@ internal sealed record ToBeCommand(IPrintingSubsystem PrintingSubsystem, ObjectH
 
         if (subject != default)
         {
-            ObjectHandler.StoreAsActiveObject(subject);
+            Tracker.Store(subject);
 
             try
             {

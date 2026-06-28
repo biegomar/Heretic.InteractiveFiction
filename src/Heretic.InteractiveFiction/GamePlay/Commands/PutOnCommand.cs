@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record PutOnCommand(Universe Universe, IGrammar Grammar, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler, ICommand ClimbCommand) : ICommand
+internal sealed record PutOnCommand(Universe Universe, IGrammar Grammar, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker, ICommand ClimbCommand) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -40,10 +40,10 @@ internal sealed record PutOnCommand(Universe Universe, IGrammar Grammar, IPrinti
         var target = adventureEvent.ObjectTwo;
         if (item != default && target != default)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item)
-                || ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(target))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item)
+                || Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(target))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 if (target.IsSurfaceContainer)
                 {

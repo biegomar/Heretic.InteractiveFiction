@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record UseCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record UseCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -35,11 +35,11 @@ internal sealed record UseCommand(Universe Universe, IPrintingSubsystem Printing
         var item = adventureEvent.ObjectOne;
         if (item != default)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
-                if (adventureEvent.ObjectTwo is { } itemToUse && ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(itemToUse))
+                if (adventureEvent.ObjectTwo is { } itemToUse && Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(itemToUse))
                 {
                     try
                     {
@@ -91,9 +91,9 @@ internal sealed record UseCommand(Universe Universe, IPrintingSubsystem Printing
                 return PrintingSubsystem.Resource(BaseDescriptions.CANT_USE_YOURSELF);
             }
             
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
                 
                 try
                 {

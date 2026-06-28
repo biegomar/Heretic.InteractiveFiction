@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record StandUpCommand(Universe Universe, IGrammar Grammar, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler, ICommand DropCommand) : ICommand
+internal sealed record StandUpCommand(Universe Universe, IGrammar Grammar, IPrintingSubsystem PrintingSubsystem, ActiveObjectTracker Tracker, ICommand DropCommand) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -31,7 +31,7 @@ internal sealed record StandUpCommand(Universe Universe, IGrammar Grammar, IPrin
             var item = Universe.ActivePlayer.Seat;
             try
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 var eventArgs = new ContainerObjectEventArgs()
                 {

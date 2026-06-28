@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record EatCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record EatCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -50,7 +50,7 @@ internal sealed record EatCommand(Universe Universe, IPrintingSubsystem Printing
         var item = adventureEvent.ObjectOne;
         if (item != default)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
                 var itemName =
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
@@ -78,7 +78,7 @@ internal sealed record EatCommand(Universe Universe, IPrintingSubsystem Printing
                             Universe.ActiveLocation.RemoveItem((Item)item);
                         }
 
-                        ObjectHandler.RemoveAsActiveObject(item);
+                        Tracker.RemoveIfIs(item);
                         item.OnEat(itemEventArgs);
 
                         item.OnAfterEat(itemEventArgs);
@@ -91,7 +91,7 @@ internal sealed record EatCommand(Universe Universe, IPrintingSubsystem Printing
                     }
                 }
 
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 return PrintingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_EAT, itemName, true);
             }

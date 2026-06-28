@@ -6,7 +6,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record LookCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record LookCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker, WorldMutator Mutator) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -58,7 +58,7 @@ internal sealed record LookCommand(Universe Universe, IPrintingSubsystem Printin
 
             Universe.ActiveLocation.OnBeforeLook(eventArgs);
 
-            ObjectHandler.UnveilFirstLevelObjects(Universe.ActiveLocation);
+            Mutator.UnveilFirstLevelObjects(Universe.ActiveLocation);
             Universe.ActiveLocation.OnLook(eventArgs);
 
             Universe.ActiveLocation.OnAfterLook(eventArgs);
@@ -74,11 +74,11 @@ internal sealed record LookCommand(Universe Universe, IPrintingSubsystem Printin
     {
         foreach (var item in adventureEvent.AllObjects)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
                 try
                 {
-                    ObjectHandler.StoreAsActiveObject(item);
+                    Tracker.Store(item);
 
                     var eventArgs = new ContainerObjectEventArgs()
                     {
@@ -97,7 +97,7 @@ internal sealed record LookCommand(Universe Universe, IPrintingSubsystem Printin
                     item.OnBeforeLook(eventArgs);
                     Universe.ActiveLocation.OnBeforeLook(eventArgsForActiveLocation);
 
-                    ObjectHandler.UnveilFirstLevelObjects(item);
+                    Mutator.UnveilFirstLevelObjects(item);
                     item.OnLook(eventArgs);
                     Universe.ActiveLocation.OnLook(eventArgsForActiveLocation);
                     PrintingSubsystem.PrintObject(item);

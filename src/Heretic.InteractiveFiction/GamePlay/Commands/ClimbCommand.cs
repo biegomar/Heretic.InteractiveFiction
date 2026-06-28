@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record ClimbCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record ClimbCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -28,9 +28,9 @@ internal sealed record ClimbCommand(Universe Universe, IPrintingSubsystem Printi
         var item = adventureEvent.ObjectOne;
         if (item != default)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 var itemName =
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,

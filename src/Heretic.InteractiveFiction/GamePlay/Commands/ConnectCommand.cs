@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record ConnectCommand(IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler): ICommand
+internal sealed record ConnectCommand(IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker): ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -43,15 +43,15 @@ internal sealed record ConnectCommand(IPrintingSubsystem PrintingSubsystem, Obje
     {
         if (adventureEvent.ObjectOne is Item item)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 if (item.IsLinkable)
                 {
                     if (adventureEvent.ObjectTwo is Item itemToUse)
                     {
-                        if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(itemToUse))
+                        if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(itemToUse))
                         {
                             if (itemToUse.IsLinkable)
                             {

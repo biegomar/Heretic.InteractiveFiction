@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record WearCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record WearCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -35,7 +35,7 @@ internal sealed record WearCommand(Universe Universe, IPrintingSubsystem Printin
         {
             if (adventureEvent.ObjectOne is Item item)
             {
-                if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
                 {
                     var itemName =
                         ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
@@ -43,7 +43,7 @@ internal sealed record WearCommand(Universe Universe, IPrintingSubsystem Printin
                     string message = string.Format(BaseDescriptions.PULLON_WEARABLE,
                         itemName.LowerFirstChar());
 
-                    ObjectHandler.StoreAsActiveObject(item);
+                    Tracker.Store(item);
 
                     if (item.IsWearable)
                     {

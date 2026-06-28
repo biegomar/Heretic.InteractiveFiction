@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record ChangeLocationCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler, Directions Direction) : ICommand
+internal sealed record ChangeLocationCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ActiveObjectTracker Tracker, Directions Direction) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -60,7 +60,7 @@ internal sealed record ChangeLocationCommand(Universe Universe, IPrintingSubsyst
 
                             Universe.ActiveLocation = newLocationMap.Location;
 
-                            ObjectHandler.ClearActiveObjectIfNotInInventory();
+                            Tracker.ClearIfNotInInventory();
 
                             Universe.ActiveLocation.OnEnterLocation(enterLocationEventArgs);
 

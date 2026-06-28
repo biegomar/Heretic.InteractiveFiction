@@ -7,16 +7,16 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record CloseCommand(IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record CloseCommand(IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker, WorldMutator Mutator) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
         var item = adventureEvent.ObjectOne;
         if (item != default)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
                 if (item.IsCloseable)
                 {
                     if (item.IsClosed)
@@ -36,7 +36,7 @@ internal sealed record CloseCommand(IPrintingSubsystem PrintingSubsystem, Object
                         item.OnBeforeClose(eventArgs);
 
                         item.IsClosed = true;
-                        ObjectHandler.HideItemsOnClose(item);
+                        Mutator.HideItemsOnClose(item);
                         item.OnClose(eventArgs);
 
                         item.OnAfterClose(eventArgs);
@@ -46,7 +46,7 @@ internal sealed record CloseCommand(IPrintingSubsystem PrintingSubsystem, Object
                     catch (CloseException ex)
                     {
                         item.IsClosed = false;
-                        ObjectHandler.UnhideItemsOnOpen(item);
+                        Mutator.UnhideItemsOnOpen(item);
                         return PrintingSubsystem.Resource(ex.Message);
                     }
                 }

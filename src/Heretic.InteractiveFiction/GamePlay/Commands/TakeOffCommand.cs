@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record TakeOffCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record TakeOffCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -39,7 +39,7 @@ internal sealed record TakeOffCommand(Universe Universe, IPrintingSubsystem Prin
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative, lowerFirstCharacter: true);
                 var itemPronoun = PronounHandler.GetPronounForObject(item, GrammarCase.Accusative).LowerFirstChar();
 
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 try
                 {

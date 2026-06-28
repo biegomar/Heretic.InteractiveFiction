@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record BuyCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record BuyCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -40,7 +40,7 @@ internal sealed record BuyCommand(Universe Universe, IPrintingSubsystem Printing
                     return PrintingSubsystem.ItemAlreadyOwned();
                 }
 
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 try
                 {

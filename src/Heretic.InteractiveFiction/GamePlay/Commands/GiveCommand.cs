@@ -7,19 +7,19 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record GiveCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record GiveCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
         //I can only give things to visible people.
         if (adventureEvent.ObjectOne is Character character &&
-            ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
+            Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
         {
             //...and I can give only items that i own.
             if (adventureEvent.ObjectTwo is Item item &&
-                ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+                Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 try
                 {

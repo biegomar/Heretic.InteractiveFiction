@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record SwitchOffCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record SwitchOffCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -27,7 +27,7 @@ internal sealed record SwitchOffCommand(Universe Universe, IPrintingSubsystem Pr
     {
         if (adventureEvent.ObjectOne is Item item)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
                 var itemName =
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
@@ -37,7 +37,7 @@ internal sealed record SwitchOffCommand(Universe Universe, IPrintingSubsystem Pr
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Genitive,
                         lowerFirstCharacter: true);
 
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 if (item.IsSwitchable)
                 {

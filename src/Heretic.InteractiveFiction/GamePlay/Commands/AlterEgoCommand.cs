@@ -4,7 +4,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record AlterEgoCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler): ICommand
+internal sealed record AlterEgoCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker): ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -31,9 +31,9 @@ internal sealed record AlterEgoCommand(Universe Universe, IPrintingSubsystem Pri
     private bool HandleAlterEgoEventOnSingleObject(AdventureEvent adventureEvent)
     {
         var item = adventureEvent.ObjectOne;
-        if (item != null && ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        if (item != null && Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
         {
-            ObjectHandler.StoreAsActiveObject(item);
+            Tracker.Store(item);
             var result = PrintingSubsystem.AlterEgo(item);
             return result;
         }

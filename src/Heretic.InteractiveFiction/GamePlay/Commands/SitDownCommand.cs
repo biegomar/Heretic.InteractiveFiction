@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record SitDownCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record SitDownCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -45,7 +45,7 @@ internal sealed record SitDownCommand(Universe Universe, IPrintingSubsystem Prin
         if (seatCount == 1)
         {
             var onlySeat = Universe.ActiveLocation.Items.Single(x => x.IsSeatable);
-            ObjectHandler.StoreAsActiveObject(onlySeat);
+            Tracker.Store(onlySeat);
 
             try
             {
@@ -96,9 +96,9 @@ internal sealed record SitDownCommand(Universe Universe, IPrintingSubsystem Prin
             return this.HandleSitDownEventOnActiveLocation(adventureEvent);
         }
         
-        if (adventureEvent.ObjectOne is Item item && ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+        if (adventureEvent.ObjectOne is Item item && Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
         {
-            ObjectHandler.StoreAsActiveObject(item);
+            Tracker.Store(item);
             if (item.IsSeatable)
             {
                 try

@@ -7,16 +7,16 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record SayCommand(IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record SayCommand(IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
         //I can only speak to visible people
         if (adventureEvent.ObjectOne is Character character &&
-            ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
+            Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
         {
             var phrase = string.Join(" ", adventureEvent.UnidentifiedSentenceParts);
-            var key = ObjectHandler.GetConversationAnswerKeyByName(phrase);
+            var key = Resolver.GetConversationAnswerKeyByName(phrase);
             if (string.IsNullOrEmpty(key))
             {
                 return PrintingSubsystem.NoAnswer(phrase);

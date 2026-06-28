@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record LockCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record LockCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -23,9 +23,9 @@ internal sealed record LockCommand(Universe Universe, IPrintingSubsystem Printin
     {
         if (adventureEvent.ObjectOne is Item item)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
                 if (!string.IsNullOrEmpty(item.UnlockWithKey) &&
                     Universe.ActivePlayer.OwnsItem(item.UnlockWithKey) &&
                     Universe.ActivePlayer.GetItem(item.UnlockWithKey) is { } key)
@@ -88,7 +88,7 @@ internal sealed record LockCommand(Universe Universe, IPrintingSubsystem Printin
 
         if (item != default)
         {
-            ObjectHandler.StoreAsActiveObject(item);
+            Tracker.Store(item);
             if (key != default)
             {
                 if (item.IsLockable)

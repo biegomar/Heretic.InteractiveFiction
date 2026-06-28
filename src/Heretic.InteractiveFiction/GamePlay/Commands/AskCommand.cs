@@ -7,13 +7,13 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record AskCommand(IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler): ICommand
+internal sealed record AskCommand(IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker): ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
         //I can only speak to visible people in the active location
         if (adventureEvent.ObjectOne is Character character 
-            && ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
+            && Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(character))
         {
             //but I can speak about every unhidden or virtual item or character in the world
             var item = adventureEvent.ObjectTwo;

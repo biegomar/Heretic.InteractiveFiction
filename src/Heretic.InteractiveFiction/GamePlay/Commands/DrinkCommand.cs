@@ -7,14 +7,14 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record DrinkCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record DrinkCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
         var item = adventureEvent.ObjectOne;
         if (item != default)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(item))
             {
                 var itemName =
                     ArticleHandler.GetNameWithArticleForObject(item, GrammarCase.Accusative,
@@ -43,7 +43,7 @@ internal sealed record DrinkCommand(Universe Universe, IPrintingSubsystem Printi
                             Universe.ActiveLocation.RemoveItem((Item)item);
                         }
 
-                        ObjectHandler.RemoveAsActiveObject(item);
+                        Tracker.RemoveIfIs(item);
                         item.OnDrink(itemEventArgs);
 
                         item.OnAfterDrink(itemEventArgs);
@@ -56,7 +56,7 @@ internal sealed record DrinkCommand(Universe Universe, IPrintingSubsystem Printi
                     }
                 }
 
-                ObjectHandler.StoreAsActiveObject(item);
+                Tracker.Store(item);
 
                 return PrintingSubsystem.FormattedResource(BaseDescriptions.NOTHING_TO_DRINK, itemName, true);
             }

@@ -7,7 +7,7 @@ using Heretic.InteractiveFiction.Subsystems;
 
 namespace Heretic.InteractiveFiction.GamePlay.Commands;
 
-internal sealed record TakeCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectHandler ObjectHandler) : ICommand
+internal sealed record TakeCommand(Universe Universe, IPrintingSubsystem PrintingSubsystem, ObjectResolver Resolver, ActiveObjectTracker Tracker) : ICommand
 {
     public bool Execute(AdventureEvent adventureEvent)
     {
@@ -49,7 +49,7 @@ internal sealed record TakeCommand(Universe Universe, IPrintingSubsystem Printin
     {
         foreach (var hereticObject in adventureEvent.AllObjects)
         {
-            if (ObjectHandler.IsObjectUnhiddenAndInInventoryOrActiveLocation(hereticObject))
+            if (Resolver.IsObjectUnhiddenAndInInventoryOrActiveLocation(hereticObject))
             {
                 if (hereticObject is Character character)
                 {
@@ -59,7 +59,7 @@ internal sealed record TakeCommand(Universe Universe, IPrintingSubsystem Printin
                 {
                     try
                     {
-                        ObjectHandler.StoreAsActiveObject(hereticObject);
+                        Tracker.Store(hereticObject);
 
                         var eventArgs = new ContainerObjectEventArgs()
                         {
